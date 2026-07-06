@@ -59,10 +59,18 @@ def is_stage_family(family_id: str | None, config: dict | None = None) -> bool:
 
 
 def stage_order(family_id: str, targets: list[dict],
-                config: dict | None = None) -> list[str]:
-    """Generation order: anchor (usually the pristine/full end) first, then descending lv."""
+                config: dict | None = None,
+                explicit_order: list[str] | None = None) -> list[str]:
+    """Generation order: anchor (usually the pristine/full end) first, then descending lv.
+
+    ``explicit_order`` (from LLM auto-detection) wins when given — used for families
+    that have no numeric ``lv`` to sort by. Filtered to assets present in ``targets``.
+    """
     cfg = config or load_config()
     assets = stage_assets_for_family(targets, family_id)
+    if explicit_order:
+        present = {a['name'] for a in family_assets(targets, family_id)}
+        return [n for n in explicit_order if n in present]
     if not assets:
         return []
     anchor = get_family_anchor_asset(family_id, cfg)
@@ -74,6 +82,11 @@ def stage_order(family_id: str, targets: list[dict],
         names_desc = sorted(names, key=lambda n: -_lv_of(n, assets))
         return [anchor] + names_desc
     return sorted((a['name'] for a in assets), key=lambda n: -_lv_of(n, assets))
+
+
+def family_assets(targets: list[dict], family_id: str) -> list[dict]:
+    """All assets in ``targets`` for a family (regardless of numeric lv)."""
+    return [a for a in targets if a.get('family') == family_id]
 
 
 def _lv_of(name: str, assets: list[dict]) -> int:
@@ -93,39 +106,159 @@ def ref_from_for(order: list[str]) -> dict[str, str | None]:
     return chain
 
 
+def detect_stage_families(
+    targets: list[dict],
+    *,
+    config: dict | None = None,
+    client=None,
+    model: str = gemini_api.DEFAULT_CRITIC_MODEL,
+) -> dict[str, dict]:
+    """Ask the LLM which families are 'same object at progressive stages', from
+    filenames + gameplay function alone (no hardcoded naming rules).
+
+    Only inspects families NOT already flagged ``stage_progression`` in config
+    (manual wins). Returns {family_id: {'anchor': name, 'order': [pristine..destroyed]}}
+    for families the LLM judges to be genuine progressive stages (>=2 members).
+
+    Filenames are the primary signal (e.g. Crt1..Crt4, Pool_lv1..5), but the model
+    must use the gameplay ``function`` text to reject look-alikes that are NOT one
+    object — e.g. distinct colors (Red/Green/Blue) or distinct parts (body/lid).
+    """
+    from google.genai import types
+
+    cfg = config or load_config()
+
+    families: dict[str, list[dict]] = {}
+    for a in targets:
+        fam = a.get('family')
+        if not fam or is_stage_family(fam, cfg):
+            continue  # manual flag wins; skip already-known stage families
+        families.setdefault(fam, []).append(a)
+    # Only families with >=2 members can form a chain.
+    families = {f: members for f, members in families.items() if len(members) >= 2}
+    if not families:
+        return {}
+
+    blocks = []
+    for fam, members in families.items():
+        lines = [f'Family "{fam}":']
+        for a in members:
+            lines.append(f'  - {a["name"]}: {a.get("function", "")[:200]}')
+        blocks.append('\n'.join(lines))
+    families_block = '\n\n'.join(blocks)
+
+    rubric = f"""You are analyzing a match-3 game's art assets to find "stage progression" families.
+
+A STAGE-PROGRESSION family is ONE single object shown at multiple progressive states
+(e.g. increasing damage, decreasing water/fill level, wear). Its members differ ONLY by
+how damaged/depleted the SAME object is.
+
+It is NOT a stage-progression family if the members are different things, for example:
+- different colors of the same shape (e.g. red/green/blue gems)
+- different parts/components of an assembly (e.g. body, lid, door)
+- different distinct objects that merely share an art style
+
+Use the asset NAMES (numeric suffixes like 1..4 or _lv1.._lv5 often signal stages) as a
+strong hint, but you MUST confirm with the gameplay FUNCTION text before deciding.
+
+For each family below, decide if it is a stage-progression family. If yes, also pick:
+- "anchor": the member representing the MOST intact / fullest / pristine state — this is
+  the visual baseline the other stages derive from.
+- "order": ALL members ordered from most-intact (the anchor, first) to most-destroyed (last).
+
+Families:
+{families_block}
+
+Return ONLY JSON (no markdown), listing ONLY the families that ARE stage progressions:
+{{
+  "stage_families": {{
+    "<family_id>": {{"anchor": "<member name>", "order": ["<most intact>", ..., "<most destroyed>"]}}
+  }}
+}}
+If none qualify, return {{"stage_families": {{}}}}."""
+
+    if client is None:
+        client = gemini_api.get_client()
+
+    def _call():
+        return client.models.generate_content(
+            model=model,
+            contents=rubric,
+            config=types.GenerateContentConfig(response_mime_type='application/json'),
+        )
+
+    resp = gemini_api._with_retries(_call, 'detect_stage_families')
+    try:
+        data = json.loads(resp.text)
+    except (json.JSONDecodeError, TypeError) as e:
+        raise RuntimeError(
+            f'Stage-family detector returned invalid JSON: {resp.text[:300]}') from e
+
+    detected: dict[str, dict] = {}
+    for fam, spec in (data.get('stage_families') or {}).items():
+        if fam not in families:
+            continue
+        member_names = {a['name'] for a in families[fam]}
+        order = [n for n in (spec.get('order') or []) if n in member_names]
+        anchor = spec.get('anchor')
+        if anchor not in member_names:
+            anchor = order[0] if order else None
+        if anchor and order[:1] != [anchor]:
+            # keep anchor first regardless of what the model listed
+            order = [anchor] + [n for n in order if n != anchor]
+        if len(order) >= 2 and anchor:
+            detected[fam] = {'anchor': anchor, 'order': order}
+    return detected
+
+
 def expand_stage_progression(
     family_id: str,
     targets: list[dict],
     style_text: str,
     *,
     theme_text: str | None = None,
+    explicit_order: list[str] | None = None,
     client=None,
     model: str = gemini_api.DEFAULT_CRITIC_MODEL,
     config: dict | None = None,
 ) -> dict | None:
     """LLM-expand a multi-stage family into discrete, mutually-distinct per-stage visuals.
 
-    Returns None when the family has fewer than 2 numbered stages (nothing to chain).
+    ``explicit_order`` (from LLM auto-detection) supplies the chain order for families
+    with no numeric ``lv``; otherwise order is derived from ``lv`` + the configured anchor.
+    Returns None when the family has fewer than 2 chainable stages.
     """
     from google.genai import types
 
     cfg = config or load_config()
-    assets = stage_assets_for_family(targets, family_id)
-    if len(assets) < 2:
+    order = stage_order(family_id, targets, cfg, explicit_order=explicit_order)
+    if len(order) < 2:
         return None
 
-    order = stage_order(family_id, targets, cfg)
     ref_from = ref_from_for(order)
-    max_lv = max(_lv(a) or 0 for a in assets)
     meta = get_family_meta(family_id, cfg)
     series_note = meta.get('series_note', '')
+    by_name = {a['name']: a for a in family_assets(targets, family_id)}
+    n = len(order)
 
-    # Feed the model the gameplay meaning of each stage (HP level + any authored state).
+    # Feed the model each stage in intact->destroyed order, with any gameplay hint.
     stage_lines = []
-    for a in sorted(assets, key=lambda x: -(_lv(x) or 0)):
+    for pos, name in enumerate(order):
+        a = by_name.get(name, {})
+        lv = _lv(a)
         authored = _state(a)
-        note = f' (authored hint: {authored})' if authored else ''
-        stage_lines.append(f'- {a["name"]}: HP {_lv(a)}/{max_lv}{note}')
+        hint_bits = []
+        if lv is not None:
+            hint_bits.append(f'HP level {lv}')
+        if authored:
+            hint_bits.append(authored)
+        fn = a.get('function')
+        if fn:
+            hint_bits.append(fn[:160])
+        stage_kind = 'MOST intact/full' if pos == 0 else (
+            'MOST destroyed/empty' if pos == n - 1 else f'stage {pos + 1} of {n}')
+        hint = f' — {"; ".join(hint_bits)}' if hint_bits else ''
+        stage_lines.append(f'- {name} ({stage_kind}){hint}')
     stages_block = '\n'.join(stage_lines)
     theme_line = f'\n[Theme concept] {theme_text}' if theme_text else ''
 
@@ -135,23 +268,23 @@ def expand_stage_progression(
 [Series meaning] {series_note}
 [Target art style] {style_text}{theme_line}
 
-This family is the SAME object shown at {len(assets)} progressive HP/depletion stages.
-HP {max_lv} = fully intact/full; HP 1 = about to be destroyed.
+This family is the SAME object shown at {n} progressive stages, ordered below from the
+MOST intact/full to the MOST destroyed/empty.
 
 Write a SHORT, CONCRETE visual spec for each stage so that:
 1. All stages are clearly the SAME object and design (identical base shape, material, palette).
 2. Each stage is UNMISTAKABLY different from its neighbours when viewed small (~70px):
    use DISCRETE, chunky, readable damage/depletion steps — not subtle gradients.
    (e.g. missing whole chunks, big cracks, water level in clear quarters — not faint scratches.)
-3. The change is MONOTONIC as HP drops (damage only ever increases toward HP 1).
+3. The change is MONOTONIC along the order (damage/depletion only ever increases).
 
-Stages (highest HP first):
+Stages (most intact first):
 {stages_block}
 
 Return ONLY JSON (no markdown):
 {{
   "stages": {{
-    {', '.join(f'"{a["name"]}": "concrete visual for this stage"' for a in sorted(assets, key=lambda x: -(_lv(x) or 0)))}
+    {', '.join(f'"{name}": "concrete visual for this stage"' for name in order)}
   }}
 }}"""
 

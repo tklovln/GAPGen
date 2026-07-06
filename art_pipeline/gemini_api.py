@@ -26,6 +26,7 @@ PASS_FUNCTION = 8
 PASS_ELEMENT = 8
 PASS_COHESION = 8
 PASS_REASONABLENESS = 8
+PASS_BACKGROUND = 8
 PASS_PROGRESSION = 7
 
 PROGRESSION_RUBRIC = (
@@ -56,8 +57,17 @@ CUTOUT_RUBRIC = (
 
 
 def critic_pass_rules(*, style_image: bool, cohesion_rules: str,
-                       transparent: bool = True, has_prev_stage: bool = False) -> str:
+                       transparent: bool = True, has_prev_stage: bool = False,
+                       background: bool = False) -> str:
     """Verdict comment line for critic JSON rubric."""
+    if background:
+        # function_score/reasonableness/cutout are meaningless for a full-canvas backdrop;
+        # gate on background-specific quality instead.
+        parts = [f'style_score>={PASS_STYLE}',
+                 f'background_quality_score>={PASS_BACKGROUND}', 'background_ok']
+        if style_image:
+            parts.insert(1, f'reference_element_score>={PASS_ELEMENT}')
+        return f'{cohesion_rules}{" AND ".join(parts)}'
     parts = [
         f'style_score>={PASS_STYLE}',
         f'function_score>={PASS_FUNCTION}',
@@ -93,6 +103,25 @@ FILL_FRAME_REVIEW_NOTE = (
     'margin) and must NOT be a thin, spindly, sliver-like or overly elongated shape. If it '
     'leaves large empty areas or looks thin/elongated, list it under "issues", lower '
     'reasonableness_score, and set "verdict" to "retry".')
+
+# 背景專屬硬性規則:board_bg 是鋪在棋盤格下方的整版底圖,引擎會在上面畫格子。
+# 若圖上自己畫了棋盤格/磚格/格線,或對比太高、有搶焦點的主體,一律 retry。
+BACKGROUND_REVIEW_NOTE = (
+    '\n[Hard rule — this is a BOARD BACKGROUND, not a sprite] The game engine draws the board '
+    'grid cells ON TOP of this image, so the image itself must NOT contain any board grid, '
+    'cells, tiles, square blocks, checkerboard, brick/paved-tile floor or grid lines. If you '
+    'see a tiled/paved/grid floor or any pre-rendered board cells, list it under "issues" and '
+    'set "verdict" to "retry" regardless of the other scores.\n'
+    '[Hard rule] It must stay LOW-CONTRAST with NO single strong focal object and no busy '
+    'high-contrast pattern — it must never compete with foreground pieces. If contrast is high '
+    'or a dominant focal object steals attention, lower background_quality_score and set '
+    '"verdict" to "retry".')
+
+BACKGROUND_QUALITY_RUBRIC = (
+    '\n  "background_quality_score": 0-10, // suitability as a board backdrop: low contrast, '
+    'evenly lit, no board grid/tiles/cells drawn in, no single strong focal object competing '
+    'with foreground pieces'
+)
 
 
 def get_client():
@@ -207,7 +236,8 @@ def critique_image(client, model: str, original_png: bytes | None, generated_png
 
 
 def _normalize_verdict(verdict: dict, *, style_image: bool | None,
-                       has_family_anchor: bool, has_prev_stage: bool = False) -> dict:
+                       has_family_anchor: bool, has_prev_stage: bool = False,
+                       background: bool = False) -> dict:
     verdict.setdefault('style_score', 0)
     verdict.setdefault('function_score', 0)
     verdict.setdefault('reasonableness_score', 0)
@@ -222,6 +252,8 @@ def _normalize_verdict(verdict: dict, *, style_image: bool | None,
         verdict.setdefault('cohesion_score', 0)
     if has_prev_stage:
         verdict.setdefault('progression_score', 0)
+    if background:
+        verdict.setdefault('background_quality_score', 0)
     return verdict
 
 
@@ -248,9 +280,17 @@ def _critique_restyle(client, model: str, original_png: bytes, generated_png: by
     has_anchor = family_anchor is not None
     has_prev = prev_stage_image is not None
     transparent = asset.get('transparent', True)
+    is_background = asset.get('category') == 'background'
     cohesion_extra = cohesion_critic_rubric(has_family_anchor=has_anchor)
     cohesion_rules = cohesion_verdict_rules(has_family_anchor=has_anchor)
     progression_extra = PROGRESSION_RUBRIC if has_prev else ''
+    # background: swap single-object review notes + function/reasonableness score
+    # for background-specific ones (see critic_pass_rules background branch).
+    subject_notes = (BACKGROUND_REVIEW_NOTE if is_background
+                     else f'{NO_FACE_REVIEW_NOTE}{NO_OUTLINE_REVIEW_NOTE}{FILL_FRAME_REVIEW_NOTE}')
+    quality_line = (BACKGROUND_QUALITY_RUBRIC if is_background else
+                    f'\n  "function_score": 0-10,      // from the image alone, can the gameplay '
+                    f'function be recognized{REASONABLENESS_RUBRIC}')
 
     if style_image:
         ref_line = ('\nThere is also a design-element reference image (Reference B): a source of '
@@ -273,7 +313,7 @@ def _critique_restyle(client, model: str, original_png: bytes, generated_png: by
         prev_line = ('\nThere is also a PREVIOUS-STAGE image (one HP level higher / less damaged): '
                      'the new version must be the SAME object shown with clearly MORE damage.')
 
-    verdict_rule = f'// pass only if {critic_pass_rules(style_image=bool(style_image), cohesion_rules=cohesion_rules, transparent=transparent, has_prev_stage=has_prev)}'
+    verdict_rule = f'// pass only if {critic_pass_rules(style_image=bool(style_image), cohesion_rules=cohesion_rules, transparent=transparent, has_prev_stage=has_prev, background=is_background)}'
     cutout_rubric = CUTOUT_RUBRIC if transparent else ''
     gen_label = ('[AI-generated new version — shown composited on a magenta/white checkerboard '
                  'to reveal transparency]' if transparent else '[AI-generated new version]')
@@ -284,14 +324,13 @@ def _critique_restyle(client, model: str, original_png: bytes, generated_png: by
 [Asset function] {asset['name']}: {asset['function']}
 [Visual constraints]
 {constraints}
-[Target art style (text)] {style_text}{visual_block}{NO_FACE_REVIEW_NOTE}{NO_OUTLINE_REVIEW_NOTE}{FILL_FRAME_REVIEW_NOTE}
+[Target art style (text)] {style_text}{visual_block}{subject_notes}
 
 The first image is the original asset (the baseline for function and composition);
 the last image is the AI-generated new version.{ref_line}{anchor_line}{prev_line}
 Score it against the criteria below and return ONLY JSON (no other text):
 {{
-  "style_score": 0-10,         // how well it matches the target art style described in text{ref_score_line}{cohesion_extra}{progression_extra}
-  "function_score": 0-10,      // judging from the image alone, can the original gameplay function be recognized{REASONABLENESS_RUBRIC}
+  "style_score": 0-10,         // how well it matches the target art style described in text{ref_score_line}{cohesion_extra}{progression_extra}{quality_line}
   "background_ok": true/false, // background cleanliness (transparent assets: no solid color; background images: low contrast){cutout_rubric}
   "issues": ["issue 1", ...],
   "fix_instructions": "one concise sentence of concrete fix instructions for the image generation model, in English",
@@ -333,9 +372,11 @@ Score it against the criteria below and return ONLY JSON (no other text):
              'background_ok': False,
              'issues': ['critic returned non-JSON output'], 'fix_instructions': '',
              'verdict': 'retry'},
-            style_image=style_image, has_family_anchor=has_anchor, has_prev_stage=has_prev)
+            style_image=style_image, has_family_anchor=has_anchor, has_prev_stage=has_prev,
+            background=is_background)
     return _normalize_verdict(
-        verdict, style_image=style_image, has_family_anchor=has_anchor, has_prev_stage=has_prev)
+        verdict, style_image=style_image, has_family_anchor=has_anchor, has_prev_stage=has_prev,
+        background=is_background)
 
 
 def _critique_theme_swap(client, model: str, generated_png: bytes,
@@ -356,9 +397,17 @@ def _critique_theme_swap(client, model: str, generated_png: bytes,
     has_anchor = family_anchor is not None
     has_prev = prev_stage_image is not None
     transparent = asset.get('transparent', True)
+    is_background = asset.get('category') == 'background'
     cohesion_extra = cohesion_critic_rubric(has_family_anchor=has_anchor)
     cohesion_rules = cohesion_verdict_rules(has_family_anchor=has_anchor)
     progression_extra = PROGRESSION_RUBRIC if has_prev else ''
+    # background: swap single-object review notes + function/reasonableness score
+    # for background-specific ones (see critic_pass_rules background branch).
+    subject_notes = (BACKGROUND_REVIEW_NOTE if is_background
+                     else f'{NO_FACE_REVIEW_NOTE}{NO_OUTLINE_REVIEW_NOTE}{FILL_FRAME_REVIEW_NOTE}')
+    quality_line = (BACKGROUND_QUALITY_RUBRIC if is_background else
+                    f'\n  "function_score": 0-10,      // from the image alone, can the gameplay '
+                    f'function be recognized{REASONABLENESS_RUBRIC}')
 
     if style_image:
         ref_line = ('\nThere is also a theme reference image: use it as the visual theme source '
@@ -379,7 +428,7 @@ def _critique_theme_swap(client, model: str, generated_png: bytes,
         prev_line = ('\nThere is also a PREVIOUS-STAGE image (one HP level higher / less damaged): '
                      'the new version must be the SAME object shown with clearly MORE damage.')
 
-    verdict_rule = f'// pass only if {critic_pass_rules(style_image=bool(style_image), cohesion_rules=cohesion_rules, transparent=transparent, has_prev_stage=has_prev)}'
+    verdict_rule = f'// pass only if {critic_pass_rules(style_image=bool(style_image), cohesion_rules=cohesion_rules, transparent=transparent, has_prev_stage=has_prev, background=is_background)}'
     cutout_rubric = CUTOUT_RUBRIC if transparent else ''
     gen_label = ('[AI-generated new version — shown composited on a magenta/white checkerboard '
                  'to reveal transparency]' if transparent else '[AI-generated new version]')
@@ -393,13 +442,12 @@ def _critique_theme_swap(client, model: str, generated_png: bytes,
 [Must preserve (gameplay readability)] {preserve}
 [Visual constraints]
 {constraints}
-[Target art style (text)] {style_text}{visual_block}{ref_line}{anchor_line}{prev_line}{NO_FACE_REVIEW_NOTE}{NO_OUTLINE_REVIEW_NOTE}{FILL_FRAME_REVIEW_NOTE}
+[Target art style (text)] {style_text}{visual_block}{ref_line}{anchor_line}{prev_line}{subject_notes}
 
 The last image is the AI-generated new version. Judge ONLY whether it fulfills the gameplay role and constraints — do NOT penalize for looking different from any legacy sprite.
 Score it and return ONLY JSON (no other text):
 {{
-  "style_score": 0-10,         // how well it matches the target art style / theme{ref_score_line}{cohesion_extra}{progression_extra}
-  "function_score": 0-10,      // from the image alone, can the gameplay function be recognized{REASONABLENESS_RUBRIC}
+  "style_score": 0-10,         // how well it matches the target art style / theme{ref_score_line}{cohesion_extra}{progression_extra}{quality_line}
   "background_ok": true/false,{cutout_rubric}
   "issues": ["issue 1", ...],
   "fix_instructions": "one concise sentence of concrete fix instructions for the image generation model, in English",
@@ -438,9 +486,11 @@ Score it and return ONLY JSON (no other text):
              'background_ok': False,
              'issues': ['critic returned non-JSON output'], 'fix_instructions': '',
              'verdict': 'retry'},
-            style_image=style_image, has_family_anchor=has_anchor, has_prev_stage=has_prev)
+            style_image=style_image, has_family_anchor=has_anchor, has_prev_stage=has_prev,
+            background=is_background)
     return _normalize_verdict(
-        verdict, style_image=style_image, has_family_anchor=has_anchor, has_prev_stage=has_prev)
+        verdict, style_image=style_image, has_family_anchor=has_anchor, has_prev_stage=has_prev,
+        background=is_background)
 
 
 if __name__ == '__main__':
@@ -452,4 +502,9 @@ if __name__ == '__main__':
     assert 'progression_score>=' in critic_pass_rules(
         style_image=False, cohesion_rules='', has_prev_stage=True)
     assert 'progression_score>=' not in critic_pass_rules(style_image=False, cohesion_rules='')
+    # background branch: gate on background_quality, drop function/reasonableness/cutout
+    _bg = critic_pass_rules(style_image=False, cohesion_rules='', transparent=True, background=True)
+    assert 'background_quality_score>=' in _bg
+    assert 'function_score>=' not in _bg and 'reasonableness_score>=' not in _bg
+    assert 'cutout_ok' not in _bg
     print('gemini_api timeout ok')

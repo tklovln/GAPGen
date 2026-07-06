@@ -54,6 +54,7 @@ from .gemini_api import (
     PASS_COHESION,
     PASS_ELEMENT,
     PASS_FUNCTION,
+    PASS_BACKGROUND,
     PASS_PROGRESSION,
     PASS_REASONABLENESS,
     PASS_STYLE,
@@ -83,6 +84,16 @@ NO_OUTLINE_RULE = (
     '- NO OUTLINE/STROKE: do NOT add any ink outline, stroke, border contour, or edge line '
     'around the subject — no black, white, or colored strokes. Define form with shading and '
     'color only.')
+
+# 背景專屬規則:board_bg 是鋪在棋盤格下方的整版底圖,引擎會在上面畫格子。
+# 不能自己畫出任何棋盤格/磚格/格線,也不要有搶焦點的主體或磚地板透視。
+BACKGROUND_RULE = (
+    '- This is a full-canvas OPAQUE board background — fill the entire square canvas edge to edge.\n'
+    '- DO NOT draw any board grid, cells, tiles, square blocks, checkerboard, brick/paved floor '
+    'or grid lines — the game engine draws the grid cells on top. A tiled/paved floor is WRONG.\n'
+    '- Keep it a soft, LOW-CONTRAST, evenly-lit environment scene with NO single strong focal '
+    'object and no busy high-contrast pattern — semi-transparent grid cells will be drawn over '
+    'it, so it must never compete with the foreground pieces for attention.')
 
 # 全域規則:主體要填滿畫面、不要細長。細長的東西縮到 ~70px 會又小又難辨識。
 FILL_FRAME_RULE = (
@@ -185,10 +196,12 @@ def build_generation_prompt(asset: dict, style_text: str, family_names: list[str
     feedback_note = (f'\n[Fix instructions from the previous attempt — MUST follow] {feedback}'
                      if feedback else '')
     stage_note = stage_note_for_asset(asset['name'], stage_plan)
-    if asset.get('transparent', True):
-        bg_rule = _chromakey_block(asset)
+    is_background = asset.get('category') == 'background'
+    if not asset.get('transparent', True):
+        bg_rule = BACKGROUND_RULE if is_background else (
+            '- This is a full-canvas opaque background image — fill the entire canvas.')
     else:
-        bg_rule = '- This is a full-canvas opaque background image — fill the entire canvas.'
+        bg_rule = _chromakey_block(asset)
 
     if mode == 'theme_swap':
         return _build_theme_swap_prompt(
@@ -223,10 +236,10 @@ def build_generation_prompt(asset: dict, style_text: str, family_names: list[str
 {family_note}{stage_note}
 
 [Output requirements]
-{bg_rule}
+{bg_rule}{'' if is_background else f'''
 {NO_FACE_RULE}
 {NO_OUTLINE_RULE}
-{FILL_FRAME_RULE}
+{FILL_FRAME_RULE}'''}
 - Preserve the original composition, silhouette proportions and meaning; change ONLY the art style
 - Square canvas, a single image — no collage, no multiple views{feedback_note}"""
 
@@ -253,10 +266,12 @@ def _build_theme_swap_prompt(asset: dict, style_text: str, family_names: list[st
     theme_note = theme_note_for_asset(asset['name'], theme_text, theme_plan)
     stage_note = stage_note_for_asset(asset['name'], stage_plan)
 
-    if asset.get('transparent', True):
-        bg_rule = _chromakey_block(asset)
+    is_background = asset.get('category') == 'background'
+    if not asset.get('transparent', True):
+        bg_rule = BACKGROUND_RULE if is_background else (
+            '- This is a full-canvas opaque background image — fill the entire canvas.')
     else:
-        bg_rule = '- This is a full-canvas opaque background image — fill the entire canvas.'
+        bg_rule = _chromakey_block(asset)
 
     if has_style_image:
         ref_block = (
@@ -285,10 +300,10 @@ def _build_theme_swap_prompt(asset: dict, style_text: str, family_names: list[st
 [Target art style] {style_text}{theme_note}{stage_note}
 
 [Output requirements]
-{bg_rule}
+{bg_rule}{'' if is_background else f'''
 {NO_FACE_RULE}
 {NO_OUTLINE_RULE}
-{FILL_FRAME_RULE}
+{FILL_FRAME_RULE}'''}
 - Invent a completely NEW subject — do NOT replicate any original game sprite
 - Square canvas, a single image — no collage, no multiple views{feedback_note}"""
 
@@ -320,22 +335,25 @@ def _save_iteration(history_dir: pathlib.Path, asset: dict, i: int,
 
 def _passes_critique(verdict: dict, *, style_image: bool | None,
                      require_cohesion: bool, has_prev_stage: bool = False,
-                     transparent: bool = True) -> bool:
+                     transparent: bool = True, background: bool = False) -> bool:
     if verdict['verdict'] != 'pass':
         return False
     if verdict['style_score'] < PASS_STYLE:
         return False
-    if verdict['function_score'] < PASS_FUNCTION:
-        return False
     if not verdict['background_ok']:
-        return False
-    if transparent and not verdict.get('cutout_ok', False):
         return False
     if style_image and verdict.get('reference_element_score', 0) < PASS_ELEMENT:
         return False
-    if verdict.get('reasonableness_score', 0) < PASS_REASONABLENESS:
-        return False
     if require_cohesion and verdict.get('cohesion_score', 0) < PASS_COHESION:
+        return False
+    if background:
+        # full-canvas backdrop: function/reasonableness/cutout don't apply
+        return verdict.get('background_quality_score', 0) >= PASS_BACKGROUND
+    if verdict['function_score'] < PASS_FUNCTION:
+        return False
+    if transparent and not verdict.get('cutout_ok', False):
+        return False
+    if verdict.get('reasonableness_score', 0) < PASS_REASONABLENESS:
         return False
     if has_prev_stage and verdict.get('progression_score', 0) < PASS_PROGRESSION:
         return False
@@ -439,8 +457,10 @@ def generate_one(client, asset: dict, style_text: str, style_image: bytes | None
             client, critic_model, original, processed, style_text, asset, style_image,
             mode=mode, family_anchor=family_anchor, family_style_plan=family_style_plan,
             prev_stage_image=prev_stage_image)
-        score = (verdict['style_score'] + verdict['function_score']
-                 + verdict.get('reasonableness_score', 0)
+        is_background = asset.get('category') == 'background'
+        score = (verdict['style_score']
+                 + (verdict.get('background_quality_score', 0) if is_background
+                    else verdict['function_score'] + verdict.get('reasonableness_score', 0))
                  + (2 if verdict['background_ok'] else 0)
                  + (2 if verdict.get('cutout_ok') else 0))
         if style_image is not None:
@@ -464,7 +484,8 @@ def generate_one(client, asset: dict, style_text: str, style_image: bytes | None
             verdict, style_image=style_image is not None,
             require_cohesion=require_cohesion,
             has_prev_stage=prev_stage_image is not None,
-            transparent=asset.get('transparent', True))
+            transparent=asset.get('transparent', True),
+            background=is_background)
         if log:
             log.iter_critique(i, time.time() - t0, verdict, score, passed,
                               style_image is not None)

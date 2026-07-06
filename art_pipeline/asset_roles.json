@@ -347,6 +347,7 @@
     "puddle": {
       "series_note": "Puddle_lv1 is a nearly-dried version of Puddle_lv2.",
       "anchor_asset": "Puddle_lv2",
+      "stage_progression": true,
       "cohesion": [
         "Puddle_lv1 is the dried-down version of Puddle_lv2 — same stain shape and palette"
       ],
@@ -355,6 +356,7 @@
     "rope": {
       "series_note": "Rope_lv1 is the damaged version of Rope_lv2 — rope mesh overlay only, no trapped objects.",
       "anchor_asset": "Rope_lv2",
+      "stage_progression": true,
       "cohesion": [
         "Rope_lv1 is the frayed version of Rope_lv2 — same rope material and twist pattern",
         "Draw ONLY the rope/net mesh; gaps are transparent — never fill with fruit or elements"
@@ -372,6 +374,7 @@
     "pool": {
       "series_note": "Pool_lv1-lv5 are the SAME pool at 5 progressive depletion stages.",
       "anchor_asset": "Pool_lv5",
+      "stage_progression": true,
       "cohesion": [
         "Pool_lv1-lv5 are the SAME stone pool at progressive water depletion — identical masonry, only water level changes"
       ],
