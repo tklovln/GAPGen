@@ -87,7 +87,9 @@ Return ONLY JSON (no markdown):
             config=types.GenerateContentConfig(response_mime_type='application/json'),
         )
 
-    resp = gemini_api._with_retries(_call, f'expand_family_styles({model})')
+    resp = gemini_api._with_retries(
+        _call, f'expand_family_styles({model})',
+        validate=lambda r: json.loads(r.text))
     try:
         data = json.loads(resp.text)
     except (json.JSONDecodeError, TypeError) as e:

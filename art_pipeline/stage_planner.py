@@ -187,7 +187,9 @@ If none qualify, return {{"stage_families": {{}}}}."""
             config=types.GenerateContentConfig(response_mime_type='application/json'),
         )
 
-    resp = gemini_api._with_retries(_call, 'detect_stage_families')
+    resp = gemini_api._with_retries(
+        _call, 'detect_stage_families',
+        validate=lambda r: json.loads(r.text))
     try:
         data = json.loads(resp.text)
     except (json.JSONDecodeError, TypeError) as e:
@@ -256,7 +258,7 @@ def expand_stage_progression(
         if fn:
             hint_bits.append(fn[:160])
         stage_kind = 'MOST intact/full' if pos == 0 else (
-            'MOST destroyed/empty' if pos == n - 1 else f'stage {pos + 1} of {n}')
+            'MOST depleted/consumed' if pos == n - 1 else f'stage {pos + 1} of {n}')
         hint = f' — {"; ".join(hint_bits)}' if hint_bits else ''
         stage_lines.append(f'- {name} ({stage_kind}){hint}')
     stages_block = '\n'.join(stage_lines)
@@ -269,20 +271,34 @@ def expand_stage_progression(
 [Target art style] {style_text}{theme_line}
 
 This family is the SAME object shown at {n} progressive stages, ordered below from the
-MOST intact/full to the MOST destroyed/empty.
+MOST intact/full to the MOST depleted/consumed.
 
-Write a SHORT, CONCRETE visual spec for each stage so that:
+FIRST, decide the ONE depletion dimension that is NATURAL for THIS specific object and
+theme — do NOT default to "shattered/broken debris" for everything. Pick the axis that a
+player would find believable for this object, e.g.:
+- a pool / puddle / drink → the LIQUID LEVEL drops (surface lowers, more empty basin shows,
+  wet area shrinks); the vessel/basin itself stays intact.
+- a rope / net / fabric → it FRAYS and loosens (strands break, mesh sags); the material thins.
+- a stack/pile (bottles, coins, crates) → the COUNT drops (fewer items remain).
+- a solid wooden crate / stone block → THEN cracks, chips and missing chunks are appropriate.
+Report this choice in "depletion_axis" (a short phrase, e.g. "water level", "fraying",
+"remaining count", "structural cracks").
+
+THEN write a SHORT, CONCRETE visual spec for each stage so that:
 1. All stages are clearly the SAME object and design (identical base shape, material, palette).
+   Only the chosen depletion axis changes — do NOT turn the whole object into rubble unless
+   physical shattering is genuinely the natural axis for it.
 2. Each stage is UNMISTAKABLY different from its neighbours when viewed small (~70px):
-   use DISCRETE, chunky, readable damage/depletion steps — not subtle gradients.
-   (e.g. missing whole chunks, big cracks, water level in clear quarters — not faint scratches.)
-3. The change is MONOTONIC along the order (damage/depletion only ever increases).
+   use DISCRETE, readable steps along that axis — not subtle gradients
+   (e.g. water in clear quarter steps, whole strands gone, one fewer item — not faint scratches).
+3. The change is MONOTONIC along the order (depletion only ever increases).
 
 Stages (most intact first):
 {stages_block}
 
 Return ONLY JSON (no markdown):
 {{
+  "depletion_axis": "short phrase naming the single dimension that changes",
   "stages": {{
     {', '.join(f'"{name}": "concrete visual for this stage"' for name in order)}
   }}
@@ -298,7 +314,9 @@ Return ONLY JSON (no markdown):
             config=types.GenerateContentConfig(response_mime_type='application/json'),
         )
 
-    resp = gemini_api._with_retries(_call, f'expand_stage_progression({family_id})')
+    resp = gemini_api._with_retries(
+        _call, f'expand_stage_progression({family_id})',
+        validate=lambda r: json.loads(r.text))
     try:
         data = json.loads(resp.text)
     except (json.JSONDecodeError, TypeError) as e:
@@ -306,9 +324,9 @@ Return ONLY JSON (no markdown):
             f'Stage planner returned invalid JSON: {resp.text[:300]}') from e
 
     raw = data.get('stages') or {}
-    names = {a['name'] for a in assets}
+    depletion_axis = str(data.get('depletion_axis', '')).strip()
     stages: dict[str, dict] = {}
-    for name in names:
+    for name in order:
         visual = str(raw.get(name, '')).strip()
         if not visual:
             raise RuntimeError(f'Stage planner missing visual for {name}')
@@ -318,6 +336,7 @@ Return ONLY JSON (no markdown):
         'family': family_id,
         'concept': theme_text,
         'style': style_text,
+        'depletion_axis': depletion_axis,
         'anchor': order[0] if order else None,
         'order': order,
         'stages': stages,
@@ -331,15 +350,17 @@ def stage_note_for_asset(asset_name: str, stage_plan: dict | None) -> str:
     entry = stage_plan.get('stages', {}).get(asset_name)
     if not entry:
         return ''
+    axis = stage_plan.get('depletion_axis') or 'depletion'
     lines = [f'[This stage\'s target look] {entry["visual"]}']
     ref = entry.get('ref_from')
     if ref:
         ref_visual = stage_plan.get('stages', {}).get(ref, {}).get('visual', '')
         lines.append(
             f'[Progression — MUST be obvious] The attached previous-stage reference is '
-            f'"{ref}" ({ref_visual}). This stage has LESS HP: show clearly MORE '
-            f'damage/depletion than it, in a discrete step a player notices instantly at ~70px. '
-            f'Keep the same base object and style; change ONLY the damage/depletion.')
+            f'"{ref}" ({ref_visual}). This stage is one step FURTHER along "{axis}": show '
+            f'clearly MORE {axis} than it, in a discrete step a player notices instantly at '
+            f'~70px. Keep the same base object, material and style intact — change ONLY '
+            f'"{axis}", do NOT turn the object into unrelated rubble.')
     return '\n' + '\n'.join(lines)
 
 
@@ -366,4 +387,11 @@ if __name__ == '__main__':
     note = stage_note_for_asset('Crt3', plan)
     assert 'MUST be obvious' in note and 'Crt4' in note, note
     assert stage_note_for_asset('Crt4', plan).find('Progression') == -1
+
+    # explicit_order path (LLM-detected families with no numeric lv)
+    nolv = [{'name': 'BoxA', 'family': 'box'}, {'name': 'BoxB', 'family': 'box'},
+            {'name': 'BoxC', 'family': 'box'}]
+    eo = stage_order('box', nolv, {'families': {}}, explicit_order=['BoxA', 'BoxB', 'BoxC', 'Ghost'])
+    assert eo == ['BoxA', 'BoxB', 'BoxC'], eo  # Ghost filtered (not a target)
+    assert family_assets(nolv, 'box') == nolv
     print('stage_planner self-check ok')

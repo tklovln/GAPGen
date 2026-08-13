@@ -89,6 +89,8 @@ def format_reproduce_command(cfg: dict) -> str:
         lines.append('  --force \\')
     if cfg.get('max_iters', 3) != 3:
         lines.append(f'  --max-iters {cfg["max_iters"]} \\')
+    if cfg.get('ablation'):
+        lines.append(f'  --ablation {shlex.quote(str(cfg["ablation"]))} \\')
     default_image = 'gemini-3.1-flash-image'
     default_critic = 'gemini-3.5-flash'
     if cfg.get('image_model') and cfg['image_model'] != default_image:

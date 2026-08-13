@@ -1,0 +1,366 @@
+
+=== B1 × pet (Pet / 3dCartoonSimple) → research_B1_pet ===
+2026-07-22 15:44:53.107 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-07-22 15:44:53.107 WARNING streamlit.runtime.state.session_state_proxy: Session state does not function when running a script without `streamlit run`
+2026-07-22 15:44:53.109 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 精煉畫風: '3D Disney Cartoon Style, Simple design, Clean illustrations, Intuitive icon, highly recognizable'
+[style] → A vibrant, 3D Disney-style cartoon aesthetic featuring soft, rounded shapes, rich volumetric shading, and a warm, pet-friendly color palette with absolutely no black outlines.
+[theme] 展開主題概念: 'Pet'
+[theme] → Blu=A chunky, stylized blue fish toy sculpted from smooth clay with a fat, rounded body and highly simplified fins. It features a vibrant sky-blue gradient with soft rim lighting and a semi-gloss finish., Crt1=An almost entirely destroyed wooden pet crate, reduced to a loose, crumbling pile of chunky, broken clay planks and a detached wire frame, barely maintaining a square silhouette., Crt2=A heavily damaged wooden pet crate with one side completely broken open, showing thick, stylized clay splinters and a metal door hanging loosely by a single corner., Crt3=A slightly damaged wooden pet crate with a single thick, clean crack running down its side panel and the wire door resting slightly askew., Crt4=An intact, sturdy wooden pet crate sculpted from thick, smooth clay planks in a warm brown color, featuring a perfectly aligned, simple grey wire door., Grn=A simplified, chunky green frog-shaped squeaker toy with a smooth, bulbous clay volume, colored in a vibrant lime-green with a friendly, semi-gloss finish., LtBl=A large, spherical silver pet bowl overflowing with a dome of glossy, multi-colored spherical kibble in vibrant, rainbow-colored clay hues, creating an iconic, colorful dome silhouette., Pur=A perfectly rounded purple ball of yarn, sculpted as a chunky clay sphere wrapped in a few thick, simplified strands with deep, soft ambient occlusion shadows between the folds., Red=A bold, chunky red pet collar shaped into a clean, thick ring and decorated with a single oversized, circular gold tag. Made of soft, smooth clay with a warm red hue., Soda0d=A thick, horizontal dog bone toy made of smooth white clay, with its left and right rounded knobs painted in vibrant, alternating orange and yellow horizontal stripes to signal its lateral direction., Soda90=A thick, vertical dog bone toy made of smooth white clay, with its top and bottom rounded knobs painted in vibrant, alternating blue and cyan vertical stripes to signal its vertical direction., Yel=A classic yellow rubber ducky toy, sculpted as a highly simplified, chunky 3D clay figure with an oversized head, small wings, and a warm, friendly orange bill.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B1_pet                         │
+│ style    Render all pet-themed assets as soft 3… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /Users/tkwang/Match3_sim/generated_art… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       12                                  │
+│ 🟡 review     0                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /Users/tkwang/Match3_sim/generated_art… │
+│ history  /Users/tkwang/Match3_sim/generated_art… │
+│ report   /Users/tkwang/Match3_sim/generated_art… │
+│ contact  /Users/tkwang/Match3_sim/generated_art… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /Users/tkwang/Match3_sim/generated_art/research_B1_pet/generated_sprites.png
+
+=== B2 × pet (Pet / 3dCartoonSimple) → research_B2_pet ===
+2026-07-22 15:47:30.684 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-07-22 15:47:30.684 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 精煉畫風: '3D Disney Cartoon Style, Simple design, Clean illustrations, Intuitive icon, highly recognizable'
+  [api] refine_style(gemini-3.5-flash) 失敗(第 1 次,JSONDecodeError),5s 後重試…
+[style] → A vibrant, soft-shaded 3D Disney cartoon style featuring clean, highly recognizable pet-themed shapes with smooth gradients and no outlines.
+[theme] 展開主題概念: 'Pet'
+[theme] → Blu=A soft 3D vinyl squeaky fish cat-toy, rendered in an unmistakable bright cyan-blue with a smooth gradient. It features bold, rounded fins, a simple silhouette, and a polished semi-glossy finish catching the top-front right light., Crt1=A heavily cracked wooden pet transport crate. The front panel is split wide open, revealing soft straw stuffing peeking out, with only a few shattered, loose planks remaining of the main structure., Crt2=A visibly damaged wooden pet transport crate. Multiple deep, clean-edged cracks split the front panel, and the wooden frame is visibly warped with gaps between the planks., Crt3=A slightly damaged wooden pet transport crate. A few fine cracks are visible along the front panel, and one of the corners has a small clean chip, maintaining the soft 3D toy-like aesthetic., Crt4=A pristine, light-brown wooden pet transport crate. Features a bold, square silhouette with a dark-brown paw print logo on the front, with soft lighting defining the smooth, polished wooden panels., Grn=A high-fidelity 3D green tennis toy ball. It has a bright grass-green vinyl surface with a single sweeping white curved stripe, and warm lighting and soft shadows that define its roundness., LtBl=A vibrant, multi-colored rainbow yarn ball cat toy. It is wound from thick, glossy vinyl strands of red, blue, green, and yellow in a perfectly spherical silhouette with deep, soft ambient occlusion between the strands., Pur=A chunky, purple vinyl pet bowl styled as a cat's head silhouette. It features a rich magenta-purple gradient with a semi-glossy, polished surface and smooth, rounded edges., Red=A bold, red dog bone toy, rendered as a soft 3D vinyl asset. It has a vibrant scarlet red color with a clean gradient and soft highlights on the rounded knobby ends., Soda0d=A horizontal double-headed pet treat launcher toy. Shaped like a long, rounded capsule aligned horizontally in striped blue and yellow vinyl, with raised white arrows molded directly into the left and right ends., Soda90=A vertical double-headed pet treat launcher toy. Shaped like a tall, rounded capsule aligned vertically in striped pink and orange vinyl, with raised white arrows molded directly into the top and bottom ends., Yel=A cute, yellow vinyl rubber ducky toy. It features an instantly recognizable silhouette with a smooth bright yellow gradient, a tiny orange beak, and a polished, tactile finish.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B2_pet                         │
+│ style    Render all pet-themed sprites as soft,… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /Users/tkwang/Match3_sim/generated_art… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       12                                  │
+│ 🟡 review     0                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /Users/tkwang/Match3_sim/generated_art… │
+│ history  /Users/tkwang/Match3_sim/generated_art… │
+│ report   /Users/tkwang/Match3_sim/generated_art… │
+│ contact  /Users/tkwang/Match3_sim/generated_art… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /Users/tkwang/Match3_sim/generated_art/research_B2_pet/generated_sprites.png
+
+=== B1 × ocean (Ocean / 3dCartoonSimple) → research_B1_ocean ===
+2026-07-22 15:51:33.337 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-07-22 15:51:33.337 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 精煉畫風: '3D Disney Cartoon Style, Simple design, Clean illustrations, Intuitive icon, highly recognizable'
+  [api] refine_style(gemini-3.5-flash) 失敗(第 1 次,JSONDecodeError),5s 後重試…
+[style] → A vibrant 3D Disney-style cartoon aesthetic featuring soft, clean, semi-glossy marine shapes defined entirely by light and volume without any outlines.
+[theme] 展開主題概念: 'Ocean'
+[theme] → Blu=A chunky, ultra-rounded five-pointed starfish in deep sky blue. Rendered with a smooth, semi-glossy enamel finish, featuring a plump, domed center and stubby, thick arms. Lit with warm top-left sunlight and soft, cool blue under-lighting to emphasize its volumetric 3D shape., Crt1=The final stage of the stylized wooden crate, almost completely destroyed. Only a few rounded, splintered corner planks and a single snapped kelp rope remain, barely holding together a loose, broken square frame., Crt2=The stylized wooden crate showing heavy damage. Several planks are completely missing, creating wide, clean gaps that reveal a dark, hollow interior, and the remaining kelp ropes are frayed and loose., Crt3=The same stylized wooden crate, now slightly damaged. One corner plank is cleanly broken off with rounded, smooth-edged cracks, and one kelp rope is snapped, dangling loosely to indicate a loss of structural integrity., Crt4=An intact, chunky square wooden crate made of thick, stylized orange-brown planks. It is wrapped tightly with thick, smooth green kelp ropes. The corners are extremely rounded, possessing a soft matte-plastic texture with clear volumetric depth., Grn=A highly stylized, bulbous green sea turtle shell. The shell is simplified into smooth, rounded hexagonal segments with soft gradient shading. The surface has a polished plastic luster, catching sharp specular highlights, completely outline-free., LtBl=A massive, perfectly spherical white pearl with a highly reflective, pearlescent rainbow sheen. It sits nestled inside a thick, glossy golden-orange open oyster shell. The entire asset has an ultra-high specular polish that acts as a focal point., Pur=A plump, stylized purple clam shell with deep, soft vertical grooves. The silhouette is extremely rounded, resembling a glossy cartoon pastry, colored in vibrant royal purple with a warm lavender gradient shading towards the top., Red=An oversized, chubby red crab claw with smooth, rounded pincers. The main body is extremely plump with no sharp edges, boasting a rich, saturated red coral hue, polished to a high-gloss reflective finish., Soda0d=A chubby, horizontal yellow-and-orange submarine. It features prominent, oversized horizontal stabilizer fins on its sides and a stubby propeller, creating a clear, iconic horizontal silhouette to signal horizontal clearance without any motion trails., Soda90=A vertical, rocket-shaped pink squid pointing straight up. Its body is a smooth, tapered cone with oversized, wide vertical fins on its sides that point directly upwards, establishing an unmistakable vertical orientation through its shape alone., Yel=An inflated, spherical yellow pufferfish with tiny, stubby orange fins and a cute, simplified face. The body is a perfect glossy yellow sphere with a warm sunny gradient, showing smooth 3D depth and soft shadows.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B1_ocean                       │
+│ style    Render all ocean-themed assets as soft… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /Users/tkwang/Match3_sim/generated_art… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       12                                  │
+│ 🟡 review     0                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /Users/tkwang/Match3_sim/generated_art… │
+│ history  /Users/tkwang/Match3_sim/generated_art… │
+│ report   /Users/tkwang/Match3_sim/generated_art… │
+│ contact  /Users/tkwang/Match3_sim/generated_art… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /Users/tkwang/Match3_sim/generated_art/research_B1_ocean/generated_sprites.png
+
+=== B2 × ocean (Ocean / 3dCartoonSimple) → research_B2_ocean ===
+2026-07-22 15:54:34.469 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-07-22 15:54:34.469 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 精煉畫風: '3D Disney Cartoon Style, Simple design, Clean illustrations, Intuitive icon, highly recognizable'
+[style] → Render all assets as stylized, chunky 3D Disney-inspired cartoon icons with soft, clean gradient shading, bright oceanic colors, and no outlines.
+[theme] 展開主題概念: 'Ocean'
+[theme] → Blu=A plump, stylized starfish with soft, rounded arms, rendered in a vibrant royal blue. The surface has a semi-glossy, wet finish with soft, airbrushed transitions from a warm sky-blue highlight on top to a deep navy blue shadow underneath, accentuated by subtle rim lighting., Crt1=The wooden cargo crate in a heavily ruined state. Only a few loose, jagged planks remain hanging on a broken frame, revealing a hollow, dark interior, with a few loose barnacles clinging to the remaining wet wood., Crt2=The wooden cargo crate showing visible damage. The kelp rope is completely gone, one brass corner is missing, and several planks are splintered and buckled outward, leaving a dark, wide gap in the middle., Crt3=The same wooden cargo crate, but showing slight wear. One side of the kelp rope has snapped and hangs loose, and a single clean, chunky hairline crack splits the front mahogany plank, revealing the volumetric depth of the wood beneath., Crt4=An intact, chunky wooden cargo crate sitting underwater, bound tightly by a thick, green kelp rope. The wood has a rich mahogany tone with simplified, rounded planks, a wet finish, and solid brass corner brackets that catch the warm overhead light., Grn=A chubby green sea turtle tucked into a clean, circular silhouette. The dome-shaped shell features simplified, chunky hexagonal segments in vivid kelly green, with smooth airbrushed shading and a soft overhead highlight that gives it a volumetric, wet appearance., LtBl=A massive, glossy white pearl with an iridescent, multi-colored surface sheen, cradled inside a wide-open, chunky golden clam shell. The wet, pearlescent surface naturally reflects a rainbow of soft pinks, blues, and yellows, making its color-bomb functionality clear through material finish alone., Pur=A cute, bulbous purple octopus with a perfectly smooth, teardrop-shaped head and tiny, stubby tentacles curled at the base. Colored in rich violet, its surface shows clean, simplified specular highlights and a deep indigo ambient shadow, creating strong 3D depth., Red=A stocky, semi-circular red crab with oversized, smooth, rounded claws folded tightly against its body. The shell is a vibrant crimson, polished to a high-gloss wet sheen with a soft overhead key light casting a warm coral glow on its upper curves., Soda0d=A chunky, cigar-shaped yellow submarine designed for horizontal alignment. It features prominent, rounded propeller screws on both its far-left and far-right tips, emphasizing its horizontal path purely through its physical, symmetrical silhouette., Soda90=A tall, vertical deep-sea diving bell shaped like a rounded capsule. Heavy, stylized thruster nozzles are integrated into both its top dome and bottom base, clearly defining its vertical orientation through its stout, symmetrical shape., Yel=A perfectly spherical, puffed-up yellow blowfish with tiny, stubby fins and a small, puckered mouth. Colored in bright lemon yellow, its plump body is defined by smooth, airbrushed volume and a soft, warm key light, with no outlines or harsh details.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+  [api] expand_stage_progression(crate) 失敗(第 1 次,JSONDecodeError),5s 後重試…
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B2_ocean                       │
+│ style    Render every asset in a soft 3D Disney… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /Users/tkwang/Match3_sim/generated_art… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       12                                  │
+│ 🟡 review     0                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /Users/tkwang/Match3_sim/generated_art… │
+│ history  /Users/tkwang/Match3_sim/generated_art… │
+│ report   /Users/tkwang/Match3_sim/generated_art… │
+│ contact  /Users/tkwang/Match3_sim/generated_art… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /Users/tkwang/Match3_sim/generated_art/research_B2_ocean/generated_sprites.png
+
+Wrote /Users/tkwang/Match3_sim/paper/results/ablation_multi_theme.csv
+{'condition': 'B1', 'slug': 'pet', 'theme': 'Pet', 'style_label': '3dCartoonSimple', 'run_id': 'research_B1_pet', 'n': 12, 'pass_rate': 1.0, 'needs_review_rate': 0.0, 'failed_rate': 0.0, 'mean_iters': 1.0, 'mean_style': None, 'mean_function': None, 'mean_cohesion': None, 'mean_progression': None, 'cutout_fail_rate': None}
+{'condition': 'B2', 'slug': 'pet', 'theme': 'Pet', 'style_label': '3dCartoonSimple', 'run_id': 'research_B2_pet', 'n': 12, 'pass_rate': 1.0, 'needs_review_rate': 0.0, 'failed_rate': 0.0, 'mean_iters': 1.0, 'mean_style': None, 'mean_function': None, 'mean_cohesion': None, 'mean_progression': None, 'cutout_fail_rate': None}
+{'condition': 'B1', 'slug': 'ocean', 'theme': 'Ocean', 'style_label': '3dCartoonSimple', 'run_id': 'research_B1_ocean', 'n': 12, 'pass_rate': 1.0, 'needs_review_rate': 0.0, 'failed_rate': 0.0, 'mean_iters': 1.0, 'mean_style': None, 'mean_function': None, 'mean_cohesion': None, 'mean_progression': None, 'cutout_fail_rate': None}
+{'condition': 'B2', 'slug': 'ocean', 'theme': 'Ocean', 'style_label': '3dCartoonSimple', 'run_id': 'research_B2_ocean', 'n': 12, 'pass_rate': 1.0, 'needs_review_rate': 0.0, 'failed_rate': 0.0, 'mean_iters': 1.0, 'mean_style': None, 'mean_function': None, 'mean_cohesion': None, 'mean_progression': None, 'cutout_fail_rate': None}

@@ -1,0 +1,68 @@
+2026-08-11 03:41:56.150 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-11 03:41:56.150 WARNING streamlit.runtime.state.session_state_proxy: Session state does not function when running a script without `streamlit run`
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/223 [00:00<?, ?it/s]Loading weights: 100%|██████████| 223/223 [00:00<00:00, 8487.80it/s]
+Wrote /Users/tkwang/Match3_sim/paper/results/auto_eval.json
+{
+  "judge": "openai",
+  "themes": {
+    "fruit": {
+      "B0": {
+        "role_recognition": {
+          "n": 8,
+          "accuracy": 0.375,
+          "trials": [
+            {
+              "asset": "Red",
+              "true": "match",
+              "pred": "match",
+              "correct": true
+            },
+            {
+              "asset": "Blu",
+              "true": "match",
+              "pred": "match",
+              "correct": true
+            },
+            {
+              "asset": "Soda0d",
+              "true": "h_power",
+              "pred": "match",
+              "correct": false
+            },
+            {
+              "asset": "Soda90",
+              "true": "v_power",
+              "pred": "match",
+              "correct": false
+            },
+            {
+              "asset": "Crt4",
+              "true": "obstacle",
+              "pred": "match",
+              "correct": false
+            },
+            {
+              "asset": "Crt1",
+              "true": "obstacle",
+              "pred": "match",
+              "correct": false
+            },
+            {
+              "asset": "Yel",
+              "true": "match",
+              "pred": "match",
+              "correct": true
+            },
+            {
+              "asset": "LtBl",
+              "true": "v_power",
+              "pred": "match",
+              "correct": false
+            }
+          ]
+        },
+        "stage_ordering": {
+          "n": 4,
+          "presented": [
+        

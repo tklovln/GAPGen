@@ -309,6 +309,7 @@ def generate(
     critic_model: str | None = None,
     max_iters: int = 3,
     force: bool = False,
+    ablation: str | None = None,
     on_progress: Callable[[int, int, str, AssetResult | None], None] | None = None,
 ) -> GenerationSummary:
     """
@@ -318,6 +319,7 @@ def generate(
       is called before each asset (result=None) and after completion.
 
     Delegates to pipeline.run so Web and CLI share the same generation path.
+    ablation: optional B0–B3 research profile (see pipeline.resolve_ablation).
     """
     progress_adapter = None
     if on_progress:
@@ -344,6 +346,7 @@ def generate(
             mode, theme_text),
         refine_style=refine_style if refine_style is not None else resolve_refine_style(),
         reference_run=reference_run,
+        ablation=ablation,
         source='web',
         on_progress=progress_adapter,
     )

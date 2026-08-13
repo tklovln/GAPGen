@@ -38,6 +38,7 @@ from .family_style_planner import (
 )
 from .style_planner import refine_style_prompt, resolved_style_text
 from .stage_planner import (
+    detect_stage_families,
     expand_stage_progression,
     is_stage_family,
     stage_note_for_asset,
@@ -65,12 +66,39 @@ from .run_log import RunLog
 
 GENERATED_ROOT = PROJECT_ROOT / 'generated_art'
 
-# 鏈式 stage 生成:前一級(HP 較高)當參考,鎖住演進方向。與 family anchor(鎖畫風)並用。
+# Research ablations (NeurIPS Creative AI): stacked features, not separate pipelines.
+# B0 naive → B1 ontology → B2 + dual refs → B3 + hybrid critic.
+ABLATION_PROFILES: dict[str, dict] = {
+    'B0': {'use_ontology': False, 'use_family_refs': False, 'use_critic': False, 'max_iters': 1},
+    'B1': {'use_ontology': True, 'use_family_refs': False, 'use_critic': False, 'max_iters': 1},
+    'B2': {'use_ontology': True, 'use_family_refs': True, 'use_critic': False, 'max_iters': 1},
+    'B3': {'use_ontology': True, 'use_family_refs': True, 'use_critic': True, 'max_iters': 3},
+}
+
+
+def resolve_ablation(ablation: str | None) -> dict:
+    """Return feature flags for an ablation id, or full-system defaults when None."""
+    if not ablation:
+        return {
+            'name': None,
+            'use_ontology': True,
+            'use_family_refs': True,
+            'use_critic': True,
+            'max_iters': None,  # caller keeps its max_iters
+        }
+    key = str(ablation).strip().upper()
+    if key not in ABLATION_PROFILES:
+        raise ValueError(f'Unknown ablation {ablation!r}; expected one of {sorted(ABLATION_PROFILES)}')
+    return {'name': key, **ABLATION_PROFILES[key]}
+
+
+# 鏈式 stage 生成:前一級(較完好)當參考,鎖住演進方向。與 family anchor(鎖畫風)並用。
 PREV_STAGE_REF_LABEL = (
-    'Reference — PREVIOUS stage of this same object (one HP level HIGHER, i.e. less damaged). '
-    'Keep the exact same base object, material, palette and rendering. Show this stage as '
-    'clearly MORE damaged/depleted than it, in one discrete step obvious at ~70px. '
-    'Do NOT redraw a different object.')
+    'Reference — PREVIOUS stage of this same object (one step LESS consumed / more intact). '
+    'Keep the exact same base object, material, palette and rendering. Show this stage as one '
+    'discrete step FURTHER along the object\'s natural depletion dimension (e.g. lower liquid '
+    'level, more fraying, fewer items, or cracks only if genuinely appropriate) — obvious at '
+    '~70px. Do NOT redraw a different object and do NOT turn it into unrelated rubble.')
 
 # 預設元素參考圖(圖騰/logo/特殊形狀/風格;沒指定 --style-image 時自動使用,若存在)
 DEFAULT_STYLE_IMAGE = PROJECT_ROOT / 'game_art_reference.png'
@@ -180,6 +208,32 @@ def _chromakey_block(asset: dict) -> str:
     return postprocess.chromakey_generation_rules(asset)
 
 
+def _build_naive_theme_swap_prompt(
+    asset: dict, style_text: str, theme_text: str | None, feedback: str | None,
+) -> str:
+    """B0: style + theme + slot name only — no role ontology / family / stage briefs."""
+    feedback_note = (f'\n[Fix instructions from the previous attempt — MUST follow] {feedback}'
+                     if feedback else '')
+    is_background = asset.get('category') == 'background'
+    if not asset.get('transparent', True):
+        bg_rule = BACKGROUND_RULE if is_background else (
+            '- This is a full-canvas opaque background image — fill the entire canvas.')
+    else:
+        bg_rule = _chromakey_block(asset)
+    theme_line = f'\n[Theme] {theme_text}' if theme_text else ''
+    return f"""Create a single 2D match-3 game sprite.
+
+[Asset name] {asset['name']}
+[Target art style] {style_text}{theme_line}
+
+[Output requirements]
+{bg_rule}{'' if is_background else f'''
+{NO_FACE_RULE}
+{NO_OUTLINE_RULE}
+{FILL_FRAME_RULE}'''}
+- Square canvas, a single image — no collage, no multiple views{feedback_note}"""
+
+
 def build_generation_prompt(asset: dict, style_text: str, family_names: list[str],
                             feedback: str | None, has_style_image: bool = False,
                             *, mode: GenerationMode = 'restyle',
@@ -187,7 +241,11 @@ def build_generation_prompt(asset: dict, style_text: str, family_names: list[str
                             theme_plan: dict | None = None,
                             family_style_plan: dict | None = None,
                             stage_plan: dict | None = None,
-                            has_family_anchor: bool = False) -> str:
+                            has_family_anchor: bool = False,
+                            use_ontology: bool = True) -> str:
+    if mode == 'theme_swap' and not use_ontology:
+        return _build_naive_theme_swap_prompt(asset, style_text, theme_text, feedback)
+
     constraints = '\n'.join(f'- {c}' for c in asset.get('constraints', []))
     family_note = format_family_visual_block(
         asset, family_names,
@@ -386,10 +444,13 @@ def generate_one(client, asset: dict, style_text: str, style_image: bytes | None
                  stage_plan: dict | None = None,
                  family_anchor: bytes | None = None,
                  prev_stage_image: bytes | None = None,
-                 reference_run: str | None = None) -> dict:
+                 reference_run: str | None = None,
+                 use_ontology: bool = True,
+                 use_critic: bool = True) -> dict:
     """對單一 asset 跑迭代循環。回傳結果 dict(含 attempts log 與最佳圖 bytes)。
 
     history_dir 有給時,每一次迭代的圖都會被保留到 history_dir/<asset>/ 並標上 tag。
+    use_critic=False 時只做 postprocess 門檻(研究消融 B0–B2)。
     """
     original: bytes | None = None
     refs: list[tuple[bytes, str]] = []
@@ -430,7 +491,8 @@ def generate_one(client, asset: dict, style_text: str, style_image: bytes | None
                                          theme_plan=theme_plan,
                                          family_style_plan=family_style_plan,
                                          stage_plan=stage_plan,
-                                         has_family_anchor=family_anchor is not None)
+                                         has_family_anchor=family_anchor is not None,
+                                         use_ontology=use_ontology)
         t0 = time.time()
         try:
             raw = gemini_api.generate_image(client, image_model, prompt, refs)
@@ -452,6 +514,26 @@ def generate_one(client, asset: dict, style_text: str, style_image: bytes | None
             feedback = ('; '.join(issues)
                         + '. Output a single centered object on a fully transparent background.')
             continue
+
+        # Ablation B0–B2: accept postprocess-clean images without VLM critic.
+        if not use_critic:
+            verdict = {
+                'style_score': 0, 'function_score': 0, 'reasonableness_score': 0,
+                'background_ok': True, 'cutout_ok': True, 'verdict': 'pass',
+                'issues': [], 'fix_instructions': '', 'skipped_critic': True,
+            }
+            entry = {
+                'iter': i, 'stage': 'postprocess_accept', 'ok': True,
+                'elapsed_sec': round(time.time() - t0, 1),
+                'postprocess_warnings': issues, 'verdict': verdict, 'score': 0,
+            }
+            if history_dir is not None:
+                entry.update(_save_iteration(
+                    history_dir, asset, i, raw, processed, 0, 'no_critic'))
+            attempts.append(entry)
+            return {'name': asset['name'], 'status': 'pass', 'iters': i,
+                    'attempts': attempts, 'image': processed, 'verdict': verdict,
+                    'chosen_iter': i}
 
         verdict = gemini_api.critique_image(
             client, critic_model, original, processed, style_text, asset, style_image,
@@ -638,26 +720,34 @@ def prepare_stage_plans_for_targets(
     report_path: pathlib.Path,
     *,
     theme_text: str | None = None,
+    detected: dict[str, dict] | None = None,
     client=None,
 ) -> dict[str, dict]:
     """Expand a per-stage visual+reference chain for each stage-progression family.
 
+    Families come from two sources: those manually flagged ``stage_progression`` in
+    asset_roles.json (order derived from lv), and ``detected`` = {family: {anchor, order}}
+    from LLM auto-detection (explicit order, used for families with no numeric lv).
     Returns {family_id: stage_plan}; caches in report['stage_plans'] keyed by family.
     """
     cached: dict = report.get('stage_plans') or {}
-    families = []
+    detected = detected or {}
+    # family -> explicit order (None for manual/lv-based families)
+    families: dict[str, list[str] | None] = {}
     for a in targets:
         fam = a.get('family')
         if fam and is_stage_family(fam) and fam not in families:
-            families.append(fam)
+            families[fam] = None
+    for fam, spec in detected.items():
+        families.setdefault(fam, spec.get('order'))
     if not families:
         return {}
 
     plans: dict[str, dict] = {}
     dirty = False
-    for fam in families:
+    for fam, explicit_order in families.items():
         prev = cached.get(fam)
-        stage_names = stage_order(fam, targets)
+        stage_names = stage_order(fam, targets, explicit_order=explicit_order)
         if (prev and prev.get('concept') == theme_text
                 and prev.get('order') == stage_names):
             plans[fam] = prev
@@ -666,6 +756,7 @@ def prepare_stage_plans_for_targets(
             client = gemini_api.get_client()
         plan = expand_stage_progression(
             fam, targets, style_text, theme_text=theme_text,
+            explicit_order=explicit_order,
             client=client, model=critic_model,
         )
         if plan:
@@ -743,6 +834,8 @@ def run(style_text: str, run_name: str,
         expand_theme: bool = False,
         reference_run: str | None = None,
         refine_style: bool = True,
+        auto_stage: bool = False,
+        ablation: str | None = None,
         source: str = 'cli',
         cli_extra: dict | None = None,
         on_progress: GenerationProgressCallback | None = None) -> pathlib.Path:
@@ -760,7 +853,20 @@ def run(style_text: str, run_name: str,
     reference_run:
       先前生成 run 名稱(如 pixar_cartoon); restyle 時用其 sprites/ 當 Reference A,
       不含的 asset 跳過,不 fallback 官方圖。
+    ablation:
+      B0–B3 research profile (see resolve_ablation); None = full production path.
     """
+    abl = resolve_ablation(ablation)
+    if abl['max_iters'] is not None:
+        max_iters = abl['max_iters']
+    use_ontology = abl['use_ontology']
+    use_family_refs = abl['use_family_refs']
+    use_critic = abl['use_critic']
+    # B0: no ontology → skip LLM theme expansion / style refine noise.
+    if not use_ontology:
+        expand_theme = False
+        refine_style = False
+
     manifest = build_manifest()
     by_family: dict[str, list[str]] = {}
     for a in manifest:
@@ -804,8 +910,13 @@ def run(style_text: str, run_name: str,
     }
     if reference_run:
         report['reference_run'] = reference_run
+    if abl['name']:
+        report['ablation'] = abl
 
     report['target_assets'] = [a['name'] for a in targets]
+    extra = dict(cli_extra or {})
+    if abl['name']:
+        extra['ablation'] = abl['name']
     report['cli'] = build_run_config(
         source=source,
         run_name=run_name,
@@ -824,7 +935,7 @@ def run(style_text: str, run_name: str,
         reference_image=reference_image,
         expand_theme=expand_theme,
         refine_style=refine_style,
-        extra=cli_extra,
+        extra=extra,
     )
     report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
 
@@ -878,13 +989,36 @@ def run(style_text: str, run_name: str,
         fams = ', '.join(sorted(family_style_plan.get('families', {})))
         print(f'[family-style] → {fams}')
 
-    stage_families = sorted({a.get('family') for a in targets
-                             if a.get('family') and is_stage_family(a.get('family'))})
+    detected_stage = {}
+    if auto_stage:
+        cached_detect = report.get('stage_detect')
+        target_families = sorted({a.get('family') for a in targets
+                                  if a.get('family') and not is_stage_family(a.get('family'))})
+        if cached_detect and cached_detect.get('scanned') == target_families:
+            detected_stage = cached_detect.get('families', {})
+            if detected_stage:
+                print(f'[stage] 使用已快取的自動偵測: {", ".join(detected_stage)}')
+        else:
+            print('[stage] 自動偵測 stage family(看檔名 + function)…')
+            detected_stage = detect_stage_families(
+                targets, client=client, model=critic_model)
+            report['stage_detect'] = {'scanned': target_families, 'families': detected_stage}
+            report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
+            if detected_stage:
+                print(f'[stage] 自動判定為 stage family: {", ".join(detected_stage)}')
+            else:
+                print('[stage] 沒有偵測到新的 stage family')
+
+    stage_families = sorted(
+        {a.get('family') for a in targets
+         if a.get('family') and is_stage_family(a.get('family'))}
+        | set(detected_stage)
+    )
     if stage_families:
         print(f'[stage] 展開 {len(stage_families)} 個 family 的鏈式階段規格: {", ".join(stage_families)}')
     stage_plans = prepare_stage_plans_for_targets(
         targets, resolved_style, critic_model, report, report_path,
-        theme_text=theme_text, client=client,
+        theme_text=theme_text, detected=detected_stage, client=client,
     )
     for fam in stage_families:
         plan = stage_plans.get(fam)
@@ -926,11 +1060,15 @@ def run(style_text: str, run_name: str,
             mode=mode, theme_text=resolved_theme, theme_plan=theme_plan,
             family_style_plan=family_style_plan,
             stage_plan=stage_plans.get(targets[0].get('family')),
-            has_family_anchor=dry_anchor))
+            has_family_anchor=dry_anchor and use_family_refs,
+            use_ontology=use_ontology))
         report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
         return run_dir
 
-    family_anchors = _seed_family_anchors_from_disk(targets, sprites_out, report, force)
+    family_anchors = (
+        _seed_family_anchors_from_disk(targets, sprites_out, report, force)
+        if use_family_refs else {}
+    )
     # 鏈式 stage:每個 stage family 最近一張完成圖(前一級),餵給下一級當「演進」參考。
     prev_stage_images: dict[str, bytes] = {}
     n_pass = n_review = n_fail = n_skip = 0
@@ -965,22 +1103,27 @@ def run(style_text: str, run_name: str,
                 })
             continue
 
-        anchor = family_anchors.get(fam)
-        if force and anchor is not None and asset['name'] == get_family_anchor_asset(fam):
+        anchor = family_anchors.get(fam) if use_family_refs else None
+        if use_family_refs and force and anchor is not None and asset['name'] == get_family_anchor_asset(fam):
             family_anchors.pop(fam, None)
             anchor = None
+        if not use_family_refs:
+            prev_stage_image = None
 
         log.asset_start(idx, asset['name'], asset.get('family'))
         result = generate_one(client, asset, resolved_style, style_image,
                               by_family.get(fam, []),
                               image_model, critic_model, max_iters,
                               history_dir=history_dir, log=log,
-                              mode=mode, theme_text=resolved_theme, theme_plan=theme_plan,
-                              family_style_plan=family_style_plan,
-                              stage_plan=stage_plan,
+                              mode=mode, theme_text=resolved_theme,
+                              theme_plan=theme_plan if use_ontology else None,
+                              family_style_plan=family_style_plan if use_ontology else None,
+                              stage_plan=stage_plan if use_ontology else None,
                               family_anchor=anchor,
                               prev_stage_image=prev_stage_image,
-                              reference_run=reference_run)
+                              reference_run=reference_run,
+                              use_ontology=use_ontology,
+                              use_critic=use_critic)
         image = result.pop('image')
         if image:
             (sprites_out / asset['file']).write_bytes(image)
@@ -1007,3 +1150,19 @@ def run(style_text: str, run_name: str,
         if sheet:
             print(f'[contact-sheet] {sheet}')
     return run_dir
+
+
+if __name__ == '__main__':
+    # ponytail: ablation flag self-check (no API)
+    assert resolve_ablation(None)['use_critic'] is True
+    assert resolve_ablation('B0') == {
+        'name': 'B0', 'use_ontology': False, 'use_family_refs': False,
+        'use_critic': False, 'max_iters': 1,
+    }
+    assert resolve_ablation('b3')['use_critic'] is True and resolve_ablation('b3')['max_iters'] == 3
+    naive = _build_naive_theme_swap_prompt(
+        {'name': 'Red', 'transparent': True, 'category': 'element'},
+        'pixel', 'Fruit', None,
+    )
+    assert 'Gameplay role' not in naive and 'Fruit' in naive
+    print('pipeline ablation self-check ok')

@@ -1,9 +1,4 @@
-python scripts/ai_art_gen.py generate \
-  --mode theme-swap \
-  --style "3D Disney Cartoon Style, Simple design, high gloss color" \
-  --theme "水果" \
-  --run fruit_3dCartoon \
-  --no-reference-image
+
 
 python scripts/ai_art_gen.py generate \
   --mode theme-swap \
@@ -18,3 +13,5 @@ python scripts/ai_art_gen.py generate \
   --theme "水果" \
   --run fruit_3dCartoonSimple \
   --no-reference-image \
+  --family pool \
+  --force

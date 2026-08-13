@@ -4,3 +4,6 @@ anthropic>=0.40.0
 openai>=1.50.0
 pillow>=10.0.0
 numpy>=1.23.0
+torch
+torchvision
+transformers

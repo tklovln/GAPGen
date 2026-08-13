@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>三消遊戲美術包評測</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="top">
+      <div class="brand">三消遊戲美術包評測</div>
+      <div class="progress-wrap" id="progressWrap" hidden>
+        <div class="progress-meta">
+          <span id="stepLabel">步驟</span>
+          <span id="stepCount"></span>
+        </div>
+        <div class="bar"><div class="bar-fill" id="barFill"></div></div>
+      </div>
+    </header>
+
+    <main id="app" class="card" aria-live="polite"></main>
+
+    <footer class="foot">
+      <span>約 15–20 分鐘 · 作答資料留在本機，結束時請下載檔案</span>
+    </footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

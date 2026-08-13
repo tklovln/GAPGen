@@ -1,0 +1,1 @@
+cd /Users/tkwang/Match3_sim/paper/human_eval && python3 -m http.server 8766

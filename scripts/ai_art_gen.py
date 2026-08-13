@@ -100,6 +100,12 @@ def main():
     g.add_argument('--critic-model', default=None, help='評審模型(預設 gemini-3.5-flash)')
     g.add_argument('--max-iters', type=int, default=3, help='每張 asset 最多迭代次數(預設 3)')
     g.add_argument('--force', action='store_true', help='重生已 pass 的 asset')
+    g.add_argument('--auto-stage', action='store_true',
+                   help='用 LLM 自動偵測 stage family(同一物件的漸進級數)與其 anchor,走鏈式生成; '
+                        'asset_roles.json 已手填 stage_progression/anchor_asset 的優先')
+    g.add_argument('--ablation', choices=['B0', 'B1', 'B2', 'B3'], default=None,
+                   help='研究消融: B0 naive / B1 ontology / B2 +refs / B3 +critic '
+                        '(覆寫 max-iters 與部分規劃開關)')
     g.add_argument('--dry-run', action='store_true', help='只列出目標與範例 prompt,不呼叫 API')
 
     a = sub.add_parser('apply', help='把生成結果套進 Godot sprites(自動備份原版)')
@@ -177,6 +183,8 @@ def main():
                 expand_theme=expand_theme,
                 refine_style=refine_style,
                 reference_run=args.reference_run,
+                auto_stage=args.auto_stage,
+                ablation=args.ablation,
             )
         except (ValueError, FileNotFoundError) as e:
             raise SystemExit(str(e)) from e

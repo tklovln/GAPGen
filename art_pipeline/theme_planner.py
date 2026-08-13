@@ -157,7 +157,9 @@ def expand_theme_for_targets(
                 ),
             )
 
-        resp = gemini_api._with_retries(_call, f'expand_theme({model})')
+        resp = gemini_api._with_retries(
+            _call, f'expand_theme({model})',
+            validate=lambda r: json.loads(r.text))
         try:
             data = json.loads(resp.text)
         except (json.JSONDecodeError, TypeError) as e:

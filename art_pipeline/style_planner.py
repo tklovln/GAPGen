@@ -85,15 +85,27 @@ Return ONLY JSON (no markdown):
             config=types.GenerateContentConfig(response_mime_type='application/json'),
         )
 
-    resp = gemini_api._with_retries(_call, f'refine_style({model})')
     try:
+        resp = gemini_api._with_retries(
+            _call, f'refine_style({model})',
+            validate=lambda r: json.loads(r.text))
         data = json.loads(resp.text)
-    except (json.JSONDecodeError, TypeError) as e:
-        raise RuntimeError(f'Style planner returned invalid JSON: {resp.text[:300]}') from e
+    except Exception as e:  # noqa: BLE001 — fall back so a bad refine never kills a run
+        print(f'  [style] refine_style JSON failed ({type(e).__name__}); '
+              f'using raw style text as brief')
+        return {
+            'input': raw_style,
+            'summary': raw_style[:120],
+            'style_brief': raw_style,
+            'rendering': '',
+            'line_and_shape': '',
+            'color_and_lighting': '',
+            'material_finish': '',
+            'avoid': 'outlines, text, watermarks',
+            'fallback': True,
+        }
 
-    brief = str(data.get('style_brief', '')).strip()
-    if not brief:
-        raise RuntimeError('Style planner returned empty style_brief')
+    brief = str(data.get('style_brief', '')).strip() or raw_style
 
     return {
         'input': raw_style,

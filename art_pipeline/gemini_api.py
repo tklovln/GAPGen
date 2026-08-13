@@ -30,12 +30,14 @@ PASS_BACKGROUND = 8
 PASS_PROGRESSION = 7
 
 PROGRESSION_RUBRIC = (
-    '\n  "progression_score": 0-10, // stage progression readability: this asset is one HP '
-    'stage of a multi-stage object and an image of the PREVIOUS (less-damaged) stage is '
-    'attached. Score HIGH only if (a) it is clearly the SAME base object/material/palette as '
-    'the previous stage AND (b) it shows clearly MORE damage/depletion than it, in a discrete '
-    'step a player notices instantly at ~70px. Score LOW if it looks nearly identical to the '
-    'previous stage, or if it drifted into a different object/style'
+    '\n  "progression_score": 0-10, // stage progression readability: this asset is one stage '
+    'of a multi-stage object and an image of the PREVIOUS (less-consumed) stage is attached. '
+    'Score HIGH only if (a) it is clearly the SAME base object/material/palette as the previous '
+    'stage AND (b) it is clearly further along that object\'s NATURAL depletion dimension '
+    '(e.g. lower liquid level, more fraying, fewer items, or — only if genuinely appropriate for '
+    'the object — more cracks), in a discrete step a player notices instantly at ~70px. Score LOW '
+    'if it looks nearly identical to the previous stage, if it drifted into a different '
+    'object/style, or if it turned an intact object (pool, rope, drink) into unrelated rubble'
 )
 
 REASONABLENESS_RUBRIC = (
@@ -152,16 +154,25 @@ def get_client():
     )
 
 
-def _with_retries(fn, what: str):
+def _with_retries(fn, what: str, validate=None):
+    """呼叫 fn 並在 transient 錯誤時重試。
+
+    validate: 可選,對 fn 的回傳值再做驗證(例如 json.loads)。驗證拋出的例外
+    也視為 transient 而重試 —— LLM JSON 截斷是機率性的,重試通常就過。
+    """
     last_err = None
     for attempt in range(1, _MAX_API_RETRIES + 1):
         try:
-            return fn()
+            result = fn()
+            if validate is not None:
+                validate(result)
+            return result
         except Exception as e:  # noqa: BLE001 — API 層各種 transient error 統一重試
             last_err = e
             msg = str(e)
             transient = (
-                isinstance(e, TimeoutError)
+                validate is not None  # validate 提供時,任何失敗(含 JSON 截斷)都重試
+                or isinstance(e, TimeoutError)
                 or any(t in msg for t in ('429', '500', '503', 'RESOURCE_EXHAUSTED',
                                           'UNAVAILABLE', 'DeadlineExceeded', 'timeout',
                                           'Timeout', 'timed out'))
@@ -235,9 +246,26 @@ def critique_image(client, model: str, original_png: bytes | None, generated_png
         client, model, original_png, generated_png, style_text, asset, style_image, **kwargs)
 
 
-def _normalize_verdict(verdict: dict, *, style_image: bool | None,
+def _coerce_verdict_obj(verdict) -> dict:
+    """Critics sometimes return a JSON list; pick the first object dict."""
+    if isinstance(verdict, dict):
+        return verdict
+    if isinstance(verdict, list):
+        for item in verdict:
+            if isinstance(item, dict):
+                return item
+    return {
+        'style_score': 0, 'function_score': 0, 'reasonableness_score': 0,
+        'background_ok': False, 'cutout_ok': False,
+        'issues': ['critic returned non-object JSON'],
+        'fix_instructions': '', 'verdict': 'retry',
+    }
+
+
+def _normalize_verdict(verdict, *, style_image: bool | None,
                        has_family_anchor: bool, has_prev_stage: bool = False,
                        background: bool = False) -> dict:
+    verdict = _coerce_verdict_obj(verdict)
     verdict.setdefault('style_score', 0)
     verdict.setdefault('function_score', 0)
     verdict.setdefault('reasonableness_score', 0)
@@ -310,8 +338,10 @@ def _critique_restyle(client, model: str, original_png: bytes, generated_png: by
                        'match its rendering style and material, not necessarily its silhouette.')
     prev_line = ''
     if has_prev:
-        prev_line = ('\nThere is also a PREVIOUS-STAGE image (one HP level higher / less damaged): '
-                     'the new version must be the SAME object shown with clearly MORE damage.')
+        prev_line = ('\nThere is also a PREVIOUS-STAGE image (one step less consumed): the new '
+                     'version must be the SAME object, one discrete step further along its '
+                     'natural depletion dimension (e.g. lower liquid level, more fraying, fewer '
+                     'items, or cracks only if truly appropriate) — NOT turned into rubble.')
 
     verdict_rule = f'// pass only if {critic_pass_rules(style_image=bool(style_image), cohesion_rules=cohesion_rules, transparent=transparent, has_prev_stage=has_prev, background=is_background)}'
     cutout_rubric = CUTOUT_RUBRIC if transparent else ''
@@ -425,8 +455,10 @@ def _critique_theme_swap(client, model: str, generated_png: bytes,
                        'its rendering style and material, not necessarily its silhouette.')
     prev_line = ''
     if has_prev:
-        prev_line = ('\nThere is also a PREVIOUS-STAGE image (one HP level higher / less damaged): '
-                     'the new version must be the SAME object shown with clearly MORE damage.')
+        prev_line = ('\nThere is also a PREVIOUS-STAGE image (one step less consumed): the new '
+                     'version must be the SAME object, one discrete step further along its '
+                     'natural depletion dimension (e.g. lower liquid level, more fraying, fewer '
+                     'items, or cracks only if truly appropriate) — NOT turned into rubble.')
 
     verdict_rule = f'// pass only if {critic_pass_rules(style_image=bool(style_image), cohesion_rules=cohesion_rules, transparent=transparent, has_prev_stage=has_prev, background=is_background)}'
     cutout_rubric = CUTOUT_RUBRIC if transparent else ''
@@ -502,9 +534,31 @@ if __name__ == '__main__':
     assert 'progression_score>=' in critic_pass_rules(
         style_image=False, cohesion_rules='', has_prev_stage=True)
     assert 'progression_score>=' not in critic_pass_rules(style_image=False, cohesion_rules='')
+    assert _normalize_verdict([{'style_score': 7, 'verdict': 'pass'}],
+                              style_image=False, has_family_anchor=False)['style_score'] == 7
+    assert _normalize_verdict(['bad'], style_image=False, has_family_anchor=False)['verdict'] == 'retry'
     # background branch: gate on background_quality, drop function/reasonableness/cutout
     _bg = critic_pass_rules(style_image=False, cohesion_rules='', transparent=True, background=True)
     assert 'background_quality_score>=' in _bg
     assert 'function_score>=' not in _bg and 'reasonableness_score>=' not in _bg
     assert 'cutout_ok' not in _bg
+    # _with_retries: validate 失敗會重試,最終成功則回傳;全失敗則 raise
+    import types as _t
+    _orig_sleep = time.sleep
+    time.sleep = lambda *_: None
+    try:
+        _calls = {'n': 0}
+        def _flaky():
+            _calls['n'] += 1
+            return _t.SimpleNamespace(text='{}' if _calls['n'] >= 2 else '{bad')
+        ok = _with_retries(_flaky, 'selfcheck-ok', validate=lambda r: json.loads(r.text))
+        assert ok.text == '{}' and _calls['n'] == 2, 'validate should retry then succeed'
+        _bad = _t.SimpleNamespace(text='{bad')
+        try:
+            _with_retries(lambda: _bad, 'selfcheck-bad', validate=lambda r: json.loads(r.text))
+            raise AssertionError('should have raised after exhausting retries')
+        except json.JSONDecodeError:
+            pass
+    finally:
+        time.sleep = _orig_sleep
     print('gemini_api timeout ok')

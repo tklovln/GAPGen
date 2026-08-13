@@ -1,0 +1,5 @@
+condition,n_seeds,pass_rate_mean,pass_rate_std,needs_review_rate_mean,needs_review_rate_std,failed_rate_mean,failed_rate_std,mean_iters_mean,mean_iters_std,mean_style_mean,mean_style_std,mean_function_mean,mean_function_std,mean_cohesion_mean,mean_cohesion_std,mean_progression_mean,mean_progression_std,cutout_fail_rate_mean,cutout_fail_rate_std
+B0,3,1.0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,,,,,,,,,,
+B1,3,0.972,0.039,0.0,0.0,0.028,0.039,1.0,0.0,,,,,,,,,0.0,0.0
+B2,3,0.972,0.039,0.0,0.0,0.028,0.039,1.0,0.0,,,,,,,,,0.0,0.0
+B3,3,0.889,0.104,0.111,0.104,0.0,0.0,1.947,0.336,9.28,0.198,9.333,0.135,9.037,0.93,9.777,0.316,0.028,0.039

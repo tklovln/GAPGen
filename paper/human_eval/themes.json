@@ -1,0 +1,50 @@
+{
+  "version": 2,
+  "baseline_slug": "fruit",
+  "themes": [
+    {
+      "slug": "fruit",
+      "theme": "Fruit",
+      "label_zh": "水果",
+      "style_label": "3dCartoonSimple",
+      "conditions": [
+        "B1",
+        "B2",
+        "B3"
+      ],
+      "run_id": "research_B3_fruit",
+      "condition": "B3"
+    },
+    {
+      "slug": "pet",
+      "theme": "Pet",
+      "label_zh": "寵物",
+      "style_label": "3dCartoonSimple",
+      "conditions": [
+        "B1",
+        "B2",
+        "B3"
+      ],
+      "run_id": "research_B3_pet",
+      "condition": "B3"
+    },
+    {
+      "slug": "ocean",
+      "theme": "Ocean",
+      "label_zh": "海洋",
+      "style_label": "3dCartoonSimple",
+      "conditions": [
+        "B1",
+        "B2",
+        "B3"
+      ],
+      "run_id": "research_B3_ocean",
+      "condition": "B3"
+    }
+  ],
+  "ablation_compare_themes": [
+    "fruit",
+    "pet",
+    "ocean"
+  ]
+}
