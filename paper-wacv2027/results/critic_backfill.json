@@ -1,0 +1,23 @@
+{
+  "B0": {
+    "cohesion_mean": 3.74,
+    "cohesion_std": 1.32,
+    "progression_mean": 0.22,
+    "progression_std": 0.16,
+    "n_seeds": 3
+  },
+  "B1": {
+    "cohesion_mean": 3.58,
+    "cohesion_std": 1.48,
+    "progression_mean": 4.22,
+    "progression_std": 1.23,
+    "n_seeds": 3
+  },
+  "B2": {
+    "cohesion_mean": 4.35,
+    "cohesion_std": 1.52,
+    "progression_mean": 5.56,
+    "progression_std": 2.31,
+    "n_seeds": 3
+  }
+}

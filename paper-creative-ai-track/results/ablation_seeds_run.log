@@ -1,0 +1,1077 @@
+
+=== B0 seed 1 → research_B0_fruit ===
+2026-08-11 02:10:54.403 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-11 02:10:54.403 WARNING streamlit.runtime.state.session_state_proxy: Session state does not function when running a script without `streamlit run`
+2026-08-11 02:10:54.406 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B0_fruit                       │
+│ style    3D Disney Cartoon Style, Simple design… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /Users/tkwang/Match3_sim/generated_art… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       12                                  │
+│ 🟡 review     0                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /Users/tkwang/Match3_sim/generated_art… │
+│ history  /Users/tkwang/Match3_sim/generated_art… │
+│ report   /Users/tkwang/Match3_sim/generated_art… │
+│ contact  /Users/tkwang/Match3_sim/generated_art… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /Users/tkwang/Match3_sim/generated_art/research_B0_fruit/generated_sprites.png
+
+=== B0 seed 2 → research_B0_fruit_s2 ===
+2026-08-11 02:12:40.668 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-11 02:12:40.668 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B0_fruit_s2                    │
+│ style    3D Disney Cartoon Style, Simple design… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /Users/tkwang/Match3_sim/generated_art… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       12                                  │
+│ 🟡 review     0                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /Users/tkwang/Match3_sim/generated_art… │
+│ history  /Users/tkwang/Match3_sim/generated_art… │
+│ report   /Users/tkwang/Match3_sim/generated_art… │
+│ contact  /Users/tkwang/Match3_sim/generated_art… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /Users/tkwang/Match3_sim/generated_art/research_B0_fruit_s2/generated_sprites.png
+
+=== B0 seed 3 → research_B0_fruit_s3 ===
+2026-08-11 02:14:26.968 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-11 02:14:26.969 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B0_fruit_s3                    │
+│ style    3D Disney Cartoon Style, Simple design… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /Users/tkwang/Match3_sim/generated_art… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       12                                  │
+│ 🟡 review     0                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /Users/tkwang/Match3_sim/generated_art… │
+│ history  /Users/tkwang/Match3_sim/generated_art… │
+│ report   /Users/tkwang/Match3_sim/generated_art… │
+│ contact  /Users/tkwang/Match3_sim/generated_art… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /Users/tkwang/Match3_sim/generated_art/research_B0_fruit_s3/generated_sprites.png
+
+=== B1 seed 1 → research_B1_fruit ===
+2026-08-11 02:16:21.545 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-11 02:16:21.546 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 使用已快取的精煉結果: Vibrant, high-fidelity 3D Disney-style cartoon rendering for clean, highly recognizable fruit-themed match-3 assets with soft gradients and zero outlines.
+[theme] 使用已快取的展開結果: Blu=A plump, stylized blueberry with a soft, semi-glossy deep blue skin and a tiny, cute star-shaped crown at its top. Shaded with a smooth gradient from navy to bright sky blue under a warm diagonal key light, with no outline strokes., Crt1=A heavily ruined, almost entirely collapsed wooden fruit crate. The thick oak planks are shattered into a few chunky, splintered pieces splayed outwards, with loose straw scattering from the bottom, rendered with soft ambient occlusion., Crt2=A visibly damaged wooden fruit crate with several front planks broken and splintered open. The thick binding rope is loose and slipping down the side, revealing a glimpse of squashed, colorful fruit pulp inside., Crt3=A slightly damaged wooden fruit crate made of thick, warm-toned oak planks. A single front plank is cracked down the middle with a clean, chunky split, and a few strands of golden straw are starting to peek through., Crt4=An intact, sturdy fruit crate crafted from chunky, warm-toned oak planks, bound tightly with thick, stylized rope. The wood has a soft, matte finish with rounded, exaggerated edges and deep volumetric shading., Grn=A chubby, perfectly round green lime with a small, stylized brown stem and a single glossy green leaf. Its surface features a highly saturated lime gradient that transitions to a warm golden-green on its highlighted side., LtBl=A perfectly spherical, glossy Rainbow Melon. Its smooth, candy-like skin is divided into bold, colorful vertical stripes of red, blue, green, and yellow, topped with a stubby golden stem that catches a bright, warm key light., Pur=A bulbous, cartoonish purple plum with a deep, smooth crease running down its side. The surface has a rich, velvety violet texture with a soft volumetric sheen and highly saturated magenta highlights, completely free of outlines., Red=A heart-shaped, chunky red strawberry with oversized, soft yellow seeds nestled in smooth, rounded dimples. It is crowned with a flat, cartoonish cap of bright green leaves, fully realized in soft, outline-free 3D shading., Soda0d=A horizontal rocket powerup carved from a chubby yellow banana. The peel is partially sliced and flared out to the left and right like aerodynamic horizontal wings, with bold horizontal orange stripes painted across its glossy center., Soda90=A vertical rocket powerup carved from a tall, tapered pineapple. Its spiky green leafy crown acts as stabilizing fins at the base, and the body tapers upwards to a point, decorated with bold, vertical blue stripes to indicate direction., Yel=A plump, oval-shaped yellow lemon with cute, slightly pinched ends. Its surface is rendered with a warm, soft yellow-to-orange gradient and a gentle, semi-glossy texture that catches a warm top-down diagonal highlight.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B1_fruit                       │
+│ style    Render all assets as soft, semi-glossy… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /Users/tkwang/Match3_sim/generated_art… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  — 已 pass,跳過
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  — 已 pass,跳過
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  — 已 pass,跳過
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  — 已 pass,跳過
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  — 已 pass,跳過
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  — 已 pass,跳過
+
+[██████████░░░░░░░░░░] [7/12] Crt3  — 已 pass,跳過
+
+[████████████░░░░░░░░] [8/12] Crt2  — 已 pass,跳過
+
+[█████████████░░░░░░░] [9/12] Crt1  — 已 pass,跳過
+
+[███████████████░░░░░] [10/12] Soda0d  — 已 pass,跳過
+
+[█████████████████░░░] [11/12] LtBl  — 已 pass,跳過
+
+[██████████████████░░] [12/12] Soda90  — 已 pass,跳過
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       0                                   │
+│ 🟡 review     0                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       12                                  │
+│ total        12                                  │
+│                                                  │
+│ sprites  /Users/tkwang/Match3_sim/generated_art… │
+│ history  /Users/tkwang/Match3_sim/generated_art… │
+│ report   /Users/tkwang/Match3_sim/generated_art… │
+│ contact  /Users/tkwang/Match3_sim/generated_art… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /Users/tkwang/Match3_sim/generated_art/research_B1_fruit/generated_sprites.png
+
+=== B1 seed 2 → research_B1_fruit_s2 ===
+2026-08-11 02:16:21.626 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-11 02:16:21.626 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 精煉畫風: '3D Disney Cartoon Style, Simple design, Clean illustrations, Intuitive icon, highly recognizable'
+  [api] refine_style(gemini-3.5-flash) 失敗(第 1 次,JSONDecodeError),5s 後重試…
+  [api] refine_style(gemini-3.5-flash) 失敗(第 2 次,JSONDecodeError),10s 後重試…
+  [style] refine_style JSON failed (JSONDecodeError); using raw style text as brief
+[style] → 3D Disney Cartoon Style, Simple design, Clean illustrations, Intuitive icon, highly recognizable
+[theme] 展開主題概念: 'Fruit'
+[theme] → Blu=A plump, spherical blueberry rendered in a glossy 3D Disney cartoon style, featuring a deep royal blue skin with a stylized, soft-edged star crown on top and a satin-like sheen for high readability., Crt1=A heavily splintered, near-destroyed wooden crate where only the base and a few jagged, broken plank stumps remain standing, collapsing outwards to indicate it is one hit away from breaking., Crt2=The wooden fruit crate showing major structural damage, where two front planks are completely severed in half, revealing a soft yellow-straw packing material peeking out from the dark interior., Crt3=The wooden fruit crate showing minor damage, where one of the front planks has a single clean, dark diagonal crack and one corner rivet is slightly popped out of the wood., Crt4=An intact, chunky wooden fruit crate crafted from light-toned pine boards with soft, rounded edges, held together by oversized dark metal rivets in a clean, friendly 3D cartoon style., Grn=A chubby green apple designed with clean, rounded 3D curves, featuring a bright lime-green skin, a short stubby brown stem, and a single stylized, perky green leaf pointing upwards., LtBl=A prismatic, glossy Starfruit shaped like a chunky five-point star with soft beveled edges, where each segment of the star is colored a different vibrant hue of the rainbow with a polished, glassy glaze., Pur=A small, compact cluster of three glossy purple grapes consolidated into a single bold silhouette, each grape being a soft perfect sphere topped by a tiny green stem segment., Red=A stylized, heart-shaped strawberry with a glossy candy-red finish, featuring a chunky green leaf cap on top and oversized yellow seeds slightly recessed into its smooth surface., Soda0d=A horizontal rocket shaped like an oblong watermelon, featuring bright red-and-white horizontal stripes wrapped around its front tip, flanked by flat, horizontal green rind fins pointing left and right., Soda90=A vertical rocket designed as an elongated pineapple, featuring bright yellow and orange vertical striping on the body, topped by a crown of stiff green leaves pointing straight up like vertical stabilizer fins., Yel=A bright lemon with a soft, plump oval silhouette and slightly pointed ends, rendered in a warm sunny yellow with a clean matte-porcelain finish and a tiny brown node at one end.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B1_fruit_s2                    │
+│ style    3D Disney Cartoon Style, Simple design… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /Users/tkwang/Match3_sim/generated_art… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  │  ✗ postprocess  Object too small (bbox coverage 26% < 30%). Mak…
+  └─ ❌ FAILED
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       11                                  │
+│ 🟡 review     0                                   │
+│ ❌ failed     1                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /Users/tkwang/Match3_sim/generated_art… │
+│ history  /Users/tkwang/Match3_sim/generated_art… │
+│ report   /Users/tkwang/Match3_sim/generated_art… │
+│ contact  /Users/tkwang/Match3_sim/generated_art… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /Users/tkwang/Match3_sim/generated_art/research_B1_fruit_s2/generated_sprites.png
+
+=== B1 seed 3 → research_B1_fruit_s3 ===
+2026-08-11 02:18:59.643 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-11 02:18:59.644 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 精煉畫風: '3D Disney Cartoon Style, Simple design, Clean illustrations, Intuitive icon, highly recognizable'
+[style] → Create vibrant, highly recognizable 3D Disney-style cartoon fruit assets using smooth, volumetric shading and warm, saturated colors without any black outlines.
+[theme] 展開主題概念: 'Fruit'
+[theme] → Blu=A plump, spherical blueberry with a simplified, chunky five-pointed crown at its top. Rendered in a deep, highly saturated royal blue with a soft, semi-glossy finish. High-contrast top-left lighting defines its rounded 3D form, keeping the silhouette clean without any outlines., Crt1=A heavily damaged wooden fruit crate on the verge of collapsing. Three-quarters of the planks are shattered and missing, leaving a broken, jagged base with a few loose, rounded wooden splinters and bits of exposed straw. The soft-bevelled wooden fragments maintain a semi-glossy, warm-toned finish., Crt2=A visibly fractured wooden fruit crate. Two of the main front planks are split completely in half with wide, rounded gaps, exposing the bright yellow straw filling inside. The corners are dented and rounded, rendered in a warm, saturated orange-brown with smooth, diffuse shadow casting., Crt3=A slightly damaged wooden fruit crate. A single clean, diagonal crack runs through one of the side planks, and a tiny chip is missing from the top corner, but the overall box shape remains sturdy. Surfaces are semi-glossy with warm, rich wood tones., Crt4=An intact, pristine wooden fruit crate built from thick, chunky planks with highly rounded edges. Rendered in a warm, saturated golden-brown color with a smooth, semi-glossy vinyl texture. A tiny bit of bright yellow straw peeks out from the top seams under soft, diffuse top-left lighting., Grn=A chubby, rounded green apple with simplified, stylized proportions. Its surface is a highly saturated lime green with a polished, semi-glossy sheen. A single, thick, curved brown stem and one small, smooth green leaf sprout from the top, defined purely by soft color contrast., LtBl=A spherical, stylized multi-colored dragonfruit serving as the ultimate color bomb. The body is covered in chunky, overlapping scales that form a spiraling rainbow pattern of highly saturated red, yellow, green, blue, and purple. The entire object has a polished, glossy vinyl finish to make it instantly recognizable., Pur=A plump, teardrop-shaped purple plum with a soft, stylized vertical crease down one side. Rendered in a rich, saturated violet hue with a smooth, semi-glossy skin that catches a soft, diffuse highlight on its top-left curve., Red=A cute, heart-shaped strawberry with highly rounded, chunky contours. The body is a vibrant, saturated red dotted with simplified, slightly recessed yellow seeds. A tiny, flat cap of green leaves sits perfectly on top, rendered with zero outlines and soft, 3D shading., Soda0d=A horizontal rocket crafted from an elongated pineapple. The pineapple body is oriented horizontally, tapering to a point on the left with its chunky green leaves, while the right side is blunt. Bold, horizontal orange stripes are painted across its yellow rind to clearly indicate its row-clearing direction., Soda90=A vertical rocket crafted from a bundle of three fused bananas pointing upwards. The tips of the bananas form a sharp vertical point at the top, while their bases form a flat, heavy launch pad at the bottom. Bold, vertical red stripes run up the bright yellow peels to visually emphasize its column-clearing direction., Yel=A chubby, egg-shaped lemon with soft, rounded nubs on both ends. It is rendered in a bright, highly saturated sunny yellow with a slightly dimpled, semi-glossy surface texture that reflects a soft directional light, creating a strong 3D volume.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B1_fruit_s3                    │
+│ style    Render all fruit-themed assets as soft… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /Users/tkwang/Match3_sim/generated_art… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       12                                  │
+│ 🟡 review     0                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /Users/tkwang/Match3_sim/generated_art… │
+│ history  /Users/tkwang/Match3_sim/generated_art… │
+│ report   /Users/tkwang/Match3_sim/generated_art… │
+│ contact  /Users/tkwang/Match3_sim/generated_art… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /Users/tkwang/Match3_sim/generated_art/research_B1_fruit_s3/generated_sprites.png
+
+=== B2 seed 1 → research_B2_fruit ===
+2026-08-11 02:21:11.404 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-11 02:21:11.404 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 使用已快取的精煉結果: Render all fruit-themed match-3 assets in a soft, 3D Disney-inspired CGI style with clean, chunky shapes and vibrant, warm lighting.
+[theme] 使用已快取的展開結果: Blu=A single, ultra-plump, spherical blueberry featuring a simplified, star-shaped crown at the top. Rendered in deep, vibrant royal blue with soft, smooth gradients that transition to a cool navy in the shadows, highlighting its chunky 3D volume., Crt1=A heavily ruined wooden fruit crate, almost entirely collapsed. Only a few cracked and splintered light-brown planks remain standing at odd angles, barely holding together a loose mound of stylized, soft yellow packing straw., Crt2=The wooden fruit crate, now visibly damaged. One of the front side planks is completely split in two with the broken halves pointing askew, revealing a clear glimpse of soft yellow packing straw inside., Crt3=The sturdy wooden fruit crate, showing slight damage. A single clean, stylized crack runs diagonally down the front-facing plank, while the overall chunky square structure remains perfectly intact., Crt4=A clean, undamaged square fruit crate made of thick, chunky light-brown wooden planks. Features rounded corners, a smooth semi-glossy finish, and soft ambient shadows defining the depth between the closely-fit planks., Grn=A perfectly round, plump key lime with a tiny brown stem and one small, stylized green leaf. Colored in brilliant, high-saturation lime green with smooth gradients defining its spherical, chunky volume., LtBl=A perfectly spherical, magnificent dragonfruit covered in plump, layered scales. The scales form a vibrant, spiraling gradient of red, blue, green, and yellow, finished with a high-gloss vinyl sheen that defines its premium color-matching role., Pur=A juicy, egg-shaped purple plum with a soft vertical crease down one side. The finish is a semi-glossy vinyl, colored in deep, rich violet with soft magenta highlights on the top-left and cool indigo shadows on the bottom-right., Red=A chunky, heart-shaped strawberry with a smooth, plump silhouette. It features a tiny, stylized green leaf cap on top and tear-shaped yellow seeds painted flush onto its vibrant red surface using soft gradients., Soda0d=A horizontally-oriented rocket shaped like a stylized pineapple. The central body is a plump, golden-yellow pineapple cylinder, capped on both the left and right ends with symmetrical, sharp green leafy crowns pointing outwards to indicate horizontal direction., Soda90=A vertically-oriented rocket composed of two plump yellow banana halves bound back-to-back by a thick, chunky red vinyl band. The pointed tips of the bananas face directly up and down, forming a clear vertical diamond silhouette., Yel=A stubby, teardrop-shaped whole lemon with gently rounded ends. Colored in high-saturation sunshine yellow with soft, warm highlights on the upper left and smooth, cool-toned amber shadows underneath to convey solid volume.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B2_fruit                       │
+│ style    Render all fruit, crates, and powerup … │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /Users/tkwang/Match3_sim/generated_art… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  — 已 pass,跳過
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  — 已 pass,跳過
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  — 已 pass,跳過
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  — 已 pass,跳過
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  — 已 pass,跳過
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  — 已 pass,跳過
+
+[██████████░░░░░░░░░░] [7/12] Crt3  — 已 pass,跳過
+
+[████████████░░░░░░░░] [8/12] Crt2  — 已 pass,跳過
+
+[█████████████░░░░░░░] [9/12] Crt1  — 已 pass,跳過
+
+[███████████████░░░░░] [10/12] Soda0d  — 已 pass,跳過
+
+[█████████████████░░░] [11/12] LtBl  — 已 pass,跳過
+
+[██████████████████░░] [12/12] Soda90  — 已 pass,跳過
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       0                                   │
+│ 🟡 review     0                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       12                                  │
+│ total        12                                  │
+│                                                  │
+│ sprites  /Users/tkwang/Match3_sim/generated_art… │
+│ history  /Users/tkwang/Match3_sim/generated_art… │
+│ report   /Users/tkwang/Match3_sim/generated_art… │
+│ contact  /Users/tkwang/Match3_sim/generated_art… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /Users/tkwang/Match3_sim/generated_art/research_B2_fruit/generated_sprites.png
+
+=== B2 seed 2 → research_B2_fruit_s2 ===
+2026-08-11 02:21:11.481 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-11 02:21:11.481 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 精煉畫風: '3D Disney Cartoon Style, Simple design, Clean illustrations, Intuitive icon, highly recognizable'
+  [api] refine_style(gemini-3.5-flash) 失敗(第 1 次,JSONDecodeError),5s 後重試…
+  [api] refine_style(gemini-3.5-flash) 失敗(第 2 次,JSONDecodeError),10s 後重試…
+[style] → Vibrant, clean 3D-styled Disney cartoon aesthetic with soft, volumetric shading and chunky, simplified fruit-themed forms.
+[theme] 展開主題概念: 'Fruit'
+[theme] → Blu=A plump, chunky cluster of three blueberries. Features smooth, semi-glossy dark blue skin with soft, light-blue powdery bloom gradients. Each berry has a tiny, soft-rimmed star-shaped calyx on top, illuminated by a warm key light from the top-left with zero harsh outlines., Crt1=A heavily fractured wooden fruit crate on the verge of collapse. The plump, warm-brown planks are skewed at odd angles with wide, dark gaps revealing soft-yellow straw inside, held together loosely by a single frayed, simplified rope., Crt2=A visibly damaged wooden fruit crate with one side plank broken in half, revealing a dark interior cavity filled with packing straw. Deep, wide cracks run across the remaining planks, defined by soft ambient occlusion., Crt3=A slightly damaged wooden fruit crate made of thick, rounded warm-brown planks. A single clean, dark hairline crack splits the front plank diagonally, while the overall square silhouette remains solid and chunky., Crt4=An intact, sturdy fruit crate made of thick, rounded warm-brown wooden planks. Fully whole with soft ambient occlusion in the gaps, showing bright top-left highlights on the wood grain and stylized yellow straw peeking from the top., Grn=A fat, chunky green pear with an ultra-simplified rounded teardrop silhouette. It features a warm, semi-glossy lime-green skin gradient, a single soft-edged dark green leaf on a tiny brown stem, and a gentle top-left highlight., LtBl=A perfect spherical starfruit, sliced to show a bold five-point star silhouette. Its rind features a vibrant, multi-colored spectrum gradient shifting from hot pink to bright cyan, with a highly polished surface reflecting a crisp key light., Pur=A simplified, chubby bunch of three grape-like spheres clustered together. Features rich, deep purple skin with highly saturated violet highlights, defined entirely by soft ambient occlusion between the overlapping spheres., Red=A highly simplified, heart-shaped chubby strawberry. Warm, saturated red surface adorned with soft, indented golden-yellow seeds, topped with a tiny, thick green leaf crown, sculpted purely via clean, semi-glossy value gradients., Soda0d=A chunky, horizontally-oriented watermelon rocket with a thick cylindrical body and rounded, blunt ends pointing left and right. The body is decorated with bold horizontal orange and yellow warning stripes, expressing horizontal directionality purely through its form., Soda90=A chunky, vertically-oriented pineapple rocket with a thick cylindrical body and rounded, blunt ends pointing up and down. Decorated with bold vertical magenta and yellow warning stripes, with simplified leafy crowns on both ends pointing vertically., Yel=A plump, stubby lemon with extremely rounded, chubby ends. Bright, warm yellow skin with a subtle, soft-textured orange gradient near the base and a clear directional highlight on the top-left to define its clean, three-dimensional volume.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B2_fruit_s2                    │
+│ style    Render every asset as a soft, semi-glo… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /Users/tkwang/Match3_sim/generated_art… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  │  ✗ postprocess  Object too small (bbox coverage 26% < 30%). Mak…
+  └─ ❌ FAILED
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       11                                  │
+│ 🟡 review     0                                   │
+│ ❌ failed     1                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /Users/tkwang/Match3_sim/generated_art… │
+│ history  /Users/tkwang/Match3_sim/generated_art… │
+│ report   /Users/tkwang/Match3_sim/generated_art… │
+│ contact  /Users/tkwang/Match3_sim/generated_art… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /Users/tkwang/Match3_sim/generated_art/research_B2_fruit_s2/generated_sprites.png
+
+=== B2 seed 3 → research_B2_fruit_s3 ===
+2026-08-11 02:24:12.576 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-11 02:24:12.578 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 精煉畫風: '3D Disney Cartoon Style, Simple design, Clean illustrations, Intuitive icon, highly recognizable'
+[style] → Render vibrant, chunky 3D Disney-style fruit assets with ultra-smooth forms, warm volumetric lighting, and zero outlines to ensure maximum readability at small scale.
+[theme] 展開主題概念: 'Fruit'
+[theme] → Blu=A plump, perfectly round blueberry with a tiny, soft-star crown at the top. Modeled in a smooth, semi-glossy deep blue material with a gentle dusty-blue gradient on top, lit softly from the top-left to define its cute, squeezable shape., Crt1=The stylized wooden harvest crate in a near-ruined state. Planks are heavily splintered, hanging loosely, and heavily cracked, exposing the hollow interior with only a few structural pieces remaining intact., Crt2=The stylized wooden harvest crate, now visibly damaged. The front plank is split in half with a noticeable gap, and one side plank is warped outward, showing loose, rounded silver nails., Crt3=The same stylized wooden harvest crate, now showing early signs of wear with a single clean, diagonal crack running through the front-facing plank and a small chipped corner., Crt4=A sturdy, fully intact wooden harvest crate made of thick, rounded pine planks. It is styled with soft 3D volumes, a warm tan-brown color palette, and subtle shadows between the clean, undamaged joints., Grn=A chubby, rounded key lime with a tiny brown stem offset at the top. The surface has a clean, semi-glossy lime-green finish, relying on soft, smooth gradients and ambient occlusion to define its organic, spherical form., LtBl=A grand, multi-colored starfruit with smooth, rounded ridges that spiral gently. Each ridge is colored in a clean gradient of the rainbow (red, yellow, green, blue, purple) with a glossy, candy-like finish that defines its star-shaped profile., Pur=A soft, heart-shaped purple plum with a gentle crease down the center. Its material is a semi-glossy rich violet with a soft magenta gradient highlight on the top-left, giving it a juicy, stylized depth., Red=An iconic, stout red apple with a friendly, plump silhouette and a short, stylized brown stem. Rendered with a glossy warm red finish that blends into a soft yellow-orange gradient at the base, with smooth shadows defining its volume., Soda0d=A horizontal rocket powerup shaped like a stylized pineapple lying on its side. It features a bright yellow-segmented central body with two identical, leafy green crowns pointing horizontally to the left and right, clearly indicating its horizontal clearing direction., Soda90=A vertical rocket powerup shaped like a stylized pineapple standing upright. It features a bright yellow-segmented central body with two identical, leafy green crowns pointing vertically to the top and bottom, clearly indicating its vertical clearing direction., Yel=A stubby, tear-shaped lemon with soft, rounded tips on both ends. It features a bright, warm yellow semi-glossy surface with smooth ambient occlusion emphasizing its clean, stylized silhouette.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B2_fruit_s3                    │
+│ style    Render all assets as high-quality, sty… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /Users/tkwang/Match3_sim/generated_art… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       12                                  │
+│ 🟡 review     0                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /Users/tkwang/Match3_sim/generated_art… │
+│ history  /Users/tkwang/Match3_sim/generated_art… │
+│ report   /Users/tkwang/Match3_sim/generated_art… │
+│ contact  /Users/tkwang/Match3_sim/generated_art… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /Users/tkwang/Match3_sim/generated_art/research_B2_fruit_s3/generated_sprites.png
+
+=== B3 seed 1 → research_B3_fruit ===
+2026-08-11 02:26:38.046 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-11 02:26:38.049 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 使用已快取的精煉結果: Create vibrant, chunkily proportioned 3D Disney-inspired fruit assets featuring soft toy-like surfaces, high-contrast values, and edge-defined shapes without any outlines.
+[theme] 使用已快取的展開結果: Blu=An ultra-plump, single round blueberry with a highly simplified crown at the top. It is rendered in a saturated royal blue with a semi-glossy plastic-toy finish. Soft top-left key lighting casts a gentle gradient across its spherical surface, defining its 3D volume without any black outlines., Crt1=A heavily destroyed wooden fruit crate with only 1/4 HP remaining. The chunky, orange-brown planks are mostly shattered, leaving a crumbling base with large, rounded gaps and deep internal shadows. Built with thick, rounded edges and a smooth plastic-like texture, showing it is on the verge of collapse., Crt2=A visibly damaged wooden fruit crate with 2/4 HP remaining. One of the thick, front horizontal planks is completely broken in half, sagging downward to reveal a dark, empty interior. The corners are rounded, and the surface features a smooth semi-glossy finish with soft ambient occlusion in the cracks., Crt3=A slightly damaged wooden fruit crate with 3/4 HP remaining. The structure is mostly intact, but a single clean, rounded hairline crack runs diagonally across the front plank. The toy-like wooden planks have a warm, saturated brown tone, highlighted by smooth gradient shading from the top-left., Crt4=An intact, undamaged wooden fruit crate with 4/4 HP. It is a solid, chunky square box constructed from thick, rounded planks of a warm orange-brown color. The edges are soft and bevelled, featuring a uniform semi-glossy finish that looks like a high-end plastic toy, with no visible damage., Grn=A perfectly plump, spherical lime with a tiny, single rounded green leaf attached to its top. It is colored in a bright, highly saturated lime green. The surface has a smooth, semi-glossy sheen, with form defined solely by a warm gradient transition and soft ambient occlusion where the leaf meets the fruit., LtBl=A spherical 'Rainbow Melon' powerup, divided into smooth, perfectly flush vertical segments of red, yellow, green, blue, and purple. The entire object has a uniform, highly polished semi-glossy plastic finish, using its multi-colored segmented surface to clearly communicate its color-matching power., Pur=A cute, oversized purple plum with a soft, simplified vertical indentation down its center. It is rendered in a deep, saturated grape-purple with a smooth plastic-toy texture. Top-left key lighting creates a soft, bright highlight, accentuating its round, cuddly 3D shape., Red=A heart-shaped strawberry with highly simplified, rounded contours and a tiny star-shaped green cap. The surface is a vibrant, warm cherry-red, decorated with tiny yellow seeds that are flush with the smooth, semi-glossy surface, ensuring a clean, readable silhouette at 70px., Soda0d=A horizontal rocket powerup shaped like a sleek, capsule-like Pineapple. Its main body is a warm, glossy orange with simple criss-cross grooves, and it features chunky, green leafy fins pointing flatly to the left and right, clearly indicating its horizontal blast direction purely through its toy-like form., Soda90=A vertical rocket powerup shaped like a sleek, capsule-like Banana. The main body is a bright, glossy yellow, featuring chunky, green leafy fins pointing straight up and down on either end, indicating its vertical blast direction purely through its bold, simplified silhouette., Yel=An adorable, plump lemon with highly simplified, blunt nubs on both ends to keep its silhouette extremely clean and readable. Colored in a warm, sunny yellow with a semi-glossy plastic finish, its 3D form is defined by soft, smooth gradient transitions.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B3_fruit                       │
+│ style    Render all assets as high-fidelity, se… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤3 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /Users/tkwang/Match3_sim/generated_art… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  — 已 pass,跳過
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  — 已 pass,跳過
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  — 已 pass,跳過
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  — 已 pass,跳過
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/3  generating…
+  │  iter 1  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 44  (16.8s)
+  └─ ✅ PASS  style 10  fn 10  iter 1
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  — 已 pass,跳過
+
+[██████████░░░░░░░░░░] [7/12] Crt3  — 已 pass,跳過
+
+[████████████░░░░░░░░] [8/12] Crt2  — 已 pass,跳過
+
+[█████████████░░░░░░░] [9/12] Crt1  — 已 pass,跳過
+
+[███████████████░░░░░] [10/12] Soda0d  — 已 pass,跳過
+
+[█████████████████░░░] [11/12] LtBl  — 已 pass,跳過
+
+[██████████████████░░] [12/12] Soda90  — 已 pass,跳過
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       1                                   │
+│ 🟡 review     0                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       11                                  │
+│ total        12                                  │
+│                                                  │
+│ sprites  /Users/tkwang/Match3_sim/generated_art… │
+│ history  /Users/tkwang/Match3_sim/generated_art… │
+│ report   /Users/tkwang/Match3_sim/generated_art… │
+│ contact  /Users/tkwang/Match3_sim/generated_art… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /Users/tkwang/Match3_sim/generated_art/research_B3_fruit/generated_sprites.png
+
+=== B3 seed 2 → research_B3_fruit_s2 ===
+2026-08-11 02:26:54.956 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-11 02:26:54.956 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 精煉畫風: '3D Disney Cartoon Style, Simple design, Clean illustrations, Intuitive icon, highly recognizable'
+[style] → Render vibrant, semi-glossy 3D Disney-style fruit assets with soft volumetric shading, high-key warm lighting, and bold, simplified silhouettes optimized for match-3 readability.
+[theme] 展開主題概念: 'Fruit'
+[theme] → Blu=A plump, single blueberry modeled as a chunky, stylized 3D sphere with a soft, star-shaped dimple at its crown. It features a vibrant, highly saturated royal blue color and a semi-glossy, squishy finish, with warm top-right lighting and cool-blue ambient shadows defining its outline-free geometry., Crt1=A heavily cracked, almost destroyed wooden fruit crate. The planks are splintered, misaligned, and barely held together by a thick, chunky stylized rope. The asset maintains a warm, semi-glossy, outline-free style, presenting a highly fractured but readable 3D block., Crt2=A visibly damaged wooden fruit crate with multiple deep cracks running through the planks, a broken corner slat, and some stylized yellow straw spilling out of the gap. The chunky, rounded geometry shows clear structural wear while retaining its soft, outline-free toy-like rendering style., Crt3=A slightly damaged wooden fruit crate with a single large, clean crack splitting the front-facing plank, showing slight separation. The overall structure remains sturdy, maintaining its chunky, stylized 3D volume and warm-brown semi-glossy finish., Crt4=A sturdy, undamaged wooden crate filled with soft straw, designed with chunky, rounded 3D planks. Rendered in a warm, stylized light-brown palette with a clean, semi-glossy satin finish. Warm top-right lighting and cool under-shadows clearly define its solid, blocky toy-like geometry without outlines., Grn=A chunky, rounded green lime, rendered as a plump oval with soft, subtle dimpled textures at its ends. It has a vibrant, highly saturated lime-green color with a semi-glossy sheen. Soft, broad specular highlights define its smooth, squishy 3D form, with no outline strokes., LtBl=A large, perfectly spherical melon displaying vibrant, rainbow-colored vertical stripes. Rendered with a glossy, highly reflective finish that gives it a tactile, toy-like luster. The clean, chunky geometry is defined by warm top-right highlights and cool ambient fill, serving as an iconic, multi-color master fruit., Pur=A smooth, stylized plum with a deep, soft cleft along one side, rendered as a chunky 3D volume. It features a rich, highly saturated purple color and a uniform semi-glossy, toy-like finish. A warm top-right key light and cool purple ambient shadows outline its rounded, stroke-free geometry., Red=A plump, rounded strawberry with a chunky, stylized teardrop silhouette. Soft, shallow yellow seeds are embedded smoothly into its vibrant, highly saturated red surface, topped with a small, rounded green leaf crown. The asset features a semi-glossy, squishy texture with soft, broad specular highlights., Soda0d=A horizontal rocket shaped like an elongated, double-ended banana lying flat. It features chunky, stylized green leaf fins pointing horizontally outward on both left and right sides to indicate its horizontal path. Rendered in highly saturated yellow and green with a smooth, semi-glossy, squishy finish., Soda90=A vertical rocket shaped like a tall, stylized pineapple pointing straight up. It features chunky, pointed leaf fronds at the top and bottom that extend vertically, clearly signaling a vertical path. Rendered in vibrant orange and green with a smooth, glossy, outline-free 3D volume., Yel=A chunky, stylized lemon shaped like a rounded, plump oval with soft, gentle nubs at both ends. It is rendered in a vibrant, highly saturated lemon-yellow. A uniform semi-glossy finish with warm top-right highlights gives it a tactile, toy-like appearance without any black outline.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B3_fruit_s2                    │
+│ style    Render all fruit-themed sprites as chu… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤3 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /Users/tkwang/Match3_sim/generated_art… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (18.8s)
+  ├─ iter 2/3  generating…
+  │  ✗ generate  模型沒有回傳圖像。文字回應: ```json
+{
+  "id": "match-element-red-straw…
+  ├─ iter 3/3  generating…
+  │  iter 3  pass  style 8  fn 8  real 8  bg ✓  cut ✓  score 28  (13.1s)
+  └─ ✅ PASS  style 8  fn 8  iter 3
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (13.7s)
+  ├─ iter 2/3  generating…
+  │  iter 2  retry  style 9  fn 10  real 10  bg ✓  cut ✓  score 37  (15.9s)
+  ├─ iter 3/3  generating…
+  │  iter 3  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 44  (13.3s)
+  └─ ✅ PASS  style 10  fn 10  iter 3
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (32.3s)
+  ├─ iter 2/3  generating…
+  │  iter 2  retry  style 7  fn 9  real 7  bg ✓  cut ✓  score 33  (16.6s)
+  ├─ iter 3/3  generating…
+  │  iter 3  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 44  (14.7s)
+  └─ ✅ PASS  style 10  fn 10  iter 3
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (17.6s)
+  ├─ iter 2/3  generating…
+  │  iter 2  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 44  (21.4s)
+  └─ ✅ PASS  style 10  fn 10  iter 2
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (13.7s)
+  ├─ iter 2/3  generating…
+  │  iter 2  retry  style 9  fn 9  real 9  bg ✓  cut ✓  score 35  (16.6s)
+  ├─ iter 3/3  generating…
+  │  iter 3  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 44  (14.0s)
+  └─ ✅ PASS  style 10  fn 10  iter 3
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 9  fn 8  real 8  bg ✓  cut ✗  score 27  (14.0s)
+  ├─ iter 2/3  generating…
+  │  iter 2  pass  style 9  fn 9  real 9  bg ✓  cut ✓  score 31  (12.4s)
+  └─ ✅ PASS  style 9  fn 9  iter 2
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (15.4s)
+  ├─ iter 2/3  generating…
+  │  iter 2  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 54  (13.8s)
+  └─ ✅ PASS  style 10  fn 10  iter 2
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (12.8s)
+  ├─ iter 2/3  generating…
+  │  iter 2  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 54  (12.9s)
+  └─ ✅ PASS  style 10  fn 10  iter 2
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (18.4s)
+  ├─ iter 2/3  generating…
+  │  iter 2  pass  style 9  fn 9  real 9  bg ✓  cut ✓  score 51  (15.2s)
+  └─ ✅ PASS  style 9  fn 9  iter 2
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/3  generating…
+  │  ✗ postprocess  Object too small (bbox coverage 26% < 30%). Mak…
+  ├─ iter 2/3  generating…
+  │  ✗ postprocess  Object too thin/sparse (fills 17% of the frame …
+  ├─ iter 3/3  generating…
+  │  iter 3  retry  style 7  fn 8  real 6  bg ✓  cut ✗  score 23  (13.5s)
+  └─ 🟡 NEEDS REVIEW  style 7  fn 8  iter 3
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/3  generating…
+  │  iter 1  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 44  (12.9s)
+  └─ ✅ PASS  style 10  fn 10  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (16.5s)
+  ├─ iter 2/3  generating…
+  │  iter 2  retry  style 9  fn 9  real 9  bg ✓  cut ✗  score 37  (18.7s)
+  ├─ iter 3/3  generating…
+  │  iter 3  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 44  (19.7s)
+  └─ ✅ PASS  style 10  fn 10  iter 3
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       11                                  │
+│ 🟡 review     1                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /Users/tkwang/Match3_sim/generated_art… │
+│ history  /Users/tkwang/Match3_sim/generated_art… │
+│ report   /Users/tkwang/Match3_sim/generated_art… │
+│ contact  /Users/tkwang/Match3_sim/generated_art… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /Users/tkwang/Match3_sim/generated_art/research_B3_fruit_s2/generated_sprites.png
+
+=== B3 seed 3 → research_B3_fruit_s3 ===
+2026-08-11 02:34:41.335 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-11 02:34:41.335 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 精煉畫風: '3D Disney Cartoon Style, Simple design, Clean illustrations, Intuitive icon, highly recognizable'
+  [api] refine_style(gemini-3.5-flash) 失敗(第 1 次,JSONDecodeError),5s 後重試…
+  [api] refine_style(gemini-3.5-flash) 失敗(第 2 次,JSONDecodeError),10s 後重試…
+  [style] refine_style JSON failed (JSONDecodeError); using raw style text as brief
+[style] → 3D Disney Cartoon Style, Simple design, Clean illustrations, Intuitive icon, highly recognizable
+[theme] 展開主題概念: 'Fruit'
+[theme] → Blu=A chunky, spherical 3D blueberry with a soft, matte waxy blue finish and a pale blue gradient. It is topped with a simple, flat, deep-green five-pointed star leaf crown for a clean, highly recognizable silhouette., Crt1=A heavily broken wooden crate on the verge of collapse. Planks are shattered and splintered with loose nails sticking out, revealing a heavily deformed frame and a large pile of soft yellow straw spilling out from the gaps., Crt2=A visibly damaged wooden crate with two front planks snapped in half, creating a jagged gap that reveals a glimpse of clean yellow straw packing material inside. The crate's overall shape is slightly skewed., Crt3=A slightly damaged wooden crate featuring a single clean, dark hairline crack split down the middle of its front plank, with one of the dark grey corner brackets visibly bent outward., Crt4=An intact, pristine wooden farm crate shaped as a perfect cube. It is built from thick, light-brown pine planks with stylized, chunky wood grain patterns and secured with simple, rounded dark grey metal corner brackets., Grn=A glossy, bright lime-green apple with a highly simplified, perfectly round silhouette. The surface has a polished, reflective plastic-like finish, complete with a short brown wooden stem and a single perky tear-shaped green leaf., LtBl=A spherical 'Rainbow Melon' split into perfectly clean, high-gloss wedges of red, blue, green, and yellow. It has a thick, stylized golden spiral stem at the top, creating a vibrant, high-contrast color bomb shape., Pur=A plump, teardrop-shaped purple plum with a smooth, semi-matte lavender finish. It is accented with a short, chunky curlicue stem of light-brown wood on top for a playful, toy-like appearance., Red=A vibrant, heart-shaped strawberry with a smooth, high-gloss red finish. Its seeds are represented by soft, shallow, teardrop-shaped yellow dimples spaced evenly across the surface, crowned by a flat, stylized five-leaf green cap., Soda0d=A thick, horizontally aligned yellow banana with its peel peeled back symmetrically on the left and right sides. The peeled skin segments are sculpted into bold, outward-pointing arrow shapes that visually direct force to the left and right., Soda90=A chunky, vertical cylindrical pineapple rocket. The top leafy fronds are stylized into a sharp, upward-pointing arrow, while the bottom woody core is carved into a clean, downward-pointing arrow, clearly directing vertical force., Yel=A chubby, egg-shaped yellow lemon. Its warm yellow surface is lightly textured with soft, stylized dimples that catch specular highlights, finished with a tiny brown leaf stem on one end.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B3_fruit_s3                    │
+│ style    3D Disney Cartoon Style, Simple design… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤3 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /Users/tkwang/Match3_sim/generated_art… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 5  fn 6  real 4  bg ✓  cut ✗  score 17  (14.5s)
+  ├─ iter 2/3  generating…
+  │  iter 2  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 34  (11.9s)
+  └─ ✅ PASS  style 10  fn 10  iter 2
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/3  generating…
+  │  iter 1  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 42  (16.3s)
+  └─ ✅ PASS  style 10  fn 10  iter 1
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 9  fn 9  real 9  bg ✓  cut ✓  score 34  (13.9s)
+  ├─ iter 2/3  generating…
+  │  iter 2  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 44  (14.3s)
+  └─ ✅ PASS  style 10  fn 10  iter 2
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (30.9s)
+  ├─ iter 2/3  generating…
+  │  iter 2  retry  style 9  fn 9  real 9  bg ✓  cut ✓  score 34  (15.0s)
+  ├─ iter 3/3  generating…
+  │  iter 3  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (13.7s)
+  └─ 🟡 NEEDS REVIEW  style 9  fn 9  iter 2
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (17.6s)
+  ├─ iter 2/3  generating…
+  │  iter 2  retry  style 6  fn 7  real 7  bg ✓  cut ✓  score 28  (17.2s)
+  ├─ iter 3/3  generating…
+  │  iter 3  pass  style 7  fn 7  real 7  bg ✓  cut ✓  score 32  (15.4s)
+  └─ 🟡 NEEDS REVIEW  style 7  fn 7  iter 3
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (11.5s)
+  ├─ iter 2/3  generating…
+  │  iter 2  pass  style 9  fn 10  real 10  bg ✓  cut ✓  score 33  (11.6s)
+  └─ ✅ PASS  style 9  fn 10  iter 2
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/3  generating…
+  │  iter 1  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 54  (13.8s)
+  └─ ✅ PASS  style 10  fn 10  iter 1
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/3  generating…
+  │  iter 1  pass  style 9  fn 9  real 9  bg ✓  cut ✓  score 49  (16.0s)
+  └─ ✅ PASS  style 9  fn 9  iter 1
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/3  generating…
+  │  iter 1  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 53  (15.3s)
+  └─ ✅ PASS  style 10  fn 10  iter 1
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/3  generating…
+  │  iter 1  pass  style 8  fn 8  real 8  bg ✓  cut ✓  score 28  (15.6s)
+  └─ ✅ PASS  style 8  fn 8  iter 1
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/3  generating…
+  │  iter 1  pass  style 8  fn 8  real 8  bg ✓  cut ✓  score 36  (16.1s)
+  └─ ✅ PASS  style 8  fn 8  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 8  fn 9  real 8  bg ✓  cut ✓  score 34  (18.3s)
+  ├─ iter 2/3  generating…
+  │  iter 2  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (13.2s)
+  ├─ iter 3/3  generating…
+  │  iter 3  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (23.8s)
+  └─ 🟡 NEEDS REVIEW  style 8  fn 9  iter 1
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       9                                   │
+│ 🟡 review     3                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /Users/tkwang/Match3_sim/generated_art… │
+│ history  /Users/tkwang/Match3_sim/generated_art… │
+│ report   /Users/tkwang/Match3_sim/generated_art… │
+│ contact  /Users/tkwang/Match3_sim/generated_art… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /Users/tkwang/Match3_sim/generated_art/research_B3_fruit_s3/generated_sprites.png
+
+Wrote /Users/tkwang/Match3_sim/paper/results/ablation_seeds.csv
+Wrote /Users/tkwang/Match3_sim/paper/results/ablation_preliminary.csv (mean±std over 3 seeds)
+{'condition': 'B0', 'n_seeds': 3, 'pass_rate_mean': 1.0, 'pass_rate_std': 0.0, 'needs_review_rate_mean': 0.0, 'needs_review_rate_std': 0.0, 'failed_rate_mean': 0.0, 'failed_rate_std': 0.0, 'mean_iters_mean': 1.0, 'mean_iters_std': 0.0, 'mean_style_mean': None, 'mean_style_std': None, 'mean_function_mean': None, 'mean_function_std': None, 'mean_cohesion_mean': None, 'mean_cohesion_std': None, 'mean_progression_mean': None, 'mean_progression_std': None, 'cutout_fail_rate_mean': None, 'cutout_fail_rate_std': None}
+{'condition': 'B1', 'n_seeds': 3, 'pass_rate_mean': 0.972, 'pass_rate_std': 0.039, 'needs_review_rate_mean': 0.0, 'needs_review_rate_std': 0.0, 'failed_rate_mean': 0.028, 'failed_rate_std': 0.039, 'mean_iters_mean': 1.0, 'mean_iters_std': 0.0, 'mean_style_mean': None, 'mean_style_std': None, 'mean_function_mean': None, 'mean_function_std': None, 'mean_cohesion_mean': None, 'mean_cohesion_std': None, 'mean_progression_mean': None, 'mean_progression_std': None, 'cutout_fail_rate_mean': 0.0, 'cutout_fail_rate_std': 0.0}
+{'condition': 'B2', 'n_seeds': 3, 'pass_rate_mean': 0.972, 'pass_rate_std': 0.039, 'needs_review_rate_mean': 0.0, 'needs_review_rate_std': 0.0, 'failed_rate_mean': 0.028, 'failed_rate_std': 0.039, 'mean_iters_mean': 1.0, 'mean_iters_std': 0.0, 'mean_style_mean': None, 'mean_style_std': None, 'mean_function_mean': None, 'mean_function_std': None, 'mean_cohesion_mean': None, 'mean_cohesion_std': None, 'mean_progression_mean': None, 'mean_progression_std': None, 'cutout_fail_rate_mean': 0.0, 'cutout_fail_rate_std': 0.0}
+{'condition': 'B3', 'n_seeds': 3, 'pass_rate_mean': 0.889, 'pass_rate_std': 0.104, 'needs_review_rate_mean': 0.111, 'needs_review_rate_std': 0.104, 'failed_rate_mean': 0.0, 'failed_rate_std': 0.0, 'mean_iters_mean': 1.947, 'mean_iters_std': 0.336, 'mean_style_mean': 9.28, 'mean_style_std': 0.198, 'mean_function_mean': 9.333, 'mean_function_std': 0.135, 'mean_cohesion_mean': 9.037, 'mean_cohesion_std': 0.93, 'mean_progression_mean': 9.777, 'mean_progression_std': 0.316, 'cutout_fail_rate_mean': 0.028, 'cutout_fail_rate_std': 0.039}

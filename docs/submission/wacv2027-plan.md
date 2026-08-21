@@ -6,6 +6,18 @@
 
 ---
 
+## 資料夾配置（`wacv` branch）
+
+| 路徑 | 角色 | 可否修改 |
+|---|---|---|
+| `paper-creative-ai-track/` | Creative AI 投稿版凍結備份（8/10 投出的狀態） | **不要動**，只作對照 |
+| `paper-wacv2027/` | WACV 稿件工作目錄，本 branch 一切撰稿改在這裡 | 可改 |
+| `paper/` | 保留為腳本產出目錄（`auto_eval.py`、`research_*.py`、`critic_backfill.py` 皆硬寫 `ROOT/'paper'`） | 只由腳本寫入 |
+
+**注意**：`paper-wacv2027/figures/make_*.py` 是複製品，執行後仍會寫回 `paper/figures`。要重繪圖表就跑 `paper/figures/make_*.py`，再把需要的 PNG 複製進 `paper-wacv2027/figures/`。
+
+---
+
 ## 立即行動（8/22 台北 19:59 前，逾期則 Round 2 完全不能投）
 
 - [ ] 確認自己的 OpenReview profile 已核准（非機構信箱審核最長兩週，現在補來不及）

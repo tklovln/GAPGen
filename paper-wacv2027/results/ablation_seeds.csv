@@ -1,0 +1,13 @@
+condition,seed,run_id,n,pass_rate,needs_review_rate,failed_rate,mean_iters,mean_style,mean_function,mean_cohesion,mean_progression,cutout_fail_rate
+B0,1,research_B0_fruit,12,1.0,0.0,0.0,1.0,,,,,
+B0,2,research_B0_fruit_s2,12,1.0,0.0,0.0,1.0,,,,,
+B0,3,research_B0_fruit_s3,12,1.0,0.0,0.0,1.0,,,,,
+B1,1,research_B1_fruit,12,1.0,0.0,0.0,1.0,,,,,
+B1,2,research_B1_fruit_s2,12,0.917,0.0,0.083,1.0,,,,,0.0
+B1,3,research_B1_fruit_s3,12,1.0,0.0,0.0,1.0,,,,,
+B2,1,research_B2_fruit,12,1.0,0.0,0.0,1.0,,,,,
+B2,2,research_B2_fruit_s2,12,0.917,0.0,0.083,1.0,,,,,0.0
+B2,3,research_B2_fruit_s3,12,1.0,0.0,0.0,1.0,,,,,
+B3,1,research_B3_fruit,12,1.0,0.0,0.0,1.67,9.42,9.33,9.33,10.0,0.0
+B3,2,research_B3_fruit_s2,12,0.917,0.083,0.0,2.42,9.42,9.5,10.0,10.0,0.083
+B3,3,research_B3_fruit_s3,12,0.75,0.25,0.0,1.75,9.0,9.17,7.78,9.33,0.0

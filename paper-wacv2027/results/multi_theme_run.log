@@ -1,0 +1,528 @@
+
+=== B3 × pet (Pet / 3dCartoonSimple) → research_B3_pet ===
+2026-07-22 15:17:57.589 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-07-22 15:17:57.590 WARNING streamlit.runtime.state.session_state_proxy: Session state does not function when running a script without `streamlit run`
+2026-07-22 15:17:57.592 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 精煉畫風: '3D Disney Cartoon Style, Simple design, Clean illustrations, Intuitive icon, highly recognizable'
+[style] → A soft, high-fidelity 3D Disney-inspired cartoon style featuring chunky, rounded pet-themed objects rendered with clean, glossy gradients and warm, inviting studio lighting.
+[theme] 展開主題概念: 'Pet'
+[theme] → Blu=A chunky, stylized blue plastic fish toy with rounded, plump proportions, soft-edged fins, a glossy finish, and subtle warm rim highlights defining its clean circular silhouette., Crt1=A heavily shattered wooden pet crate with only a few crumbling, chunky planks remaining on a cracked base, showing wide gaps and exposing a dark interior., Crt2=A visibly damaged wooden pet crate with two thick planks broken open, a loose silver latch hanging askew, and deep, smooth cracks splintering its side., Crt3=A slightly damaged wooden pet crate with a single clean, thick crack splitting the top plank and a slightly tilted metal latch, showing minor wear., Crt4=An intact, sturdy wooden pet crate built from thick, blocky planks with heavily rounded corners, a shiny silver latch, and a soft paw print emblem stamped on the front., Grn=A chunky, stylized green squeaky frog toy with a perfectly round body, bulbous eyes, a semi-glossy rubber texture, and soft ambient occlusion under its stubby legs., LtBl=A large, spherical pet treat dispenser made of thick, semi-glossy clear plastic, housing a vibrant mix of multi-colored round kibble treats inside with a chunky star-shaped rubber grip., Pur=A chunky, stylized purple ball of yarn wrapped into a soft, puffy sphere with thick, deep, smooth crevices and a matte, soft-touch fabric texture., Red=A chunky, stylized red dog food bowl with a thick, flared rim, soft pillowy edges, a glossy finish, and filled with tiny, simplified brown kibble spheres., Soda0d=A stubby squeaky dog bone toy oriented strictly horizontally, featuring bold, thick horizontal red and white stripes painted along its length to indicate its horizontal clearance direction., Soda90=A stubby squeaky dog bone toy oriented strictly vertically, featuring bold, thick vertical blue and white stripes painted along its length to indicate its vertical clearance direction., Yel=A chunky, stylized yellow rubber ducky with a plump, highly-simplified silhouette, a tiny orange bill, and a gentle, semi-glossy finish catching soft-edged highlights.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B3_pet                         │
+│ style    Render all pet-themed sprites as chunk… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤3 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /Users/tkwang/Match3_sim/generated_art… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (17.4s)
+  ├─ iter 2/3  generating…
+  │  iter 2  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (16.3s)
+  ├─ iter 3/3  generating…
+  │  iter 3  pass  style 8  fn 8  real 8  bg ✓  cut ✓  score 28  (16.4s)
+  └─ ✅ PASS  style 8  fn 8  iter 3
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/3  generating…
+  │  iter 1  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 43  (29.0s)
+  └─ ✅ PASS  style 10  fn 10  iter 1
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (18.2s)
+  ├─ iter 2/3  generating…
+  │  iter 2  retry  style 4  fn 7  real 8  bg ✓  cut ✓  score 26  (17.1s)
+  ├─ iter 3/3  generating…
+  │  iter 3  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (13.9s)
+  └─ 🟡 NEEDS REVIEW  style 4  fn 7  iter 2
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 8  fn 9  real 9  bg ✓  cut ✓  score 32  (16.5s)
+  ├─ iter 2/3  generating…
+  │  iter 2  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 44  (19.3s)
+  └─ ✅ PASS  style 10  fn 10  iter 2
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (19.1s)
+  ├─ iter 2/3  generating…
+  │  iter 2  retry  style 4  fn 4  real 4  bg ✓  cut ✓  score 19  (16.9s)
+  ├─ iter 3/3  generating…
+  │  iter 3  pass  style 8  fn 8  real 8  bg ✓  cut ✓  score 36  (19.4s)
+  └─ ✅ PASS  style 8  fn 8  iter 3
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/3  generating…
+  │  iter 1  pass  style 8  fn 8  real 8  bg ✓  cut ✓  score 28  (18.8s)
+  └─ ✅ PASS  style 8  fn 8  iter 1
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (18.4s)
+  ├─ iter 2/3  generating…
+  │  iter 2  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (16.8s)
+  ├─ iter 3/3  generating…
+  │  iter 3  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 54  (16.1s)
+  └─ ✅ PASS  style 10  fn 10  iter 3
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/3  generating…
+  │  iter 1  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 54  (25.1s)
+  └─ ✅ PASS  style 10  fn 10  iter 1
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (22.7s)
+  ├─ iter 2/3  generating…
+  │  iter 2  retry  style 5  fn 7  real 4  bg ✓  cut ✗  score 21  (23.4s)
+  ├─ iter 3/3  generating…
+  │  iter 3  pass  style 9  fn 9  real 9  bg ✓  cut ✓  score 51  (19.1s)
+  └─ ✅ PASS  style 9  fn 9  iter 3
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (18.5s)
+  ├─ iter 2/3  generating…
+  │  iter 2  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (14.9s)
+  ├─ iter 3/3  generating…
+  │  iter 3  retry  style 5  fn 6  real 5  bg ✓  cut ✓  score 20  (19.2s)
+  └─ 🟡 NEEDS REVIEW  style 5  fn 6  iter 3
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 6  fn 5  real 7  bg ✓  cut ✓  score 28  (23.8s)
+  ├─ iter 2/3  generating…
+  │  iter 2  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (31.3s)
+  ├─ iter 3/3  generating…
+  │  iter 3  retry  style 6  fn 6  real 6  bg ✓  cut ✓  score 27  (17.0s)
+  └─ 🟡 NEEDS REVIEW  style 6  fn 5  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/3  generating…
+  │  iter 1  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 44  (17.8s)
+  └─ ✅ PASS  style 10  fn 10  iter 1
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       9                                   │
+│ 🟡 review     3                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /Users/tkwang/Match3_sim/generated_art… │
+│ history  /Users/tkwang/Match3_sim/generated_art… │
+│ report   /Users/tkwang/Match3_sim/generated_art… │
+│ contact  /Users/tkwang/Match3_sim/generated_art… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /Users/tkwang/Match3_sim/generated_art/research_B3_pet/generated_sprites.png
+
+=== B3 × ocean (Ocean / 3dCartoonSimple) → research_B3_ocean ===
+2026-07-22 15:27:11.700 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-07-22 15:27:11.701 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 精煉畫風: '3D Disney Cartoon Style, Simple design, Clean illustrations, Intuitive icon, highly recognizable'
+[style] → Smooth, semi-glossy 3D Disney-style cartoon renders with soft volumetric lighting, vibrant oceanic colors, and highly legible, rounded silhouettes defined entirely without outlines.
+[theme] 展開主題概念: 'Ocean'
+[theme] → Blu=A chubby, highly rounded nautilus shell rendered in a deep oceanic blue. The shell features a smooth, semi-glossy surface with soft, light-blue spiral gradients and a thick, plump spiral shape with heavily rounded edges., Crt1=A heavily shattered, chunky wooden treasure chest on the verge of collapsing. The mahogany wood is deeply splintered with gaping, dark cracks, the binding ropes are entirely gone, and the lid is severely crooked and loose., Crt2=A visibly damaged wooden treasure chest with its binding rope snapped and hanging loosely. Several deep, dark splits run through the front wooden planks, and one of the rounded brass corners is completely missing., Crt3=A slightly damaged wooden treasure chest showing minor wear. The thick rope binding has a small fray, and a single, clean-edged crack runs vertically down the center of the front mahogany plank., Crt4=An intact, pristine wooden treasure chest bound by a thick, simple rope. Rendered with smooth, semi-glossy mahogany-brown wood, heavily rounded brass corners, and a plump, bulging lid., Grn=A cute, bulbous sea turtle with a simplified, dome-shaped shell in a vibrant lime green. Its tiny flippers and head are tucked tightly to its body to maintain a compact, rounded silhouette, highlighted with soft yellow-green gradients., LtBl=A giant, glossy white oyster shell, propped open to display a massive, perfectly spherical pearl. The pearl has a highly polished, semi-glossy surface reflecting a soft, multi-colored pastel gradient., Pur=A plump, spherical cartoon octopus in a rich violet-purple. Its eight tiny, stubby tentacles are curled closely underneath its body to form a cohesive round shape, rendered with soft lavender highlights on its smooth dome head., Red=A friendly, chunky cartoon crab in a bright coral red. Its body is extremely rounded, with two oversized, smooth mitten-like claws tucked tightly against its sides to form a solid, readable oval silhouette., Soda0d=A chunky, horizontal toy submarine styled like an orange-and-white striped clownfish. Its main body is elongated horizontally, with wide, flat, horizontally-aligned side fins that strongly emphasize horizontal direction., Soda90=A chunky, vertical toy submarine styled like a blue-and-yellow striped tang fish. Its main body is elongated vertically, with tall, vertical fins pointing straight up and down to strongly emphasize vertical direction., Yel=A spherical, adorable pufferfish in a warm, sunny yellow. It has a perfectly round, inflated body with a smooth, soft-shaded belly in cream-yellow, and tiny, simplified fins that blend seamlessly into its silhouette.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B3_ocean                       │
+│ style    Render all assets as high-quality, pre… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤3 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /Users/tkwang/Match3_sim/generated_art… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/3  generating…
+  │  iter 1  pass  style 8  fn 8  real 8  bg ✓  cut ✓  score 28  (17.9s)
+  └─ ✅ PASS  style 8  fn 8  iter 1
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/3  generating…
+  │  iter 1  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 43  (19.2s)
+  └─ ✅ PASS  style 10  fn 10  iter 1
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 9  fn 9  real 9  bg ✓  cut ✓  score 36  (21.3s)
+  ├─ iter 2/3  generating…
+  │  iter 2  retry  style 8  fn 9  real 7  bg ✓  cut ✓  score 33  (17.7s)
+  ├─ iter 3/3  generating…
+  │  iter 3  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 44  (15.7s)
+  └─ ✅ PASS  style 10  fn 10  iter 3
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/3  generating…
+  │  iter 1  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 44  (17.2s)
+  └─ ✅ PASS  style 10  fn 10  iter 1
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 7  fn 7  real 6  bg ✓  cut ✓  score 28  (16.6s)
+  ├─ iter 2/3  generating…
+  │  iter 2  pass  style 8  fn 8  real 8  bg ✓  cut ✓  score 36  (22.8s)
+  └─ ✅ PASS  style 8  fn 8  iter 2
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (17.0s)
+  ├─ iter 2/3  generating…
+  │  iter 2  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 34  (17.6s)
+  └─ ✅ PASS  style 10  fn 10  iter 2
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/3  generating…
+  │  iter 1  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 54  (22.9s)
+  └─ ✅ PASS  style 10  fn 10  iter 1
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (20.6s)
+  ├─ iter 2/3  generating…
+  │  iter 2  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (17.7s)
+  ├─ iter 3/3  generating…
+  │  iter 3  retry  style 8  fn 8  real 7  bg ✓  cut ✗  score 41  (19.0s)
+  └─ 🟡 NEEDS REVIEW  style 8  fn 8  iter 3
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/3  generating…
+  │  iter 1  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 54  (18.4s)
+  └─ ✅ PASS  style 10  fn 10  iter 1
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/3  generating…
+  │  iter 1  pass  style 10  fn 9  real 10  bg ✓  cut ✓  score 33  (20.0s)
+  └─ ✅ PASS  style 10  fn 9  iter 1
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (21.8s)
+  ├─ iter 2/3  generating…
+  │  iter 2  pass  style 9  fn 8  real 9  bg ✓  cut ✓  score 39  (21.8s)
+  └─ ✅ PASS  style 9  fn 8  iter 2
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 7  fn 7  real 7  bg ✓  cut ✓  score 32  (20.9s)
+  ├─ iter 2/3  generating…
+Traceback (most recent call last):
+  File "/Users/tkwang/Match3_sim/scripts/research_multi_theme.py", line 331, in <module>
+    main()
+    ~~~~^^
+  File "/Users/tkwang/Match3_sim/scripts/research_multi_theme.py", line 292, in main
+    pipeline.run(
+    ~~~~~~~~~~~~^
+        style_text=combo['style'],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<12 lines>...
+        source='research_multi_theme',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/tkwang/Match3_sim/art_pipeline/pipeline.py", line 1114, in run
+    result = generate_one(client, asset, resolved_style, style_image,
+                          by_family.get(fam, []),
+    ...<9 lines>...
+                          use_ontology=use_ontology,
+                          use_critic=use_critic)
+  File "/Users/tkwang/Match3_sim/art_pipeline/pipeline.py", line 538, in generate_one
+    verdict = gemini_api.critique_image(
+        client, critic_model, original, processed, style_text, asset, style_image,
+        mode=mode, family_anchor=family_anchor, family_style_plan=family_style_plan,
+        prev_stage_image=prev_stage_image)
+  File "/Users/tkwang/Match3_sim/art_pipeline/gemini_api.py", line 243, in critique_image
+    return _critique_theme_swap(
+        client, model, generated_png, style_text, asset, style_image, **kwargs)
+  File "/Users/tkwang/Match3_sim/art_pipeline/gemini_api.py", line 506, in _critique_theme_swap
+    return _normalize_verdict(
+        verdict, style_image=style_image, has_family_anchor=has_anchor, has_prev_stage=has_prev,
+        background=is_background)
+  File "/Users/tkwang/Match3_sim/art_pipeline/gemini_api.py", line 252, in _normalize_verdict
+    verdict.setdefault('style_score', 0)
+    ^^^^^^^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute 'setdefault'
+
+=== B3 × ocean (Ocean / 3dCartoonSimple) → research_B3_ocean ===
+2026-07-22 15:35:09.689 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-07-22 15:35:09.689 WARNING streamlit.runtime.state.session_state_proxy: Session state does not function when running a script without `streamlit run`
+2026-07-22 15:35:09.691 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 使用已快取的精煉結果: Smooth, semi-glossy 3D Disney-style cartoon renders with soft volumetric lighting, vibrant oceanic colors, and highly legible, rounded silhouettes defined entirely without outlines.
+[theme] 使用已快取的展開結果: Blu=A chubby, highly rounded nautilus shell rendered in a deep oceanic blue. The shell features a smooth, semi-glossy surface with soft, light-blue spiral gradients and a thick, plump spiral shape with heavily rounded edges., Crt1=A heavily shattered, chunky wooden treasure chest on the verge of collapsing. The mahogany wood is deeply splintered with gaping, dark cracks, the binding ropes are entirely gone, and the lid is severely crooked and loose., Crt2=A visibly damaged wooden treasure chest with its binding rope snapped and hanging loosely. Several deep, dark splits run through the front wooden planks, and one of the rounded brass corners is completely missing., Crt3=A slightly damaged wooden treasure chest showing minor wear. The thick rope binding has a small fray, and a single, clean-edged crack runs vertically down the center of the front mahogany plank., Crt4=An intact, pristine wooden treasure chest bound by a thick, simple rope. Rendered with smooth, semi-glossy mahogany-brown wood, heavily rounded brass corners, and a plump, bulging lid., Grn=A cute, bulbous sea turtle with a simplified, dome-shaped shell in a vibrant lime green. Its tiny flippers and head are tucked tightly to its body to maintain a compact, rounded silhouette, highlighted with soft yellow-green gradients., LtBl=A giant, glossy white oyster shell, propped open to display a massive, perfectly spherical pearl. The pearl has a highly polished, semi-glossy surface reflecting a soft, multi-colored pastel gradient., Pur=A plump, spherical cartoon octopus in a rich violet-purple. Its eight tiny, stubby tentacles are curled closely underneath its body to form a cohesive round shape, rendered with soft lavender highlights on its smooth dome head., Red=A friendly, chunky cartoon crab in a bright coral red. Its body is extremely rounded, with two oversized, smooth mitten-like claws tucked tightly against its sides to form a solid, readable oval silhouette., Soda0d=A chunky, horizontal toy submarine styled like an orange-and-white striped clownfish. Its main body is elongated horizontally, with wide, flat, horizontally-aligned side fins that strongly emphasize horizontal direction., Soda90=A chunky, vertical toy submarine styled like a blue-and-yellow striped tang fish. Its main body is elongated vertically, with tall, vertical fins pointing straight up and down to strongly emphasize vertical direction., Yel=A spherical, adorable pufferfish in a warm, sunny yellow. It has a perfectly round, inflated body with a smooth, soft-shaded belly in cream-yellow, and tiny, simplified fins that blend seamlessly into its silhouette.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B3_ocean                       │
+│ style    Render all assets as high-quality, pre… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤3 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /Users/tkwang/Match3_sim/generated_art… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  — 已 pass,跳過
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  — 已 pass,跳過
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  — 已 pass,跳過
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  — 已 pass,跳過
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  — 已 pass,跳過
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  — 已 pass,跳過
+
+[██████████░░░░░░░░░░] [7/12] Crt3  — 已 pass,跳過
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 8  fn 9  real 8  bg ✓  cut ✗  score 42  (20.4s)
+  ├─ iter 2/3  generating…
+  │  iter 2  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 53  (20.1s)
+  └─ ✅ PASS  style 10  fn 10  iter 2
+
+[█████████████░░░░░░░] [9/12] Crt1  — 已 pass,跳過
+
+[███████████████░░░░░] [10/12] Soda0d  — 已 pass,跳過
+
+[█████████████████░░░] [11/12] LtBl  — 已 pass,跳過
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (23.6s)
+  ├─ iter 2/3  generating…
+  │  iter 2  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (19.6s)
+  ├─ iter 3/3  generating…
+  │  iter 3  retry  style 7  fn 6  real 7  bg ✓  cut ✓  score 31  (22.4s)
+  └─ 🟡 NEEDS REVIEW  style 7  fn 6  iter 3
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       1                                   │
+│ 🟡 review     1                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       10                                  │
+│ total        12                                  │
+│                                                  │
+│ sprites  /Users/tkwang/Match3_sim/generated_art… │
+│ history  /Users/tkwang/Match3_sim/generated_art… │
+│ report   /Users/tkwang/Match3_sim/generated_art… │
+│ contact  /Users/tkwang/Match3_sim/generated_art… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /Users/tkwang/Match3_sim/generated_art/research_B3_ocean/generated_sprites.png
+
+=== B3 × steampunk (Steampunk / 3dCartoonSimple) → research_B3_steampunk ===
+2026-07-22 15:36:55.908 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-07-22 15:36:55.908 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 精煉畫風: '3D Disney Cartoon Style, Simple design, Clean illustrations, Intuitive icon, highly recognizable'
+  [api] refine_style(gemini-3.5-flash) 失敗(第 1 次,JSONDecodeError),5s 後重試…
+  [api] refine_style(gemini-3.5-flash) 失敗(第 2 次,JSONDecodeError),10s 後重試…
+Traceback (most recent call last):
+  File "/Users/tkwang/Match3_sim/scripts/research_multi_theme.py", line 331, in <module>
+    main()
+    ~~~~^^
+  File "/Users/tkwang/Match3_sim/scripts/research_multi_theme.py", line 292, in main
+    pipeline.run(
+    ~~~~~~~~~~~~^
+        style_text=combo['style'],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<12 lines>...
+        source='research_multi_theme',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/tkwang/Match3_sim/art_pipeline/pipeline.py", line 950, in run
+    resolved_style, style_plan = prepare_style_for_run(
+                                 ~~~~~~~~~~~~~~~~~~~~~^
+        style_text, refine_style, mode, theme_text, targets, critic_model,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        report, report_path, client=client,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/tkwang/Match3_sim/art_pipeline/pipeline.py", line 668, in prepare_style_for_run
+    plan = refine_style_prompt(
+        style_text,
+    ...<4 lines>...
+        model=critic_model,
+    )
+  File "/Users/tkwang/Match3_sim/art_pipeline/style_planner.py", line 88, in refine_style_prompt
+    resp = gemini_api._with_retries(
+        _call, f'refine_style({model})',
+        validate=lambda r: json.loads(r.text))
+  File "/Users/tkwang/Match3_sim/art_pipeline/gemini_api.py", line 168, in _with_retries
+    validate(result)
+    ~~~~~~~~^^^^^^^^
+  File "/Users/tkwang/Match3_sim/art_pipeline/style_planner.py", line 90, in <lambda>
+    validate=lambda r: json.loads(r.text))
+                       ~~~~~~~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.4/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py", line 352, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.4/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.4/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py", line 361, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ~~~~~~~~~~~~~~^^^^^^^^
+json.decoder.JSONDecodeError: Expecting ',' delimiter: line 8 column 185 (char 1769)
+
+=== B3 × steampunk (Steampunk / 3dCartoonSimple) → research_B3_steampunk ===
+2026-07-22 15:38:07.268 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-07-22 15:38:07.269 WARNING streamlit.runtime.state.session_state_proxy: Session state does not function when running a script without `streamlit run`
+2026-07-22 15:38:07.271 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 精煉畫風: '3D Disney Cartoon Style, Simple design, Clean illustrations, Intuitive icon, highly recognizable'
+  [api] refine_style(gemini-3.5-flash) 失敗(第 1 次,JSONDecodeError),5s 後重試…
+[style] → A clean, whimsical 3D Disney-inspired cartoon style with polished steampunk elements, focusing on chunky silhouettes and soft-shaded metallic finishes.
+[theme] 展開主題概念: 'Steampunk'
+[theme] → Blu=A stubby, spherical blue glass vial encased in a chunky, semi-glossy copper frame. The dominant blue glass has painterly, smooth value gradients and a bright top-right rim light that gives it a tactile vinyl-toy volume, with no black outlines., Crt1=The brass shipping crate on the verge of collapsing; the metal plates are deeply fractured and splayed open to reveal simplified inner copper gears, with major pieces broken away, maintaining a readable yet highly distressed 3D silhouette., Crt2=The brass shipping crate showing severe damage; the top-right corner is heavily bent outward, deep cracks splinter through the brass plates, and the front face is visibly warped, defined by painterly value gradients and deep shadows., Crt3=The brass shipping crate with minor structural damage; several thin, dark fractures run across the front copper plate, and one corner rivet is missing, rendered with soft ambient occlusion to emphasize the dented metal surfaces., Crt4=An intact, cubic steampunk shipping crate made of solid, polished brass plates secured with chunky copper rivets on the corners. It features a clean, blocky 3D silhouette with a semi-glossy finish and a subtle top-right rim light highlighting its solid weight., Grn=A heavy-duty, stylized green glass pressure valve with a chunky brass cap. Rendered as a soft, glossy 3D cartoon shape with warm green gradients and a polished copper rim light highlighting its clean, outline-free silhouette., LtBl=A spherical, multi-tiered brass gyroscope powerup with a central, multi-faceted prismatic glass core. The outer brass rings are thick, rounded, and highly polished, catching a bright top-right key light that defines its chunky, outline-free spherical form., Pur=A chunkily proportioned, hexagonal purple crystal battery held in a secure brass socket with soft rivets. The crystal surface has semi-glossy painterly gradients of deep violet and a brilliant top-right highlight for tactile depth., Red=A circular, chunky four-spoke red metal valve wheel with a central polished brass rivet. The wheel features a smooth, saturated red finish with soft ambient occlusion in the crevices and a subtle warm rim light on the upper-right edge., Soda0d=A horizontal, cylindrical copper steam capsule with two chunky brass arrow plates bolted to its left and right sides. The asset features a soft, semi-glossy finish with warm ambient occlusion and no outlines, clearly communicating its horizontal function through its physical shape., Soda90=A vertical, stubby copper steam capsule with two chunky brass arrow plates bolted to its top and bottom ends. The capsule is rendered as a clean, rounded 3D shape with smooth gradients and a distinct top-right rim light emphasizing its vertical orientation., Yel=A thick, chunky yellow gear with simplified teeth and a central brass washer. The gear is rendered in warm, saturated yellow with smooth, hand-painted gradients, soft AO shading, and no harsh outlines to ensure optimal 70px readability.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B3_steampunk                   │
+│ style    Render all sprites as soft, semi-gloss… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤3 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /Users/tkwang/Match3_sim/generated_art… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/3  generating…
+  │  iter 1  pass  style 8  fn 8  real 8  bg ✓  cut ✓  score 28  (18.2s)
+  └─ ✅ PASS  style 8  fn 8  iter 1
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (20.5s)
+  ├─ iter 2/3  generating…
+  │  iter 2  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (20.5s)
+  ├─ iter 3/3  generating…
+  │  iter 3  pass  style 8  fn 8  real 8  bg ✓  cut ✓  score 36  (19.7s)
+  └─ ✅ PASS  style 8  fn 8  iter 3
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (22.5s)
+  ├─ iter 2/3  generating…
+  │  iter 2  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (18.7s)
+  ├─ iter 3/3  generating…
+  │  iter 3  pass  style 8  fn 8  real 8  bg ✓  cut ✓  score 36  (18.8s)
+  └─ ✅ PASS  style 8  fn 8  iter 3
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/3  generating…
+  │  iter 1  pass  style 8  fn 8  real 8  bg ✓  cut ✓  score 36  (19.9s)
+  └─ ✅ PASS  style 8  fn 8  iter 1
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 9  fn 9  real 9  bg ✓  cut ✓  score 35  (19.4s)
+  ├─ iter 2/3  generating…
+  │  iter 2  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (18.4s)
+  ├─ iter 3/3  generating…
+  │  iter 3  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 43  (15.0s)
+  └─ ✅ PASS  style 10  fn 10  iter 3
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (15.7s)
+  ├─ iter 2/3  generating…
+  │  iter 2  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 34  (13.8s)
+  └─ ✅ PASS  style 10  fn 10  iter 2
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/3  generating…
+  │  iter 1  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 54  (20.2s)
+  └─ ✅ PASS  style 10  fn 10  iter 1
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 7  fn 8  real 5  bg ✓  cut ✓  score 35  (24.1s)
+  ├─ iter 2/3  generating…
+  │  iter 2  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (21.3s)
+  ├─ iter 3/3  generating…
+  │  iter 3  pass  style 9  fn 9  real 9  bg ✓  cut ✓  score 48  (23.1s)
+  └─ ✅ PASS  style 9  fn 9  iter 3
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/3  generating…
+  │  iter 1  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 54  (20.1s)
+  └─ ✅ PASS  style 10  fn 10  iter 1
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/3  generating…
+  │  iter 1  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 34  (15.1s)
+  └─ ✅ PASS  style 10  fn 10  iter 1
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/3  generating…
+  │  iter 1  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (32.8s)
+  ├─ iter 2/3  generating…
+  │  iter 2  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (16.2s)
+  ├─ iter 3/3  generating…
+  │  iter 3  retry  style 0  fn 0  real 0  bg ✗  cut ✗  score 0  (17.1s)
+  └─ 🟡 NEEDS REVIEW  style 0  fn 0  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/3  generating…
+  │  iter 1  pass  style 10  fn 10  real 10  bg ✓  cut ✓  score 44  (16.8s)
+  └─ ✅ PASS  style 10  fn 10  iter 1
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       11                                  │
+│ 🟡 review     1                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /Users/tkwang/Match3_sim/generated_art… │
+│ history  /Users/tkwang/Match3_sim/generated_art… │
+│ report   /Users/tkwang/Match3_sim/generated_art… │
+│ contact  /Users/tkwang/Match3_sim/generated_art… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /Users/tkwang/Match3_sim/generated_art/research_B3_steampunk/generated_sprites.png
+
+Wrote /Users/tkwang/Match3_sim/paper/results/ablation_multi_theme.csv
+{'condition': 'B3', 'slug': 'steampunk', 'theme': 'Steampunk', 'style_label': '3dCartoonSimple', 'run_id': 'research_B3_steampunk', 'n': 12, 'pass_rate': 0.917, 'needs_review_rate': 0.083, 'failed_rate': 0.0, 'mean_iters': 1.92, 'mean_style': 8.42, 'mean_function': 8.42, 'mean_cohesion': 8.0, 'mean_progression': 9.33, 'cutout_fail_rate': 0.083}
+[export] steampunk → /Users/tkwang/Match3_sim/paper/human_eval/assets/themes/steampunk
+Wrote /Users/tkwang/Match3_sim/paper/human_eval/themes.json
