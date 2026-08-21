@@ -2,7 +2,17 @@
 
 **標的**：IEEE/CVF WACV 2027 · Disney Springs, FL · 2027/1/4–8
 **現況基礎**：`paper/main.tex`（GAPGen）+ `art_pipeline/` + `scripts/auto_eval.py` + `paper/results/`
-**撰寫日**：2026-08-21
+**撰寫日**：2026-08-21 · **更新**：2026-08-21（補註冊規則查證）
+
+---
+
+## 立即行動（8/22 台北 19:59 前，逾期則 Round 2 完全不能投）
+
+- [ ] 確認自己的 OpenReview profile 已核准（非機構信箱審核最長兩週，現在補來不及）
+- [ ] 決定共同作者名單（**註冊截止後只能調順序、不能增刪**；人類評測協助者要掛名就得現在加）
+- [ ] 在 Round 2 群組建立 submission，填標題 + 可用的摘要（≤5000 字元，**不可留空白佔位，不完整會被刪除**）
+- [ ] 下載 WACV 2027 Author Kit
+- [ ] 記下 8/24 的 Go / No-go 決策點（見第 1 節 dual submission 衝突）
 
 ---
 
