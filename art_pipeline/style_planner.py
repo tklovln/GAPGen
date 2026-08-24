@@ -11,6 +11,7 @@ import json
 
 from . import gemini_api
 from .roles import GenerationMode
+from .run_config import ALLOW_OUTLINE
 
 
 def resolved_style_text(style_plan: dict | None, raw_style: str) -> str:
@@ -49,6 +50,18 @@ def refine_style_prompt(
     if target_families:
         families_line = '\n[Sprite families in this batch] ' + ', '.join(target_families)
 
+    outline_req = (
+        '- Outline strokes are ALLOWED and part of this style: specify the exact line language '
+        '(weight, color, hand-drawn wobble, whether it varies) and keep it identical on every sprite.'
+        if ALLOW_OUTLINE else
+        '- HARD RULE: no outline strokes, ink borders, or contour lines on any sprite — form is defined by shading and color only.')
+    readability_req = (
+        '- For match-3: readable silhouettes at ~70px; no photoreal noise; no text/watermarks.'
+        if ALLOW_OUTLINE else
+        '- For match-3: readable silhouettes at ~70px; no photoreal noise; no text/watermarks; no outlines.')
+    line_hint = ('corner roundness, proportions, outline weight/color'
+                 if ALLOW_OUTLINE else 'corner roundness, proportions (no outline strokes)')
+
     rubric = f"""You are a lead art director for a match-3 mobile game.
 
 The user gave a SHORT or VAGUE art-style prompt. Expand it into a PRECISE, LOCKED art-direction brief so that EVERY sprite in the batch looks like it was painted by the same artist with the same rules.
@@ -59,9 +72,9 @@ The user gave a SHORT or VAGUE art-style prompt. Expand it into a PRECISE, LOCKE
 Requirements for style_brief:
 - Write in English, 3-6 sentences, imperative tone ("Use…", "Keep…").
 - Specify: rendering dimension (2D/3D/pixel), shading model, material finish, palette temperature, lighting, edge treatment.
-- HARD RULE: no outline strokes, ink borders, or contour lines on any sprite — form is defined by shading and color only.
+{outline_req}
 - Emphasize CROSS-ASSET CONSISTENCY — all sprites must share the same rendering pipeline.
-- For match-3: readable silhouettes at ~70px; no photoreal noise; no text/watermarks; no outlines.
+{readability_req}
 - Do NOT invent gameplay objects — only define HOW to render.
 
 Return ONLY JSON (no markdown):
@@ -69,7 +82,7 @@ Return ONLY JSON (no markdown):
   "summary": "one sentence art direction in English",
   "style_brief": "full locked art-direction paragraph for image generation prompts",
   "rendering": "e.g. soft 3D toon render, not flat vector",
-  "line_and_shape": "corner roundness, proportions (no outline strokes)",
+  "line_and_shape": "{line_hint}",
   "color_and_lighting": "palette, saturation, highlight/shadow style",
   "material_finish": "matte/glossy/painterly texture language",
   "avoid": "what to never do in this style"
@@ -101,7 +114,7 @@ Return ONLY JSON (no markdown):
             'line_and_shape': '',
             'color_and_lighting': '',
             'material_finish': '',
-            'avoid': 'outlines, text, watermarks',
+            'avoid': 'text, watermarks' if ALLOW_OUTLINE else 'outlines, text, watermarks',
             'fallback': True,
         }
 

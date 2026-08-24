@@ -56,9 +56,84 @@ ROLE_CHOICES = {
 }
 ROLE_TASK1_ASSETS = ['Red', 'Blu', 'Soda0d', 'Soda90', 'Crt4', 'Crt1', 'Yel', 'LtBl']
 
+# --------------------------------------------------------------------------- #
+# Ontology-derived ground truth (scope=full). asset_roles.json is human-written,
+# so these labels are not model opinions.
+# --------------------------------------------------------------------------- #
+ONTOLOGY = ROOT / 'art_pipeline' / 'asset_roles.json'
+HUMAN_SPRITES = ROOT / 'godot_demo' / 'resources' / 'sprites'
+
+# Coarse 4-way label space for the full asset set. The fine-grained 19 role
+# classes are not visually separable (e.g. static vs movable obstacle), so the
+# wide-coverage task uses `category` and the core-12 task keeps the finer
+# h_power/v_power split.
+CATEGORY_CHOICES = {
+    'element': 'basic match element (cleared by matching 3+)',
+    'powerup': 'special power-up item (rocket / bomb / color bomb / projectile)',
+    'obstacle': 'obstacle / blocker occupying a cell',
+    'background': 'board background / backdrop',
+}
+
+_ONTO_CACHE: dict = {}
+
+
+def _ontology() -> dict:
+    if 'data' not in _ONTO_CACHE:
+        _ONTO_CACHE['data'] = json.loads(ONTOLOGY.read_text(encoding='utf-8'))
+    return _ONTO_CACHE['data']
+
+
+def asset_category() -> dict[str, str]:
+    """asset name -> coarse category, straight from the ontology."""
+    onto = _ONTO_CACHE.setdefault('cat', {})
+    if onto:
+        return onto
+    data = _ontology()
+    for g in data['asset_groups']:
+        cat = data['role_classes'][g['role_class']]['category']
+        for n in g['names']:
+            onto[n] = cat
+    return onto
+
+
+def ontology_families() -> dict[str, list[str]]:
+    """family -> all asset names in it (for intra-family cohesion)."""
+    fams = _ONTO_CACHE.setdefault('fams', {})
+    if fams:
+        return fams
+    for g in _ontology()['asset_groups']:
+        fams.setdefault(g['family'], []).extend(g['names'])
+    return fams
+
+
+def ontology_stage_sets(min_len: int = 3) -> dict[str, list[str]]:
+    """label -> names ordered intact->destroyed (descending HP `lv`).
+
+    Keyed per asset_group, not per family: `movable` holds both Barrel and the
+    TrafficCone stage pair, which are not one progression.
+    """
+    sets = _ONTO_CACHE.setdefault('stages', {})
+    if sets:
+        return {k: v for k, v in sets.items() if len(v) >= min_len}
+    for g in _ontology()['asset_groups']:
+        lvs = {n: p['lv'] for n, p in (g.get('params') or {}).items()
+               if isinstance(p, dict) and 'lv' in p}
+        if len(lvs) < 2:
+            continue
+        label = g['family']
+        while label in sets:
+            label += '_x'
+        sets[label] = sorted(lvs, key=lambda n: -lvs[n])
+    return {k: v for k, v in sets.items() if len(v) >= min_len}
+
 
 def run_dir(theme: str, cond: str) -> pathlib.Path:
     return GEN / f'research_{cond}_{theme}' / 'sprites'
+
+
+def resolve_run(spec: str) -> pathlib.Path:
+    """'human' -> shipped human art; otherwise a generated_art run name."""
+    return HUMAN_SPRITES if spec == 'human' else GEN / spec / 'sprites'
 
 
 def load_png(path: pathlib.Path, size: int | None = None) -> bytes:
@@ -149,8 +224,7 @@ def _parse_json(text: str) -> dict:
 # --------------------------------------------------------------------------- #
 # Tasks
 # --------------------------------------------------------------------------- #
-def task_role_recognition(judge, theme: str, cond: str) -> dict:
-    src = run_dir(theme, cond)
+def task_role_recognition(judge, src: pathlib.Path) -> dict:
     trials, correct = [], 0
     letters = {'A': 'match', 'B': 'h_power', 'C': 'v_power', 'D': 'obstacle'}
     for asset in ROLE_TASK1_ASSETS:
@@ -176,6 +250,42 @@ def task_role_recognition(judge, theme: str, cond: str) -> dict:
     return {'n': n, 'accuracy': round(correct / n, 3) if n else None, 'trials': trials}
 
 
+def task_role_category(judge, src: pathlib.Path) -> dict:
+    """Wide-coverage variant: every asset present, 4-way ontology category."""
+    cats = asset_category()
+    letters = dict(zip('ABCD', CATEGORY_CHOICES))
+    options = '; '.join(f'{k}={CATEGORY_CHOICES[v]}' for k, v in letters.items())
+    trials, correct = [], 0
+    per_cat: dict[str, list[int]] = {}
+    for asset in sorted(cats):
+        p = src / f'{asset}.png'
+        if not p.exists():
+            continue
+        prompt = (
+            'This is a Match-3 game sprite shown at gameplay size (~70px). '
+            f'Pick what it is. {options}. '
+            'JSON: {"choice":"A|B|C|D"}'
+        )
+        try:
+            ans = judge.ask(prompt, [load_png(p, size=70)])
+            pred = letters.get(str(ans.get('choice', '')).strip().upper()[:1], 'unsure')
+        except Exception as e:  # noqa: BLE001
+            pred = f'error:{type(e).__name__}'
+        ok = pred == cats[asset]
+        correct += int(ok)
+        per_cat.setdefault(cats[asset], []).append(int(ok))
+        trials.append({'asset': asset, 'true': cats[asset], 'pred': pred, 'correct': ok})
+    n = len(trials)
+    return {
+        'n': n,
+        'accuracy': round(correct / n, 3) if n else None,
+        'by_category': {k: {'n': len(v), 'accuracy': round(sum(v) / len(v), 3)}
+                        for k, v in sorted(per_cat.items())},
+        'trials': trials,
+    }
+
+
+
 def _kendall_tau(order: list[str], gt: list[str]) -> float:
     rank = {n: i for i, n in enumerate(gt)}
     order = [o for o in order if o in rank]
@@ -191,31 +301,47 @@ def _kendall_tau(order: list[str], gt: list[str]) -> float:
     return round((conc - disc) / denom, 3) if denom else 1.0
 
 
-def task_stage_ordering(judge, theme: str, cond: str) -> dict:
-    src = run_dir(theme, cond)
-    imgs, labels = [], []
+def _order_once(judge, src: pathlib.Path, names: list[str]) -> dict:
     import random
 
-    shuffled = CRATES[:]
+    shuffled = names[:]
     random.shuffle(shuffled)
-    for name in shuffled:
-        p = src / f'{name}.png'
-        if not p.exists():
-            return {'n': 0, 'kendall_tau': None}
-        imgs.append(load_png(p, size=96))
-        labels.append(name)
+    imgs = [load_png(src / f'{n}.png', size=96) for n in shuffled]
     prompt = (
-        f'These {len(labels)} images (labeled {", ".join(f"{i+1}={labels[i]}" for i in range(len(labels)))}) '
-        'are damage stages of ONE crate obstacle. Order them from MOST INTACT to MOST DESTROYED. '
-        'JSON: {"order":["<label>",...]} using the given labels.'
+        f'These {len(shuffled)} images (labeled '
+        f'{", ".join(f"{i+1}={shuffled[i]}" for i in range(len(shuffled)))}) '
+        'are damage/depletion stages of ONE object. Order them from MOST INTACT '
+        'to MOST DESTROYED. JSON: {"order":["<label>",...]} using the given labels.'
     )
     try:
         ans = judge.ask(prompt, imgs)
         order = [str(x) for x in ans.get('order', [])]
     except Exception as e:  # noqa: BLE001
-        return {'n': len(labels), 'kendall_tau': None, 'error': type(e).__name__}
-    return {'n': len(labels), 'presented': labels,
-            'predicted_order': order, 'kendall_tau': _kendall_tau(order, CRATES)}
+        return {'presented': shuffled, 'error': type(e).__name__, 'kendall_tau': None}
+    return {'presented': shuffled, 'predicted_order': order,
+            'kendall_tau': _kendall_tau(order, names)}
+
+
+def task_stage_ordering(judge, src: pathlib.Path, stage_sets: dict[str, list[str]],
+                        repeats: int = 1) -> dict:
+    """Kendall tau per stage family, averaged over shuffled repeats."""
+    out: dict = {'families': {}}
+    taus = []
+    for label, names in stage_sets.items():
+        present = [n for n in names if (src / f'{n}.png').exists()]
+        if len(present) < 3:
+            continue
+        runs = [_order_once(judge, src, present) for _ in range(repeats)]
+        vals = [r['kendall_tau'] for r in runs if r.get('kendall_tau') is not None]
+        mean = round(sum(vals) / len(vals), 3) if vals else None
+        out['families'][label] = {'n_stages': len(present), 'repeats': len(runs),
+                                 'kendall_tau_mean': mean, 'runs': runs}
+        if mean is not None:
+            taus.append(mean)
+    out['n_families'] = len(out['families'])
+    out['kendall_tau_macro'] = round(sum(taus) / len(taus), 3) if taus else None
+    return out
+
 
 
 def task_pairwise(judge, theme: str, c1: str, c2: str, repeats: int) -> dict:
@@ -323,10 +449,9 @@ def _cos(a, b) -> float:
     return num / (da * db) if da and db else 0.0
 
 
-def task_cohesion(theme: str, cond: str, *, force_fallback: bool = False) -> dict:
+def task_cohesion(src: pathlib.Path, families: dict[str, list[str]],
+                  *, force_fallback: bool = False) -> dict:
     """Intra-family mean pairwise similarity (higher = more cohesive)."""
-    src = run_dir(theme, cond)
-    families = {'elements': ELEMENTS, 'powerups': POWERUPS, 'crate': CRATES}
     use_dino = (not force_fallback) and _dino_available()
     method = 'dinov2-small' if use_dino else 'color-histogram(fallback)'
     result: dict = {'method': method, 'families': {}}
@@ -346,7 +471,8 @@ def task_cohesion(theme: str, cond: str, *, force_fallback: bool = False) -> dic
             sims = [_cos(vecs[i], vecs[j])
                     for i in range(len(vecs)) for j in range(i + 1, len(vecs))]
         fam_mean = round(sum(sims) / len(sims), 4)
-        result['families'][fam] = {'n_pairs': len(sims), 'mean_sim': fam_mean}
+        result['families'][fam] = {'n_assets': len(paths), 'n_pairs': len(sims),
+                                   'mean_sim': fam_mean}
         all_sims.extend(sims)
     result['overall_mean_sim'] = round(sum(all_sims) / len(all_sims), 4) if all_sims else None
     return result
@@ -361,11 +487,30 @@ def self_check() -> None:
     assert abs(_cos([1, 0], [0, 1]) - 0.0) < 1e-9
     assert _parse_json('```json\n{"choice":"A"}\n```')['choice'] == 'A'
     assert _parse_json('noise {"winner":"LEFT"} tail')['winner'] == 'LEFT'
+
+    # Ontology-derived GT must agree with the hand-written core-12 tables.
+    cats = asset_category()
+    assert cats['Red'] == 'element' and cats['Crt4'] == 'obstacle'
+    assert cats['Soda0d'] == cats['LtBl'] == 'powerup'
+    assert cats['board_bg'] == 'background'
+    fams = ontology_families()
+    assert fams['elements'] == ELEMENTS
+    assert set(POWERUPS) <= set(fams['powerups'])
+    stages = ontology_stage_sets()
+    assert stages['crate'] == CRATES, stages['crate']            # intact -> destroyed
+    assert stages['pool'][0] == 'Pool_lv5' and stages['pool'][-1] == 'Pool_lv1'
+    assert 'movable' not in stages or 'Barrel' not in stages['movable']
+    assert all(len(v) >= 3 for v in stages.values())
+
     # cohesion works offline on existing sprites via histogram fallback
     if run_dir('fruit', 'B3').is_dir():
-        coh = task_cohesion('fruit', 'B3', force_fallback=True)
+        coh = task_cohesion(run_dir('fruit', 'B3'),
+                            {'elements': ELEMENTS, 'powerups': POWERUPS, 'crate': CRATES},
+                            force_fallback=True)
         assert coh['overall_mean_sim'] is not None
         print('cohesion(fruit,B3) fallback:', coh['method'], coh['overall_mean_sim'])
+    print(f'ontology: {len(cats)} assets, {len(fams)} families, '
+          f'{len(stages)} stage sets {[(k, len(v)) for k, v in stages.items()]}')
     print('self-check OK')
 
 
@@ -377,11 +522,20 @@ def main() -> None:
     ap = argparse.ArgumentParser(description='Automatic eval (VLM + cohesion proxies)')
     ap.add_argument('--themes', default='fruit', help='comma slugs (fruit,pet,ocean)')
     ap.add_argument('--conditions', default='B1,B3', help='conditions to score')
+    ap.add_argument('--runs', default='',
+                    help="comma run names to score directly, e.g. "
+                         "fruit_3dCartoonSimple,human (bypasses --themes/--conditions)")
+    ap.add_argument('--scope', choices=['core', 'full'], default='core',
+                    help='core = hand-picked 12 assets (paper table); '
+                         'full = every asset in the ontology')
     ap.add_argument('--tasks', default='role,stage,pairwise,cohesion',
                     help='subset of role,stage,pairwise,cohesion')
     ap.add_argument('--judge', choices=['gemini', 'openai'], default='gemini')
     ap.add_argument('--pairwise-repeats', type=int, default=2,
                     help='AB-swapped repeats per pair (even = balanced)')
+    ap.add_argument('--stage-repeats', type=int, default=1,
+                    help='shuffled repeats per stage family (>=3 tames tau noise)')
+    ap.add_argument('--out', default=str(OUT), help='output JSON path')
     ap.add_argument('--self-check', action='store_true')
     args = ap.parse_args()
 
@@ -389,40 +543,64 @@ def main() -> None:
         self_check()
         return
 
-    themes = [t.strip() for t in args.themes.split(',') if t.strip()]
-    conds = [c.strip().upper() for c in args.conditions.split(',') if c.strip()]
+    full = args.scope == 'full'
+    families = ontology_families() if full else {
+        'elements': ELEMENTS, 'powerups': POWERUPS, 'crate': CRATES}
+    stage_sets = ontology_stage_sets() if full else {'crate': CRATES}
+
     tasks = {t.strip() for t in args.tasks.split(',') if t.strip()}
     need_vlm = bool(tasks & {'role', 'stage', 'pairwise'})
     judge = build_judge(args.judge) if need_vlm else None
 
-    report: dict = {'judge': args.judge if need_vlm else None, 'themes': {}}
-    for theme in themes:
-        tr: dict = {}
-        for cond in conds:
-            if not run_dir(theme, cond).is_dir():
-                continue
-            cr: dict = {}
-            if 'role' in tasks:
-                cr['role_recognition'] = task_role_recognition(judge, theme, cond)
-            if 'stage' in tasks:
-                cr['stage_ordering'] = task_stage_ordering(judge, theme, cond)
-            if 'cohesion' in tasks:
-                cr['cohesion'] = task_cohesion(theme, cond)
-            tr[cond] = cr
-        if 'pairwise' in tasks and len(conds) >= 2:
-            pairs = []
-            for i in range(len(conds)):
-                for j in range(i + 1, len(conds)):
-                    if run_dir(theme, conds[i]).is_dir() and run_dir(theme, conds[j]).is_dir():
-                        pairs.append(task_pairwise(judge, theme, conds[i], conds[j],
-                                                   args.pairwise_repeats))
-            tr['pairwise'] = pairs
-        report['themes'][theme] = tr
+    def score(src: pathlib.Path) -> dict:
+        cr: dict = {'sprites': str(src.relative_to(ROOT)),
+                    'n_png': len(list(src.glob('*.png')))}
+        if 'role' in tasks:
+            cr['role_recognition'] = (task_role_category(judge, src) if full
+                                      else task_role_recognition(judge, src))
+        if 'stage' in tasks:
+            cr['stage_ordering'] = task_stage_ordering(judge, src, stage_sets,
+                                                       args.stage_repeats)
+        if 'cohesion' in tasks:
+            cr['cohesion'] = task_cohesion(src, families)
+        return cr
 
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
-    print(f'Wrote {OUT}')
-    print(json.dumps(report, ensure_ascii=False, indent=2)[:1500])
+    report: dict = {'judge': args.judge if need_vlm else None, 'scope': args.scope}
+
+    if args.runs:
+        report['runs'] = {}
+        for spec in [r.strip() for r in args.runs.split(',') if r.strip()]:
+            src = resolve_run(spec)
+            if not src.is_dir():
+                print(f'skip {spec}: {src} missing')
+                continue
+            print(f'-- scoring {spec}')
+            report['runs'][spec] = score(src)
+    else:
+        themes = [t.strip() for t in args.themes.split(',') if t.strip()]
+        conds = [c.strip().upper() for c in args.conditions.split(',') if c.strip()]
+        report['themes'] = {}
+        for theme in themes:
+            tr: dict = {}
+            for cond in conds:
+                if not run_dir(theme, cond).is_dir():
+                    continue
+                print(f'-- scoring {theme}/{cond}')
+                tr[cond] = score(run_dir(theme, cond))
+            if 'pairwise' in tasks and len(conds) >= 2:
+                pairs = []
+                for i in range(len(conds)):
+                    for j in range(i + 1, len(conds)):
+                        if run_dir(theme, conds[i]).is_dir() and run_dir(theme, conds[j]).is_dir():
+                            pairs.append(task_pairwise(judge, theme, conds[i], conds[j],
+                                                       args.pairwise_repeats))
+                tr['pairwise'] = pairs
+            report['themes'][theme] = tr
+
+    out = pathlib.Path(args.out)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
+    print(f'Wrote {out}')
 
 
 if __name__ == '__main__':

@@ -10,6 +10,8 @@ from __future__ import annotations
 import json
 import time
 
+from .run_config import ALLOW_OUTLINE
+
 # 預設模型 — 可在 CLI 用 --image-model / --critic-model 覆寫
 DEFAULT_IMAGE_MODEL = 'gemini-3.1-flash-image'   # nano banana(GA);高品質可換 gemini-3-pro-image。無 3.5 image 版
 DEFAULT_CRITIC_MODEL = 'gemini-3.5-flash'
@@ -95,7 +97,7 @@ NO_FACE_REVIEW_NOTE = (
     'or anthropomorphic traits. If you see any, list it under "issues" and set "verdict" to '
     '"retry" regardless of the other scores.')
 
-NO_OUTLINE_REVIEW_NOTE = (
+NO_OUTLINE_REVIEW_NOTE = '' if ALLOW_OUTLINE else (
     '\n[Hard rule] The asset MUST NOT have any outline, stroke, ink border, or contour line '
     '(black, white, or colored). If you see any, list it under "issues" and set "verdict" to '
     '"retry" regardless of the other scores.')

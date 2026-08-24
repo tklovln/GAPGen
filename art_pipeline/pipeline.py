@@ -61,7 +61,7 @@ from .gemini_api import (
     PASS_STYLE,
 )
 from .sprite_sheet import write_sprite_contact_sheet
-from .run_config import build_run_config
+from .run_config import ALLOW_OUTLINE, build_run_config
 from .run_log import RunLog
 
 GENERATED_ROOT = PROJECT_ROOT / 'generated_art'
@@ -108,7 +108,7 @@ NO_FACE_RULE = (
     '- NO FACIAL FEATURES: do NOT add eyes, mouths, faces, expressions or any anthropomorphic '
     'features to the asset. Keep objects as inanimate objects — no cartoon eyes or smiley faces.')
 
-NO_OUTLINE_RULE = (
+NO_OUTLINE_RULE = '' if ALLOW_OUTLINE else (
     '- NO OUTLINE/STROKE: do NOT add any ink outline, stroke, border contour, or edge line '
     'around the subject — no black, white, or colored strokes. Define form with shading and '
     'color only.')

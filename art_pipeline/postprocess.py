@@ -23,6 +23,8 @@ from collections import deque
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
+from .run_config import ALLOW_OUTLINE
+
 # 物件外接框至少要佔畫面面積比例(填滿畫面,不要縮在角落)
 _MIN_BBOX_COVERAGE = 0.30
 # 不透明像素至少要佔畫面比例(擋掉細長/稀疏的形狀)
@@ -71,14 +73,20 @@ def chromakey_generation_rules(asset: dict) -> str:
     r, g, b = ck['rgb']
     name = ck['name_en']
     forbidden = chromakey_forbidden_description(ck)
+    outline_rule = (
+        f"""- OUTLINE: an ink outline that is part of the art style is allowed, but it must be an
+  outline of the SUBJECT ITSELF — no sticker frame, no halo, no glow, no die-cut white border
+  offset from the shape. The outlined subject must touch the {name} background directly."""
+        if ALLOW_OUTLINE else
+        f"""- NO OUTLINE/BORDER: do NOT add any outline, stroke, border, halo, glow or sticker frame around
+  the subject (no black/white/colored ink lines). The subject must touch the {name} background
+  directly with crisp, clean edges defined by shading only.""")
     return (
         f"""- BACKGROUND: render the subject on a SOLID, FLAT, UNIFORM {name} background using
   EXACTLY hex {ck['hex']} (RGB {r}, {g}, {b}). The whole background must be this single pure
   color — no gradients, no shadows, no lighting effects. This background will be removed
   programmatically by chromakey, so it must be clean.
-- NO OUTLINE/BORDER: do NOT add any outline, stroke, border, halo, glow or sticker frame around
-  the subject (no black/white/colored ink lines). The subject must touch the {name} background
-  directly with crisp, clean edges defined by shading only.
+{outline_rule}
 - FORBIDDEN IN SUBJECT: the subject must NEVER use {forbidden} anywhere — not on surfaces,
   highlights, leaves, gaps, cavities, holes, or negative space between parts. Use clearly
   different hues (shift hue away from the key color, lower saturation, or darken).

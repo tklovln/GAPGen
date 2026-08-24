@@ -49,6 +49,14 @@
 → **8/22 台北 19:59 前沒註冊，8/28 就完全不能投，且 Round 2 是最後一輪。**
 （Dates 頁那句 "Resubmitting Round 1 papers need to be re-register" 是給 Round 1 作者的補充；我們沒有 Round 1 稿件，不適用。）
 
+**狀態更新（8/24）**：註冊截止已過（8/22 台北），**未完成註冊**，但 OpenReview 仍可建立 submission。
+「表單還開著」不等於「投稿有效」——指南明文寫不符要件的投稿會被刪除、且不給延期。處理方式：
+
+1. 立刻建立 submission（標題 + 摘要 + 完整作者名單），記下 OpenReview ID。
+2. 同時寄 WACV Help Desk 詢問逾期註冊的投稿是否受理，信中附 OpenReview ID。
+3. **在收到回覆前不要把主力押在 WACV**。目前 WACV 疊了兩個相乘的風險：(a) 逾期註冊是否有效未知，(b) 與 NeurIPS Creative AI 的 20% 重疊未解。
+   → 優先做計畫 B（Workshop，8/30 台北、政策零風險），實驗共用，等回覆再決定是否順手交 WACV。
+
 註冊只需在 OpenReview 建立 submission、填標題 + 摘要（上限 5000 字元）、加齊共同作者。但有三個會咬人的點：
 
 1. **作者名單在註冊截止後凍結**，之後只能調換順序、不能增刪 → 明天前就要決定人類評測協助者是否掛名。
@@ -89,6 +97,21 @@ WACV 政策：審查期間不得有 **內容重疊 ≥20%** 的稿件投在別�
 > 遊戲素材生成的既有評測只量視覺一致性；我們提出 **gameplay-consistency 評測套件**：角色可辨識度（board scale 70px）、階段進程正確性、家族內聚 / 跨家族區辨，以及一個**下游感知任務**（用生成素材渲染真實關卡盤面，量測盤面解析正確率），並用它比較 5 種生成方法，顯示視覺指標排名與玩法指標排名不一致。
 
 **為什麼這是 CV 論文而不是 workflow 部落格**：核心量測建立在感知任務上（低解析度小圖的角色辨識、序列排序、下游盤面解析），而非生產流程效率。
+
+### GC-Bench 內容物（不是「一包 AI 圖」，本體是標註與任務）
+
+| 層 | 內容 | 來源 | 性質 |
+|---|---|---|---|
+| 1. 規格 / 標籤 | 19 role_class、12 family、63 asset 的角色與家族歸屬；階段順序 GT（`Crt4→Crt1`、`Pool_lv1..5`、`Puddle/Rope/TrafficCone lv1..2`、`SalmonCan` 三態）；每 asset 的功能敘述與硬約束；`cell_display_px=70`；跨家族 cohesion / distinct_from 規則 | `art_pipeline/asset_roles.json` | **人寫，非 AI** |
+| 2. 任務實例 | 100 關官方盤面 + 7 關內部關卡，每格 `tile_id` = board-parse 的 per-cell GT | `godot_demo/levels/`、`levels/` | 人寫 |
+| 3. 被評測的圖 | AI：12 assets × 18 research runs + 63 assets × 5 主題 run（共 478 張）；**人類美術 63 張作 upper bound**；外部 generator 待補 | `generated_art/`、`godot_demo/resources/sprites/` | AI + 人類 |
+| 4. 評測協定 | 五個任務 + 每個 metric 的 GT 來源、跨模型判官設定、明列哪些指標不可信 | `scripts/auto_eval.py` + 新 board-parse | 方法 |
+
+**三個必須處理的問題**：
+
+1. **IP / 可釋出性（先問法務或主管）**：63 張人類美術與 100 關官方關卡屬公司 / 官方資產，很可能不能對外釋出，而 E&D track 實質預期資料可取得。閃避方案：關卡改用 `level_generator` 程序生成的 layout（per-cell GT 同樣成立、零 IP 問題）；人類美術降為不釋出的內部對照並在 licence 節說明；只公開 AI 生成的 478 張 + ontology JSON（ontology 是否算公司文件也需確認）。**未確認前，不要把「釋出 dataset」寫進貢獻。**
+2. **單一 generator**：478 張幾乎全出自同一個 Gemini image model → 這是消融資料集而非 benchmark。必須補至少一個不同家族的 generator（見 E2）。
+3. **免費的覆蓋率擴張（優先做）**：那 5 個 63-asset 全套主題 run（315 張）目前只當質性圖用，可直接餵進角色辨識與階段排序任務，asset 覆蓋 12 → 63，且新增 `Pool_lv1..5`（五階段）、`Rope`、`Puddle`、`SalmonCan`、`Chiller` 等多階段家族 → 階段進程任務樣本數大增。零生成成本。
 
 ---
 

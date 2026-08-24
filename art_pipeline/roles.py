@@ -15,6 +15,8 @@ import json
 import pathlib
 from typing import Literal
 
+from .run_config import ALLOW_OUTLINE
+
 GenerationMode = Literal['restyle', 'theme_swap']
 
 ROLES_PATH = pathlib.Path(__file__).parent / 'asset_roles.json'
@@ -22,10 +24,24 @@ _config_cache: dict | None = None
 _role_table_cache: dict[str, dict] | None = None
 
 
+def _strip_outline_bans(cfg: dict) -> None:
+    """ART_ALLOW_OUTLINE=1: 移除 role 資料裡寫死的「不可有外框線」條款。"""
+    meta = cfg.get('meta', {})
+    meta['common_sprite_constraints'] = [
+        c for c in meta.get('common_sprite_constraints', []) if 'No outline' not in c
+    ]
+    for vis in meta.get('visual_categories', {}).values():
+        vis['cohesion'] = [c.replace('; no outline strokes', '')
+                           for c in vis.get('cohesion', [])]
+
+
 def load_config(path: pathlib.Path = ROLES_PATH) -> dict:
     global _config_cache
     if _config_cache is None or path != ROLES_PATH:
-        _config_cache = json.loads(path.read_text(encoding='utf-8'))
+        cfg = json.loads(path.read_text(encoding='utf-8'))
+        if ALLOW_OUTLINE:
+            _strip_outline_bans(cfg)
+        _config_cache = cfg
     return _config_cache
 
 

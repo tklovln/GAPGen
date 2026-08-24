@@ -2,9 +2,15 @@
 
 from __future__ import annotations
 
+import os
 import shlex
 from datetime import datetime, timezone
 from typing import Any
+
+# ponytail: 全域「禁止外框線」硬規則的逃生門 — IP 畫風本身就靠手繪墨線時設 ART_ALLOW_OUTLINE=1。
+# 生圖 prompt / chromakey 規則 / critic 評審 / 畫風精煉四處共用這個開關；未設時行為完全不變。
+# 天花板:整個 run 全有全無,無法只讓部分 asset 帶墨線。要分開就開兩個 run。
+ALLOW_OUTLINE = os.environ.get('ART_ALLOW_OUTLINE') == '1'
 
 
 def build_run_config(
@@ -51,6 +57,8 @@ def build_run_config(
         'expand_theme': expand_theme,
         'refine_style': refine_style,
     }
+    if ALLOW_OUTLINE:
+        cfg['allow_outline'] = True
     if extra:
         cfg.update(extra)
     cfg['reproduce_command'] = format_reproduce_command(cfg)
@@ -59,7 +67,10 @@ def build_run_config(
 
 def format_reproduce_command(cfg: dict) -> str:
     """Multi-line shell command equivalent to the invocation."""
-    lines = ['python scripts/ai_art_gen.py generate \\']
+    lines = []
+    if cfg.get('allow_outline'):
+        lines.append('ART_ALLOW_OUTLINE=1 \\')
+    lines.append('python scripts/ai_art_gen.py generate \\')
     if cfg.get('mode') == 'theme-swap':
         lines.append('  --mode theme-swap \\')
     lines.append(f'  --style {shlex.quote(cfg["style"])} \\')
