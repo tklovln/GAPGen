@@ -22,13 +22,19 @@
 
 ---
 
+
+
 ## 人類決策（LOCKED）— 見 `SCOPE.md`
 
 H1 P1 ✅ · H2 可去 Sydney（全名 T9）✅ · H3 Fruit + Pet/Ocean × 3dCartoonSimple / elements+powerups+crate ✅ · H4 RQ2+RQ4 ✅
 
 ---
 
+
+
 ## 進行中 / 下一項
+
+
 
 ### T6. Mini human eval ⬅️ **NEXT（需人類招募／部署）**
 
@@ -38,7 +44,10 @@ H1 P1 ✅ · H2 可去 Sydney（全名 T9）✅ · H3 Fruit + Pet/Ocean × 3dCar
 - [ ] Deploy Pages + 分享 URL
 - [ ] n≥6 收集（下載 JSON/CSV 寄回）
 - [ ] `results/human_eval_summary.csv`
+
 - **Done when：** 有描述統計，或論文明確寫 pending + 只用設計層 agency 論點
+
+
 
 ### T7. 補 `main.tex`（剩餘）
 
@@ -48,11 +57,15 @@ H1 P1 ✅ · H2 可去 Sydney（全名 T9）✅ · H3 Fruit + Pet/Ocean × 3dCar
 - [ ] 可選：B0 真跑後補一列
 - [ ] 刪已解決的 `\pending`
 
+
+
 ### T8. 圖進論文
 
 - [x] Fig pipeline + Fig B1/B3 grids
 - [ ] 可選 board screenshot（apply B3 後）
 - [ ] 可選 cat／Pet 圖若版面允許
+
+
 
 ### T9. 文獻與作者
 
@@ -60,11 +73,15 @@ H1 P1 ✅ · H2 可去 Sydney（全名 T9）✅ · H3 Fruit + Pet/Ocean × 3dCar
 - [ ] 人類填真實 `\author{}`
 - [ ] checklist 若 track 需要則填
 
+
+
 ### T10. 寫作 polish
 
 - [ ] 跟 `research-paper-writing/SKILL.md` 過一輪
 - [ ] 交稿前刪 Draft Self-Review
 - [ ] 確認正文 ≤6 頁（Creative AI）
+
+
 
 ### T11–T13
 
@@ -73,6 +90,8 @@ H1 P1 ✅ · H2 可去 Sydney（全名 T9）✅ · H3 Fruit + Pet/Ocean × 3dCar
 - [ ] 編譯 + OpenReview 提交
 
 ---
+
+
 
 ## 明確不要做
 
@@ -84,6 +103,8 @@ H1 P1 ✅ · H2 可去 Sydney（全名 T9）✅ · H3 Fruit + Pet/Ocean × 3dCar
 
 ---
 
+
+
 ## Agent prompt（可複製）
 
 ```text
@@ -92,3 +113,4 @@ Next: T6 (Pages deploy + collect n≥6) and/or T9–T10 polish.
 Do not invent human-eval numbers. Do not claim B1>B3 on pass rate.
 Sync markdown (AGENT_TODO, SCOPE, RESEARCH_PLAN, RESEARCH_PROPOSAL) when finishing a task.
 ```
+

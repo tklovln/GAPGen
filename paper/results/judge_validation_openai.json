@@ -1,0 +1,122 @@
+{
+  "judge": "openai",
+  "model": "gpt-4o",
+  "pack": "human",
+  "sample": [
+    [
+      "board_bg",
+      "background"
+    ],
+    [
+      "Blu",
+      "element"
+    ],
+    [
+      "Grn",
+      "element"
+    ],
+    [
+      "Pur",
+      "element"
+    ],
+    [
+      "Barrel",
+      "obstacle"
+    ],
+    [
+      "BeverageChiller_body",
+      "obstacle"
+    ],
+    [
+      "BeverageChiller_bottle_blue",
+      "obstacle"
+    ],
+    [
+      "LtBl",
+      "powerup"
+    ],
+    [
+      "Soda0d",
+      "powerup"
+    ],
+    [
+      "Soda90",
+      "powerup"
+    ]
+  ],
+  "pass1": [
+    "background",
+    "element",
+    "obstacle",
+    "obstacle",
+    "obstacle",
+    "obstacle",
+    "element",
+    "powerup",
+    "powerup",
+    "powerup"
+  ],
+  "pass2": [
+    "background",
+    "element",
+    "element",
+    "obstacle",
+    "obstacle",
+    "obstacle",
+    "element",
+    "powerup",
+    "powerup",
+    "powerup"
+  ],
+  "permuted": [
+    "background",
+    "obstacle",
+    "element",
+    "obstacle",
+    "obstacle",
+    "obstacle",
+    "element",
+    "powerup",
+    "powerup",
+    "powerup"
+  ],
+  "blind": [
+    "background",
+    "background",
+    "background",
+    "background",
+    "background",
+    "background",
+    "background",
+    "background",
+    "background",
+    "background"
+  ],
+  "accuracy": 0.7,
+  "blind_accuracy": 0.1,
+  "majority_accuracy": 0.3,
+  "chance": 0.25,
+  "checks": {
+    "1 protocol compliance": {
+      "value": "1.000 valid",
+      "pass": true
+    },
+    "2 test-retest agreement": {
+      "value": "0.900",
+      "pass": true
+    },
+    "3 label-permutation invariance": {
+      "value": "0.800",
+      "pass": true
+    },
+    "4 looks at the image (blind control)": {
+      "value": "real 0.700 vs blind 0.100 (chance 0.25)",
+      "pass": true
+    },
+    "5 beats constant-majority guess": {
+      "value": "0.700 vs always-\"powerup\" 0.300",
+      "pass": true
+    }
+  },
+  "usable": true
+}

@@ -1,0 +1,122 @@
+{
+  "judge": "claude",
+  "model": "claude-sonnet-5",
+  "pack": "human",
+  "sample": [
+    [
+      "board_bg",
+      "background"
+    ],
+    [
+      "Blu",
+      "element"
+    ],
+    [
+      "Grn",
+      "element"
+    ],
+    [
+      "Pur",
+      "element"
+    ],
+    [
+      "Barrel",
+      "obstacle"
+    ],
+    [
+      "BeverageChiller_body",
+      "obstacle"
+    ],
+    [
+      "BeverageChiller_bottle_blue",
+      "obstacle"
+    ],
+    [
+      "LtBl",
+      "powerup"
+    ],
+    [
+      "Soda0d",
+      "powerup"
+    ],
+    [
+      "Soda90",
+      "powerup"
+    ]
+  ],
+  "pass1": [
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError"
+  ],
+  "pass2": [
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError"
+  ],
+  "permuted": [
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError"
+  ],
+  "blind": [
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError",
+    "error:BadRequestError"
+  ],
+  "accuracy": 0.0,
+  "blind_accuracy": 0.0,
+  "majority_accuracy": 0.3,
+  "chance": 0.25,
+  "checks": {
+    "1 protocol compliance": {
+      "value": "0.000 valid",
+      "pass": false
+    },
+    "2 test-retest agreement": {
+      "value": "1.000",
+      "pass": true
+    },
+    "3 label-permutation invariance": {
+      "value": "1.000",
+      "pass": true
+    },
+    "4 looks at the image (blind control)": {
+      "value": "real 0.000 vs blind 0.000 (chance 0.25)",
+      "pass": false
+    },
+    "5 beats constant-majority guess": {
+      "value": "0.000 vs always-\"powerup\" 0.300",
+      "pass": false
+    }
+  },
+  "usable": false
+}

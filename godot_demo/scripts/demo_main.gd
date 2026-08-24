@@ -82,12 +82,6 @@ func _ready() -> void:
 	if _level_paths.is_empty():
 		push_error("DemoMain: 找不到 res://levels/*.json,請確認檔案已複製")
 		return
-	# 嘗試啟動 BGM(若 AudioManager 存在)
-	if Engine.has_singleton("AudioManager") or has_node("/root/AudioManager"):
-		var audio = get_node_or_null("/root/AudioManager")
-		if audio and audio.has_method("start_bgm"):
-			audio.start_bgm()
-
 	# 攤位模式偵測(?booth=1)：開機顯示待機畫面、不顯示官方 100 關選單
 	if OS.has_feature("web"):
 		var booth_param = JavaScriptBridge.eval("""

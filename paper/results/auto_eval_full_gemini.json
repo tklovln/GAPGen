@@ -1,0 +1,2041 @@
+{
+  "judge": "gemini",
+  "scope": "full",
+  "runs": {
+    "fruit_3dCartoonSimple": {
+      "sprites": "generated_art/fruit_3dCartoonSimple/sprites",
+      "n_png": 63,
+      "role_recognition": {
+        "n": 63,
+        "accuracy": 0.825,
+        "accuracy_macro": 0.857,
+        "by_category": {
+          "background": {
+            "n": 1,
+            "accuracy": 1.0
+          },
+          "element": {
+            "n": 5,
+            "accuracy": 1.0
+          },
+          "obstacle": {
+            "n": 52,
+            "accuracy": 0.827
+          },
+          "powerup": {
+            "n": 5,
+            "accuracy": 0.6
+          }
+        },
+        "trials": [
+          {
+            "asset": "Barrel",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_body",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_bottle_blue",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "BeverageChiller_bottle_green",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "BeverageChiller_bottle_red",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_bottle_yellow",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "BeverageChiller_closed",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_door",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv5",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Blu",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Grn",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "LtBl",
+            "true": "powerup",
+            "pred": "powerup",
+            "correct": true
+          },
+          {
+            "asset": "Mud",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv4",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Pool_lv5",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Postmark_01",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Postmark_02",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Postmark_bundle",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Postmark_card",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Postmark_goal",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Puddle_lv1",
+            "true": "obstacle",
+            "pred": "background",
+            "correct": false
+          },
+          {
+            "asset": "Puddle_lv2",
+            "true": "obstacle",
+            "pred": "background",
+            "correct": false
+          },
+          {
+            "asset": "Pur",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Red",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Rope_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Rope_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "SalmonCan",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "SalmonCan_body",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "SalmonCan_top1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "SalmonCan_top2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Soda0d",
+            "true": "powerup",
+            "pred": "obstacle",
+            "correct": false
+          },
+          {
+            "asset": "Soda90",
+            "true": "powerup",
+            "pred": "obstacle",
+            "correct": false
+          },
+          {
+            "asset": "Stamp",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "TNT",
+            "true": "powerup",
+            "pred": "powerup",
+            "correct": true
+          },
+          {
+            "asset": "TrPr",
+            "true": "powerup",
+            "pred": "powerup",
+            "correct": true
+          },
+          {
+            "asset": "TrafficCone_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "TrafficCone_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_closed",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_door",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv10",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv11",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv5",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv6",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv7",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv8",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv9",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Yel",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "board_bg",
+            "true": "background",
+            "pred": "background",
+            "correct": true
+          }
+        ]
+      }
+    },
+    "cat_3dCartoonSimple": {
+      "sprites": "generated_art/cat_3dCartoonSimple/sprites",
+      "n_png": 63,
+      "role_recognition": {
+        "n": 63,
+        "accuracy": 0.857,
+        "accuracy_macro": 0.866,
+        "by_category": {
+          "background": {
+            "n": 1,
+            "accuracy": 1.0
+          },
+          "element": {
+            "n": 5,
+            "accuracy": 1.0
+          },
+          "obstacle": {
+            "n": 52,
+            "accuracy": 0.865
+          },
+          "powerup": {
+            "n": 5,
+            "accuracy": 0.6
+          }
+        },
+        "trials": [
+          {
+            "asset": "Barrel",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_body",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_bottle_blue",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "BeverageChiller_bottle_green",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "BeverageChiller_bottle_red",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "BeverageChiller_bottle_yellow",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "BeverageChiller_closed",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_door",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv5",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Blu",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Grn",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "LtBl",
+            "true": "powerup",
+            "pred": "obstacle",
+            "correct": false
+          },
+          {
+            "asset": "Mud",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv5",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Postmark_01",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Postmark_02",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Postmark_bundle",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Postmark_card",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Postmark_goal",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Puddle_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Puddle_lv2",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Pur",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Red",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Rope_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Rope_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "SalmonCan",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "SalmonCan_body",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "SalmonCan_top1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "SalmonCan_top2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Soda0d",
+            "true": "powerup",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Soda90",
+            "true": "powerup",
+            "pred": "powerup",
+            "correct": true
+          },
+          {
+            "asset": "Stamp",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "TNT",
+            "true": "powerup",
+            "pred": "powerup",
+            "correct": true
+          },
+          {
+            "asset": "TrPr",
+            "true": "powerup",
+            "pred": "powerup",
+            "correct": true
+          },
+          {
+            "asset": "TrafficCone_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "TrafficCone_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_closed",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_door",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv10",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv11",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv5",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv6",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv7",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv8",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv9",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Yel",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "board_bg",
+            "true": "background",
+            "pred": "background",
+            "correct": true
+          }
+        ]
+      }
+    },
+    "ocean_3dCartoonSimple": {
+      "sprites": "generated_art/ocean_3dCartoonSimple/sprites",
+      "n_png": 63,
+      "role_recognition": {
+        "n": 63,
+        "accuracy": 0.889,
+        "accuracy_macro": 0.831,
+        "by_category": {
+          "background": {
+            "n": 1,
+            "accuracy": 1.0
+          },
+          "element": {
+            "n": 5,
+            "accuracy": 0.6
+          },
+          "obstacle": {
+            "n": 52,
+            "accuracy": 0.923
+          },
+          "powerup": {
+            "n": 5,
+            "accuracy": 0.8
+          }
+        },
+        "trials": [
+          {
+            "asset": "Barrel",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_body",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_bottle_blue",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "BeverageChiller_bottle_green",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_bottle_red",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_bottle_yellow",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_closed",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_door",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv5",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Blu",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Grn",
+            "true": "element",
+            "pred": "obstacle",
+            "correct": false
+          },
+          {
+            "asset": "LtBl",
+            "true": "powerup",
+            "pred": "obstacle",
+            "correct": false
+          },
+          {
+            "asset": "Mud",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv5",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Postmark_01",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Postmark_02",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Postmark_bundle",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Postmark_card",
+            "true": "obstacle",
+            "pred": "background",
+            "correct": false
+          },
+          {
+            "asset": "Postmark_goal",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Puddle_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Puddle_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pur",
+            "true": "element",
+            "pred": "obstacle",
+            "correct": false
+          },
+          {
+            "asset": "Red",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Rope_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Rope_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "SalmonCan",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "SalmonCan_body",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "SalmonCan_top1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "SalmonCan_top2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Soda0d",
+            "true": "powerup",
+            "pred": "powerup",
+            "correct": true
+          },
+          {
+            "asset": "Soda90",
+            "true": "powerup",
+            "pred": "powerup",
+            "correct": true
+          },
+          {
+            "asset": "Stamp",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "TNT",
+            "true": "powerup",
+            "pred": "powerup",
+            "correct": true
+          },
+          {
+            "asset": "TrPr",
+            "true": "powerup",
+            "pred": "powerup",
+            "correct": true
+          },
+          {
+            "asset": "TrafficCone_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "TrafficCone_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_closed",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_door",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv10",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv11",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv5",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv6",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv7",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv8",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv9",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Yel",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "board_bg",
+            "true": "background",
+            "pred": "background",
+            "correct": true
+          }
+        ]
+      }
+    },
+    "SteamPunk_3dCartoonSimple": {
+      "sprites": "generated_art/SteamPunk_3dCartoonSimple/sprites",
+      "n_png": 63,
+      "role_recognition": {
+        "n": 63,
+        "accuracy": 0.841,
+        "accuracy_macro": 0.816,
+        "by_category": {
+          "background": {
+            "n": 1,
+            "accuracy": 1.0
+          },
+          "element": {
+            "n": 5,
+            "accuracy": 0.8
+          },
+          "obstacle": {
+            "n": 52,
+            "accuracy": 0.865
+          },
+          "powerup": {
+            "n": 5,
+            "accuracy": 0.6
+          }
+        },
+        "trials": [
+          {
+            "asset": "Barrel",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_body",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_bottle_blue",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "BeverageChiller_bottle_green",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "BeverageChiller_bottle_red",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "BeverageChiller_bottle_yellow",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "BeverageChiller_closed",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_door",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv5",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Blu",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Grn",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "LtBl",
+            "true": "powerup",
+            "pred": "obstacle",
+            "correct": false
+          },
+          {
+            "asset": "Mud",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv5",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Postmark_01",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Postmark_02",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Postmark_bundle",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Postmark_card",
+            "true": "obstacle",
+            "pred": "background",
+            "correct": false
+          },
+          {
+            "asset": "Postmark_goal",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Puddle_lv1",
+            "true": "obstacle",
+            "pred": "background",
+            "correct": false
+          },
+          {
+            "asset": "Puddle_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pur",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Red",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Rope_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Rope_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "SalmonCan",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "SalmonCan_body",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "SalmonCan_top1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "SalmonCan_top2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Soda0d",
+            "true": "powerup",
+            "pred": "powerup",
+            "correct": true
+          },
+          {
+            "asset": "Soda90",
+            "true": "powerup",
+            "pred": "powerup",
+            "correct": true
+          },
+          {
+            "asset": "Stamp",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "TNT",
+            "true": "powerup",
+            "pred": "obstacle",
+            "correct": false
+          },
+          {
+            "asset": "TrPr",
+            "true": "powerup",
+            "pred": "powerup",
+            "correct": true
+          },
+          {
+            "asset": "TrafficCone_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "TrafficCone_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_closed",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_door",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv10",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv11",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv5",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv6",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv7",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv8",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv9",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Yel",
+            "true": "element",
+            "pred": "obstacle",
+            "correct": false
+          },
+          {
+            "asset": "board_bg",
+            "true": "background",
+            "pred": "background",
+            "correct": true
+          }
+        ]
+      }
+    },
+    "human": {
+      "sprites": "godot_demo/resources/sprites_original_backup",
+      "n_png": 63,
+      "role_recognition": {
+        "n": 63,
+        "accuracy": 0.873,
+        "accuracy_macro": 0.826,
+        "by_category": {
+          "background": {
+            "n": 1,
+            "accuracy": 1.0
+          },
+          "element": {
+            "n": 5,
+            "accuracy": 0.6
+          },
+          "obstacle": {
+            "n": 52,
+            "accuracy": 0.904
+          },
+          "powerup": {
+            "n": 5,
+            "accuracy": 0.8
+          }
+        },
+        "trials": [
+          {
+            "asset": "Barrel",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_body",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_bottle_blue",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_bottle_green",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "BeverageChiller_bottle_red",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_bottle_yellow",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "BeverageChiller_closed",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_door",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv5",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Blu",
+            "true": "element",
+            "pred": "obstacle",
+            "correct": false
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Grn",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "LtBl",
+            "true": "powerup",
+            "pred": "powerup",
+            "correct": true
+          },
+          {
+            "asset": "Mud",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv1",
+            "true": "obstacle",
+            "pred": "background",
+            "correct": false
+          },
+          {
+            "asset": "Pool_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv5",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Postmark_01",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Postmark_02",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Postmark_bundle",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Postmark_card",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Postmark_goal",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Puddle_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Puddle_lv2",
+            "true": "obstacle",
+            "pred": "background",
+            "correct": false
+          },
+          {
+            "asset": "Pur",
+            "true": "element",
+            "pred": "obstacle",
+            "correct": false
+          },
+          {
+            "asset": "Red",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Rope_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Rope_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "SalmonCan",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "SalmonCan_body",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "SalmonCan_top1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "SalmonCan_top2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Soda0d",
+            "true": "powerup",
+            "pred": "powerup",
+            "correct": true
+          },
+          {
+            "asset": "Soda90",
+            "true": "powerup",
+            "pred": "obstacle",
+            "correct": false
+          },
+          {
+            "asset": "Stamp",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "TNT",
+            "true": "powerup",
+            "pred": "powerup",
+            "correct": true
+          },
+          {
+            "asset": "TrPr",
+            "true": "powerup",
+            "pred": "powerup",
+            "correct": true
+          },
+          {
+            "asset": "TrafficCone_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "TrafficCone_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_closed",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_door",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv10",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv11",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv5",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv6",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv7",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv8",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv9",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Yel",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "board_bg",
+            "true": "background",
+            "pred": "background",
+            "correct": true
+          }
+        ]
+      }
+    }
+  }
+}

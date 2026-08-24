@@ -1,0 +1,1354 @@
+{
+  "judge": "openai",
+  "scope": "full",
+  "runs": {
+    "human": {
+      "sprites": "godot_demo/resources/sprites_original_backup",
+      "n_png": 63,
+      "role_recognition": {
+        "n": 63,
+        "accuracy": 0.746,
+        "by_category": {
+          "background": {
+            "n": 1,
+            "accuracy": 1.0
+          },
+          "element": {
+            "n": 5,
+            "accuracy": 0.0
+          },
+          "obstacle": {
+            "n": 52,
+            "accuracy": 0.788
+          },
+          "powerup": {
+            "n": 5,
+            "accuracy": 1.0
+          }
+        },
+        "trials": [
+          {
+            "asset": "Barrel",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_body",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_bottle_blue",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "BeverageChiller_bottle_green",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "BeverageChiller_bottle_red",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "BeverageChiller_bottle_yellow",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "BeverageChiller_closed",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_door",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv5",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Blu",
+            "true": "element",
+            "pred": "powerup",
+            "correct": false
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Grn",
+            "true": "element",
+            "pred": "obstacle",
+            "correct": false
+          },
+          {
+            "asset": "LtBl",
+            "true": "powerup",
+            "pred": "powerup",
+            "correct": true
+          },
+          {
+            "asset": "Mud",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv1",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Pool_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv5",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Postmark_01",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Postmark_02",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Postmark_bundle",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Postmark_card",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Postmark_goal",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Puddle_lv1",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Puddle_lv2",
+            "true": "obstacle",
+            "pred": "background",
+            "correct": false
+          },
+          {
+            "asset": "Pur",
+            "true": "element",
+            "pred": "obstacle",
+            "correct": false
+          },
+          {
+            "asset": "Red",
+            "true": "element",
+            "pred": "obstacle",
+            "correct": false
+          },
+          {
+            "asset": "Rope_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Rope_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "SalmonCan",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "SalmonCan_body",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "SalmonCan_top1",
+            "true": "obstacle",
+            "pred": "powerup",
+            "correct": false
+          },
+          {
+            "asset": "SalmonCan_top2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Soda0d",
+            "true": "powerup",
+            "pred": "powerup",
+            "correct": true
+          },
+          {
+            "asset": "Soda90",
+            "true": "powerup",
+            "pred": "powerup",
+            "correct": true
+          },
+          {
+            "asset": "Stamp",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "TNT",
+            "true": "powerup",
+            "pred": "powerup",
+            "correct": true
+          },
+          {
+            "asset": "TrPr",
+            "true": "powerup",
+            "pred": "powerup",
+            "correct": true
+          },
+          {
+            "asset": "TrafficCone_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "TrafficCone_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_closed",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_door",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv10",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv11",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv5",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv6",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv7",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv8",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv9",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Yel",
+            "true": "element",
+            "pred": "powerup",
+            "correct": false
+          },
+          {
+            "asset": "board_bg",
+            "true": "background",
+            "pred": "background",
+            "correct": true
+          }
+        ]
+      },
+      "stage_ordering": {
+        "families": {
+          "crate": {
+            "n_stages": 4,
+            "repeats": 3,
+            "kendall_tau_mean": 0.333,
+            "runs": [
+              {
+                "presented": [
+                  "Crt4",
+                  "Crt3",
+                  "Crt2",
+                  "Crt1"
+                ],
+                "predicted_order": [
+                  "Crt2",
+                  "Crt3",
+                  "Crt4",
+                  "Crt1"
+                ],
+                "kendall_tau": 0.0
+              },
+              {
+                "presented": [
+                  "Crt1",
+                  "Crt4",
+                  "Crt3",
+                  "Crt2"
+                ],
+                "predicted_order": [
+                  "Crt3",
+                  "Crt2",
+                  "Crt4",
+                  "Crt1"
+                ],
+                "kendall_tau": 0.333
+              },
+              {
+                "presented": [
+                  "Crt1",
+                  "Crt2",
+                  "Crt3",
+                  "Crt4"
+                ],
+                "predicted_order": [
+                  "Crt3",
+                  "Crt4",
+                  "Crt2",
+                  "Crt1"
+                ],
+                "kendall_tau": 0.667
+              }
+            ]
+          },
+          "pool": {
+            "n_stages": 5,
+            "repeats": 3,
+            "kendall_tau_mean": 0.333,
+            "runs": [
+              {
+                "presented": [
+                  "Pool_lv3",
+                  "Pool_lv5",
+                  "Pool_lv4",
+                  "Pool_lv1",
+                  "Pool_lv2"
+                ],
+                "predicted_order": [
+                  "Pool_lv5",
+                  "Pool_lv4",
+                  "Pool_lv3",
+                  "Pool_lv2",
+                  "Pool_lv1"
+                ],
+                "kendall_tau": 1.0
+              },
+              {
+                "presented": [
+                  "Pool_lv4",
+                  "Pool_lv5",
+                  "Pool_lv3",
+                  "Pool_lv2",
+                  "Pool_lv1"
+                ],
+                "predicted_order": [
+                  "Pool_lv5",
+                  "Pool_lv4",
+                  "Pool_lv3",
+                  "Pool_lv2",
+                  "Pool_lv1"
+                ],
+                "kendall_tau": 1.0
+              },
+              {
+                "presented": [
+                  "Pool_lv1",
+                  "Pool_lv2",
+                  "Pool_lv5",
+                  "Pool_lv3",
+                  "Pool_lv4"
+                ],
+                "predicted_order": [
+                  "Pool_lv1",
+                  "Pool_lv2",
+                  "Pool_lv3",
+                  "Pool_lv4",
+                  "Pool_lv5"
+                ],
+                "kendall_tau": -1.0
+              }
+            ]
+          },
+          "water_chiller": {
+            "n_stages": 11,
+            "repeats": 3,
+            "kendall_tau_mean": 0.745,
+            "runs": [
+              {
+                "presented": [
+                  "WaterChiller_lv7",
+                  "WaterChiller_lv2",
+                  "WaterChiller_lv3",
+                  "WaterChiller_lv6",
+                  "WaterChiller_lv11",
+                  "WaterChiller_lv8",
+                  "WaterChiller_lv5",
+                  "WaterChiller_lv9",
+                  "WaterChiller_lv1",
+                  "WaterChiller_lv10",
+                  "WaterChiller_lv4"
+                ],
+                "predicted_order": [
+                  "WaterChiller_lv10",
+                  "WaterChiller_lv5",
+                  "WaterChiller_lv8",
+                  "WaterChiller_lv6",
+                  "WaterChiller_lv7",
+                  "WaterChiller_lv4",
+                  "WaterChiller_lv3",
+                  "WaterChiller_lv2",
+                  "WaterChiller_lv9",
+                  "WaterChiller_lv1",
+                  "WaterChiller_lv11"
+                ],
+                "kendall_tau": 0.236
+              },
+              {
+                "presented": [
+                  "WaterChiller_lv1",
+                  "WaterChiller_lv6",
+                  "WaterChiller_lv3",
+                  "WaterChiller_lv5",
+                  "WaterChiller_lv10",
+                  "WaterChiller_lv9",
+                  "WaterChiller_lv8",
+                  "WaterChiller_lv2",
+                  "WaterChiller_lv7",
+                  "WaterChiller_lv4",
+                  "WaterChiller_lv11"
+                ],
+                "predicted_order": [
+                  "WaterChiller_lv11",
+                  "WaterChiller_lv10",
+                  "WaterChiller_lv9",
+                  "WaterChiller_lv8",
+                  "WaterChiller_lv7",
+                  "WaterChiller_lv6",
+                  "WaterChiller_lv5",
+                  "WaterChiller_lv4",
+                  "WaterChiller_lv3",
+                  "WaterChiller_lv2",
+                  "WaterChiller_lv1"
+                ],
+                "kendall_tau": 1.0
+              },
+              {
+                "presented": [
+                  "WaterChiller_lv1",
+                  "WaterChiller_lv9",
+                  "WaterChiller_lv8",
+                  "WaterChiller_lv3",
+                  "WaterChiller_lv10",
+                  "WaterChiller_lv5",
+                  "WaterChiller_lv7",
+                  "WaterChiller_lv2",
+                  "WaterChiller_lv11",
+                  "WaterChiller_lv6",
+                  "WaterChiller_lv4"
+                ],
+                "predicted_order": [
+                  "9",
+                  "5",
+                  "2",
+                  "3",
+                  "7",
+                  "10",
+                  "6",
+                  "11",
+                  "4",
+                  "8",
+                  "1"
+                ],
+                "kendall_tau": 1.0
+              }
+            ]
+          },
+          "beverage_chiller": {
+            "n_stages": 5,
+            "repeats": 3,
+            "kendall_tau_mean": 0.933,
+            "runs": [
+              {
+                "presented": [
+                  "BeverageChiller_lv2",
+                  "BeverageChiller_lv1",
+                  "BeverageChiller_lv4",
+                  "BeverageChiller_lv3",
+                  "BeverageChiller_lv5"
+                ],
+                "predicted_order": [
+                  "BeverageChiller_lv5",
+                  "BeverageChiller_lv4",
+                  "BeverageChiller_lv3",
+                  "BeverageChiller_lv2",
+                  "BeverageChiller_lv1"
+                ],
+                "kendall_tau": 1.0
+              },
+              {
+                "presented": [
+                  "BeverageChiller_lv4",
+                  "BeverageChiller_lv3",
+                  "BeverageChiller_lv1",
+                  "BeverageChiller_lv2",
+                  "BeverageChiller_lv5"
+                ],
+                "predicted_order": [
+                  "BeverageChiller_lv5",
+                  "BeverageChiller_lv4",
+                  "BeverageChiller_lv3",
+                  "BeverageChiller_lv2",
+                  "BeverageChiller_lv1"
+                ],
+                "kendall_tau": 1.0
+              },
+              {
+                "presented": [
+                  "BeverageChiller_lv1",
+                  "BeverageChiller_lv2",
+                  "BeverageChiller_lv5",
+                  "BeverageChiller_lv4",
+                  "BeverageChiller_lv3"
+                ],
+                "predicted_order": [
+                  "BeverageChiller_lv5",
+                  "BeverageChiller_lv4",
+                  "BeverageChiller_lv2",
+                  "BeverageChiller_lv3",
+                  "BeverageChiller_lv1"
+                ],
+                "kendall_tau": 0.8
+              }
+            ]
+          }
+        },
+        "n_families": 4,
+        "kendall_tau_macro": 0.586
+      }
+    },
+    "applied": {
+      "sprites": "godot_demo/resources/sprites",
+      "n_png": 63,
+      "role_recognition": {
+        "n": 63,
+        "accuracy": 0.762,
+        "by_category": {
+          "background": {
+            "n": 1,
+            "accuracy": 1.0
+          },
+          "element": {
+            "n": 5,
+            "accuracy": 0.6
+          },
+          "obstacle": {
+            "n": 52,
+            "accuracy": 0.808
+          },
+          "powerup": {
+            "n": 5,
+            "accuracy": 0.4
+          }
+        },
+        "trials": [
+          {
+            "asset": "Barrel",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_body",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_bottle_blue",
+            "true": "obstacle",
+            "pred": "powerup",
+            "correct": false
+          },
+          {
+            "asset": "BeverageChiller_bottle_green",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "BeverageChiller_bottle_red",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_bottle_yellow",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "BeverageChiller_closed",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_door",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "BeverageChiller_lv5",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Blu",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Grn",
+            "true": "element",
+            "pred": "obstacle",
+            "correct": false
+          },
+          {
+            "asset": "LtBl",
+            "true": "powerup",
+            "pred": "obstacle",
+            "correct": false
+          },
+          {
+            "asset": "Mud",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Pool_lv5",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Postmark_01",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Postmark_02",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Postmark_bundle",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Postmark_card",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Postmark_goal",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Puddle_lv1",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Puddle_lv2",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Pur",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Red",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Rope_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Rope_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "SalmonCan",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "SalmonCan_body",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "SalmonCan_top1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "SalmonCan_top2",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Soda0d",
+            "true": "powerup",
+            "pred": "obstacle",
+            "correct": false
+          },
+          {
+            "asset": "Soda90",
+            "true": "powerup",
+            "pred": "obstacle",
+            "correct": false
+          },
+          {
+            "asset": "Stamp",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "TNT",
+            "true": "powerup",
+            "pred": "powerup",
+            "correct": true
+          },
+          {
+            "asset": "TrPr",
+            "true": "powerup",
+            "pred": "powerup",
+            "correct": true
+          },
+          {
+            "asset": "TrafficCone_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "TrafficCone_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_closed",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_door",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv10",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv11",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv5",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv6",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv7",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv8",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "WaterChiller_lv9",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Yel",
+            "true": "element",
+            "pred": "obstacle",
+            "correct": false
+          },
+          {
+            "asset": "board_bg",
+            "true": "background",
+            "pred": "background",
+            "correct": true
+          }
+        ]
+      },
+      "stage_ordering": {
+        "families": {
+          "crate": {
+            "n_stages": 4,
+            "repeats": 3,
+            "kendall_tau_mean": 0.889,
+            "runs": [
+              {
+                "presented": [
+                  "Crt2",
+                  "Crt3",
+                  "Crt1",
+                  "Crt4"
+                ],
+                "predicted_order": [
+                  "Crt4",
+                  "Crt3",
+                  "Crt2",
+                  "Crt1"
+                ],
+                "kendall_tau": 1.0
+              },
+              {
+                "presented": [
+                  "Crt2",
+                  "Crt1",
+                  "Crt3",
+                  "Crt4"
+                ],
+                "predicted_order": [
+                  "Crt4",
+                  "Crt3",
+                  "Crt1",
+                  "Crt2"
+                ],
+                "kendall_tau": 0.667
+              },
+              {
+                "presented": [
+                  "Crt1",
+                  "Crt2",
+                  "Crt3",
+                  "Crt4"
+                ],
+                "predicted_order": [
+                  "Crt4",
+                  "Crt3",
+                  "Crt2",
+                  "Crt1"
+                ],
+                "kendall_tau": 1.0
+              }
+            ]
+          },
+          "pool": {
+            "n_stages": 5,
+            "repeats": 3,
+            "kendall_tau_mean": 0.2,
+            "runs": [
+              {
+                "presented": [
+                  "Pool_lv2",
+                  "Pool_lv1",
+                  "Pool_lv4",
+                  "Pool_lv3",
+                  "Pool_lv5"
+                ],
+                "predicted_order": [
+                  "Pool_lv5",
+                  "Pool_lv3",
+                  "Pool_lv4",
+                  "Pool_lv2",
+                  "Pool_lv1"
+                ],
+                "kendall_tau": 0.8
+              },
+              {
+                "presented": [
+                  "Pool_lv4",
+                  "Pool_lv1",
+                  "Pool_lv3",
+                  "Pool_lv2",
+                  "Pool_lv5"
+                ],
+                "predicted_order": [
+                  "Pool_lv5",
+                  "Pool_lv4",
+                  "Pool_lv2",
+                  "Pool_lv3",
+                  "Pool_lv1"
+                ],
+                "kendall_tau": 0.8
+              },
+              {
+                "presented": [
+                  "Pool_lv5",
+                  "Pool_lv2",
+                  "Pool_lv1",
+                  "Pool_lv3",
+                  "Pool_lv4"
+                ],
+                "predicted_order": [
+                  "Pool_lv1",
+                  "Pool_lv2",
+                  "Pool_lv3",
+                  "Pool_lv4",
+                  "Pool_lv5"
+                ],
+                "kendall_tau": -1.0
+              }
+            ]
+          },
+          "water_chiller": {
+            "n_stages": 11,
+            "repeats": 3,
+            "kendall_tau_mean": 0.709,
+            "runs": [
+              {
+                "presented": [
+                  "WaterChiller_lv7",
+                  "WaterChiller_lv1",
+                  "WaterChiller_lv4",
+                  "WaterChiller_lv8",
+                  "WaterChiller_lv3",
+                  "WaterChiller_lv9",
+                  "WaterChiller_lv10",
+                  "WaterChiller_lv5",
+                  "WaterChiller_lv6",
+                  "WaterChiller_lv11",
+                  "WaterChiller_lv2"
+                ],
+                "predicted_order": [
+                  "WaterChiller_lv7",
+                  "WaterChiller_lv10",
+                  "WaterChiller_lv6",
+                  "WaterChiller_lv4",
+                  "WaterChiller_lv3",
+                  "WaterChiller_lv11",
+                  "WaterChiller_lv9",
+                  "WaterChiller_lv5",
+                  "WaterChiller_lv8",
+                  "WaterChiller_lv2",
+                  "WaterChiller_lv1"
+                ],
+                "kendall_tau": 0.382
+              },
+              {
+                "presented": [
+                  "WaterChiller_lv4",
+                  "WaterChiller_lv6",
+                  "WaterChiller_lv9",
+                  "WaterChiller_lv2",
+                  "WaterChiller_lv1",
+                  "WaterChiller_lv5",
+                  "WaterChiller_lv3",
+                  "WaterChiller_lv7",
+                  "WaterChiller_lv8",
+                  "WaterChiller_lv11",
+                  "WaterChiller_lv10"
+                ],
+                "predicted_order": [
+                  "WaterChiller_lv10",
+                  "WaterChiller_lv11",
+                  "WaterChiller_lv9",
+                  "WaterChiller_lv8",
+                  "WaterChiller_lv7",
+                  "WaterChiller_lv6",
+                  "WaterChiller_lv5",
+                  "WaterChiller_lv4",
+                  "WaterChiller_lv3",
+                  "WaterChiller_lv2",
+                  "WaterChiller_lv1"
+                ],
+                "kendall_tau": 0.964
+              },
+              {
+                "presented": [
+                  "WaterChiller_lv3",
+                  "WaterChiller_lv2",
+                  "WaterChiller_lv4",
+                  "WaterChiller_lv7",
+                  "WaterChiller_lv1",
+                  "WaterChiller_lv9",
+                  "WaterChiller_lv5",
+                  "WaterChiller_lv6",
+                  "WaterChiller_lv8",
+                  "WaterChiller_lv11",
+                  "WaterChiller_lv10"
+                ],
+                "predicted_order": [
+                  "WaterChiller_lv7",
+                  "WaterChiller_lv11",
+                  "WaterChiller_lv10",
+                  "WaterChiller_lv9",
+                  "WaterChiller_lv8",
+                  "WaterChiller_lv6",
+                  "WaterChiller_lv4",
+                  "WaterChiller_lv3",
+                  "WaterChiller_lv5",
+                  "WaterChiller_lv2",
+                  "WaterChiller_lv1"
+                ],
+                "kendall_tau": 0.782
+              }
+            ]
+          },
+          "beverage_chiller": {
+            "n_stages": 5,
+            "repeats": 3,
+            "kendall_tau_mean": 0.8,
+            "runs": [
+              {
+                "presented": [
+                  "BeverageChiller_lv1",
+                  "BeverageChiller_lv5",
+                  "BeverageChiller_lv3",
+                  "BeverageChiller_lv4",
+                  "BeverageChiller_lv2"
+                ],
+                "predicted_order": [
+                  "BeverageChiller_lv5",
+                  "BeverageChiller_lv3",
+                  "BeverageChiller_lv4",
+                  "BeverageChiller_lv2",
+                  "BeverageChiller_lv1"
+                ],
+                "kendall_tau": 0.8
+              },
+              {
+                "presented": [
+                  "BeverageChiller_lv3",
+                  "BeverageChiller_lv1",
+                  "BeverageChiller_lv4",
+                  "BeverageChiller_lv2",
+                  "BeverageChiller_lv5"
+                ],
+                "predicted_order": [
+                  "BeverageChiller_lv5",
+                  "BeverageChiller_lv3",
+                  "BeverageChiller_lv4",
+                  "BeverageChiller_lv1",
+                  "BeverageChiller_lv2"
+                ],
+                "kendall_tau": 0.6
+              },
+              {
+                "presented": [
+                  "BeverageChiller_lv4",
+                  "BeverageChiller_lv3",
+                  "BeverageChiller_lv5",
+                  "BeverageChiller_lv1",
+                  "BeverageChiller_lv2"
+                ],
+                "predicted_order": [
+                  "BeverageChiller_lv5",
+                  "BeverageChiller_lv4",
+                  "BeverageChiller_lv3",
+                  "BeverageChiller_lv2",
+                  "BeverageChiller_lv1"
+                ],
+                "kendall_tau": 1.0
+              }
+            ]
+          }
+        },
+        "n_families": 4,
+        "kendall_tau_macro": 0.649
+      }
+    }
+  }
+}

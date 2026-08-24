@@ -263,6 +263,71 @@
       }
     },
     "human": {
+      "sprites": "godot_demo/resources/sprites_original_backup",
+      "n_png": 63,
+      "cohesion": {
+        "method": "dinov2-small",
+        "families": {
+          "elements": {
+            "n_assets": 5,
+            "n_pairs": 10,
+            "mean_sim": 0.3677
+          },
+          "powerups": {
+            "n_assets": 5,
+            "n_pairs": 10,
+            "mean_sim": 0.4497
+          },
+          "crate": {
+            "n_assets": 4,
+            "n_pairs": 6,
+            "mean_sim": 0.6994
+          },
+          "movable": {
+            "n_assets": 3,
+            "n_pairs": 3,
+            "mean_sim": 0.5037
+          },
+          "salmon_can": {
+            "n_assets": 4,
+            "n_pairs": 6,
+            "mean_sim": 0.4848
+          },
+          "puddle": {
+            "n_assets": 2,
+            "n_pairs": 1,
+            "mean_sim": 0.4977
+          },
+          "rope": {
+            "n_assets": 2,
+            "n_pairs": 1,
+            "mean_sim": 0.831
+          },
+          "postmark": {
+            "n_assets": 6,
+            "n_pairs": 15,
+            "mean_sim": 0.5936
+          },
+          "pool": {
+            "n_assets": 5,
+            "n_pairs": 10,
+            "mean_sim": 0.6855
+          },
+          "water_chiller": {
+            "n_assets": 13,
+            "n_pairs": 78,
+            "mean_sim": 0.8394
+          },
+          "beverage_chiller": {
+            "n_assets": 12,
+            "n_pairs": 66,
+            "mean_sim": 0.7151
+          }
+        },
+        "overall_mean_sim": 0.7114
+      }
+    },
+    "applied": {
       "sprites": "godot_demo/resources/sprites",
       "n_png": 63,
       "cohesion": {
@@ -271,60 +336,60 @@
           "elements": {
             "n_assets": 5,
             "n_pairs": 10,
-            "mean_sim": 0.4731
+            "mean_sim": 0.5522
           },
           "powerups": {
             "n_assets": 5,
             "n_pairs": 10,
-            "mean_sim": 0.3546
+            "mean_sim": 0.3225
           },
           "crate": {
             "n_assets": 4,
             "n_pairs": 6,
-            "mean_sim": 0.6431
+            "mean_sim": 0.7873
           },
           "movable": {
             "n_assets": 3,
             "n_pairs": 3,
-            "mean_sim": 0.3274
+            "mean_sim": 0.4926
           },
           "salmon_can": {
             "n_assets": 4,
             "n_pairs": 6,
-            "mean_sim": 0.3602
+            "mean_sim": 0.5632
           },
           "puddle": {
             "n_assets": 2,
             "n_pairs": 1,
-            "mean_sim": 0.4446
+            "mean_sim": 0.8914
           },
           "rope": {
             "n_assets": 2,
             "n_pairs": 1,
-            "mean_sim": 0.6585
+            "mean_sim": 0.9586
           },
           "postmark": {
             "n_assets": 6,
             "n_pairs": 15,
-            "mean_sim": 0.3816
+            "mean_sim": 0.4903
           },
           "pool": {
             "n_assets": 5,
             "n_pairs": 10,
-            "mean_sim": 0.546
+            "mean_sim": 0.9202
           },
           "water_chiller": {
             "n_assets": 13,
             "n_pairs": 78,
-            "mean_sim": 0.5712
+            "mean_sim": 0.6258
           },
           "beverage_chiller": {
             "n_assets": 12,
             "n_pairs": 66,
-            "mean_sim": 0.437
+            "mean_sim": 0.4916
           }
         },
-        "overall_mean_sim": 0.4901
+        "overall_mean_sim": 0.5727
       }
     }
   }

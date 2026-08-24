@@ -12,6 +12,9 @@
 #   GODOT  — Godot 執行檔路徑（必填,若不在 PATH）
 #            macOS 例: /Applications/Godot.app/Contents/MacOS/Godot
 #            Linux 例: ~/Godot/Godot_v4.6-stable_linux.x86_64
+#   PACKED_ART_RUN — 要打包進 index.pck 的美術 run
+#            預設 art_pipeline.apply.DEFAULT_PACKED_ART_RUN
+#            例: PACKED_ART_RUN=deo_cat_ip ./scripts/export_godot_web.sh
 #
 # 備份位置: godot_web_original/  （舊版完整 web build,只備份一次）
 # 匯出位置: godot_demo/web/            （run.sh 與 GitHub Pages 使用）
@@ -33,7 +36,7 @@ while [[ $# -gt 0 ]]; do
     --skip-backup) SKIP_BACKUP=1 ;;
     --backup-only) BACKUP_ONLY=1 ;;
     -h|--help)
-      sed -n '3,20p' "$0" | sed 's/^# \?//'
+      sed -n '3,23p' "$0" | sed 's/^# \?//'
       exit 0
       ;;
     *) echo "Unknown option: $1" >&2; exit 1 ;;
@@ -162,10 +165,20 @@ sync_default_packed_art() {
     echo "[!] 找不到 python,無法同步預設打包美術" >&2
     exit 1
   fi
-  echo "[export] 同步預設打包美術 → resources/sprites/ …"
+  echo "[export] 同步打包美術 → resources/sprites/ …"
   (
     cd "$REPO_ROOT"
-    "$py" -c "from art_pipeline.apply import apply_default_packed_art; apply_default_packed_art()"
+    PACKED_ART_RUN="${PACKED_ART_RUN:-}" "$py" -c "
+import os, sys
+from art_pipeline.apply import GENERATED_ROOT, DEFAULT_PACKED_ART_RUN, apply_run_batch
+run = os.environ.get('PACKED_ART_RUN') or DEFAULT_PACKED_ART_RUN
+if not (GENERATED_ROOT / run / 'sprites').is_dir():
+    sys.exit(f'[!] 找不到打包美術 run: generated_art/{run}/sprites/\n'
+             f'    用 PACKED_ART_RUN=<run> 指定,或先跑生成 (現有 run: '
+             f'{\", \".join(sorted(p.name for p in GENERATED_ROOT.iterdir() if (p / \"sprites\").is_dir()))})')
+print(f'[export] 打包美術 run = {run}')
+apply_run_batch(run, None, to_component=True, to_live=False, to_project=True)
+"
   )
 }
 

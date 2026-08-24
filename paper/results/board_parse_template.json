@@ -1,0 +1,633 @@
+{
+  "parser": "template",
+  "levels": [
+    "Level_024.json",
+    "Level_009.json",
+    "Level_012.json",
+    "Level_008.json",
+    "Level_049.json",
+    "Level_014.json",
+    "Level_002.json",
+    "Level_092.json",
+    "Level_095.json",
+    "Level_055.json",
+    "Level_017.json",
+    "Level_064.json",
+    "Level_053.json",
+    "Level_042.json",
+    "Level_081.json",
+    "Level_003.json",
+    "Level_048.json",
+    "Level_088.json",
+    "Level_079.json",
+    "Level_067.json"
+  ],
+  "judge": null,
+  "results": [
+    {
+      "n_cells": 1121,
+      "cell_accuracy": 0.9795,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 0.9885,
+      "by_category": {
+        "element": {
+          "n": 113,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 1008,
+          "accuracy": 0.977
+        }
+      },
+      "top_confusions": {
+        "obstacle->obstacle": 23
+      },
+      "pack": "human",
+      "cell_px": 70,
+      "parser": "template",
+      "n_levels": 20,
+      "n_candidates": 19,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 1121,
+      "cell_accuracy": 0.942,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 0.968,
+      "by_category": {
+        "element": {
+          "n": 113,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 1008,
+          "accuracy": 0.936
+        }
+      },
+      "top_confusions": {
+        "obstacle->obstacle": 65
+      },
+      "pack": "human",
+      "cell_px": 48,
+      "parser": "template",
+      "n_levels": 20,
+      "n_candidates": 19,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 1121,
+      "cell_accuracy": 0.934,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 0.9635,
+      "by_category": {
+        "element": {
+          "n": 113,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 1008,
+          "accuracy": 0.927
+        }
+      },
+      "top_confusions": {
+        "obstacle->obstacle": 74
+      },
+      "pack": "human",
+      "cell_px": 32,
+      "parser": "template",
+      "n_levels": 20,
+      "n_candidates": 19,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 1121,
+      "cell_accuracy": 0.9215,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 0.9565,
+      "by_category": {
+        "element": {
+          "n": 113,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 1008,
+          "accuracy": 0.913
+        }
+      },
+      "top_confusions": {
+        "obstacle->obstacle": 88
+      },
+      "pack": "human",
+      "cell_px": 24,
+      "parser": "template",
+      "n_levels": 20,
+      "n_candidates": 19,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 1121,
+      "cell_accuracy": 0.934,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 0.9635,
+      "by_category": {
+        "element": {
+          "n": 113,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 1008,
+          "accuracy": 0.927
+        }
+      },
+      "top_confusions": {
+        "obstacle->obstacle": 74
+      },
+      "pack": "human",
+      "cell_px": 16,
+      "parser": "template",
+      "n_levels": 20,
+      "n_candidates": 19,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 1121,
+      "cell_accuracy": 0.967,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 0.9815,
+      "by_category": {
+        "element": {
+          "n": 113,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 1008,
+          "accuracy": 0.963
+        }
+      },
+      "top_confusions": {
+        "obstacle->obstacle": 37
+      },
+      "pack": "fruit_3dCartoonSimple",
+      "cell_px": 70,
+      "parser": "template",
+      "n_levels": 20,
+      "n_candidates": 19,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 1121,
+      "cell_accuracy": 0.959,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 0.977,
+      "by_category": {
+        "element": {
+          "n": 113,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 1008,
+          "accuracy": 0.954
+        }
+      },
+      "top_confusions": {
+        "obstacle->obstacle": 46
+      },
+      "pack": "fruit_3dCartoonSimple",
+      "cell_px": 48,
+      "parser": "template",
+      "n_levels": 20,
+      "n_candidates": 19,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 1121,
+      "cell_accuracy": 0.959,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 0.977,
+      "by_category": {
+        "element": {
+          "n": 113,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 1008,
+          "accuracy": 0.954
+        }
+      },
+      "top_confusions": {
+        "obstacle->obstacle": 46
+      },
+      "pack": "fruit_3dCartoonSimple",
+      "cell_px": 32,
+      "parser": "template",
+      "n_levels": 20,
+      "n_candidates": 19,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 1121,
+      "cell_accuracy": 0.959,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 0.977,
+      "by_category": {
+        "element": {
+          "n": 113,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 1008,
+          "accuracy": 0.954
+        }
+      },
+      "top_confusions": {
+        "obstacle->obstacle": 46
+      },
+      "pack": "fruit_3dCartoonSimple",
+      "cell_px": 24,
+      "parser": "template",
+      "n_levels": 20,
+      "n_candidates": 19,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 1121,
+      "cell_accuracy": 0.959,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 0.977,
+      "by_category": {
+        "element": {
+          "n": 113,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 1008,
+          "accuracy": 0.954
+        }
+      },
+      "top_confusions": {
+        "obstacle->obstacle": 46
+      },
+      "pack": "fruit_3dCartoonSimple",
+      "cell_px": 16,
+      "parser": "template",
+      "n_levels": 20,
+      "n_candidates": 19,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 1121,
+      "cell_accuracy": 1.0,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 1.0,
+      "by_category": {
+        "element": {
+          "n": 113,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 1008,
+          "accuracy": 1.0
+        }
+      },
+      "top_confusions": {},
+      "pack": "cat_3dCartoonSimple",
+      "cell_px": 70,
+      "parser": "template",
+      "n_levels": 20,
+      "n_candidates": 19,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 1121,
+      "cell_accuracy": 1.0,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 1.0,
+      "by_category": {
+        "element": {
+          "n": 113,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 1008,
+          "accuracy": 1.0
+        }
+      },
+      "top_confusions": {},
+      "pack": "cat_3dCartoonSimple",
+      "cell_px": 48,
+      "parser": "template",
+      "n_levels": 20,
+      "n_candidates": 19,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 1121,
+      "cell_accuracy": 1.0,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 1.0,
+      "by_category": {
+        "element": {
+          "n": 113,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 1008,
+          "accuracy": 1.0
+        }
+      },
+      "top_confusions": {},
+      "pack": "cat_3dCartoonSimple",
+      "cell_px": 32,
+      "parser": "template",
+      "n_levels": 20,
+      "n_candidates": 19,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 1121,
+      "cell_accuracy": 1.0,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 1.0,
+      "by_category": {
+        "element": {
+          "n": 113,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 1008,
+          "accuracy": 1.0
+        }
+      },
+      "top_confusions": {},
+      "pack": "cat_3dCartoonSimple",
+      "cell_px": 24,
+      "parser": "template",
+      "n_levels": 20,
+      "n_candidates": 19,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 1121,
+      "cell_accuracy": 1.0,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 1.0,
+      "by_category": {
+        "element": {
+          "n": 113,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 1008,
+          "accuracy": 1.0
+        }
+      },
+      "top_confusions": {},
+      "pack": "cat_3dCartoonSimple",
+      "cell_px": 16,
+      "parser": "template",
+      "n_levels": 20,
+      "n_candidates": 19,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 1121,
+      "cell_accuracy": 0.959,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 0.977,
+      "by_category": {
+        "element": {
+          "n": 113,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 1008,
+          "accuracy": 0.954
+        }
+      },
+      "top_confusions": {
+        "obstacle->obstacle": 46
+      },
+      "pack": "ocean_3dCartoonSimple",
+      "cell_px": 70,
+      "parser": "template",
+      "n_levels": 20,
+      "n_candidates": 19,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 1121,
+      "cell_accuracy": 0.959,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 0.977,
+      "by_category": {
+        "element": {
+          "n": 113,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 1008,
+          "accuracy": 0.954
+        }
+      },
+      "top_confusions": {
+        "obstacle->obstacle": 46
+      },
+      "pack": "ocean_3dCartoonSimple",
+      "cell_px": 48,
+      "parser": "template",
+      "n_levels": 20,
+      "n_candidates": 19,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 1121,
+      "cell_accuracy": 0.959,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 0.977,
+      "by_category": {
+        "element": {
+          "n": 113,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 1008,
+          "accuracy": 0.954
+        }
+      },
+      "top_confusions": {
+        "obstacle->obstacle": 46
+      },
+      "pack": "ocean_3dCartoonSimple",
+      "cell_px": 32,
+      "parser": "template",
+      "n_levels": 20,
+      "n_candidates": 19,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 1121,
+      "cell_accuracy": 0.959,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 0.977,
+      "by_category": {
+        "element": {
+          "n": 113,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 1008,
+          "accuracy": 0.954
+        }
+      },
+      "top_confusions": {
+        "obstacle->obstacle": 46
+      },
+      "pack": "ocean_3dCartoonSimple",
+      "cell_px": 24,
+      "parser": "template",
+      "n_levels": 20,
+      "n_candidates": 19,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 1121,
+      "cell_accuracy": 0.959,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 0.977,
+      "by_category": {
+        "element": {
+          "n": 113,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 1008,
+          "accuracy": 0.954
+        }
+      },
+      "top_confusions": {
+        "obstacle->obstacle": 46
+      },
+      "pack": "ocean_3dCartoonSimple",
+      "cell_px": 16,
+      "parser": "template",
+      "n_levels": 20,
+      "n_candidates": 19,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 1121,
+      "cell_accuracy": 1.0,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 1.0,
+      "by_category": {
+        "element": {
+          "n": 113,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 1008,
+          "accuracy": 1.0
+        }
+      },
+      "top_confusions": {},
+      "pack": "SteamPunk_3dCartoonSimple",
+      "cell_px": 70,
+      "parser": "template",
+      "n_levels": 20,
+      "n_candidates": 19,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 1121,
+      "cell_accuracy": 1.0,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 1.0,
+      "by_category": {
+        "element": {
+          "n": 113,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 1008,
+          "accuracy": 1.0
+        }
+      },
+      "top_confusions": {},
+      "pack": "SteamPunk_3dCartoonSimple",
+      "cell_px": 48,
+      "parser": "template",
+      "n_levels": 20,
+      "n_candidates": 19,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 1121,
+      "cell_accuracy": 1.0,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 1.0,
+      "by_category": {
+        "element": {
+          "n": 113,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 1008,
+          "accuracy": 1.0
+        }
+      },
+      "top_confusions": {},
+      "pack": "SteamPunk_3dCartoonSimple",
+      "cell_px": 32,
+      "parser": "template",
+      "n_levels": 20,
+      "n_candidates": 19,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 1121,
+      "cell_accuracy": 1.0,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 1.0,
+      "by_category": {
+        "element": {
+          "n": 113,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 1008,
+          "accuracy": 1.0
+        }
+      },
+      "top_confusions": {},
+      "pack": "SteamPunk_3dCartoonSimple",
+      "cell_px": 24,
+      "parser": "template",
+      "n_levels": 20,
+      "n_candidates": 19,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 1121,
+      "cell_accuracy": 1.0,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 1.0,
+      "by_category": {
+        "element": {
+          "n": 113,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 1008,
+          "accuracy": 1.0
+        }
+      },
+      "top_confusions": {},
+      "pack": "SteamPunk_3dCartoonSimple",
+      "cell_px": 16,
+      "parser": "template",
+      "n_levels": 20,
+      "n_candidates": 19,
+      "global_candidates": true
+    }
+  ]
+}

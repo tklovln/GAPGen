@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<title>Match3 Web</title>
+<style>
+  :root { --hud-fg: #fff; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #1a1229; font-family: "Helvetica Neue", Arial, "PingFang TC", sans-serif; }
+  #game { position: absolute; inset: 0; }
+  #game canvas { display: block; touch-action: none; }
+
+  /* HUD */
+  #hud {
+    position: absolute; top: 0; left: 0; right: 0; padding: 10px 14px;
+    display: flex; align-items: flex-start; justify-content: space-between;
+    color: var(--hud-fg); pointer-events: none; user-select: none;
+  }
+  #hud .panel {
+    background: rgba(20, 12, 40, .75); border: 1px solid rgba(140, 110, 220, .5);
+    border-radius: 10px; padding: 6px 12px;
+  }
+  #hud .label { font-size: 11px; opacity: .7; letter-spacing: 1px; }
+  #hud .value { font-size: 20px; font-weight: 700; }
+  #objectives { display: flex; gap: 10px; }
+  .obj { display: flex; align-items: center; gap: 6px; }
+  .obj img { width: 30px; height: 30px; object-fit: contain; }
+  .obj .swatch { width: 22px; height: 22px; border-radius: 50%; }
+  .obj .count { font-size: 16px; font-weight: 700; }
+  .obj.done .count { color: #7dff9e; }
+  #topRight { display: flex; gap: 8px; pointer-events: auto; }
+  #topRight button {
+    background: rgba(20, 12, 40, .75); color: #fff; border: 1px solid rgba(140, 110, 220, .5);
+    border-radius: 10px; padding: 6px 12px; font-size: 14px; cursor: pointer;
+  }
+  #topRight button:hover { background: rgba(60, 40, 110, .8); }
+
+  /* 全螢幕覆蓋（選單/勝負） */
+  .overlay {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 18px;
+    background: rgba(12, 8, 24, .92); color: #fff; z-index: 10;
+  }
+  .overlay h1 { font-size: 34px; letter-spacing: 2px; }
+  .overlay h2 { font-size: 24px; }
+  .overlay .sub { opacity: .75; font-size: 15px; }
+  .overlay button {
+    background: linear-gradient(180deg, #8a5cf5, #6a3de0); color: #fff; border: 0;
+    border-radius: 12px; padding: 12px 34px; font-size: 18px; font-weight: 700; cursor: pointer;
+    box-shadow: 0 4px 14px rgba(105, 60, 220, .45);
+  }
+  .overlay button.secondary { background: rgba(255,255,255,.12); box-shadow: none; }
+  .overlay button:hover { filter: brightness(1.12); }
+  #levelGrid {
+    display: grid; grid-template-columns: repeat(10, 52px); gap: 8px;
+    max-height: 60vh; overflow-y: auto; padding: 6px;
+  }
+  #levelGrid button {
+    width: 52px; height: 52px; padding: 0; font-size: 15px; border-radius: 10px;
+    background: rgba(255,255,255,.10); box-shadow: none;
+  }
+  #levelGrid button:hover { background: rgba(138, 92, 245, .55); }
+  #themeRow { display: flex; align-items: center; gap: 8px; font-size: 14px; }
+  #themeRow select {
+    background: #241740; color: #fff; border: 1px solid rgba(140,110,220,.5);
+    border-radius: 8px; padding: 6px 10px; font-size: 14px;
+  }
+  .stars { font-size: 40px; letter-spacing: 6px; color: #ffd84d; }
+  .hidden { display: none !important; }
+  #loading { z-index: 20; }
+</style>
+</head>
+<body>
+  <div id="game"></div>
+
+  <div id="hud" class="hidden">
+    <div class="panel" id="scorePanel">
+      <div class="label">SCORE</div>
+      <div class="value" id="scoreVal">0</div>
+    </div>
+    <div class="panel"><div id="objectives"></div></div>
+    <div class="panel" id="movesPanel">
+      <div class="label">MOVES</div>
+      <div class="value" id="movesVal">0</div>
+    </div>
+    <div id="topRight">
+      <button id="muteBtn" title="靜音">🔊</button>
+      <button id="menuBtn" title="回選單">☰</button>
+    </div>
+  </div>
+
+  <div id="loading" class="overlay"><h2>載入素材中…</h2><div class="sub" id="loadingSub"></div></div>
+
+  <div id="menu" class="overlay hidden">
+    <h1>MATCH-3</h1>
+    <div id="themeRow">
+      <span>美術主題</span>
+      <select id="themeSelect"><option value="">預設（godot 素材）</option></select>
+    </div>
+    <div id="levelGrid"></div>
+  </div>
+
+  <div id="result" class="overlay hidden">
+    <h1 id="resultTitle"></h1>
+    <div class="stars" id="resultStars"></div>
+    <div class="sub" id="resultScore"></div>
+    <div style="display:flex; gap:12px">
+      <button id="retryBtn">再玩一次</button>
+      <button id="nextBtn">下一關</button>
+      <button id="backBtn" class="secondary">回選單</button>
+    </div>
+  </div>
+
+  <script src="vendor/pixi.min.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

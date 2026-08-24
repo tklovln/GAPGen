@@ -62,7 +62,6 @@ echo
   --style "$STYLE" \
   --theme "$THEME" \
   --style-image "$REF" \
-  --assets "$ASSETS" \
   --run "$RUN" \
   --max-iters "$MAX_ITERS" \
   "$@"
