@@ -32,6 +32,11 @@ Models: image `gemini-3.1-flash-image`, critic/planners `gemini-3.5-flash`. n=12
 Script: `scripts/auto_eval.py --judge openai` → `paper/results/auto_eval.json`.
 Judge (GPT-4o) ≠ generator/critic (Gemini) → no self-circularity.
 
+> **SUPERSEDED 2026-08-24.** The table below is one seed under one judge. Rerun at 3 seeds × 2
+> judges (`ablation_role_openai.json`, `ablation_role_gemini.json`) and the monotone rise does not
+> survive. See "Dual-judge, 3-seed rerun" below — read that instead. Kept here only to show what the
+> single-seed protocol reported.
+
 **Role recognition @70px** (forced 4-choice, 8 assets):
 
 | Cond | accuracy |
@@ -57,6 +62,119 @@ Monotone rise; B0 collapses power-ups/obstacles onto `match`. This is the headli
 Refs (B2) and critic (B3) both clearly preferred over B1; B2≈B3 (critic changes friction, not appearance).
 
 **Stage ordering (Kendall τ):** B0 0.33 / B1 −0.67 / B2 0.67 / B3 0.0 — **noisy** (single ordering/cond). Not primary evidence; report as limitation only.
+
+---
+
+## Dual-judge, 3-seed rerun (2026-08-24) — what actually replicates
+
+Same 12 runs, role recognition @70px, forced 4-choice, 8 assets, scored independently by both judges.
+Both judges passed the 5-check validity battery on this pack (`judge_validation_*.json`).
+
+```bash
+python scripts/auto_eval.py --task role --judge openai --runs research_B{0,1,2,3}_fruit{,_s2,_s3} \
+  --out paper/results/ablation_role_openai.json      # and again with --judge gemini
+```
+
+| Cond | GPT-4o mean±sd | per-seed | Gemini mean±sd | per-seed |
+|---|---|---|---|---|
+| B0 Naive | 0.375 ± 0.000 | 0.375, 0.375, 0.375 | 0.375 ± 0.000 | 0.375, 0.375, 0.375 |
+| B1 Ontology | 0.786 ± 0.139 | 0.625, 0.857, 0.875 | **0.911 ± 0.078** | 1.000, 0.857, 0.875 |
+| B2 + Refs | 0.786 ± 0.062 | 0.750, 0.857, 0.750 | 0.780 ± 0.085 | 0.750, 0.714, 0.875 |
+| B3 Full | 0.750 ± 0.125 | 0.750, 0.625, 0.875 | **1.000 ± 0.000** | 1.000, 1.000, 1.000 |
+
+**What replicates (report this):**
+
+- **B0 → ontology is a large, judge-independent, seed-independent effect.** B0 = 0.375 under both
+  judges with sd = 0.000 across all three seeds — it is not noise, it is a hard floor: without
+  ontology conditioning the generator collapses power-ups and obstacles onto `match`, and *both*
+  judges see the same collapse. Adding ontology lifts this to 0.75–1.00: **+0.375 (GPT-4o), +0.625
+  (Gemini)**. The direction and rough magnitude survive a judge swap and 3 seeds.
+
+**What does NOT replicate (do not report as a result):**
+
+- **The monotone B0 < B1 < B2 < B3 rise.** Neither judge is non-decreasing. GPT-4o ranks
+  B1 > B2 > B3 > B0; Gemini ranks B3 > B1 > B2 > B0. Kendall τ between judges over the four
+  conditions = **0.333**.
+- **Any claim that refs (B2) or critic (B3) improve role recognition over ontology alone (B1).**
+  GPT-4o has B1 ≈ B2 > B3; Gemini has B3 > B1 > B2. The two judges disagree on which of the three
+  is best, and per-seed sd (0.06–0.14) is comparable to the gaps between them.
+- The old single-seed "monotone rise 0.375 → 0.625 → 0.750 → 0.750" was an artifact of n=1 seed and
+  n=1 judge.
+
+**Reading.** The ablation supports exactly one causal claim, and it is the claim the method is
+actually about: **grounding generation in an ontology of gameplay roles is what makes assets
+role-legible.** The two increments layered on top of it (dual visual refs, VLM critic loop) do not
+have a role-recognition effect that survives a judge swap — consistent with the earlier finding that
+B2 ≈ B3 on pairwise preference, and with `report.json` showing the critic changes *friction*
+(needs_review, iters) rather than appearance. Refs/critic should be justified by what they measurably
+do (style-drift control, review load), not by role accuracy.
+
+---
+
+## Cross-theme transfer of the ontology effect (2026-08-24, extended 2026-08-25)
+
+B0 previously existed only for fruit, so the ontology effect could not be separated from that one
+theme. Generated `research_B0_{pet,ocean}` then `research_B{0,1}_steampunk` (12 assets each, no
+critic, max_iters=1 — cheap) and scored B0 vs B1 under both judges. B0 and B1 differ in **exactly
+one flag** (`pipeline.py:72-73`: `use_ontology` False/True; refs, critic and max_iters identical),
+locked by a `resolve_ablation` self-check — a clean single-variable contrast.
+
+```bash
+python scripts/research_multi_theme.py --conditions B0,B1 --slugs steampunk
+python scripts/auto_eval.py --task role --judge openai \
+  --runs research_B{0,1}_pet,research_B{0,1}_ocean,research_B{0,1}_steampunk \
+  --out paper/results/transfer_role_openai.json      # and again with --judge gemini
+```
+
+| Theme | Judge | B0 | B1 | Δ |
+|---|---|---|---|---|
+| fruit (3 seeds) | GPT-4o | 0.375 | 0.786 | **+0.411** |
+| fruit (3 seeds) | Gemini | 0.375 | 0.911 | **+0.536** |
+| pet | GPT-4o | 0.250 | 0.750 | **+0.500** |
+| pet | Gemini | 0.375 | 0.750 | **+0.375** |
+| ocean | GPT-4o | 0.500 | 0.875 | **+0.375** |
+| ocean | Gemini | 0.500 | 0.875 | **+0.375** |
+| steampunk | GPT-4o | 0.250 | 0.500 | **+0.250** |
+| steampunk | Gemini | 0.500 | 0.750 | **+0.250** |
+
+**8 of 8 (theme × judge) cells positive. Δ range +0.250 to +0.536, mean +0.384.** No cell is
+negative or zero, across 4 themes and 2 independently-validated judges.
+
+### Judge run-to-run noise, and a claim it killed
+
+Adding steampunk meant re-scoring pet and ocean, i.e. **the same images scored twice by the same
+judge**. They did not agree:
+
+| Theme | Judge | B0 pass 1 → 2 | B1 pass 1 → 2 |
+|---|---|---|---|
+| pet | GPT-4o | 0.250 → 0.250 | 0.750 → 0.750 |
+| ocean | GPT-4o | 0.500 → 0.500 | 0.750 → **0.875** |
+| pet | Gemini | 0.125 → **0.375** | 0.750 → 0.750 |
+| ocean | Gemini | 0.625 → **0.500** | 0.875 → 0.875 |
+
+3 of 8 re-scored numbers moved, max change **0.250**. With n=8 assets per cell, one asset = 0.125, so
+this is a 1–2 asset flip. **This noise is the same size as the smallest effect in the table above.**
+
+**Retracted claim.** The first (6-cell) pass had B1 ≥ 0.750 in every cell and I wrote that ontology
+grounding "converts legibility from a theme- and observer-dependent lottery into a stable property."
+**That is now false**: steampunk/GPT-4o has B1 = 0.500, and B1's spread across cells (0.500–0.911) is
+*wider* than B0's (0.250–0.500). The variance claim was an artifact of 6 cells and one scoring pass.
+
+**What survives, stated at the strength the data supports:**
+
+- **The sign of the ontology effect is robust**: positive in 8/8 cells across 4 themes × 2 judges,
+  Δ ≥ +0.250 everywhere. Since judge noise reaches 0.250 on a single number, the evidence is the
+  *unanimity of direction across 8 cells*, not any individual Δ.
+- **Magnitude is not resolvable at this n.** Report the range (+0.25 to +0.54) and the noise floor
+  (±0.25 per cell) together. Do not report mean Δ as a point estimate without the noise floor.
+- **Do not claim ontology reduces variance.** It does not, at this n.
+- **B1 is not sufficient**: steampunk B1 = 0.500 under GPT-4o means 4 of 8 assets still unreadable in
+  the hardest theme. Ontology is necessary, not sufficient.
+
+**Methodological consequence (a paper-worthy point in itself):** n=8 assets per cell gives a 0.125
+quantisation and ≥0.250 observed run-to-run swing, so **no single cell in any role-accuracy table in
+this repo is trustworthy alone**. Every claim must rest on agreement across many cells. This is the
+fifth way this benchmark misled us, and the cheapest fix is more assets per cell, not more themes.
 
 ## DINOv2 intra-family cohesion (objective, no VLM)
 

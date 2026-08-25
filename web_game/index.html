@@ -11,30 +11,74 @@
   #game { position: absolute; inset: 0; }
   #game canvas { display: block; touch-action: none; }
 
-  /* HUD */
+  /* ===== 頂部 HUD（Royal Match 風格）===== */
   #hud {
-    position: absolute; top: 0; left: 0; right: 0; padding: 10px 14px;
-    display: flex; align-items: flex-start; justify-content: space-between;
-    color: var(--hud-fg); pointer-events: none; user-select: none;
+    position: absolute; top: 0; left: 0; right: 0; padding: 14px 12px 0;
+    display: flex; align-items: flex-start; justify-content: center; gap: 10px;
+    color: #4a2410; pointer-events: none; user-select: none;
+    font-family: "Arial Rounded MT Bold", "Helvetica Neue", "PingFang TC", sans-serif;
   }
-  #hud .panel {
-    background: rgba(20, 12, 40, .75); border: 1px solid rgba(140, 110, 220, .5);
-    border-radius: 10px; padding: 6px 12px;
+  /* 左：頭像框 */
+  #avatarFrame {
+    flex: 0 0 auto; width: 74px; height: 74px; border-radius: 20px;
+    background: linear-gradient(180deg, #9a4f28, #6b3013);
+    border: 3px solid #f7c04a;
+    box-shadow: 0 3px 8px rgba(0,0,0,.45), inset 0 0 0 2px #a3541f;
+    overflow: hidden; display: flex; align-items: center; justify-content: center;
   }
-  #hud .label { font-size: 11px; opacity: .7; letter-spacing: 1px; }
-  #hud .value { font-size: 20px; font-weight: 700; }
-  #objectives { display: flex; gap: 10px; }
-  .obj { display: flex; align-items: center; gap: 6px; }
-  .obj img { width: 30px; height: 30px; object-fit: contain; }
-  .obj .swatch { width: 22px; height: 22px; border-radius: 50%; }
-  .obj .count { font-size: 16px; font-weight: 700; }
-  .obj.done .count { color: #7dff9e; }
-  #topRight { display: flex; gap: 8px; pointer-events: auto; }
-  #topRight button {
-    background: rgba(20, 12, 40, .75); color: #fff; border: 1px solid rgba(140, 110, 220, .5);
-    border-radius: 10px; padding: 6px 12px; font-size: 14px; cursor: pointer;
+  #avatarFrame canvas { width: 92%; height: 92%; filter: drop-shadow(0 2px 2px rgba(0,0,0,.35)); }
+  /* 中/右：面板卡 */
+  .topPanel {
+    position: relative; min-height: 74px; border-radius: 18px;
+    background: linear-gradient(180deg, #fff8e6 0%, #f6e6c4 100%);
+    border: 3px solid #caa04f;
+    box-shadow: 0 3px 8px rgba(0,0,0,.4), inset 0 -4px 0 rgba(160,120,50,.25);
+    padding: 18px 16px 8px; display: flex; align-items: center; justify-content: center;
   }
-  #topRight button:hover { background: rgba(60, 40, 110, .8); }
+  .panelBanner {
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(180deg, #e8493a, #b31f1f);
+    border: 2px solid #7d1010; border-radius: 999px;
+    color: #fff; font-weight: 800; font-size: 14px; letter-spacing: .5px;
+    padding: 2px 16px; white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0,0,0,.35), inset 0 2px 0 rgba(255,255,255,.35);
+    text-shadow: 0 1px 2px rgba(0,0,0,.4);
+  }
+  #goalsPanel { flex: 0 1 auto; max-width: 52vw; }
+  #objectives { display: flex; gap: 14px; align-items: center; }
+  .obj { position: relative; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; }
+  .obj img { width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(0 2px 2px rgba(0,0,0,.3)); }
+  .obj .swatch { width: 30px; height: 30px; border-radius: 50%; box-shadow: inset -3px -4px 6px rgba(0,0,0,.3); }
+  .obj .star { font-size: 30px; color: #f4b63f; text-shadow: 0 2px 2px rgba(0,0,0,.3); }
+  .obj .count {
+    position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
+    min-width: 20px; padding: 0 5px; border-radius: 999px;
+    background: linear-gradient(180deg, #e8493a, #b31f1f); border: 2px solid #fff;
+    color: #fff; font-size: 12px; font-weight: 800; text-align: center; line-height: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.4);
+  }
+  .obj.done .count { background: linear-gradient(180deg, #57c94f, #2c9930); }
+  #movesPanel { flex: 0 0 auto; min-width: 92px; }
+  .movesNum { font-size: 34px; font-weight: 900; color: #4a2410; line-height: 1; text-shadow: 0 1px 0 #fff; }
+  #movesPanel.low .movesNum { color: #d31f1f; animation: movesPulse .7s ease-in-out infinite; }
+  @keyframes movesPulse { 50% { transform: scale(1.18); } }
+  /* 分數/聲音/選關 — 下排，跟上排卡片同款式 */
+  #bottomBar {
+    position: fixed; left: 0; right: 0; bottom: 16px;
+    display: flex; justify-content: center; align-items: flex-end; gap: 16px;
+    pointer-events: none;
+  }
+  #bottomBar > * { pointer-events: auto; }
+  #scorePanel { min-width: 170px; }
+  .scoreNum { font-size: 34px; font-weight: 900; color: #4a2410; line-height: 1; text-shadow: 0 1px 0 #fff; }
+  .iconCard {
+    width: 74px; height: 74px; border-radius: 18px;
+    background: linear-gradient(180deg, #fff8e6 0%, #f6e6c4 100%);
+    border: 3px solid #caa04f;
+    box-shadow: 0 3px 8px rgba(0,0,0,.4), inset 0 -4px 0 rgba(160,120,50,.25);
+    font-size: 32px; cursor: pointer;
+  }
+  .iconCard:hover { filter: brightness(1.08); }
 
   /* 全螢幕覆蓋（選單/勝負） */
   .overlay {
@@ -75,18 +119,22 @@
   <div id="game"></div>
 
   <div id="hud" class="hidden">
-    <div class="panel" id="scorePanel">
-      <div class="label">SCORE</div>
-      <div class="value" id="scoreVal">0</div>
+    <div id="avatarFrame"><canvas id="avatarCanvas" width="256" height="256"></canvas></div>
+    <div class="topPanel" id="goalsPanel">
+      <div class="panelBanner">Goals</div>
+      <div id="objectives"></div>
     </div>
-    <div class="panel"><div id="objectives"></div></div>
-    <div class="panel" id="movesPanel">
-      <div class="label">MOVES</div>
-      <div class="value" id="movesVal">0</div>
+    <div class="topPanel" id="movesPanel">
+      <div class="panelBanner">Moves</div>
+      <div class="movesNum" id="movesVal">0</div>
     </div>
-    <div id="topRight">
-      <button id="muteBtn" title="靜音">🔊</button>
-      <button id="menuBtn" title="回選單">☰</button>
+    <div id="bottomBar">
+      <div class="topPanel" id="scorePanel">
+        <div class="panelBanner">Score</div>
+        <div class="scoreNum" id="scoreVal">0</div>
+      </div>
+      <button class="iconCard" id="muteBtn" title="靜音">🔊</button>
+      <button class="iconCard" id="menuBtn" title="回選單">☰</button>
     </div>
   </div>
 

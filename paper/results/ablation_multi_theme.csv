@@ -1,7 +1,3 @@
 condition,slug,theme,style_label,run_id,n,pass_rate,needs_review_rate,failed_rate,mean_iters,mean_style,mean_function,mean_cohesion,mean_progression,cutout_fail_rate
-B1,pet,Pet,3dCartoonSimple,research_B1_pet,12,1.0,0.0,0.0,1.0,,,,,
-B2,pet,Pet,3dCartoonSimple,research_B2_pet,12,1.0,0.0,0.0,1.0,,,,,
-B3,pet,Pet,3dCartoonSimple,research_B3_pet,12,0.75,0.25,0.0,2.25,8.17,8.42,8.44,10.0,0.0
-B1,ocean,Ocean,3dCartoonSimple,research_B1_ocean,12,1.0,0.0,0.0,1.0,,,,,
-B2,ocean,Ocean,3dCartoonSimple,research_B2_ocean,12,1.0,0.0,0.0,1.0,,,,,
-B3,ocean,Ocean,3dCartoonSimple,research_B3_ocean,12,0.917,0.083,0.0,1.67,9.33,9.08,9.22,9.67,0.0
+B0,steampunk,Steampunk,3dCartoonSimple,research_B0_steampunk,12,1.0,0.0,0.0,1.0,,,,,
+B1,steampunk,Steampunk,3dCartoonSimple,research_B1_steampunk,12,1.0,0.0,0.0,1.0,,,,,

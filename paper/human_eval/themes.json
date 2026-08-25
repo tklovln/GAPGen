@@ -16,35 +16,20 @@
       "condition": "B3"
     },
     {
-      "slug": "pet",
-      "theme": "Pet",
-      "label_zh": "寵物",
+      "slug": "steampunk",
+      "theme": "Steampunk",
+      "label_zh": "蒸汽龐克",
       "style_label": "3dCartoonSimple",
       "conditions": [
         "B1",
-        "B2",
         "B3"
       ],
-      "run_id": "research_B3_pet",
-      "condition": "B3"
-    },
-    {
-      "slug": "ocean",
-      "theme": "Ocean",
-      "label_zh": "海洋",
-      "style_label": "3dCartoonSimple",
-      "conditions": [
-        "B1",
-        "B2",
-        "B3"
-      ],
-      "run_id": "research_B3_ocean",
+      "run_id": "research_B3_steampunk",
       "condition": "B3"
     }
   ],
   "ablation_compare_themes": [
     "fruit",
-    "pet",
-    "ocean"
+    "steampunk"
   ]
 }

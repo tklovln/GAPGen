@@ -4,6 +4,7 @@ import { COLOR_MAP } from './tiles.js';
 import { ArtTheme } from './theme.js';
 import { randf } from './util.js';
 import { GameManager } from './game_manager.js';
+import { playExplosionSound } from './audio.js';
 
 const TAU = Math.PI * 2;
 const STAMP_INK_COLOR = 0xbf1f2e;
@@ -19,10 +20,41 @@ export class EffectSpawner {
   constructor(container, ticker) {
     this.container = container;   // PIXI.Container（effect layer）
     this._items = new Set();      // 自更新粒子/環
+    this.shakeTarget = null;      // 震動目標（board root），由 board 設定
+    this._shake = null;           // {base:{x,y}, intensity, remain, duration}
     ticker.add((tk) => this._update(tk.deltaMS / 1000));
   }
 
+  // 螢幕震動：隨機偏移線性衰減；重複觸發取較強者
+  shake(intensity = 7, duration = 0.28) {
+    const t = this.shakeTarget;
+    if (!t || t.destroyed) return;
+    if (this._shake) {
+      this._shake.intensity = Math.max(this._shake.intensity, intensity);
+      this._shake.remain = Math.max(this._shake.remain, duration);
+      this._shake.duration = Math.max(this._shake.duration, duration);
+      return;
+    }
+    this._shake = { base: { x: t.position.x, y: t.position.y }, intensity, remain: duration, duration };
+  }
+
+  _updateShake(dt) {
+    if (!this._shake) return;
+    const s = this._shake;
+    const t = this.shakeTarget;
+    if (!t || t.destroyed) { this._shake = null; return; }
+    s.remain -= dt;
+    if (s.remain <= 0) {
+      t.position.set(s.base.x, s.base.y);
+      this._shake = null;
+      return;
+    }
+    const amp = s.intensity * (s.remain / s.duration);
+    t.position.set(s.base.x + randf(-amp, amp), s.base.y + randf(-amp, amp));
+  }
+
   _update(dt) {
+    this._updateShake(dt);
     for (const it of [...this._items]) {
       try {
         it.update(dt);
@@ -116,6 +148,8 @@ export class EffectSpawner {
   spawnShockwave(pos) {
     this._addRing(pos, 0xffe680);
     this.spawnParticles(pos, 0xffffff, 20, 120);
+    playExplosionSound();
+    this.shake(7, 0.28);
   }
 
   spawnFirework(pos) {
@@ -162,6 +196,8 @@ export class EffectSpawner {
     this.spawnParticles(pos, 0xffd94d, 22, 220);
     this.spawnParticles(pos, 0xff8033, 12, 160);
     this._addDot(pos, 0xffffff, { x: 0, y: 0 }, 0.18, 32);
+    playExplosionSound();
+    this.shake(9, 0.32);
   }
 
   // 光球 orb：LtBl sprite 浮起 + 旋轉 + 淡出
@@ -184,6 +220,48 @@ export class EffectSpawner {
   spawnStampTrigger(pos) {
     this._addRing(pos, STAMP_INK_COLOR, 120, 32);
     this.spawnParticles(pos, STAMP_INK_COLOR, 6, 55);
+  }
+
+  // 整排/整欄消除：兩枚火箭從觸發點往兩側飛出 + 尾跡
+  // axis 'h'|'v'；span = {neg, pos} 兩側到盤面邊緣的像素距離；secPerCell 與爆炸 stagger 對齊
+  spawnRocketSweep(pos, axis, span, cellSize, secPerCell = 0.03) {
+    const tex = ArtTheme.get(axis === 'h' ? 'Soda0d' : 'Soda90');
+    const speed = cellSize / secPerCell;
+    for (const s of [-1, 1]) {
+      const dist = s < 0 ? span.neg : span.pos;
+      if (dist <= cellSize * 0.25) continue;
+      let rocket;
+      if (tex) {
+        rocket = new PIXI.Sprite(tex);
+        rocket.anchor.set(0.5);
+        const scale = (cellSize * 0.9) / Math.max(tex.width, tex.height);
+        rocket.scale.set(scale);
+        // 素材朝正向（Soda0d→右、Soda90→下），反向翻轉
+        if (axis === 'h') rocket.scale.x *= s;
+        else rocket.scale.y *= s;
+      } else {
+        rocket = new PIXI.Graphics().circle(0, 0, cellSize * 0.28).fill(0xffffff);
+      }
+      rocket.position.set(pos.x, pos.y);
+      rocket.zIndex = 195;
+      this.container.addChild(rocket);
+
+      const trailTimer = setInterval(() => {
+        if (rocket.destroyed) { clearInterval(trailTimer); return; }
+        this._addDot({ x: rocket.position.x, y: rocket.position.y }, 0xffe680, { x: 0, y: 0 }, 0.3, 5);
+      }, 16);
+
+      const to = axis === 'h'
+        ? { x: { to: pos.x + s * dist } }
+        : { y: { to: pos.y + s * dist } };
+      new Tween()
+        .tweenProps(rocket.position, to, dist / speed, Ease.linear)
+        .tweenCallback(() => {
+          clearInterval(trailTimer);
+          this.spawnParticles({ x: rocket.position.x, y: rocket.position.y }, 0xffd94d, 8, 90);
+          rocket.destroy();
+        });
+    }
   }
 
   spawnTargetHighlight(pos, candyColor) {

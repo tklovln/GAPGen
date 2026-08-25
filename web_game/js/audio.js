@@ -129,3 +129,18 @@ export function playObstacleBreakSound() {
     }
   }, 0.15);
 }
+
+// 爆炸 boom：低頻掃降 + 噪音衝擊（wrapped/TNT、combo、紙飛機命中用）
+export function playExplosionSound() {
+  playBuffer((data, samples) => {
+    for (let i = 0; i < samples; i++) {
+      const t = i / SAMPLE_RATE;
+      const progress = i / samples;
+      const env = Math.pow(1.0 - progress, 1.6);
+      const freq = 150.0 - 110.0 * progress;          // 150Hz → 40Hz 低頻墜落
+      const boom = Math.sin(TAU * freq * t);
+      const noise = (Math.random() * 2 - 1) * Math.pow(1.0 - progress, 3); // 前段噪音爆點
+      data[i] = Math.min(Math.max((boom * 0.8 + noise * 0.6) * env, -1), 1);
+    }
+  }, 0.5);
+}

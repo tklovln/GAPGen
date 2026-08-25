@@ -1,0 +1,690 @@
+{
+  "judge": "openai",
+  "scope": "core",
+  "runs": {
+    "research_B0_fruit": {
+      "sprites": "generated_art/research_B0_fruit/sprites",
+      "n_png": 12,
+      "role_recognition": {
+        "n": 8,
+        "accuracy": 0.375,
+        "trials": [
+          {
+            "asset": "Red",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "Blu",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "Soda0d",
+            "true": "h_power",
+            "pred": "match",
+            "correct": false
+          },
+          {
+            "asset": "Soda90",
+            "true": "v_power",
+            "pred": "match",
+            "correct": false
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "match",
+            "correct": false
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "match",
+            "correct": false
+          },
+          {
+            "asset": "Yel",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "LtBl",
+            "true": "v_power",
+            "pred": "match",
+            "correct": false
+          }
+        ]
+      }
+    },
+    "research_B1_fruit": {
+      "sprites": "generated_art/research_B1_fruit/sprites",
+      "n_png": 12,
+      "role_recognition": {
+        "n": 8,
+        "accuracy": 0.625,
+        "trials": [
+          {
+            "asset": "Red",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "Blu",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "Soda0d",
+            "true": "h_power",
+            "pred": "match",
+            "correct": false
+          },
+          {
+            "asset": "Soda90",
+            "true": "v_power",
+            "pred": "match",
+            "correct": false
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Yel",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "LtBl",
+            "true": "v_power",
+            "pred": "match",
+            "correct": false
+          }
+        ]
+      }
+    },
+    "research_B2_fruit": {
+      "sprites": "generated_art/research_B2_fruit/sprites",
+      "n_png": 12,
+      "role_recognition": {
+        "n": 8,
+        "accuracy": 0.75,
+        "trials": [
+          {
+            "asset": "Red",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "Blu",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "Soda0d",
+            "true": "h_power",
+            "pred": "h_power",
+            "correct": true
+          },
+          {
+            "asset": "Soda90",
+            "true": "v_power",
+            "pred": "h_power",
+            "correct": false
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Yel",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "LtBl",
+            "true": "v_power",
+            "pred": "obstacle",
+            "correct": false
+          }
+        ]
+      }
+    },
+    "research_B3_fruit": {
+      "sprites": "generated_art/research_B3_fruit/sprites",
+      "n_png": 12,
+      "role_recognition": {
+        "n": 8,
+        "accuracy": 0.75,
+        "trials": [
+          {
+            "asset": "Red",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "Blu",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "Soda0d",
+            "true": "h_power",
+            "pred": "match",
+            "correct": false
+          },
+          {
+            "asset": "Soda90",
+            "true": "v_power",
+            "pred": "v_power",
+            "correct": true
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Yel",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "LtBl",
+            "true": "v_power",
+            "pred": "match",
+            "correct": false
+          }
+        ]
+      }
+    },
+    "research_B0_fruit_s2": {
+      "sprites": "generated_art/research_B0_fruit_s2/sprites",
+      "n_png": 12,
+      "role_recognition": {
+        "n": 8,
+        "accuracy": 0.375,
+        "trials": [
+          {
+            "asset": "Red",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "Blu",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "Soda0d",
+            "true": "h_power",
+            "pred": "match",
+            "correct": false
+          },
+          {
+            "asset": "Soda90",
+            "true": "v_power",
+            "pred": "match",
+            "correct": false
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "match",
+            "correct": false
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "match",
+            "correct": false
+          },
+          {
+            "asset": "Yel",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "LtBl",
+            "true": "v_power",
+            "pred": "match",
+            "correct": false
+          }
+        ]
+      }
+    },
+    "research_B1_fruit_s2": {
+      "sprites": "generated_art/research_B1_fruit_s2/sprites",
+      "n_png": 11,
+      "role_recognition": {
+        "n": 7,
+        "accuracy": 0.857,
+        "trials": [
+          {
+            "asset": "Red",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "Blu",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "Soda0d",
+            "true": "h_power",
+            "pred": "h_power",
+            "correct": true
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Yel",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "LtBl",
+            "true": "v_power",
+            "pred": "h_power",
+            "correct": false
+          }
+        ]
+      }
+    },
+    "research_B2_fruit_s2": {
+      "sprites": "generated_art/research_B2_fruit_s2/sprites",
+      "n_png": 11,
+      "role_recognition": {
+        "n": 7,
+        "accuracy": 0.857,
+        "trials": [
+          {
+            "asset": "Red",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "Blu",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "Soda0d",
+            "true": "h_power",
+            "pred": "h_power",
+            "correct": true
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Yel",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "LtBl",
+            "true": "v_power",
+            "pred": "match",
+            "correct": false
+          }
+        ]
+      }
+    },
+    "research_B3_fruit_s2": {
+      "sprites": "generated_art/research_B3_fruit_s2/sprites",
+      "n_png": 12,
+      "role_recognition": {
+        "n": 8,
+        "accuracy": 0.625,
+        "trials": [
+          {
+            "asset": "Red",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "Blu",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "Soda0d",
+            "true": "h_power",
+            "pred": "match",
+            "correct": false
+          },
+          {
+            "asset": "Soda90",
+            "true": "v_power",
+            "pred": "match",
+            "correct": false
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Yel",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "LtBl",
+            "true": "v_power",
+            "pred": "match",
+            "correct": false
+          }
+        ]
+      }
+    },
+    "research_B0_fruit_s3": {
+      "sprites": "generated_art/research_B0_fruit_s3/sprites",
+      "n_png": 12,
+      "role_recognition": {
+        "n": 8,
+        "accuracy": 0.375,
+        "trials": [
+          {
+            "asset": "Red",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "Blu",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "Soda0d",
+            "true": "h_power",
+            "pred": "match",
+            "correct": false
+          },
+          {
+            "asset": "Soda90",
+            "true": "v_power",
+            "pred": "h_power",
+            "correct": false
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "match",
+            "correct": false
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "match",
+            "correct": false
+          },
+          {
+            "asset": "Yel",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "LtBl",
+            "true": "v_power",
+            "pred": "match",
+            "correct": false
+          }
+        ]
+      }
+    },
+    "research_B1_fruit_s3": {
+      "sprites": "generated_art/research_B1_fruit_s3/sprites",
+      "n_png": 12,
+      "role_recognition": {
+        "n": 8,
+        "accuracy": 0.875,
+        "trials": [
+          {
+            "asset": "Red",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "Blu",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "Soda0d",
+            "true": "h_power",
+            "pred": "h_power",
+            "correct": true
+          },
+          {
+            "asset": "Soda90",
+            "true": "v_power",
+            "pred": "v_power",
+            "correct": true
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Yel",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "LtBl",
+            "true": "v_power",
+            "pred": "match",
+            "correct": false
+          }
+        ]
+      }
+    },
+    "research_B2_fruit_s3": {
+      "sprites": "generated_art/research_B2_fruit_s3/sprites",
+      "n_png": 12,
+      "role_recognition": {
+        "n": 8,
+        "accuracy": 0.75,
+        "trials": [
+          {
+            "asset": "Red",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "Blu",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "Soda0d",
+            "true": "h_power",
+            "pred": "match",
+            "correct": false
+          },
+          {
+            "asset": "Soda90",
+            "true": "v_power",
+            "pred": "v_power",
+            "correct": true
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Yel",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "LtBl",
+            "true": "v_power",
+            "pred": "h_power",
+            "correct": false
+          }
+        ]
+      }
+    },
+    "research_B3_fruit_s3": {
+      "sprites": "generated_art/research_B3_fruit_s3/sprites",
+      "n_png": 12,
+      "role_recognition": {
+        "n": 8,
+        "accuracy": 0.875,
+        "trials": [
+          {
+            "asset": "Red",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "Blu",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "Soda0d",
+            "true": "h_power",
+            "pred": "h_power",
+            "correct": true
+          },
+          {
+            "asset": "Soda90",
+            "true": "v_power",
+            "pred": "v_power",
+            "correct": true
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Yel",
+            "true": "match",
+            "pred": "match",
+            "correct": true
+          },
+          {
+            "asset": "LtBl",
+            "true": "v_power",
+            "pred": "h_power",
+            "correct": false
+          }
+        ]
+      }
+    }
+  }
+}

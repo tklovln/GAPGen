@@ -110,13 +110,16 @@ export class Candy {
       .tweenCallback(() => { this.isMoving = false; });
   }
 
-  // 消除：放大 1.3(0.1s) + 淡出(0.2s, delay 0.05) → destroy
-  animateDestroy() {
+  // 消除：放大 1.3(0.1s) + 淡出(0.2s, delay 0.05) → destroy；delay = 延後起爆（整排掃射用）
+  animateDestroy(delay = 0) {
     this.isBeingDestroyed = true;
     this._killScaleTween();
-    new Tween()
-      .tweenProps(this.node.scale, { x: { to: 1.3 }, y: { to: 1.3 } }, 0.1, Ease.quadOut);
-    return new Tween()
+    const t1 = new Tween();
+    if (delay > 0) t1.tweenInterval(delay);
+    t1.tweenProps(this.node.scale, { x: { to: 1.3 }, y: { to: 1.3 } }, 0.1, Ease.quadOut);
+    const t2 = new Tween();
+    if (delay > 0) t2.tweenInterval(delay);
+    return t2
       .tweenProps(this.node, { alpha: { to: 0, delay: 0.05, duration: 0.2 } }, 0.25, Ease.linear)
       .tweenCallback(() => { if (!this.node.destroyed) this.node.destroy({ children: true }); });
   }

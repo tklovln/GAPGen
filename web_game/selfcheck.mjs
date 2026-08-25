@@ -71,3 +71,16 @@ assert.strictEqual(hint.length, 2, '應找得到提示步');
 assert.deepStrictEqual(hint, [{ x: 1, y: 0 }, { x: 1, y: 1 }]);
 
 console.log('selfcheck OK — match_finder 8 項全過');
+
+// ===== avatar behavior tree（tickPose 純邏輯）=====
+const { tickPose } = await import('./js/avatar.js');
+const st = { celebrateUntil: 0, nextBlinkAt: 1000, blinkUntil: 0 };
+assert.strictEqual(tickPose(st, 0), 'neutral', '未到眨眼時間應為 neutral');
+assert.strictEqual(tickPose(st, 1000, () => 0.5), 'blink', '到時間應眨眼');
+assert.ok(st.blinkUntil === 1130 && st.nextBlinkAt > 1130, '眨眼後應排下次');
+assert.strictEqual(tickPose(st, 1100), 'blink', '閉眼期間維持 blink');
+assert.strictEqual(tickPose(st, 1200), 'neutral', '眨完回 neutral');
+st.celebrateUntil = 2000;
+assert.strictEqual(tickPose(st, 1500), 'celebrate', '消除時 celebrate 優先');
+assert.strictEqual(tickPose(st, 2000), 'neutral', 'celebrate 過期即結束');
+console.log('selfcheck OK — avatar tickPose 6 項全過');

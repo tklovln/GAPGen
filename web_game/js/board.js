@@ -68,6 +68,7 @@ export class GameBoard {
 
     this.renderer = new BoardRenderer(this, this.bgLayer, this.obstacleLayer, this.mudLayer);
     this.effects = new EffectSpawner(this.effectLayer, app.ticker);
+    this.effects.shakeTarget = root;   // 爆炸時震整個盤面
     this.filler = null;
 
     this._tickerFn = (tk) => {
@@ -91,16 +92,19 @@ export class GameBoard {
   // ============ 佈局 ============
 
   calculateOffset(viewportW, viewportH) {
+    // 固定版面配額：上 HUD 130px、下排 UI 120px，棋盤只用中間區並在其中置中
+    const TOP = 130, BOTTOM = 120;
+    const availH = Math.max(viewportH - TOP - BOTTOM, 200);
     const maxW = viewportW * 0.90;
-    const maxH = viewportH * 0.68;
+    const maxH = availH * 0.96;
     const fit = Math.min(maxW / this.gridWidth, maxH / this.gridHeight);
-    this.cellSize = Math.min(Math.max(fit, 28), 70);
+    this.cellSize = Math.min(Math.max(fit, 24), 70);
     if (this.filler) this.filler.cellSize = this.cellSize;
     const boardW = this.gridWidth * this.cellSize;
     const boardH = this.gridHeight * this.cellSize;
     this.boardOffset = {
       x: (viewportW - boardW) / 2,
-      y: (viewportH - boardH) / 2 + 60,
+      y: TOP + (availH - boardH) / 2,
     };
   }
 
@@ -919,7 +923,21 @@ export class GameBoard {
 
   // ============ 連鎖消除 ============
 
-  _explodeCells(targets, mode = EXPLODE_MODE_MATCH) {
+  // 整排掃射每格延遲（秒）— 與 spawnRocketSweep 的火箭速度對齊
+  static SWEEP_SEC_PER_CELL = 0.03;
+
+  // 條紋糖掃射視覺：火箭往兩側飛 + 回傳「依距離起爆」的 delayFn
+  _stripedSweepFx(pos, axis) {
+    const cs = this.cellSize;
+    const sec = GameBoard.SWEEP_SEC_PER_CELL;
+    const span = axis === 'h'
+      ? { neg: pos.x * cs, pos: (this.gridWidth - 1 - pos.x) * cs }
+      : { neg: pos.y * cs, pos: (this.gridHeight - 1 - pos.y) * cs };
+    this.effects.spawnRocketSweep(this.filler.gridToWorld(pos), axis, span, cs, sec);
+    return (p) => (axis === 'h' ? Math.abs(p.x - pos.x) : Math.abs(p.y - pos.y)) * sec;
+  }
+
+  _explodeCells(targets, mode = EXPLODE_MODE_MATCH, delayFn = null) {
     this._obstacleDamageMode = mode;
     this._damageTickId++;
     const chainQueue = [];
@@ -952,9 +970,15 @@ export class GameBoard {
       } else {
         this._triggerObstacleAdjacent(pos, color);
       }
-      this.effects.spawnDestroyEffect(this.filler.gridToWorld(pos), color);
+      const d = delayFn ? delayFn(pos) : 0;
+      if (d > 0) {
+        const w = this.filler.gridToWorld(pos);
+        setTimeout(() => { if (!this._destroyed) this.effects.spawnDestroyEffect(w, color); }, d * 1000);
+      } else {
+        this.effects.spawnDestroyEffect(this.filler.gridToWorld(pos), color);
+      }
       this.filler.removeCandyAt(pos);
-      c.animateDestroy();
+      c.animateDestroy(d);
       destroyedCells.push(pos);
     }
     if (mode !== EXPLODE_MODE_MATCH && destroyedCells.length > 0) {
@@ -982,14 +1006,17 @@ export class GameBoard {
 
   _chainTrigger(ct, pos, color) {
     const subTargets = [];
+    let delayFn = null;
     switch (ct) {
       case CandyType.STRIPED_H:
         Audio.playSpecialTriggerSound();
         for (let x = 0; x < this.gridWidth; x++) if (x !== pos.x) subTargets.push({ x, y: pos.y });
+        delayFn = this._stripedSweepFx(pos, 'h');
         break;
       case CandyType.STRIPED_V:
         Audio.playSpecialTriggerSound();
         for (let y = 0; y < this.gridHeight; y++) if (y !== pos.y) subTargets.push({ x: pos.x, y });
+        delayFn = this._stripedSweepFx(pos, 'v');
         break;
       case CandyType.WRAPPED:
         Audio.playSpecialTriggerSound();
@@ -1031,7 +1058,7 @@ export class GameBoard {
         break;
       }
     }
-    this._explodeCells(subTargets, EXPLODE_MODE_SPECIAL);
+    this._explodeCells(subTargets, EXPLODE_MODE_SPECIAL, delayFn);
   }
 
   _deferredExplode(targets, delay, mode = EXPLODE_MODE_MATCH) {
@@ -1086,12 +1113,17 @@ export class GameBoard {
     };
 
     switch (effect) {
-      case 'double_striped':
+      case 'double_striped': {
         this.effects.spawnShockwave(midW);
         this._destroyCandyAt(posA, candyA.candyColor, EXPLODE_MODE_SPECIAL);
         this._destroyCandyAt(posB, candyB.candyColor, EXPLODE_MODE_SPECIAL);
-        this._explodeCells(getCrossTargets(midPos, this.gridWidth, this.gridHeight), EXPLODE_MODE_MATCH);
+        const dh = this._stripedSweepFx(midPos, 'h');
+        const dv = this._stripedSweepFx(midPos, 'v');
+        // 十字：橫排格照橫向距離、直欄格照縱向距離起爆
+        const crossDelay = (p) => (p.y === midPos.y ? dh(p) : dv(p));
+        this._explodeCells(getCrossTargets(midPos, this.gridWidth, this.gridHeight), EXPLODE_MODE_MATCH, crossDelay);
         break;
+      }
 
       case 'double_wrapped':
         this.effects.spawnShockwave(midW);
@@ -1416,10 +1448,16 @@ export class GameBoard {
       return;
     }
     const cells = [pos];
+    let delayFn = null;
     if (kind === 'wrapped') cells.push(...getWrappedTargets(pos, this.gridWidth, this.gridHeight));
-    else if (kind === 'striped_h') cells.push(...getStripedHTargets(pos, this.gridWidth));
-    else if (kind === 'striped_v') cells.push(...getStripedVTargets(pos, this.gridHeight));
-    this._explodeCells(cells, EXPLODE_MODE_SPECIAL);
+    else if (kind === 'striped_h') {
+      cells.push(...getStripedHTargets(pos, this.gridWidth));
+      delayFn = this._stripedSweepFx(pos, 'h');
+    } else if (kind === 'striped_v') {
+      cells.push(...getStripedVTargets(pos, this.gridHeight));
+      delayFn = this._stripedSweepFx(pos, 'v');
+    }
+    this._explodeCells(cells, EXPLODE_MODE_SPECIAL, delayFn);
   }
 
   // ============ 障礙物傷害 ============

@@ -5,6 +5,7 @@ import { GameManager, GameState } from './game_manager.js';
 import { GameBoard } from './board.js';
 import * as Audio from './audio.js';
 import { tileFamily, OBJECTIVE_ICON_STEMS, COLOR_MAP } from './tiles.js';
+import { AvatarBT } from './avatar.js';
 import { K } from './util.js';
 
 const LEVELS_BASE = '../godot_demo/levels/';
@@ -17,6 +18,30 @@ const params = new URLSearchParams(location.search);
 let app = null;
 let board = null;
 let currentLevelNum = 1;
+let bgSprite = null;
+
+// ============ 全螢幕背景 — 對齊 bg_theme.gd（board_bg 紋理，KEEP_ASPECT_COVERED）============
+
+function layoutBg() {
+  if (!bgSprite || !bgSprite.texture) return;
+  const tex = bgSprite.texture;
+  const sw = app.screen.width, sh = app.screen.height;
+  const scale = Math.max(sw / tex.width, sh / tex.height);
+  bgSprite.scale.set(scale);
+  bgSprite.position.set((sw - tex.width * scale) / 2, (sh - tex.height * scale) / 2);
+}
+
+function applyBg() {
+  const tex = ArtTheme.get('board_bg');
+  if (!tex) return;
+  if (!bgSprite) {
+    bgSprite = new PIXI.Sprite(tex);
+    app.stage.addChildAt(bgSprite, 0);
+  } else {
+    bgSprite.texture = tex;
+  }
+  layoutBg();
+}
 
 // ============ PIXI app ============
 
@@ -30,7 +55,9 @@ async function initApp() {
     autoDensity: true,
   });
   $('game').appendChild(app.canvas);
+  ArtTheme.onThemeReady(applyBg);
   window.addEventListener('resize', () => {
+    layoutBg();
     if (board) board.relayout(app.screen.width, app.screen.height);
   });
 }
@@ -48,7 +75,15 @@ const hud = {
     return obj.type + ':' + tileFamily(String(obj.tile_id || ''));
   },
 
+  // 頭像：DEM02 動畫頭像（behavior tree：idle 眨眼 / 消除時看右下+微笑）
+  applyAvatar() {
+    if (!this._avatar) {
+      this._avatar = new AvatarBT($('avatarCanvas'), '../DEO_emotion/DEM02.png');
+    }
+  },
+
   build() {
+    this.applyAvatar();
     const wrap = $('objectives');
     wrap.innerHTML = '';
     this.objEls.clear();
@@ -58,15 +93,14 @@ const hud = {
       if (obj.type === 'collect') {
         const names = ['Red', 'Grn', 'Blu', 'Yel', 'Pur', 'Brn'];
         const stem = names[obj.color];
-        const url = ArtTheme.url(stem);
         if (ArtTheme.has(stem)) {
-          el.innerHTML = `<img src="${url}" alt="${stem}">`;
+          el.innerHTML = `<img src="${ArtTheme.url(stem)}" alt="${stem}">`;
         } else {
           const cssColor = '#' + (COLOR_MAP[obj.color] ?? 0xffffff).toString(16).padStart(6, '0');
           el.innerHTML = `<div class="swatch" style="background:${cssColor}"></div>`;
         }
       } else if (obj.type === 'score') {
-        el.innerHTML = `<span style="font-size:20px">★</span>`;
+        el.innerHTML = `<span class="star">★</span>`;
       } else {
         const fam = tileFamily(String(obj.tile_id || ''));
         const stem = OBJECTIVE_ICON_STEMS[fam] || fam;
@@ -80,7 +114,12 @@ const hud = {
     }
     this.refreshObjectives();
     $('scoreVal').textContent = GameManager.currentScore;
-    $('movesVal').textContent = GameManager.movesRemaining;
+    this.setMoves(GameManager.movesRemaining);
+  },
+
+  setMoves(m) {
+    $('movesVal').textContent = m;
+    $('movesPanel').classList.toggle('low', m <= 5);
   },
 
   refreshObjectives() {
@@ -88,8 +127,9 @@ const hud = {
       const entry = this.objEls.get(this.objKey(obj));
       if (!entry) continue;
       if (obj.type === 'score') {
-        entry.countEl.textContent = GameManager.currentScore + '/' + obj.target;
-        entry.root.classList.toggle('done', GameManager.currentScore >= obj.target);
+        const done = GameManager.currentScore >= obj.target;
+        entry.countEl.textContent = done ? '✓' : String(obj.target);
+        entry.root.classList.toggle('done', done);
       } else {
         const remain = Math.max(obj.target - (obj.current || 0), 0);
         entry.countEl.textContent = remain > 0 ? String(remain) : '✓';
@@ -108,7 +148,7 @@ const hud = {
       const r = entry.root.getBoundingClientRect();
       return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
     }
-    const r = $('scorePanel').getBoundingClientRect();
+    const r = $('goalsPanel').getBoundingClientRect();
     return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
   },
 };
@@ -192,8 +232,12 @@ async function startLevel(n) {
   board.initBoard(level, app.screen.width, app.screen.height);
 
   // GameManager → HUD
-  GameManager.on('score_changed', (s) => { $('scoreVal').textContent = s; hud.refreshObjectives(); });
-  GameManager.on('moves_changed', (m) => { $('movesVal').textContent = m; });
+  GameManager.on('score_changed', (s) => {
+    $('scoreVal').textContent = s;
+    hud.refreshObjectives();
+    if (hud._avatar) hud._avatar.onMatch();
+  });
+  GameManager.on('moves_changed', (m) => hud.setMoves(m));
   GameManager.on('objective_updated', () => hud.refreshObjectives());
   GameManager.on('level_completed', (_id, score, stars) => {
     Audio.playLevelCompleteSound();
@@ -216,7 +260,7 @@ async function startLevel(n) {
   hud.build();
   hud.show();
   showOverlay(null);
-  window.__game = { board, GameManager, level };   // 測試/自動驗證用
+  window.__game = { board, GameManager, level, hud };   // 測試/自動驗證用
 }
 
 // ============ 按鈕 ============

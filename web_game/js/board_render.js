@@ -68,26 +68,23 @@ export class BoardRenderer {
     const offset = b.boardOffset;
     const w = b.gridWidth, h = b.gridHeight, cs = b.cellSize;
 
-    // 外框（board_bg 紋理）+ 內框深色
-    const border = 12;
-    if (!this._drawTexRect(layer, 'board_bg', offset.x - border, offset.y - border, w * cs + border * 2, h * cs + border * 2)) {
-      const g0 = new PIXI.Graphics();
-      g0.rect(offset.x - border, offset.y - border, w * cs + border * 2, h * cs + border * 2)
-        .fill(0x6b4d33);
-      layer.addChild(g0);
-    }
+    // 邊框：亮金 #f7c04a，仿 #avatarFrame 的立體感（下方投影 + 暗金底層錯位當斜面）
     const g = new PIXI.Graphics();
-    g.rect(offset.x, offset.y, w * cs, h * cs).fill(0x0d0a1a);
-    g.rect(offset.x - border, offset.y - border, w * cs + border * 2, h * cs + border * 2)
-      .stroke({ width: 3, color: 0x664d99, alpha: 0.6 });
+    g.roundRect(offset.x - 3, offset.y + 2, w * cs + 6, h * cs + 6, 14)
+      .stroke({ width: 9, color: 0x000000, alpha: 0.22 });          // 投影
+    g.roundRect(offset.x, offset.y, w * cs, h * cs, 14).fill(0xd6e6f7); // 淺藍底
+    g.roundRect(offset.x - 3, offset.y - 1, w * cs + 6, h * cs + 6, 14)
+      .stroke({ width: 6, color: 0xb8860b });                       // 暗金（下緣斜面）
+    g.roundRect(offset.x - 3, offset.y - 3, w * cs + 6, h * cs + 6, 14)
+      .stroke({ width: 6, color: 0xf7c04a });                       // 主金框
 
-    // 棋盤底色（void 除外）
+    // 棋盤格：接近底色的淺藍圓角方格（void 除外），深淺微交錯
     for (let x = 0; x < w; x++) {
       for (let y = 0; y < h; y++) {
         const k = K(x, y);
         if (b.blockedCells.has(k) && !b.obstacleMap.has(k) && !b.bottomObstacleMap.has(k)) continue;
-        const shade = (x + y) % 2 === 0 ? 0x2e2447 : 0x382b52;
-        g.rect(offset.x + x * cs + 2, offset.y + y * cs + 2, cs - 4, cs - 4).fill(shade);
+        const shade = (x + y) % 2 === 0 ? 0xc5daf1 : 0xcde0f4;
+        g.roundRect(offset.x + x * cs + 2, offset.y + y * cs + 2, cs - 4, cs - 4, 10).fill(shade);
       }
     }
     layer.addChild(g);
