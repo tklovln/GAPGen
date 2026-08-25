@@ -1,0 +1,36 @@
+# Paper-only branch. This file is the safety net that keeps the 2.6GB monorepo
+# out of the Overleaf project.
+#
+# Why a whitelist and not a blacklist: this branch gets checked out into the same
+# working directory as `main`, so every monorepo path (generated_art/ 634MB,
+# godot_demo/ 141MB, ...) sits there as *untracked*. A single `git add -A` on this
+# branch would stage all of it and the next push would ship it to Overleaf, which
+# has no LFS. Ignoring everything by default makes that mistake impossible; new
+# monorepo directories are covered automatically without editing this file.
+
+# Ignore everything by default.
+*
+
+# Un-ignore only what LaTeX needs. Directories must be un-ignored before their
+# contents, otherwise git never descends into them.
+!.gitignore
+!*.tex
+!*.bib
+!*.sty
+!*.cls
+!*.bst
+
+!figures/
+!figures/*.png
+!figures/*.pdf
+!figures/*.jpg
+!figures/*.jpeg
+!figures/*.eps
+
+# Deliberately still ignored, even though they live under paper/ on main:
+#   results/       scored JSON + analysis notes, not compiled by LaTeX
+#   human_eval/    7.3MB of survey assets
+#   figures/*.py   figure generators belong on main, not in the Overleaf project
+#
+# LaTeX build artifacts (*.aux, *.log, *.pdf at root, ...) need no rules:
+# the leading `*` already covers them.
