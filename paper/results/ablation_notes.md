@@ -137,44 +137,87 @@ python scripts/auto_eval.py --task role --judge openai \
 | steampunk | GPT-4o | 0.250 | 0.500 | **+0.250** |
 | steampunk | Gemini | 0.500 | 0.750 | **+0.250** |
 
-**8 of 8 (theme × judge) cells positive. Δ range +0.250 to +0.536, mean +0.384.** No cell is
-negative or zero, across 4 themes and 2 independently-validated judges.
+**8 of 8 (theme × judge) cells positive. Δ range +0.250 to +0.536, mean +0.384.**
 
-### Judge run-to-run noise, and a claim it killed
+> **SUPERSEDED by the repeated-scoring rerun below.** Every number in this table is a *single*
+> scoring pass, and judge run-to-run noise is ±0.250 — the same size as the smallest Δ here. The
+> "8 of 8 positive" count is **wrong**: with 3-pass averaging, steampunk/GPT-4o is exactly zero.
+> Read the next section instead.
 
-Adding steampunk meant re-scoring pet and ocean, i.e. **the same images scored twice by the same
-judge**. They did not agree:
+---
 
-| Theme | Judge | B0 pass 1 → 2 | B1 pass 1 → 2 |
-|---|---|---|---|
-| pet | GPT-4o | 0.250 → 0.250 | 0.750 → 0.750 |
-| ocean | GPT-4o | 0.500 → 0.500 | 0.750 → **0.875** |
-| pet | Gemini | 0.125 → **0.375** | 0.750 → 0.750 |
-| ocean | Gemini | 0.625 → **0.500** | 0.875 → 0.875 |
+## Repeated-scoring rerun (2026-08-25) — the definitive version
 
-3 of 8 re-scored numbers moved, max change **0.250**. With n=8 assets per cell, one asset = 0.125, so
-this is a 1–2 asset flip. **This noise is the same size as the smallest effect in the table above.**
+Everything above measured each cell **once**, so judge run-to-run noise (±0.250) was inseparable from
+effect. Fixed by scoring every cell **3 independent times** with both judges, at `--scope full`
+(n=12 assets/cell, i.e. every ontology asset the research packs contain — the packs hold 12 sprites,
+not 63, so `--scope full` raises n from 8 to 12, not to 63).
 
-**Retracted claim.** The first (6-cell) pass had B1 ≥ 0.750 in every cell and I wrote that ontology
-grounding "converts legibility from a theme- and observer-dependent lottery into a stable property."
-**That is now false**: steampunk/GPT-4o has B1 = 0.500, and B1's spread across cells (0.500–0.911) is
-*wider* than B0's (0.250–0.500). The variance claim was an artifact of 6 cells and one scoring pass.
+```bash
+for P in 1 2 3; do for J in openai gemini; do
+  python scripts/auto_eval.py --task role --scope full --judge $J \
+    --runs research_B{0,1}_{fruit,pet,ocean,steampunk} \
+    --out paper/results/rep_role_${J}_p${P}.json
+done; done
+```
 
-**What survives, stated at the strength the data supports:**
+**Noise is now measured, not assumed:** within-cell sd across 3 passes is **≤0.096, mean 0.025** —
+an order of magnitude below the ±0.250 seen in single-pass scoring. Repetition, not more assets, was
+the right fix.
 
-- **The sign of the ontology effect is robust**: positive in 8/8 cells across 4 themes × 2 judges,
-  Δ ≥ +0.250 everywhere. Since judge noise reaches 0.250 on a single number, the evidence is the
-  *unanimity of direction across 8 cells*, not any individual Δ.
-- **Magnitude is not resolvable at this n.** Report the range (+0.25 to +0.54) and the noise floor
-  (±0.25 per cell) together. Do not report mean Δ as a point estimate without the noise floor.
-- **Do not claim ontology reduces variance.** It does not, at this n.
-- **B1 is not sufficient**: steampunk B1 = 0.500 under GPT-4o means 4 of 8 assets still unreadable in
-  the hardest theme. Ontology is necessary, not sufficient.
+| Theme | Judge | B0 (mean±sd) | B1 (mean±sd) | Δ | Δ > 2·SE |
+|---|---|---|---|---|---|
+| fruit | GPT-4o | 0.500 ± 0.000 | 1.000 ± 0.000 | +0.500 | yes |
+| fruit | Gemini | 0.417 ± 0.000 | 0.917 ± 0.000 | +0.500 | yes |
+| pet | GPT-4o | 0.167 ± 0.084 | 0.667 ± 0.000 | +0.500 | yes |
+| pet | Gemini | 0.195 ± 0.048 | 0.583 ± 0.000 | +0.388 | yes |
+| ocean | GPT-4o | 0.833 ± 0.000 | 0.917 ± 0.000 | +0.084 | yes |
+| ocean | Gemini | 0.556 ± 0.096 | 0.917 ± 0.000 | +0.361 | yes |
+| steampunk | GPT-4o | 0.583 ± 0.000 | 0.583 ± 0.000 | **+0.000** | **no** |
+| steampunk | Gemini | 0.417 ± 0.084 | 0.722 ± 0.096 | +0.306 | yes |
 
-**Methodological consequence (a paper-worthy point in itself):** n=8 assets per cell gives a 0.125
-quantisation and ≥0.250 observed run-to-run swing, so **no single cell in any role-accuracy table in
-this repo is trustworthy alone**. Every claim must rest on agreement across many cells. This is the
-fifth way this benchmark misled us, and the cheapest fix is more assets per cell, not more themes.
+### Second retraction: "8 of 8 positive" is false
+
+steampunk/GPT-4o is **exactly zero**, and it is not noise: sd = 0.000 on both conditions, and across
+all three passes B0 and B1 got the **identical 5 assets wrong** (Blu, Grn, Pur, Red, Yel — all
+elements). The two packs are genuinely different images (different SHA-256). Corrected count:
+**7 of 8 cells positive with Δ > 2·SE, 1 cell exactly zero, 0 negative.**
+
+### What the zero cell revealed: the mechanism is category-specific
+
+Breaking Δ down by ontology category over all 24 (theme × judge × category) cells:
+
+| Category | mean Δ | min | max | Δ > 0 |
+|---|---|---|---|---|
+| obstacle | **+0.417** | +0.000 | **+1.000** | 5/8 |
+| powerup | **+0.403** | +0.000 | +0.667 | 6/8 |
+| element | +0.217 | +0.000 | +0.467 | 5/8 |
+
+**Δ ≥ 0 in 24 of 24 cells. Zero negative cells.** Of the 8 zero cells, **7 are ceilings**
+(B0 already at 1.000 — no headroom), and only 1 is a true zero (steampunk/GPT-4o elements, stuck at
+0.00 under both conditions).
+
+The headline number is **obstacles on fruit: 0.00 → 1.00 under both judges independently.** Without
+ontology, *every* damage-stage crate is misread; with it, *every* one is read correctly.
+
+**This is the mechanism, and it is exactly what the ontology encodes.** `asset_roles.json` names
+gameplay roles and progression stages — which crate is stage 1 of 4, which sprite is a
+horizontal-clearing power-up. So it lifts obstacles (+0.417) and power-ups (+0.403) hardest, because
+those are the categories whose *identity is a gameplay function that appearance alone underdetermines*.
+Elements (the plain match-3 colours) gain least (+0.217): their identity is just colour, which the
+generator gets right without being told the rules. **The effect is largest exactly where gameplay
+semantics cannot be inferred from pixels** — which is the paper's thesis, now measured rather than
+asserted.
+
+### Claim, at the strength the data supports
+
+1. **Ontology grounding never hurts and usually helps: Δ ≥ 0 in 24/24 category cells, 0 negative.**
+2. **The gain concentrates on gameplay-defined categories** (obstacle +0.417, powerup +0.403) and is
+   weakest on appearance-defined ones (element +0.217).
+3. **It is necessary but not sufficient**: steampunk/GPT-4o B1 = 0.583, with all 5 elements still
+   unreadable; a theme can defeat it entirely.
+4. Noise is characterised (within-cell sd ≤0.096), so per-cell Δ is now reportable — unlike every
+   earlier table in this file.
 
 ## DINOv2 intra-family cohesion (objective, no VLM)
 

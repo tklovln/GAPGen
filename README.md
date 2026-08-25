@@ -141,6 +141,8 @@ Match3_sim/
 ├── art_pipeline/          # GAPGen core: planner / generation / critic
 ├── scripts/               # Generation + evaluation CLIs (ai_art_gen, auto_eval, research_*)
 ├── godot_demo/            # Match-3 demo game system (see godot_demo/README.md)
+├── web_game/              # Web port of the Match-3 demo (see web_game/README.md)
+├── serve_web.sh           # Start/stop local server + Cloudflare tunnel for web_game
 └── generated_art/         # Generated outputs (gitignored)
 ```
 

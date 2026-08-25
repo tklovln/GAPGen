@@ -78,7 +78,7 @@ const hud = {
   // 頭像：DEM02 動畫頭像（behavior tree：idle 眨眼 / 消除時看右下+微笑）
   applyAvatar() {
     if (!this._avatar) {
-      this._avatar = new AvatarBT($('avatarCanvas'), '../DEO_emotion/DEM02.png');
+      this._avatar = new AvatarBT($('avatarCanvas'), '../DEO_emotion/');
     }
   },
 
@@ -237,13 +237,20 @@ async function startLevel(n) {
     hud.refreshObjectives();
     if (hud._avatar) hud._avatar.onMatch();
   });
-  GameManager.on('moves_changed', (m) => hud.setMoves(m));
+  GameManager.on('moves_changed', (m) => {
+    hud.setMoves(m);
+    if (hud._avatar) hud._avatar.setMoves(m);
+  });
+  GameManager.on('explosion', () => { if (hud._avatar) hud._avatar.onExplosion(); });
+  GameManager.on('bad_swap', () => { if (hud._avatar) hud._avatar.onBadSwap(); });
   GameManager.on('objective_updated', () => hud.refreshObjectives());
   GameManager.on('level_completed', (_id, score, stars) => {
+    if (hud._avatar) hud._avatar.setMood('win');
     Audio.playLevelCompleteSound();
     setTimeout(() => showResult(true, stars, score), 900);
   });
   GameManager.on('level_failed', () => {
+    if (hud._avatar) hud._avatar.setMood('lose');
     Audio.playLevelFailedSound();
     setTimeout(() => showResult(false, 0, GameManager.currentScore), 700);
   });
@@ -259,6 +266,11 @@ async function startLevel(n) {
 
   hud.build();
   hud.show();
+  if (hud._avatar) {
+    // startLevel 的 moves_changed 發生在監聽器註冊前，這裡補同步一次
+    hud._avatar.setMood('');
+    hud._avatar.setMoves(GameManager.movesRemaining);
+  }
   showOverlay(null);
   window.__game = { board, GameManager, level, hud };   // 測試/自動驗證用
 }

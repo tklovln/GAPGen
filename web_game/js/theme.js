@@ -38,6 +38,32 @@ class ArtThemeClass {
 
   themeBase(themeName) { return GENERATED_BASE + themeName + '/sprites/'; }
 
+  // 旋轉動畫幀（scripts/gen_rotation_gif.py 產出，10 幀 turntable）
+  // ponytail: 目前只有 deo_cat_ip 的 Soda90 生成過幀；其他主題/素材回 null，
+  // candy 端會 fallback 成直接旋轉貼圖。要擴充就對該 sprite 跑一次生成腳本即可。
+  // SPIN_FRAMES_VERSION: 幀重新生成/後處理時 +1，避免瀏覽器用舊快取（例如白底版）
+  static SPIN_FRAMES_VERSION = 2;
+
+  async loadSpinFrames(stem) {
+    this._spinFrames ??= new Map();
+    const key = this.currentTheme + '/' + stem;
+    if (this._spinFrames.has(key)) return this._spinFrames.get(key);
+    let out = null;
+    if (this.currentTheme === 'deo_cat_ip') {
+      try {
+        const frames = [];
+        for (let i = 0; i < 10; i++) {
+          const src = `${GENERATED_BASE}rotation_test/${stem}/frame_${String(i).padStart(2, '0')}.png`
+            + `?v=${ArtThemeClass.SPIN_FRAMES_VERSION}`;
+          frames.push(await PIXI.Assets.load({ src, loadParser: 'loadTextures' }));
+        }
+        out = frames;
+      } catch (_e) { out = null; }
+    }
+    this._spinFrames.set(key, out);
+    return out;
+  }
+
   // 批次載入（12 張一批，對齊 art_theme.gd BATCH=12）；缺圖回 null
   async _loadBatch(base, names, onProgress) {
     const out = new Map();

@@ -150,6 +150,7 @@ export class EffectSpawner {
     this.spawnParticles(pos, 0xffffff, 20, 120);
     playExplosionSound();
     this.shake(7, 0.28);
+    GameManager._emit('explosion');   // 頭像等 UI 反應用
   }
 
   spawnFirework(pos) {

@@ -11,8 +11,9 @@ import {
   CandyType, CANDY_IDX_TO_COLOR_NAME, elimRule, isMovableObstacle,
   isHitsModeObstacle, tileFamily, PLANE_WEIGHT_BY_PREFIX,
   getComboResult, getStripedHTargets, getStripedVTargets,
-  getWrappedTargets, getBigWrappedTargets, getCrossTargets,
+  getWrappedTargets, getBigWrappedTargets, getCrossTargets, SPECIAL_SPRITE,
 } from './tiles.js';
+import { ArtTheme } from './theme.js';
 
 const EXPLODE_MODE_MATCH = 0;
 const EXPLODE_MODE_SPECIAL = 1;
@@ -538,6 +539,7 @@ export class GameBoard {
         GameManager.useMove();
         this.cascadeLevel = 0;
         Audio.playSpecialTriggerSound();
+        await this._spinUpIfStriped(triggerCandy);
         this._destroyCandyAt(spPos, spColor, EXPLODE_MODE_SPECIAL);
         this._chainTrigger(spType, spPos, spColor);
         await sleep(0.3);
@@ -547,6 +549,7 @@ export class GameBoard {
       }
       // 真的無效 → 換回去
       Audio.playSwapBackSound();
+      GameManager._emit('bad_swap');
       this.filler.setCandyAt(posA, candyA);
       this.filler.setCandyAt(posB, candyB);
       const tweenBack = candyA.animateTo(worldA, 0.2);
@@ -564,8 +567,9 @@ export class GameBoard {
       const pending = aSpecial ? candyA : candyB;
       const spType = pending.candyType;
       const spColor = pending.candyColor;
-      this._destroyCandyAt(pending.gridPos, spColor, EXPLODE_MODE_SPECIAL);
       Audio.playSpecialTriggerSound();
+      await this._spinUpIfStriped(pending);
+      this._destroyCandyAt(pending.gridPos, spColor, EXPLODE_MODE_SPECIAL);
       this._chainTrigger(spType, pending.gridPos, spColor);
       await sleep(0.05);
     }
@@ -726,6 +730,7 @@ export class GameBoard {
     const isSpecial = candy.candyType !== CandyType.NORMAL;
     if (matches.length === 0 && !isSpecial) {
       Audio.playSwapBackSound();
+      GameManager._emit('bad_swap');
       this.filler.setCandyAt(obsPos, null);
       this.filler.setCandyAt(candyPos, candy);
       this.obstacleMap.delete(candyK);
@@ -748,6 +753,7 @@ export class GameBoard {
       Audio.playSpecialTriggerSound();
       const spType = candy.candyType;
       const spColor = candy.candyColor;
+      await this._spinUpIfStriped(candy);
       this._destroyCandyAt(obsPos, spColor, EXPLODE_MODE_SPECIAL);
       this._chainTrigger(spType, obsPos, spColor);
       await sleep(0.3);
@@ -761,6 +767,17 @@ export class GameBoard {
   }
 
   // ============ 道具直接觸發 / 光球 ============
+
+  // 條紋道具觸發前奏：自轉加速 + 微放大，播完才真正引爆。
+  // ponytail: 只掛在「玩家直接觸發」路徑；cascade 連鎖引爆若也各等 1 秒會拖垮節奏
+  async _spinUpIfStriped(candy) {
+    if (!candy || candy.node.destroyed || candy.isBeingDestroyed) return;
+    const ct = candy.candyType;
+    if (ct !== CandyType.STRIPED_H && ct !== CandyType.STRIPED_V) return;
+    const frames = await ArtTheme.loadSpinFrames(SPECIAL_SPRITE[ct]);
+    Audio.playSpinUpSound();
+    await candy.playSpinUp(frames).finished;
+  }
 
   async _activateSpecialDirectly(candy) {
     this.isProcessing = true;
@@ -797,6 +814,7 @@ export class GameBoard {
       }
       await this._animateColorBombSequence(ncTargets, pos, -1);
     } else {
+      await this._spinUpIfStriped(candy);
       this._triggerSpecialCandy(candy);
       if (this.obstacleMap.has(K(pos.x, pos.y))) this._damageObstacle(pos);
       this.effects.spawnDestroyEffect(this.filler.gridToWorld(pos), candy.candyColor);

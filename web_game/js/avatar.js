@@ -1,9 +1,9 @@
-// avatar.js — DEM02 動畫頭像。
-// 做法：底圖照畫，表情用 canvas 在「來源圖座標」上局部重繪（眨眼＝黃底+閉眼線、
-// 看右下＝黃底重畫瞳孔偏移、微笑＝白底蓋掉 ^ 嘴重畫笑弧）。
-// 控制邏輯是一個 2 節點的 behavior tree：Celebrate（優先）→ Idle（偶爾眨眼）。
+// avatar.js — DEO 貓動畫頭像。
+// 底圖 DEM02 照畫，眨眼/看右下+微笑用 canvas 在來源圖座標上局部重繪；
+// 其他情緒（吼/嫌棄/冷汗/發綠/勝/敗）直接整張換 DEO_emotion 的表情圖。
+// 控制邏輯是一個小 behavior tree（tickPose，純函式可測）。
 
-// ---- 來源圖（1772×1772）上量測到的幾何常數 ----
+// ---- 底圖 DEM02（1772×1772）量測到的幾何常數 ----
 const SRC = 1772;
 const EYES = [
   { cx: 605, cy: 1006, rx: 233, ry: 146 },  // 左眼（畫面左）
@@ -13,13 +13,27 @@ const EYE_YELLOW = 'rgb(255,219,150)';
 const FACE_WHITE = 'rgb(251,251,251)';
 const MOUTH = { x: 665, y: 1215, w: 290, h: 130, cx: 805, cy: 1235 };
 
+// pose → 表情圖檔（base 上另外疊眨眼/微笑；其餘整張替換）
+export const EMOTES = {
+  base: 'DEM02.png',
+  boom: 'DEM03.png',   // 大爆炸狂吼
+  meh: 'DEM07.png',    // 無效交換嫌棄
+  sweat: 'DEM09.png',  // 剩 ≤5 步冒冷汗
+  panic: 'DEM12.png',  // 剩 ≤2 步臉發綠
+  win: 'DEM04.png',    // 過關星星眼
+  lose: 'DEM05.png',   // 失敗趴平
+};
+
 // ---- 純邏輯：behavior tree 的 tick（可獨立測試） ----
-// state: { celebrateUntil, nextBlinkAt, blinkUntil }
-// 回傳 pose: 'celebrate' | 'blink' | 'neutral'，並就地更新排程欄位。
+// state: { mood, react, reactUntil, movesLeft, celebrateUntil, nextBlinkAt, blinkUntil }
+// 優先序：勝負 > 一次性反應(吼/嫌棄) > 發綠(≤2步) > 消除微笑 > 冷汗(≤5步) > 眨眼 > neutral
 export function tickPose(state, now, rand = Math.random) {
-  // 節點 1：Celebrate（條件：celebrateUntil 未過期）
+  if (state.mood === 'win' || state.mood === 'lose') return state.mood;
+  if (now < state.reactUntil) return state.react;
+  const m = state.movesLeft;
+  if (m > 0 && m <= 2) return 'panic';
   if (now < state.celebrateUntil) return 'celebrate';
-  // 節點 2：Idle — 偶爾眨眼
+  if (m > 0 && m <= 5) return 'sweat';
   if (now < state.blinkUntil) return 'blink';
   if (now >= state.nextBlinkAt) {
     state.blinkUntil = now + 130;                       // 閉眼 130ms
@@ -30,21 +44,29 @@ export function tickPose(state, now, rand = Math.random) {
 }
 
 export class AvatarBT {
-  constructor(canvas, src) {
+  constructor(canvas, emotionDir) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
-    this.state = { celebrateUntil: 0, nextBlinkAt: performance.now() + 2000, blinkUntil: 0 };
-    this._lastPose = null;
-    this.img = new Image();
-    this.img.onload = () => {
-      this._lastPose = null;
-      requestAnimationFrame(this._loop.bind(this));
+    this.state = {
+      mood: '', react: '', reactUntil: 0, movesLeft: 99,
+      celebrateUntil: 0, nextBlinkAt: performance.now() + 2000, blinkUntil: 0,
     };
-    this.img.src = src;
+    this._lastPose = null;
+    this.imgs = {};
+    for (const [pose, file] of Object.entries(EMOTES)) {
+      const im = new Image();
+      im.onload = () => { if (pose === 'base') requestAnimationFrame(this._loop.bind(this)); this._lastPose = null; };
+      im.src = emotionDir + file;
+      this.imgs[pose] = im;
+    }
   }
 
-  // 有消除時呼叫：往右下看＋微笑（連續 combo 會刷新持續時間）
+  // ---- 遊戲事件 API ----
   onMatch() { this.state.celebrateUntil = performance.now() + 900; }
+  onExplosion() { this.state.react = 'boom'; this.state.reactUntil = performance.now() + 1200; }
+  onBadSwap() { this.state.react = 'meh'; this.state.reactUntil = performance.now() + 800; }
+  setMoves(m) { this.state.movesLeft = m; }
+  setMood(mood) { this.state.mood = mood; this._lastPose = null; }
 
   _loop(now) {
     const pose = tickPose(this.state, now);
@@ -57,10 +79,19 @@ export class AvatarBT {
 
   _draw(pose) {
     const { ctx, canvas } = this;
+    // 整張替換的表情圖（載入完成才用，否則先畫底圖）
+    const emoteImg = this.imgs[pose];
+    if (emoteImg && emoteImg.complete && emoteImg.naturalWidth > 0 && pose !== 'base') {
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(emoteImg, 0, 0, canvas.width, canvas.height);
+      return;
+    }
+    // 底圖 + 局部重繪（neutral / blink / celebrate）
     const s = canvas.width / SRC;
     ctx.setTransform(s, 0, 0, s, 0, 0);
     ctx.clearRect(0, 0, SRC, SRC);
-    ctx.drawImage(this.img, 0, 0, SRC, SRC);
+    ctx.drawImage(this.imgs.base, 0, 0, SRC, SRC);
     if (pose === 'blink') {
       for (const e of EYES) { this._fillEye(e); this._closedLid(e); }
     } else if (pose === 'celebrate') {

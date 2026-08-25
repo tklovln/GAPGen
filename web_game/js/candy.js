@@ -135,6 +135,32 @@ export class Candy {
     return tw;
   }
 
+  // 道具觸發前奏：自轉由慢到快（轉速 0.8 → 7 圈/秒，加速感明顯）+ 體積微放大。
+  // frames 有 10 幀 turntable 圖就逐幀換貼圖，否則直接旋轉貼圖 fallback。
+  playSpinUp(frames = null, duration = 1.0) {
+    this._killScaleTween();
+    const spr = this.sprite;
+    const w0 = 0.8, w1 = 7;
+    const baseW = spr.width, baseH = spr.height;
+    new Tween().tweenProps(this.node.scale, { x: { to: 1.18 }, y: { to: 1.18 } }, duration, Ease.quadOut);
+    this._scaleTween = new Tween().tweenMethod((p) => {
+      if (this.node.destroyed) return;
+      // 轉速線性升 → 累積圈數 = ∫w dt = D*(w0*p + (w1-w0)*p²/2)
+      const turns = duration * (w0 * p + (w1 - w0) * p * p / 2);
+      if (frames && frames.length) {
+        const idx = Math.floor(turns * frames.length) % frames.length;
+        if (spr.texture !== frames[idx]) {
+          spr.texture = frames[idx];
+          spr.width = baseW;
+          spr.height = baseH;
+        }
+      } else {
+        spr.rotation = turns * Math.PI * 2;
+      }
+    }, 0, 1, duration);
+    return this._scaleTween;
+  }
+
   playHint() {
     this._killScaleTween();
     this._scaleTween = new Tween()

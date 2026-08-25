@@ -74,7 +74,7 @@ console.log('selfcheck OK — match_finder 8 項全過');
 
 // ===== avatar behavior tree（tickPose 純邏輯）=====
 const { tickPose } = await import('./js/avatar.js');
-const st = { celebrateUntil: 0, nextBlinkAt: 1000, blinkUntil: 0 };
+const st = { mood: '', react: '', reactUntil: 0, movesLeft: 99, celebrateUntil: 0, nextBlinkAt: 1000, blinkUntil: 0 };
 assert.strictEqual(tickPose(st, 0), 'neutral', '未到眨眼時間應為 neutral');
 assert.strictEqual(tickPose(st, 1000, () => 0.5), 'blink', '到時間應眨眼');
 assert.ok(st.blinkUntil === 1130 && st.nextBlinkAt > 1130, '眨眼後應排下次');
@@ -83,4 +83,22 @@ assert.strictEqual(tickPose(st, 1200), 'neutral', '眨完回 neutral');
 st.celebrateUntil = 2000;
 assert.strictEqual(tickPose(st, 1500), 'celebrate', '消除時 celebrate 優先');
 assert.strictEqual(tickPose(st, 2000), 'neutral', 'celebrate 過期即結束');
-console.log('selfcheck OK — avatar tickPose 6 項全過');
+// 新增情緒優先序
+st.movesLeft = 5;
+assert.strictEqual(tickPose(st, 3000), 'sweat', '剩 ≤5 步冒冷汗');
+st.celebrateUntil = 3500;
+assert.strictEqual(tickPose(st, 3200), 'celebrate', '冷汗中消除仍短暫微笑');
+st.movesLeft = 2;
+assert.strictEqual(tickPose(st, 3200), 'panic', '剩 ≤2 步發綠壓過 celebrate');
+st.react = 'meh'; st.reactUntil = 4000;
+assert.strictEqual(tickPose(st, 3500), 'meh', '一次性反應壓過低步數');
+st.react = 'boom';
+assert.strictEqual(tickPose(st, 3500), 'boom', '爆炸反應');
+assert.strictEqual(tickPose(st, 4000), 'panic', '反應過期回低步數狀態');
+st.mood = 'win';
+assert.strictEqual(tickPose(st, 3500), 'win', '勝利最高優先');
+st.mood = 'lose';
+assert.strictEqual(tickPose(st, 3500), 'lose', '失敗最高優先');
+st.mood = ''; st.movesLeft = 0; st.reactUntil = 0; st.nextBlinkAt = 99999; st.blinkUntil = 0;
+assert.strictEqual(tickPose(st, 5000), 'neutral', 'movesLeft=0 不觸發冷汗（勝負由 mood 管）');
+console.log('selfcheck OK — avatar tickPose 15 項全過');

@@ -17,6 +17,22 @@ PROJECT_ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from art_pipeline import gemini_api  # noqa: E402
+from art_pipeline.postprocess import _flood_fill_from_border  # noqa: E402
+
+
+def strip_white_bg(png_bytes: bytes, thresh: int = 235) -> bytes:
+    """白底去背：近白像素中「與影像邊框連通」的整片才移除，主體內部白色保留。"""
+    import io
+    import numpy as np
+    from PIL import Image
+    im = Image.open(io.BytesIO(png_bytes)).convert('RGBA')
+    data = np.array(im)
+    rgb = data[..., :3]
+    candidate = (rgb > thresh).all(axis=-1) & (data[..., 3] > 0)
+    data[..., 3][_flood_fill_from_border(candidate)] = 0
+    out = io.BytesIO()
+    Image.fromarray(data).save(out, format='PNG')
+    return out.getvalue()
 
 # 精簡直觀的 turntable prompt：一句身分、一句動作、一句凍結其餘變因
 PROMPT = (
@@ -67,6 +83,7 @@ def main():
             ref_images=[(original, 'Reference A: original sprite'),
                         (prev, 'Reference B: previous rotation frame')],
         )
+        png = strip_white_bg(png)
         fp.write_bytes(png)
         prev = png
 

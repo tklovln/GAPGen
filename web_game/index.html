@@ -14,9 +14,20 @@
   /* ===== 頂部 HUD（Royal Match 風格）===== */
   #hud {
     position: absolute; top: 0; left: 0; right: 0; padding: 14px 12px 0;
-    display: flex; align-items: flex-start; justify-content: center; gap: 10px;
+    display: flex; align-items: flex-start; justify-content: center;
     color: #4a2410; pointer-events: none; user-select: none;
     font-family: "Arial Rounded MT Bold", "Helvetica Neue", "PingFang TC", sans-serif;
+  }
+  /* 外層酒紅色牌匾：把頭像 + Goals + Moves 全包起來 */
+  #topBar {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 12px;
+    background: linear-gradient(180deg, #a03046 0%, #7d1f31 45%, #6a1826 100%);
+    border: 3px solid #55101c; border-radius: 26px;
+    box-shadow:
+      0 5px 12px rgba(0,0,0,.45),
+      inset 0 2px 0 rgba(255,255,255,.18),
+      inset 0 -4px 0 rgba(0,0,0,.28);
   }
   /* 左：頭像框 */
   #avatarFrame {
@@ -27,22 +38,23 @@
     overflow: hidden; display: flex; align-items: center; justify-content: center;
   }
   #avatarFrame canvas { width: 92%; height: 92%; filter: drop-shadow(0 2px 2px rgba(0,0,0,.35)); }
-  /* 中/右：面板卡 */
+  /* 中/右：面板卡（牌匾內的米色內嵌板） */
   .topPanel {
     position: relative; min-height: 74px; border-radius: 18px;
     background: linear-gradient(180deg, #fff8e6 0%, #f6e6c4 100%);
-    border: 3px solid #caa04f;
-    box-shadow: 0 3px 8px rgba(0,0,0,.4), inset 0 -4px 0 rgba(160,120,50,.25);
+    border: 2px solid #55101c;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,.18), inset 0 -3px 0 rgba(160,120,50,.25);
     padding: 18px 16px 8px; display: flex; align-items: center; justify-content: center;
   }
   .panelBanner {
     position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
     background: linear-gradient(180deg, #e8493a, #b31f1f);
-    border: 2px solid #7d1010; border-radius: 999px;
+    border: 2px solid #f0b840; border-radius: 999px;
     color: #fff; font-weight: 800; font-size: 14px; letter-spacing: .5px;
     padding: 2px 16px; white-space: nowrap;
     box-shadow: 0 2px 4px rgba(0,0,0,.35), inset 0 2px 0 rgba(255,255,255,.35);
     text-shadow: 0 1px 2px rgba(0,0,0,.4);
+    z-index: 1;
   }
   #goalsPanel { flex: 0 1 auto; max-width: 52vw; }
   #objectives { display: flex; gap: 14px; align-items: center; }
@@ -69,7 +81,11 @@
     pointer-events: none;
   }
   #bottomBar > * { pointer-events: auto; }
-  #scorePanel { min-width: 170px; }
+  #scorePanel {
+    min-width: 170px;
+    border: 3px solid #caa04f;
+    box-shadow: 0 3px 8px rgba(0,0,0,.4), inset 0 -4px 0 rgba(160,120,50,.25);
+  }
   .scoreNum { font-size: 34px; font-weight: 900; color: #4a2410; line-height: 1; text-shadow: 0 1px 0 #fff; }
   .iconCard {
     width: 74px; height: 74px; border-radius: 18px;
@@ -119,14 +135,16 @@
   <div id="game"></div>
 
   <div id="hud" class="hidden">
-    <div id="avatarFrame"><canvas id="avatarCanvas" width="256" height="256"></canvas></div>
-    <div class="topPanel" id="goalsPanel">
-      <div class="panelBanner">Goals</div>
-      <div id="objectives"></div>
-    </div>
-    <div class="topPanel" id="movesPanel">
-      <div class="panelBanner">Moves</div>
-      <div class="movesNum" id="movesVal">0</div>
+    <div id="topBar">
+      <div id="avatarFrame"><canvas id="avatarCanvas" width="256" height="256"></canvas></div>
+      <div class="topPanel" id="goalsPanel">
+        <div class="panelBanner">Goals</div>
+        <div id="objectives"></div>
+      </div>
+      <div class="topPanel" id="movesPanel">
+        <div class="panelBanner">Moves</div>
+        <div class="movesNum" id="movesVal">0</div>
+      </div>
     </div>
     <div id="bottomBar">
       <div class="topPanel" id="scorePanel">
