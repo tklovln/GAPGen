@@ -51,46 +51,47 @@ class ArtThemeClass {
     let out = null;
     if (this.currentTheme === 'deo_cat_ip') {
       try {
-        const frames = [];
-        for (let i = 0; i < 10; i++) {
+        out = await Promise.all(Array.from({ length: 10 }, (_, i) => {
           const src = `${GENERATED_BASE}rotation_test/${stem}/frame_${String(i).padStart(2, '0')}.png`
             + `?v=${ArtThemeClass.SPIN_FRAMES_VERSION}`;
-          frames.push(await PIXI.Assets.load({ src, loadParser: 'loadTextures' }));
-        }
-        out = frames;
+          return PIXI.Assets.load({ src, loadParser: 'loadTextures' });
+        }));
       } catch (_e) { out = null; }
     }
     this._spinFrames.set(key, out);
     return out;
   }
 
-  // 批次載入（12 張一批，對齊 art_theme.gd BATCH=12）；缺圖回 null
-  async _loadBatch(base, names, onProgress) {
+  // 全部並發載入（HTTP/2 下瀏覽器自己會排程，分批只會拖慢）；缺圖回 null
+  async _loadBatch(base, names, tick) {
     const out = new Map();
-    const BATCH = 12;
-    let done = 0;
-    for (let i = 0; i < names.length; i += BATCH) {
-      const batch = names.slice(i, i + BATCH);
-      await Promise.all(batch.map(async (nm) => {
-        const url = base + nm + '.png';
-        try {
-          const tex = await PIXI.Assets.load({ src: url, loadParser: 'loadTextures' });
-          out.set(nm, { tex, url });
-        } catch (_e) {
-          out.set(nm, null);
-        }
-        done++;
-        if (onProgress) onProgress(done, names.length);
-      }));
-    }
+    await Promise.all(names.map(async (nm) => {
+      const url = base + nm + '.png';
+      try {
+        const tex = await PIXI.Assets.load({ src: url, loadParser: 'loadTextures' });
+        out.set(nm, { tex, url });
+      } catch (_e) {
+        out.set(nm, null);
+      }
+      if (tick) tick();
+    }));
     return out;
   }
 
   async load(themeName = '', onProgress = null) {
     this.currentTheme = themeName;
-    // 1) packed 預設
-    if (this.textures.size === 0) {
-      const defaults = await this._loadBatch(DEFAULT_BASE, MANIFEST, onProgress);
+    const needDefaults = this.textures.size === 0;
+    const total = (needDefaults ? MANIFEST.length : 0) + (themeName !== '' ? MANIFEST.length : 0);
+    let done = 0;
+    const tick = onProgress ? () => onProgress(++done, total) : null;
+
+    // 預設與主題覆蓋並行抓，抓完再依「預設 → 覆蓋」順序套用
+    const [defaults, overrides] = await Promise.all([
+      needDefaults ? this._loadBatch(DEFAULT_BASE, MANIFEST, tick) : null,
+      themeName !== '' ? this._loadBatch(this.themeBase(themeName), MANIFEST, tick) : null,
+    ]);
+
+    if (defaults) {
       for (const [nm, entry] of defaults) {
         if (entry) { this.textures.set(nm, entry.tex); this.urls.set(nm, entry.url); }
       }
@@ -101,9 +102,7 @@ class ArtThemeClass {
       this.textures = new Map(this._defaultTextures);
       this.urls = new Map(this._defaultUrls);
     }
-    // 2) 主題覆蓋（缺圖保留預設）
-    if (themeName !== '') {
-      const overrides = await this._loadBatch(this.themeBase(themeName), MANIFEST, onProgress);
+    if (overrides) {
       for (const [nm, entry] of overrides) {
         if (entry) { this.textures.set(nm, entry.tex); this.urls.set(nm, entry.url); }
       }

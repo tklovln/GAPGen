@@ -5,7 +5,7 @@ import { GameManager, GameState } from './game_manager.js';
 import { GameBoard } from './board.js';
 import * as Audio from './audio.js';
 import { tileFamily, OBJECTIVE_ICON_STEMS, COLOR_MAP } from './tiles.js';
-import { AvatarBT } from './avatar.js';
+import { AvatarBT, EMOTE_SETS } from './avatar.js';
 import { K } from './util.js';
 
 const LEVELS_BASE = '../godot_demo/levels/';
@@ -75,10 +75,14 @@ const hud = {
     return obj.type + ':' + tileFamily(String(obj.tile_id || ''));
   },
 
-  // 頭像：DEM02 動畫頭像（behavior tree：idle 眨眼 / 消除時看右下+微笑）
+  // 頭像：behavior tree 動畫頭像（idle 眨眼 / 消除 / 爆炸 / 低步數 / 勝負）
+  // 主題以 bho 開頭時換萬聖節骷髏裝貓，其餘用 DEO 貓
   applyAvatar() {
-    if (!this._avatar) {
-      this._avatar = new AvatarBT($('avatarCanvas'), '../DEO_emotion/');
+    const kind = ArtTheme.currentTheme.startsWith('bho') ? 'bho' : 'deo';
+    if (this._avatarKind !== kind) {
+      if (this._avatar) this._avatar.destroy();
+      this._avatarKind = kind;
+      this._avatar = new AvatarBT($('avatarCanvas'), EMOTE_SETS[kind]);
     }
   },
 

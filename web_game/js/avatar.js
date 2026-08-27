@@ -13,15 +13,36 @@ const EYE_YELLOW = 'rgb(255,219,150)';
 const FACE_WHITE = 'rgb(251,251,251)';
 const MOUTH = { x: 665, y: 1215, w: 290, h: 130, cx: 805, cy: 1235 };
 
-// pose → 表情圖檔（base 上另外疊眨眼/微笑；其餘整張替換）
-export const EMOTES = {
-  base: 'DEM02.png',
-  boom: 'DEM03.png',   // 大爆炸狂吼
-  meh: 'DEM07.png',    // 無效交換嫌棄
-  sweat: 'DEM09.png',  // 剩 ≤5 步冒冷汗
-  panic: 'DEM12.png',  // 剩 ≤2 步臉發綠
-  win: 'DEM04.png',    // 過關星星眼
-  lose: 'DEM05.png',   // 失敗趴平
+// pose → 表情圖檔。DEO 組：base 上另外疊眨眼/微笑（overlay:true）；其餘整張替換。
+// BHO 組（萬聖節骷髏裝貓）：沒有底圖幾何資料，全部用整張換圖，眨眼直接顯示 base。
+export const EMOTE_SETS = {
+  deo: {
+    dir: '../DEO_emotion/',
+    overlay: true,
+    emotes: {
+      base: 'DEM02.png',
+      boom: 'DEM03.png',   // 大爆炸狂吼
+      meh: 'DEM07.png',    // 無效交換嫌棄
+      sweat: 'DEM09.png',  // 剩 ≤5 步冒冷汗
+      panic: 'DEM12.png',  // 剩 ≤2 步臉發綠
+      win: 'DEM04.png',    // 過關星星眼
+      lose: 'DEM05.png',   // 失敗趴平
+    },
+  },
+  bho: {
+    dir: '../BHO_Halloween/',
+    overlay: false,
+    emotes: {
+      base: 'bho010.png',      // 站立
+      celebrate: 'bho011.png', // 跳起大笑
+      boom: 'bho008.png',      // 炸毛拱背
+      meh: 'bho012.png',       // 坐著臭臉
+      sweat: 'bho009.png',     // 瞪大眼
+      panic: 'bho009.png',
+      win: 'bho011.png',
+      lose: 'bho012.png',
+    },
+  },
 };
 
 // ---- 純邏輯：behavior tree 的 tick（可獨立測試） ----
@@ -44,22 +65,26 @@ export function tickPose(state, now, rand = Math.random) {
 }
 
 export class AvatarBT {
-  constructor(canvas, emotionDir) {
+  constructor(canvas, set = EMOTE_SETS.deo) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
+    this.overlay = set.overlay;
+    this._dead = false;
     this.state = {
       mood: '', react: '', reactUntil: 0, movesLeft: 99,
       celebrateUntil: 0, nextBlinkAt: performance.now() + 2000, blinkUntil: 0,
     };
     this._lastPose = null;
     this.imgs = {};
-    for (const [pose, file] of Object.entries(EMOTES)) {
+    for (const [pose, file] of Object.entries(set.emotes)) {
       const im = new Image();
       im.onload = () => { if (pose === 'base') requestAnimationFrame(this._loop.bind(this)); this._lastPose = null; };
-      im.src = emotionDir + file;
+      im.src = set.dir + file;
       this.imgs[pose] = im;
     }
   }
+
+  destroy() { this._dead = true; }
 
   // ---- 遊戲事件 API ----
   onMatch() { this.state.celebrateUntil = performance.now() + 900; }
@@ -69,6 +94,7 @@ export class AvatarBT {
   setMood(mood) { this.state.mood = mood; this._lastPose = null; }
 
   _loop(now) {
+    if (this._dead) return;
     const pose = tickPose(this.state, now);
     if (pose !== this._lastPose) {
       this._lastPose = pose;
@@ -82,12 +108,15 @@ export class AvatarBT {
     // 整張替換的表情圖（載入完成才用，否則先畫底圖）
     const emoteImg = this.imgs[pose];
     if (emoteImg && emoteImg.complete && emoteImg.naturalWidth > 0 && pose !== 'base') {
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(emoteImg, 0, 0, canvas.width, canvas.height);
+      this._drawFit(emoteImg);
       return;
     }
-    // 底圖 + 局部重繪（neutral / blink / celebrate）
+    if (!this.overlay) {
+      // 非 overlay 組：底圖也走等比置中（來源圖不保證正方形）
+      if (this.imgs.base.complete && this.imgs.base.naturalWidth > 0) this._drawFit(this.imgs.base);
+      return;
+    }
+    // 底圖 + 局部重繪（neutral / blink / celebrate；幾何常數是 DEM02 專用）
     const s = canvas.width / SRC;
     ctx.setTransform(s, 0, 0, s, 0, 0);
     ctx.clearRect(0, 0, SRC, SRC);
@@ -98,6 +127,16 @@ export class AvatarBT {
       for (const e of EYES) { this._fillEye(e); this._pupil(e, 60, 50); }
       this._smile();
     }
+  }
+
+  // 等比縮放置中畫滿 canvas
+  _drawFit(img) {
+    const { ctx, canvas } = this;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const s = Math.min(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight);
+    const w = img.naturalWidth * s, h = img.naturalHeight * s;
+    ctx.drawImage(img, (canvas.width - w) / 2, (canvas.height - h) / 2, w, h);
   }
 
   // 眼睛內部鋪黃色（蓋掉原本的瞳孔；內縮避免吃到黑框）
