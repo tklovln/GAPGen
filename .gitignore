@@ -14,6 +14,7 @@
 # Un-ignore only what LaTeX needs. Directories must be un-ignored before their
 # contents, otherwise git never descends into them.
 !.gitignore
+!check_paper.py
 !*.tex
 !*.bib
 !*.sty

@@ -77,6 +77,20 @@ function rather than an appearance. The mechanisms layered on top---dual visual 
 loop---do not produce a legibility gain that survives swapping the judge; what they measurably
 change is review friction.
 
+\paragraph{Related work.} Consistent multi-image generation optimises visual coherence across a
+set---shared identity, style, or layout \citep{jia2025t2is,consistyle2025}---and sprite-oriented work
+extends this to game-shaped outputs such as animation frames \citep{spritesheet2024}. Coherence is
+necessary for an asset pack, but it is not the property a player reads: a perfectly style-consistent
+pack can still be unplayable. Closest in spirit is grounding generation in a non-visual
+specification, as in physically-grounded 3D asset synthesis \citep{physx3d2025} and agentic pipelines
+that emit structured, engine-facing artifacts \citep{shapecraft2025,scenecraft2024}; our
+specification is a gameplay-role ontology rather than physics or geometry. Multi-agent creative
+systems typically compose a planner, generator, and critic \citep{crea2025,planneractorcritic2026},
+and are reported end to end; we run the same composition as a single-variable ablation and find the
+critic does not move the property the planner does. For evaluation, low-resolution game-art datasets
+supply semantic labels annotated by people \citep{gametilenet2024}; our labels instead come from the
+game engine's own tile registry, so the answer key is executable rather than annotated.
+
 Our contributions:
 
 \begin{itemize}[leftmargin=*,itemsep=2pt]
@@ -369,5 +383,8 @@ asset does. The gain is largest precisely where gameplay semantics cannot be rea
 is absent where they can. The mechanisms we stacked on top improve manufacturability, not
 legibility---a distinction we could only draw because the evaluation was built to falsify our own
 claims, and did so six times.
+
+\bibliographystyle{plainnat}
+\bibliography{refs}
 
 \end{document}
