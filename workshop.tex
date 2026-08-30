@@ -19,8 +19,8 @@
 
 \newcommand{\D}{\ensuremath{\Delta}}
 
-\title{Grounding Generative Pipelines in Task Semantics:\\
-Attributing Functional Legibility with Validated VLM Judges}
+\title{What Makes Generated Content Functionally Legible?\\
+A VLM-Judged Ablation with Executable Ground Truth}
 
 \author{Anonymous}
 
@@ -30,7 +30,8 @@ Attributing Functional Legibility with Validated VLM Judges}
 
 \begin{abstract}
 Image models make game art cheap to generate, but a game asset has a job: a player must see at a
-glance what each piece does. This property, which we call legibility, is exactly what generation
+glance what each piece does. This property, which we call functional legibility, is exactly what
+generation
 pipelines quietly break, because the generator is told how each asset should look and nothing about
 what it means. Verifying legibility is just as hard, because the natural evaluator, a
 vision--language model, is an opinion rather than a measurement: easily fooled by its prompt,
@@ -58,11 +59,13 @@ This matters more for game assets than for images in general, because a game ass
 crate at damage stage 2 of 4 must read as \emph{that} crate, not merely as a crate; a
 horizontal-clearing power-up must be distinguishable from a vertical one at a glance. These
 properties are not stylistic. They are gameplay semantics, and a player who cannot read them cannot
-play. We call this property \textbf{legibility}, and distinguish it from the visual consistency that
+play. We call this property \textbf{functional legibility}, legibility for short, and distinguish
+it from the visual consistency that
 generation systems usually optimise.
 
 Legibility is hard to measure honestly, because the obvious evaluator, a vision--language
-model asked for its verdict, is an opinion rather than a measurement. This paper's setting removes
+model or VLM asked for its verdict, is an opinion rather than a measurement. This paper's setting
+removes
 that problem. Our test bed is
 a Match-3 game whose engine contains a tile registry: executable code that defines, for every
 asset, its gameplay category and its damage-stage hit points. The engine is not our opinion about
@@ -152,7 +155,7 @@ which we later ablate independently:
     style anchor, and the previous stage in a progression. These target style drift across a pack
     and progression collapse within a family.
   \item \textbf{Hybrid verification.} Deterministic post-processing gates for cutout integrity and
-    dimensions, plus a vision--language critic scoring style, cohesion, function, and
+    dimensions, plus a VLM critic scoring style, cohesion, function, and
     progression, with up to three regeneration iterations.
 \end{enumerate}
 
@@ -405,7 +408,7 @@ A tempting use of model judges is to rank candidate asset packs. We advise again
 rankings. In the board-reading protocol of Section~\ref{sec:abstention}, the two judges' rankings
 of five
 packs, the minimum item count our own sampling guard allows, agree at only $\tau = 0.20$. Worse, a deterministic pixel-template matcher and a
-vision--language judge rank the same packs in \emph{opposite} orders: the pack that is most
+VLM judge rank the same packs in \emph{opposite} orders: the pack that is most
 pixel-distinguishable is among the least semantically legible. Pixel distinguishability and
 legibility are different properties, and a metric that mixes them up will rank confidently and
 wrongly.
