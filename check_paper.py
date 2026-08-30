@@ -43,11 +43,6 @@ PAPERS = {
         "body_pages": (4, 9),  # demo track would be (1, 4)
         "blind": True,
     },
-    "main.tex": {
-        "venue": "NeurIPS 2026 Creative AI Track",
-        "body_pages": (4, 9),
-        "blind": False,  # single-blind track: author names are meant to be visible
-    },
 }
 
 # Strings that must never reach a double-blind PDF. Extend as co-authors join.

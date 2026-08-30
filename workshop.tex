@@ -30,21 +30,23 @@ What Actually Makes Generated Game Assets Legible}
 
 \begin{abstract}
 Theme-swapping game assets with image models silently destroys gameplay legibility: under naive
-prompting, validated vision--language judges recognise the gameplay role of only 42--50\% of
-generated sprites, and \emph{zero percent} of damage-stage obstacles. We present a generation
-pipeline grounded in a gameplay-role ontology---assets, families, and progression stages---verified
+prompting, validated vision--language judges recognise the gameplay role of as little as
+17--50\% of generated sprites depending on theme, and \emph{zero percent} of Fruit-theme
+damage-stage obstacles. We present a generation
+pipeline grounded in a gameplay-role ontology of assets, families, and progression stages, verified
 against the game engine's own tile registry, so the specification the generator follows and the
 answer key the evaluator uses are the same executable object. We verify the method with
 infrastructure designed to distrust itself: judges must pass a five-check validity battery before
 they are allowed to score, every measurement is repeated three times, and each known evaluation
 failure mode is guarded by a runnable assertion. Across 4 themes $\times$ 2 judges $\times$ 3
-categories, ontology grounding never hurts (\D~$\geq 0$ in 24 of 24 cells, zero negative) and helps
+categories, ontology grounding never hurts, with \D~$\geq 0$ in 24 of 24 cells and zero negative,
+and helps
 most exactly where gameplay semantics cannot be inferred from pixels: obstacles $+0.417$ and
 power-ups $+0.403$ versus $+0.217$ for appearance-defined match elements, with damage-stage
 obstacles rising from $0.00$ to $1.00$ under both judges independently. Ablation attributes the
 legibility effect to grounding alone: visual references and a critic loop contribute review-friction
-control, not legibility. Grounding is necessary but not sufficient---one theme defeats it
-entirely---which localises the open problem rather than hiding it.
+control, not legibility. Grounding is necessary but not sufficient, since one theme defeats it
+entirely, which localises the open problem rather than hiding it.
 \end{abstract}
 
 \section{Introduction}
@@ -63,8 +65,9 @@ properties are not stylistic. They are gameplay semantics, and a player who cann
 play. We call this property \textbf{legibility}, and distinguish it from the visual consistency that
 generation systems usually optimise.
 
-Legibility is hard to measure honestly, because the obvious evaluator---ask a vision--language
-model---is an opinion, not a measurement. This paper's setting removes that problem. Our test bed is
+Legibility is hard to measure honestly, because the obvious evaluator, a vision--language
+model asked for its verdict, is an opinion rather than a measurement. This paper's setting removes
+that problem. Our test bed is
 a Match-3 game whose engine contains a tile registry: executable code that defines, for every
 asset, its gameplay category and its damage-stage hit points. The engine is not our opinion about
 what the assets mean; it is what the game actually does. We verify our role ontology against it
@@ -73,12 +76,13 @@ before using the ontology to score anything.
 With a real answer key available, we ablate the pipeline one flag at a time and find that the
 legibility effect is not distributed across mechanisms. It comes from grounding generation in the
 gameplay-role ontology, and it concentrates precisely on the categories whose identity is a gameplay
-function rather than an appearance. The mechanisms layered on top---dual visual references, a critic
-loop---do not produce a legibility gain that survives swapping the judge; what they measurably
+function rather than an appearance. The two mechanisms layered on top, dual visual references and a
+critic loop, do not produce a legibility gain that survives swapping the judge; what they measurably
 change is review friction.
 
 \paragraph{Related work.} Consistent multi-image generation optimises visual coherence across a
-set---shared identity, style, or layout \citep{jia2025t2is,consistyle2025}---and sprite-oriented work
+set, meaning shared identity, style, or layout \citep{jia2025t2is,consistyle2025}, and
+sprite-oriented work
 extends this to game-shaped outputs such as animation frames \citep{spritesheet2024}. Coherence is
 necessary for an asset pack, but it is not the property a player reads: a perfectly style-consistent
 pack can still be unplayable. Closest in spirit is grounding generation in a non-visual
@@ -89,18 +93,21 @@ systems typically compose a planner, generator, and critic \citep{crea2025,plann
 and are reported end to end; we run the same composition as a single-variable ablation and find the
 critic does not move the property the planner does. For evaluation, low-resolution game-art datasets
 supply semantic labels annotated by people \citep{gametilenet2024}; our labels instead come from the
-game engine's own tile registry, so the answer key is executable rather than annotated.
+game engine's own tile registry, so the answer key is executable rather than annotated. Model judges
+are known to carry position and self-preference biases \citep{zheng2023judging}; we go further and
+require every judge to pass an explicit validity battery before any of its numbers are reported.
 
 Our contributions:
 
 \begin{itemize}[leftmargin=*,itemsep=2pt]
   \item \textbf{An executably-grounded evaluation.} The game engine's tile registry supplies the
-    answer key, and we verify our ontology against it (zero category and zero stage-hit-point
-    mismatches over the checkable overlap). The authority of the labels comes from shipping code,
+    answer key, and we verify our ontology against it: zero category and zero stage-hit-point
+    mismatches over the checkable overlap. The authority of the labels comes from shipping code,
     not from us.
-  \item \textbf{An attribution result with a mechanism.} Ontology grounding never hurts
-    (\D~$\geq 0$ in 24/24 cells) and helps most where gameplay semantics cannot be inferred from
-    pixels (obstacles $+0.417$, power-ups $+0.403$, versus elements $+0.217$). The same experiment
+  \item \textbf{An attribution result with a mechanism.} Ontology grounding never hurts,
+    with \D~$\geq 0$ in 24 of 24 cells, and helps most where gameplay semantics cannot be inferred
+    from pixels: obstacles $+0.417$ and power-ups $+0.403$, versus elements $+0.217$. The same
+    experiment
     is a negative result for the two mechanisms stacked above it.
   \item \textbf{Evaluation infrastructure that distrusts itself.} Judge validity batteries,
     mandatory repeated measurement, and a runnable assertion for each failure mode we encountered.
@@ -110,30 +117,50 @@ Our contributions:
 \section{Method: ontology-grounded asset generation}
 \label{sec:method}
 
-\paragraph{Task.} Given a target theme (e.g.\ ``ocean'') and a locked art style, generate a
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{figures/qual_multitheme_wall.png}
+  \caption{The task, instantiated for four themes by the full pipeline: match elements, power-ups,
+  and a crate obstacle across its four damage stages.}
+  \label{fig:wall}
+\end{figure}
+
+\paragraph{Task.} Given a target theme such as ``ocean'' and a locked art style, generate a
 complete asset pack for a Match-3 game: match elements, power-ups, obstacles, and their damage-stage
-progressions. The pack must be playable, meaning a player can identify each asset's gameplay
+progressions, as in Figure~\ref{fig:wall}. The pack must be playable, meaning a player can identify
+each asset's gameplay
 function on sight.
 
-\paragraph{Three mechanisms.} Our pipeline composes three, which we later ablate independently:
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\linewidth]{figures/pipeline_overview.png}
+  \caption{The three ablated mechanisms: ontology planning, generation under dual references, and
+  hybrid verification with a retry loop.}
+  \label{fig:pipeline}
+\end{figure}
+
+\paragraph{Three mechanisms.} Our pipeline composes three, shown in Figure~\ref{fig:pipeline},
+which we later ablate independently:
 
 \begin{enumerate}[leftmargin=*,itemsep=2pt]
   \item \textbf{Ontology planning.} Generation is conditioned on a machine-readable ontology of
-    gameplay roles: each asset's category (element / power-up / obstacle / background), its family,
-    and its position in a progression sequence (e.g.\ crate stage 1 of 4, and which visual state
-    corresponds to which remaining hit points). The generator is told what the asset \emph{does},
+    gameplay roles: each asset's category of element, power-up, obstacle, or background, its
+    family,
+    and its position in a progression sequence, for example crate stage 1 of 4 and which visual
+    state
+    corresponds to which remaining hit points. The generator is told what the asset \emph{does},
     not only what it should look like.
   \item \textbf{Dual visual references.} Each generation is conditioned on two images: a family
     style anchor, and the previous stage in a progression. These target style drift across a pack
     and progression collapse within a family.
-  \item \textbf{Hybrid verification.} Deterministic post-processing gates (cutout integrity,
-    dimensions) plus a vision--language critic scoring four axes (style, cohesion, function,
-    progression), with up to three regeneration iterations.
+  \item \textbf{Hybrid verification.} Deterministic post-processing gates for cutout integrity and
+    dimensions, plus a vision--language critic scoring style, cohesion, function, and
+    progression, with up to three regeneration iterations.
 \end{enumerate}
 
 \paragraph{Ablation ladder.} The conditions form a single-variable ladder: \textbf{B0} has none of
 the three; \textbf{B1} adds ontology planning only; \textbf{B2} adds dual references; \textbf{B3}
-adds the critic loop. B0 and B1 differ in exactly one flag, with all other flags identical---a
+adds the critic loop. B0 and B1 differ in exactly one flag, with all other flags identical, a
 property enforced by an assertion in the pipeline's own self-check, since the causal claim in
 Section~\ref{sec:results} depends on it.
 
@@ -156,31 +183,36 @@ asset's role, the correct answer was fixed by code that ships in the game.
 
 A model judge is an instrument, and an uncalibrated instrument produces numbers that look like
 measurements. Before a judge is allowed to produce any reported number, it must pass five checks:
-\textbf{(1)} protocol compliance---answers parse as the requested format; \textbf{(2)}
-test--retest agreement on repeated identical queries; \textbf{(3)} label-permutation
-invariance---shuffling the answer options does not change the answer; \textbf{(4)} a blind
-control---accuracy must collapse when the image is replaced by a blank, otherwise the judge is
-reciting prompt priors rather than looking; \textbf{(5)} it must beat a constant-majority guess on
-the sampled label distribution.
+
+\begin{enumerate}[leftmargin=*,itemsep=1pt]
+  \item protocol compliance: answers parse as the requested format;
+  \item test--retest agreement on repeated identical queries;
+  \item label-permutation invariance: shuffling the answer options does not change the answer;
+  \item a blind control: accuracy must collapse when the image is replaced by a blank, otherwise
+    the judge is reciting prompt priors rather than looking;
+  \item it must beat a constant-majority guess on the sampled label distribution.
+\end{enumerate}
 
 Both judges reported here pass all five. A third judge was wired in and \emph{failed} the battery,
-which is the useful part: the failure was an infrastructure fault (an account without credit
-returning errors that a naive harness would have silently averaged into the results). The battery
+which is the useful part: the failure was an infrastructure fault, an account without credit
+returning errors that a naive harness would have silently averaged into the results. The battery
 caught it; a single accuracy number would not have.
 
 \subsection{Repeated measurement is mandatory, not optional}
 
 Judges are stochastic. Scoring the same images twice with the same judge moved 3 of 8 numbers, by up
-to $0.250$---the size of our smallest effect. Every number in Section~\ref{sec:results} is therefore
+to $0.250$, the size of our smallest effect. Every number in Section~\ref{sec:results} is therefore
 the mean of \textbf{three independent scoring passes}, with the within-cell standard deviation
-reported. Measured this way, within-cell sd is $\leq 0.096$ (mean $0.025$), an order of magnitude
+reported. Measured this way, within-cell sd is at most $0.096$ with mean $0.025$, an order of
+magnitude
 below the single-pass swing. Repetition, not a larger asset count, was the effective fix.
 
 \subsection{Four failure modes, four runnable guards}
 
 Building this evaluation produced six conclusions we later retracted, from four distinct root
-causes. We report them because each is a trap available to anyone evaluating generated assets with
-model judges, and because a failure mode documented in prose cannot fail---so each is now a runnable
+causes: under-sampling alone accounts for three retractions, and each of the other three causes for
+one. We report them because each is a trap available to anyone evaluating generated assets with
+model judges, and because a failure mode documented in prose cannot fail, so each is now a runnable
 assertion.
 
 \begin{table}[t]
@@ -201,8 +233,7 @@ assertion.
     Degenerate label space &
     Restricting candidate labels to the tiles in each level collapsed the task to a 1-of-3 choice;
     every pack scored $\geq 0.97$ regardless of quality &
-    Assert the per-level candidate count is small and the global set is several times larger, so
-    the degenerate setting cannot be used silently \\
+    Assert the global label set is several times larger than any per-level candidate set \\
     \addlinespace
     Abstention scored as error &
     A judge's refusals to answer were counted as wrong answers, turning a protocol-compliance
@@ -221,8 +252,9 @@ assertion.
 Table~\ref{tab:failures} lists them. Two points of self-criticism belong here rather than in a
 footnote. First, the contaminated baseline was pointed out by a collaborator; it was not caught by
 our own checks. What we can claim is that once identified, it became an assertion that fails, so it
-cannot recur silently. Second, the under-sampling guards were initially only prose notes---which is
-to say, no guard at all---and were made executable only after they had already misled us twice. The
+cannot recur silently. Second, the under-sampling guards were initially only prose notes, which is
+to say no guard at all, and were made executable only after that root cause had already produced
+three of the six retractions. The
 headline numbers in this paper are now regenerated from the scored data by a script that refuses to
 emit any claim violating these sampling rules.
 
@@ -238,30 +270,31 @@ reporting it as a first-class metric wherever model judges evaluate generated co
 \section{Results}
 \label{sec:results}
 
-All numbers: 4 themes, 2 validated judges, role/category identification at gameplay resolution
-($70$px), mean of 3 independent scoring passes.
+All numbers: 4 themes, 2 validated judges, role and category identification at the gameplay
+resolution of $70$px, mean of 3 independent scoring passes.
 
 \subsection{Grounding is the mechanism}
 
 \begin{table}[t]
   \centering
-  \caption{Ontology grounding (B1) versus no grounding (B0). Mean of three scoring passes;
-  SE from within-cell variance. Seven of eight cells clear twice their standard error; one is
-  exactly zero (Section~\ref{sec:zero}); none is negative.}
+  \caption{Ontology grounding B1 versus no grounding B0. Each cell is mean~$\pm$~SE of three
+  scoring passes, where SE is sd$/\sqrt{3}$; an SE of $.000$ means all three passes returned
+  identical accuracy, in which case the \D~$>2$\,SE criterion reduces to \D~$>0$. Seven of eight
+  cells clear the criterion; one is exactly zero, see Section~\ref{sec:zero}; none is negative.}
   \label{tab:main}
   \small
   \begin{tabular}{@{}llccrl@{}}
     \toprule
     Theme & Judge & B0 & B1 & \D & \D~$>2$\,SE \\
     \midrule
-    Fruit     & GPT-4o & 0.500 & 1.000 & $+0.500$ & yes \\
-    Fruit     & Gemini & 0.417 & 0.917 & $+0.500$ & yes \\
-    Pet       & GPT-4o & 0.167 & 0.667 & $+0.500$ & yes \\
-    Pet       & Gemini & 0.195 & 0.583 & $+0.388$ & yes \\
-    Ocean     & GPT-4o & 0.833 & 0.917 & $+0.084$ & yes \\
-    Ocean     & Gemini & 0.556 & 0.917 & $+0.361$ & yes \\
-    Steampunk & GPT-4o & 0.583 & 0.583 & $+0.000$ & \textbf{no} \\
-    Steampunk & Gemini & 0.417 & 0.722 & $+0.306$ & yes \\
+    Fruit     & GPT-4o & $0.500 \pm .000$ & $1.000 \pm .000$ & $+0.500$ & yes \\
+    Fruit     & Gemini & $0.417 \pm .000$ & $0.917 \pm .000$ & $+0.500$ & yes \\
+    Pet       & GPT-4o & $0.167 \pm .048$ & $0.667 \pm .000$ & $+0.500$ & yes \\
+    Pet       & Gemini & $0.195 \pm .028$ & $0.583 \pm .000$ & $+0.388$ & yes \\
+    Ocean     & GPT-4o & $0.833 \pm .000$ & $0.917 \pm .000$ & $+0.084$ & yes \\
+    Ocean     & Gemini & $0.556 \pm .056$ & $0.917 \pm .000$ & $+0.361$ & yes \\
+    Steampunk & GPT-4o & $0.583 \pm .000$ & $0.583 \pm .000$ & $+0.000$ & \textbf{no} \\
+    Steampunk & Gemini & $0.417 \pm .048$ & $0.722 \pm .055$ & $+0.306$ & yes \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -275,8 +308,8 @@ substantially in seven of eight cells, and never lowers it.
 
 \begin{table}[t]
   \centering
-  \caption{Effect of grounding by ontology category, over all 24 (theme $\times$ judge $\times$
-  category) cells. Every cell is non-negative. The ordering is the paper's thesis: gain tracks how
+  \caption{Effect of grounding by ontology category, over all 24 theme $\times$ judge $\times$
+  category cells. Every cell is non-negative. The ordering is the paper's thesis: gain tracks how
   much of an asset's identity is gameplay function rather than appearance.}
   \label{tab:bycat}
   \small
@@ -284,21 +317,31 @@ substantially in seven of eight cells, and never lowers it.
     \toprule
     Category & mean \D & min & max & cells \\
     \midrule
-    Obstacle (damage stages) & $+0.417$ & $+0.000$ & $+1.000$ & 8 \\
-    Power-up (clear pattern) & $+0.403$ & $+0.000$ & $+0.667$ & 8 \\
-    Element (colour only)    & $+0.217$ & $+0.000$ & $+0.467$ & 8 \\
+    Obstacle: damage stages & $+0.417$ & $+0.000$ & $+1.000$ & 8 \\
+    Power-up: clear pattern & $+0.403$ & $+0.000$ & $+0.667$ & 8 \\
+    Element: colour only    & $+0.217$ & $+0.000$ & $+0.467$ & 8 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.9\linewidth]{figures/ws_crates_b0_vs_b1.png}
+  \caption{The headline cell. Fruit-theme crate obstacle from intact to destroyed: ungrounded B0
+  renders four unrelated fruits, grounded B1 depicts one crate depleting.}
+  \label{fig:crates}
+\end{figure}
+
 Table~\ref{tab:bycat} is the mechanism. \textbf{\D~$\geq 0$ in 24 of 24 cells; none is negative.}
 The gain is roughly twice as large for obstacles and power-ups as for match elements, and the
-headline case is damage-stage obstacles on the Fruit theme: $0.00 \to 1.00$, under both judges
+headline case is damage-stage obstacles on the Fruit theme, shown in Figure~\ref{fig:crates}:
+$0.00 \to 1.00$, under both judges
 independently. Without grounding, \emph{every} damage-stage crate is misread; with it, every one is
 read correctly.
 
 This ordering is not incidental. An obstacle's identity is ``stage 2 of 4, three hit points
-remaining''; a power-up's is ``clears a row''. Neither is determined by appearance---many plausible
+remaining''; a power-up's is ``clears a row''. Neither is determined by appearance, since many
+plausible
 renderings of a crate are consistent with any stage. A match element's identity, by contrast, is
 its colour, which the generator gets right without being told any rules. \textbf{Grounding helps
 most exactly where gameplay semantics cannot be inferred from pixels}, which is the claim this paper
@@ -307,10 +350,20 @@ set out to test.
 \subsection{The zero cell, and what it buys}
 \label{sec:zero}
 
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.9\linewidth]{figures/ws_zerocell_steampunk.png}
+  \caption{The true-zero cell. Steampunk match elements under B0 and B1: both conditions render
+  machinery whose role neither judge can read.}
+  \label{fig:zerocell}
+\end{figure}
+
 One cell is exactly zero, and it is not noise: standard deviation $0.000$ on both conditions, with
-B0 and B1 getting the \emph{identical} five assets wrong across all three passes (all of them match
-elements), from packs that are verifiably different images. Of the eight zero-valued
-category cells, seven are ceilings---B0 already at $1.000$, leaving no headroom---and only this one
+B0 and B1 getting the \emph{identical} five assets wrong across all three passes, all of them match
+elements, from packs that are verifiably different images, shown in Figure~\ref{fig:zerocell}. Of
+the eight zero-valued
+category cells, seven are ceilings where B0 is already at $1.000$ and leaves no headroom; only this
+one
 is a true zero.
 
 We highlight it rather than bury it, for two reasons. It confirms the mechanism from the negative
@@ -321,23 +374,26 @@ specific, localised open problem, which is more useful to report than an average
 
 \subsection{What references and the critic actually do}
 
-Extending the ablation to B2 (references) and B3 (critic) does \emph{not} extend the story. Over
-three seeds and two judges, neither judge's ordering of B1/B2/B3 is monotone, and the two judges
-disagree with each other (Kendall $\tau = 0.333$ between judges across the four conditions). The
-gaps among B1, B2 and B3 are comparable to the per-seed standard deviation. We therefore decline to
+Extending the ablation to B2, which adds references, and B3, which adds the critic, does \emph{not}
+extend the story. Over
+three seeds on Fruit, the only theme with more than one seed, the two judges disagree about which
+of the three grounded conditions reads best: GPT-4o puts B1 and B2 level and B3 last, Gemini puts
+B3 first, then B1, then B2, neither ordering is monotone in the ladder, and the
+gaps among B1, B2 and B3 are comparable to the per-seed standard deviation of $0.06$ to $0.14$. We
+therefore decline to
 claim a legibility benefit for either mechanism.
 
 What the critic demonstrably changes is \textbf{review friction}: it raises the needs-review rate to
 $0.11 \pm 0.10$ and the mean iteration count to $1.95 \pm 0.34$, while pairwise preference between
-B2 and B3 is a tie. This is a real contribution to a production pipeline---it is quality control,
-catching outliers and routing them to a human---but it is a different axis from legibility, and
+B2 and B3 is a tie. This is a real contribution to a production pipeline, as quality control that
+catches outliers and routes them to a human, but it is a different axis from legibility, and
 conflating the two would credit the critic with an effect it does not have.
 
 \subsection{Pack ranking is not judge-stable}
 
 A tempting use of model judges is to rank candidate asset packs. We advise against reporting such
 rankings. Asking judges to identify tiles on rendered game boards, the two judges' rankings of five
-packs agree at only $\tau = 0.20$. Worse, a deterministic pixel-template matcher and a
+packs, the minimum item count our own sampling guard allows, agree at only $\tau = 0.20$. Worse, a deterministic pixel-template matcher and a
 vision--language judge rank the same packs in \emph{opposite} orders: the pack that is most
 pixel-distinguishable is among the least semantically legible. Pixel distinguishability and
 legibility are different properties, and a metric that conflates them will rank confidently and
@@ -381,7 +437,7 @@ Given an answer key that comes from shipping game code rather than from our own 
 legibility of generated game assets is explained by one mechanism: telling the generator what each
 asset does. The gain is largest precisely where gameplay semantics cannot be read off pixels, and it
 is absent where they can. The mechanisms we stacked on top improve manufacturability, not
-legibility---a distinction we could only draw because the evaluation was built to falsify our own
+legibility, a distinction we could only draw because the evaluation was built to falsify our own
 claims, and did so six times.
 
 % Page-limit anchor: the workshop counts 4-9 pages excluding references and
