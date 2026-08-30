@@ -42,7 +42,7 @@ evaluation side, a judge must prove it is looking before it may score, and no nu
 from a single scoring pass. Under this measurement, ablating the pipeline one mechanism at a time
 gives a clean attribution: legibility comes from grounding generation in gameplay roles, while the
 reference images and critic loop stacked on top change review effort, not legibility. Grounding is
-necessary but not sufficient: one theme defeats it entirely, and we report where and why instead of
+necessary but not sufficient: one theme largely defeats it, and we report where and why instead of
 averaging the failure away.
 \end{abstract}
 
@@ -194,10 +194,12 @@ measurements. Before a judge is allowed to produce any reported number, it must 
   \item it must beat a constant-majority guess on the sampled label distribution.
 \end{enumerate}
 
-Both judges reported here pass all five. A third judge was wired in and \emph{failed} the battery,
-which is the useful part: the failure was an infrastructure fault, an account without credit
-returning errors that a naive harness would have silently averaged into the results. The battery
-caught it; a single accuracy number would not have.
+Both judges reported here pass all five. A third judge, Claude over the direct Anthropic API, was
+wired in and \emph{failed} the battery, which is the useful part: the fault was a deprecated
+temperature parameter that made every call return an error, and a naive harness would have silently
+averaged those errors into the results. The battery caught it; a single accuracy number would not
+have. Re-run later over AWS Bedrock with the parameter fault fixed, the same model passed all five
+checks and serves as a replication judge in Section~\ref{sec:results}.
 
 \subsection{Repeated measurement is mandatory, not optional}
 
@@ -265,7 +267,8 @@ scripts will be released so that both can be reused and checked.
   \centering
   \includegraphics[width=0.85\linewidth]{figures/ws_boards_70px.png}
   \caption{Two packs rendered into the same official level at $70$px cells, the input to the
-  board-reading protocol. On the right pack Gemini abstains on $38.9\%$ of cells overall; on the
+  board-reading protocol. On the right pack Gemini abstains on $22\%$ of cells averaged over three
+  passes; on the
   left, none.}
   \label{fig:boards}
 \end{figure}
@@ -273,9 +276,12 @@ scripts will be released so that both can be reused and checked.
 Among all metrics we tried, judge \textbf{abstention rate} was the most useful and the least
 expected. In the board-reading protocol, each pack's sprites are rendered into eight official
 level layouts at $70$px cells, 422 cells in total, and the judge labels every cell against a
-global candidate set in a single scoring pass; Figure~\ref{fig:boards} shows the input. Gemini
-declined to answer $38.9\%$ of cells
-for one pack while declining $0\%$ for others, and GPT-4o never abstained. Abstention is cheap to
+global candidate set, in three independent scoring passes; Figure~\ref{fig:boards} shows the
+input. Averaged over the passes, Gemini
+declines $22\%$ of cells on the pack it reads worst and $0\%$ on the pack it reads best, while
+GPT-4o never abstains in any pass. The abstention rate itself swings by up to $0.25$ between
+passes of the same judge on the same pack, one more reason no number should come from a single
+pass. Abstention is cheap to
 measure, has an unambiguous
 good direction, and captures something accuracy cannot: a pack that makes an observer refuse to
 commit is not shippable, yet raw accuracy scores that identically to ordinary error. We recommend
@@ -368,6 +374,19 @@ its colour, which the generator gets right without being told any rules. \textbf
 most exactly where gameplay semantics cannot be inferred from pixels}, which is the claim this paper
 set out to test.
 
+\paragraph{Independent replication with a third judge.} After the two-judge results were frozen,
+the Claude judge that had failed the battery over the direct Anthropic API was re-run over AWS
+Bedrock, passed all five checks, and scored the same B0 and B1 packs in three passes. Across its 12
+theme $\times$ category cells, \D~$\geq 0$ in every one, bringing the total to 36 of 36 cells with
+no negative under three judges. The headline cell replicates: fruit damage-stage obstacles go
+$0.00 \to 0.83$ under Claude, against $0.00 \to 1.00$ under both original judges. Steampunk
+sharpens rather than breaks: exactly zero under GPT-4o, the cell of Section~\ref{sec:zero}, but
+$+0.14$ under Claude and $+0.31$ under Gemini, so the exact zero is judge-specific while steampunk
+remains the weakest theme under all three judges. Claude is also a stricter judge that
+systematically reads power-ups as match elements under both conditions, so its gains concentrate in
+obstacles, which reproduces the category ordering of Table~\ref{tab:bycat} from an independent
+model family.
+
 \subsection{The zero cell, and what it buys}
 \label{sec:zero}
 
@@ -390,7 +409,8 @@ is a true zero.
 We highlight it rather than bury it, for two reasons. It confirms the mechanism from the negative
 side: the one place grounding does nothing is a category whose identity grounding does not encode.
 And it bounds the claim. \textbf{Grounding is necessary but not sufficient}: a sufficiently
-distant theme can defeat it entirely, leaving a pack whose elements no judge can read. That is a
+distant theme can hold it to exactly zero under one judge, leaving match elements neither original
+judge can read, and steampunk is the weakest theme under all three judges we ran. That is a
 specific, localised open problem, which is more useful to report than an averaged success.
 
 \subsection{What references and the critic actually do}
@@ -415,9 +435,12 @@ mixing the two up would credit the critic with an effect it does not have.
 A tempting use of model judges is to rank candidate asset packs. We advise against reporting such
 rankings. In the board-reading protocol of Section~\ref{sec:abstention}, the two judges' rankings
 of five
-packs, the minimum item count our own sampling guard allows, agree at only $\tau = 0.20$. Worse, a deterministic pixel-template matcher and a
-VLM judge rank the same packs in \emph{opposite} orders: the pack that is most
-pixel-distinguishable is among the least semantically legible. Pixel distinguishability and
+packs, the minimum item count our own sampling guard allows, agree at only $\tau = 0.20$ on
+three-pass mean accuracy, and re-scoring alone swings the between-judge agreement from
+$\tau = 0.4$ to $\tau = -0.2$ across individual passes. Worse, a deterministic pixel-template
+matcher and a
+VLM judge rank the same packs in \emph{opposite} orders: the pack the matcher finds most
+pixel-distinguishable is the one that judge reads worst. Pixel distinguishability and
 legibility are different properties, and a metric that mixes them up will rank confidently and
 wrongly.
 
@@ -443,8 +466,9 @@ acceptance, not measurement, and a controlled reader study with players remains 
 \textbf{Small $n$ per cell.} Twelve assets per condition--theme cell; we address noise by
 repeated measurement and by requiring agreement across 24 cells rather than trusting any single
 cell, but the effect magnitudes are coarser than the reported decimals suggest.
-\textbf{Two judges.} A third was wired in and failed the validity battery, so all judge-agreement
-claims rest on two. \textbf{Single domain.} One Match-3 game; the transferable content is the
+\textbf{Two primary judges.} The main tables rest on two judges; the Claude judge passed the
+battery only after its API fault was fixed, and we report it as a separate replication rather than
+folding it into the main results. \textbf{Single domain.} One Match-3 game; the transferable content is the
 methodology, and the domain was chosen because executable ground truth is rare.
 \textbf{Board-parse breadth.} The board reading was run at one cell size, so we cannot
 report a legibility-versus-scale curve. \textbf{One seed for three themes.} Three of the four
@@ -478,29 +502,33 @@ claims, and did so six times.
 The battery runs on the human-made reference pack: ten assets sampled across all four categories,
 scored in two identical passes, one pass with the answer options shuffled, and one pass where every
 image is replaced by a blank. Table~\ref{tab:battery} lists each check, the threshold a judge must
-clear, and the values the two reported judges obtained.
+clear, and the values the three reported judges obtained.
 
 \begin{table}[h]
   \centering
   \caption{The five validity checks with pass thresholds and observed values.}
   \label{tab:battery}
-  \small
-  \begin{tabular}{@{}llll@{}}
+  \footnotesize
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabular}{@{}lllll@{}}
     \toprule
-    Check & Threshold & \texttt{gpt-4o} & \texttt{gemini-3.5-flash} \\
+    Check & Threshold & \texttt{gpt-4o} & \texttt{gemini-3.5-flash} & \texttt{claude-sonnet-5} \\
     \midrule
-    Protocol compliance        & zero unparsable answers        & $1.000$ & $1.000$ \\
-    Test--retest agreement     & $\geq 0.8$                     & $0.900$ & $0.900$ \\
-    Label-permutation invariance & $\geq 0.7$                   & $0.800$ & $0.900$ \\
-    Blind control              & real $-$ blind $\geq 0.2$      & $0.700 - 0.100$ & $0.700 - 0.100$ \\
-    Beats constant-majority    & accuracy above majority guess  & $0.700 > 0.300$ & $0.700 > 0.300$ \\
+    Protocol compliance        & zero unparsable answers        & $1.000$ & $1.000$ & $1.000$ \\
+    Test--retest agreement     & $\geq 0.8$                     & $0.900$ & $0.900$ & $1.000$ \\
+    Label-permutation invariance & $\geq 0.7$                   & $0.800$ & $0.900$ & $0.800$ \\
+    Blind control              & real $-$ blind $\geq 0.2$      & $0.700 - 0.100$ & $0.700 - 0.100$ & $0.600 - 0.100$ \\
+    Beats constant-majority    & above majority guess           & $0.700 > 0.300$ & $0.700 > 0.300$ & $0.600 > 0.300$ \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-The third judge, \texttt{claude-sonnet-5}, returned an API error for every query because its
-account had no credit, and therefore failed the protocol-compliance check with zero valid answers.
-A harness without check 1 would have averaged those errors into the results as wrong answers.
+\texttt{claude-sonnet-5} first failed the battery over the direct Anthropic API: a deprecated
+temperature parameter made every call return an error, so protocol compliance scored zero valid
+answers. A harness without check 1 would have averaged those errors into the results as wrong
+answers. Re-run over AWS Bedrock with the parameter fault fixed, the same model passed all five
+checks with the values above, and its 288 scoring calls for the replication in
+Section~\ref{sec:results} returned zero errors.
 
 \section{Ontology excerpt}
 \label{app:ontology}
