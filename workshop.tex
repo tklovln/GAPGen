@@ -255,7 +255,8 @@ cannot recur silently. Second, the under-sampling guards were initially only pro
 to say no guard at all, and were made executable only after that root cause had already produced
 three of the six retractions. The
 headline numbers in this paper are now regenerated from the scored data by a script that refuses to
-emit any claim violating these sampling rules.
+emit any claim violating these sampling rules. The validity battery, the guards, and the scoring
+scripts will be released so that both can be reused and checked.
 
 \subsection{One signal that behaves}
 \label{sec:abstention}
@@ -283,7 +284,12 @@ reporting it as a first-class metric wherever model judges evaluate generated co
 \section{Results}
 \label{sec:results}
 
-All numbers: 4 themes, 2 validated judges, role and category identification at the gameplay
+\paragraph{Setup.} Sprites come from a commercial image model, \texttt{gemini-3.1-flash-image};
+planning and the pipeline critic run on \texttt{gemini-3.5-flash}. Each theme--condition cell is a
+pack of twelve assets: five match elements, three power-ups, and one crate obstacle across four
+damage stages. The validated judges are \texttt{gpt-4o} and \texttt{gemini-3.5-flash}; the second
+shares a model family with the generator, one more reason every claim must hold under both judges.
+All numbers: 4 themes, 2 judges, role and category identification at the gameplay
 resolution of $70$px, mean of 3 independent scoring passes.
 
 \subsection{Grounding is the mechanism}
@@ -315,7 +321,9 @@ resolution of $70$px, mean of 3 independent scoring passes.
 Table~\ref{tab:main} shows the effect of adding ontology grounding alone. Without it, judges
 recognise the gameplay role of $42$--$50\%$ of sprites on the easiest theme and as little as $17\%$
 on the hardest. The single flag that tells the generator what each asset \emph{does} raises this
-substantially in seven of eight cells, and never lowers it.
+substantially in seven of eight cells, and never lowers it. The smallest gain, Ocean under GPT-4o,
+is also the one we lean on least: all three passes returned identical accuracy there, so its SE is
+zero and the criterion reduces to the gain being positive.
 
 \subsection{Where the gain lands, and why}
 
@@ -440,7 +448,9 @@ claims rest on two. \textbf{Single domain.} One Match-3 game; the transferable c
 methodology, and the domain was chosen because executable ground truth is rare.
 \textbf{Board-parse breadth.} The board reading was run at one cell size, so we cannot
 report a legibility-versus-scale curve. \textbf{One seed for three themes.} Three of the four
-themes have a single generation seed; only Fruit has three.
+themes have a single generation seed; only Fruit has three. \textbf{One generator.} All packs come
+from a single image model, so the attribution says what this generator was missing, not what
+generators in general are missing.
 
 \section{Conclusion}
 
@@ -459,5 +469,68 @@ claims, and did so six times.
 
 \bibliographystyle{plainnat}
 \bibliography{refs}
+
+\appendix
+
+\section{Judge validity battery: thresholds and observed values}
+\label{app:battery}
+
+The battery runs on the human-made reference pack: ten assets sampled across all four categories,
+scored in two identical passes, one pass with the answer options shuffled, and one pass where every
+image is replaced by a blank. Table~\ref{tab:battery} lists each check, the threshold a judge must
+clear, and the values the two reported judges obtained.
+
+\begin{table}[h]
+  \centering
+  \caption{The five validity checks with pass thresholds and observed values.}
+  \label{tab:battery}
+  \small
+  \begin{tabular}{@{}llll@{}}
+    \toprule
+    Check & Threshold & \texttt{gpt-4o} & \texttt{gemini-3.5-flash} \\
+    \midrule
+    Protocol compliance        & zero unparsable answers        & $1.000$ & $1.000$ \\
+    Test--retest agreement     & $\geq 0.8$                     & $0.900$ & $0.900$ \\
+    Label-permutation invariance & $\geq 0.7$                   & $0.800$ & $0.900$ \\
+    Blind control              & real $-$ blind $\geq 0.2$      & $0.700 - 0.100$ & $0.700 - 0.100$ \\
+    Beats constant-majority    & accuracy above majority guess  & $0.700 > 0.300$ & $0.700 > 0.300$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The third judge, \texttt{claude-sonnet-5}, returned an API error for every query because its
+account had no credit, and therefore failed the protocol-compliance check with zero valid answers.
+A harness without check 1 would have averaged those errors into the results as wrong answers.
+
+\section{Ontology excerpt}
+\label{app:ontology}
+
+The entry below drives the crate family used throughout the paper. The generator receives the
+rendered \texttt{function} text and \texttt{constraints}; the evaluator reads \texttt{role\_class}
+and \texttt{params}, which are the fields cross-checked against the engine tile registry.
+
+\begin{small}
+\begin{verbatim}
+{
+  "names": ["Crt1", "Crt2", "Crt3", "Crt4"],
+  "role_class": "obstacle_static_hp",
+  "family": "crate",
+  "function": "Static cell obstacle (remaining HP {lv}/4, {state}).
+               Occupies one cell, blocks falling elements;
+               each adjacent match deals 1 damage.",
+  "constraints": [
+    "Crt1-Crt4 are the SAME crate at 4 progressive damage stages:
+     material and design must be identical, only damage increases",
+    "Boxy square body that fills the cell"
+  ],
+  "params": {
+    "Crt1": {"lv": 1, "state": "almost destroyed, heavily cracked"},
+    "Crt2": {"lv": 2, "state": "visibly damaged"},
+    "Crt3": {"lv": 3, "state": "slightly damaged"},
+    "Crt4": {"lv": 4, "state": "intact, undamaged"}
+  }
+}
+\end{verbatim}
+\end{small}
 
 \end{document}
