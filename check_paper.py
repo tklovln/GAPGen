@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """Compile every paper on this branch and fail loudly on submission-blocking defects.
 
+Checks the NeurIPS 2026 Workshop rules that a compile alone cannot catch: body
+length within 4-9 pages excluding references, the required template, double-blind
+anonymity, and placeholder bibliography entries.
+
 Run before any Overleaf push or OpenReview upload:
 
     python3 check_paper.py            # compile + check
@@ -19,17 +23,29 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 
-# page_limit counts the whole PDF: neither venue's limit is exceeded by our
-# reference lists, so the simpler whole-document count is the safe side to err on.
+# NeurIPS 2026 Workshop "Who Verifies the Agents?" submission guidelines:
+#   Format      4-9 pages EXCLUDING references and appendices; NeurIPS 2026
+#               template; demo papers <= 4 pages.
+#   Review      double blind.
+#   Dual subm.  work under review or recently published elsewhere is welcome,
+#               so there is nothing to check here -- no venue conflict exists.
+#   Archival    non-archival; accepted papers appear on OpenReview only.
+#
+# The page count that matters therefore is not the PDF length. We read the page
+# of the \label{endofbody} marker (placed just before \bibliography) out of the
+# .aux file, which is LaTeX's own answer rather than our guess at where the
+# references start.
+BODY_LABEL = "endofbody"
+
 PAPERS = {
     "workshop.tex": {
         "venue": "NeurIPS 2026 Workshop: Who Verifies the Agents?",
-        "page_limit": 9,
+        "body_pages": (4, 9),  # demo track would be (1, 4)
         "blind": True,
     },
     "main.tex": {
         "venue": "NeurIPS 2026 Creative AI Track",
-        "page_limit": 9,
+        "body_pages": (4, 9),
         "blind": False,  # single-blind track: author names are meant to be visible
     },
 }
@@ -55,6 +71,23 @@ def compile_tex(tex: Path) -> None:
     )
 
 
+def body_pages(tex: Path) -> int | None:
+    """Page of \\label{endofbody} from the .aux, i.e. the last page of the body.
+
+    \\newlabel{endofbody}{{<num>}{<page>}...} -- field 2 is the page. Returns None
+    when the label is absent, which the caller must treat as a failure rather
+    than a pass: an unverifiable page count is the situation this guard exists for.
+    """
+    aux = tex.with_suffix(".aux")
+    if not aux.exists():
+        return None
+    m = re.search(
+        r"\\newlabel\{" + re.escape(BODY_LABEL) + r"\}\{\{[^}]*\}\{(\d+)\}",
+        aux.read_text(errors="replace"),
+    )
+    return int(m.group(1)) if m else None
+
+
 def check(tex_name: str, cfg: dict, build: bool) -> list[str]:
     tex = ROOT / tex_name
     fails: list[str] = []
@@ -75,13 +108,27 @@ def check(tex_name: str, cfg: dict, build: bool) -> list[str]:
     src = tex.read_text(errors="replace")
 
     m = re.search(r"Output written on \S+ \((\d+) pages?", log_text)
-    if not m:
+    total = int(m.group(1)) if m else None
+    if total is None:
         fails.append(f"{tex_name}: could not read page count from log")
+
+    lo, hi = cfg["body_pages"]
+    body = body_pages(tex)
+    if body is None:
+        fails.append(
+            f"{tex_name}: no \\label{{{BODY_LABEL}}} found in .aux -- cannot tell "
+            f"body pages from reference pages, so the {lo}-{hi} page rule is unverifiable"
+        )
     else:
-        pages = int(m.group(1))
-        if pages > cfg["page_limit"]:
-            fails.append(f"{tex_name}: {pages} pages exceeds limit {cfg['page_limit']}")
-        print(f"  pages: {pages} / {cfg['page_limit']}")
+        if not lo <= body <= hi:
+            fails.append(
+                f"{tex_name}: {body} body pages outside the required {lo}-{hi} "
+                f"(references and appendices excluded)"
+            )
+        print(f"  body pages: {body} / {lo}-{hi}   (PDF total {total}, refs excluded)")
+
+    if not re.search(r"\\usepackage(\[[^\]]*\])?\{neurips_2026\}", src):
+        fails.append(f"{tex_name}: not using the required NeurIPS 2026 template")
 
     for pattern, label in [
         (r"^Overfull", "overfull box"),
