@@ -88,7 +88,8 @@ Our contributions:
     mismatches over the checkable overlap.
   \item \textbf{An attribution result with a mechanism.} Ontology grounding never hurts,
     with \D~$\geq 0$ in 24 of 24 cells, and helps most where gameplay semantics cannot be inferred
-    from pixels. The same experiment
+    from pixels. The mean gain stays positive for every theme and judge across three generation
+    seeds. The same experiment
     is a negative result for the two mechanisms stacked above it.
   \item \textbf{Evaluation infrastructure that distrusts itself.} Judge validity batteries,
     mandatory repeated measurement, and a runnable assertion for each failure mode we encountered.
@@ -387,6 +388,21 @@ systematically reads power-ups as match elements under both conditions, so its g
 obstacles, which reproduces the category ordering of Table~\ref{tab:bycat} from an independent
 model family.
 
+\paragraph{Robustness across generation seeds.} Every theme was then regenerated from scratch
+twice more, giving three independent seeds per condition, each scored by both judges in three
+passes. The result survives resampling the generator. The mean gain is positive for every theme
+under every judge, the category ordering reproduces with obstacles at $+0.40$ and power-ups at
+$+0.42$ against $+0.15$ for match elements, and the headline cell is exact: fruit damage-stage
+obstacles go $0.00 \to 1.00$ in all three seeds under both judges, and grounded obstacle accuracy
+is $1.000$ in every theme, judge, and seed. The steampunk element zero of Section~\ref{sec:zero}
+replicates just as exactly, $0.000$ in all three seeds. Resampling also surfaces what repeated
+scoring alone cannot: seed-to-seed variance runs up to three times the pass-to-pass variance, and
+at the level of one individual seed a single cell dips to $-0.06$, pet under GPT-4o, where one
+ungrounded draw happened to produce readable elements. A single-seed, single-pass evaluation of
+that cell could have reported anything between $-0.06$ and $+0.50$; the mean over seeds is
+$+0.29$. This is precisely the variance the protocol exists to expose, and it is why every number
+in this paper is a mean over repeated passes and, now, repeated seeds.
+
 \subsection{The zero cell, and what it buys}
 \label{sec:zero}
 
@@ -417,7 +433,7 @@ specific, localised open problem, which is more useful to report than an average
 
 Extending the ablation to B2, which adds references, and B3, which adds the critic, does \emph{not}
 extend the story. Over
-three seeds on Fruit, the only theme with more than one seed, the two judges disagree about which
+three seeds on Fruit, the two judges disagree about which
 of the three grounded conditions reads best: GPT-4o puts B1 and B2 level and B3 last, Gemini puts
 B3 first, then B1, then B2, neither ordering follows the ladder, and the
 gaps among B1, B2 and B3 are comparable to the per-seed standard deviation of $0.06$ to $0.14$. We
@@ -471,8 +487,7 @@ battery only after its API fault was fixed, and we report it as a separate repli
 folding it into the main results. \textbf{Single domain.} One Match-3 game; the transferable content is the
 methodology, and the domain was chosen because executable ground truth is rare.
 \textbf{Board-parse breadth.} The board reading was run at one cell size, so we cannot
-report a legibility-versus-scale curve. \textbf{One seed for three themes.} Three of the four
-themes have a single generation seed; only Fruit has three. \textbf{One generator.} All packs come
+report a legibility-versus-scale curve. \textbf{One generator.} All packs come
 from a single image model, so the attribution says what this generator was missing, not what
 generators in general are missing.
 
