@@ -1,6 +1,6 @@
 {
   "judge": "claude",
-  "model": "claude-sonnet-5",
+  "model": "global.anthropic.claude-sonnet-5",
   "pack": "human",
   "sample": [
     [
@@ -45,78 +45,78 @@
     ]
   ],
   "pass1": [
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError"
+    "background",
+    "element",
+    "element",
+    "element",
+    "obstacle",
+    "element",
+    "element",
+    "powerup",
+    "element",
+    "element"
   ],
   "pass2": [
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError"
+    "background",
+    "element",
+    "element",
+    "element",
+    "obstacle",
+    "element",
+    "element",
+    "powerup",
+    "element",
+    "element"
   ],
   "permuted": [
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError"
+    "background",
+    "element",
+    "element",
+    "element",
+    "obstacle",
+    "obstacle",
+    "element",
+    "powerup",
+    "powerup",
+    "element"
   ],
   "blind": [
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError",
-    "error:BadRequestError"
+    "background",
+    "background",
+    "background",
+    "background",
+    "background",
+    "background",
+    "background",
+    "background",
+    "background",
+    "background"
   ],
-  "accuracy": 0.0,
-  "blind_accuracy": 0.0,
+  "accuracy": 0.6,
+  "blind_accuracy": 0.1,
   "majority_accuracy": 0.3,
   "chance": 0.25,
   "checks": {
     "1 protocol compliance": {
-      "value": "0.000 valid",
-      "pass": false
+      "value": "1.000 valid",
+      "pass": true
     },
     "2 test-retest agreement": {
       "value": "1.000",
       "pass": true
     },
     "3 label-permutation invariance": {
-      "value": "1.000",
+      "value": "0.800",
       "pass": true
     },
     "4 looks at the image (blind control)": {
-      "value": "real 0.000 vs blind 0.000 (chance 0.25)",
-      "pass": false
+      "value": "real 0.600 vs blind 0.100 (chance 0.25)",
+      "pass": true
     },
     "5 beats constant-majority guess": {
-      "value": "0.000 vs always-\"powerup\" 0.300",
-      "pass": false
+      "value": "0.600 vs always-\"powerup\" 0.300",
+      "pass": true
     }
   },
-  "usable": false
+  "usable": true
 }

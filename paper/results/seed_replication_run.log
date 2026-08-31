@@ -1,0 +1,1399 @@
+
+=== B0 x pet seed 2 -> research_B0_pet_s2 ===
+2026-08-30 16:33:33.526 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-30 16:33:33.526 WARNING streamlit.runtime.state.session_state_proxy: Session state does not function when running a script without `streamlit run`
+2026-08-30 16:33:33.566 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B0_pet_s2                      │
+│ style    3D Disney Cartoon Style, Simple design… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /private/tmp/m3main/generated_art/rese… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       12                                  │
+│ 🟡 review     0                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /private/tmp/m3main/generated_art/rese… │
+│ history  /private/tmp/m3main/generated_art/rese… │
+│ report   /private/tmp/m3main/generated_art/rese… │
+│ contact  /private/tmp/m3main/generated_art/rese… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /private/tmp/m3main/generated_art/research_B0_pet_s2/generated_sprites.png
+
+=== B0 x pet seed 3 -> research_B0_pet_s3 ===
+2026-08-30 16:35:51.257 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-30 16:35:51.257 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B0_pet_s3                      │
+│ style    3D Disney Cartoon Style, Simple design… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /private/tmp/m3main/generated_art/rese… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       12                                  │
+│ 🟡 review     0                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /private/tmp/m3main/generated_art/rese… │
+│ history  /private/tmp/m3main/generated_art/rese… │
+│ report   /private/tmp/m3main/generated_art/rese… │
+│ contact  /private/tmp/m3main/generated_art/rese… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /private/tmp/m3main/generated_art/research_B0_pet_s3/generated_sprites.png
+
+=== B1 x pet seed 2 -> research_B1_pet_s2 ===
+2026-08-30 16:38:17.096 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-30 16:38:17.096 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 使用已快取的精煉結果: A highly readable, soft-3D Disney-style cartoon aesthetic featuring chunky volumetric shapes, warm lighting, and zero outlines for a pet-themed match-3 game.
+[theme] 使用已快取的展開結果: Blu=A soft, plump blue squeaky fish toy. Thick, simplified 3D form resembling polished vinyl. Gentle gradients transition from deep sapphire to soft sky blue. Illuminated by a warm top-left key light and a faint cool blue rim light on the bottom-right. No outlines, clean silhouette., Crt1=The wooden pet shipping crate near total collapse. Only a few rounded, splintered stubs and the bottom base remain intact. The structure is heavily sagged and lopsided, with soft-edged debris scattered around its base., Crt2=The wooden pet shipping crate in a heavily damaged state. Two side planks are completely missing, and one of the front corners is split open, revealing a dark, soft-shaded interior. The broken edges are blunt and highly rounded., Crt3=The wooden pet shipping crate showing slight wear. A single front plank is visibly warped and slightly askew, leaving a small gap. The edges of the gap are soft and rounded, maintaining the chunky, stylized look., Crt4=A sturdy wooden pet shipping crate. Features extremely soft, rounded corners and thick, simplified pine-wood planks with a warm honey-brown finish. The surface is smooth like polished clay with no grain texture, showing a clear, solid cubic silhouette., Grn=A vibrant green tennis ball squeaker toy. The white curved seam is rendered as a soft, shallow groove rather than an outline. Smooth, semi-glossy rubber finish, no fuzz texture. Volumetric sphere shape with a warm yellow-green key light on the top-left and a soft teal rim light., LtBl=A vibrant, multi-colored pet treat dispenser jar. Spherical glass globe shape containing a bright, colorful assortment of rainbow pet kibble. The glass is rendered as a semi-glossy, highly reflective 3D sphere with a silver metal base, reflecting a warm top-left key light., Pur=A cute, chunky purple pet collar forming a perfect circle. Made of soft, thick vinyl with a golden bell dangling at the bottom. Highly rounded, smooth surface with a gentle purple-to-lavender gradient, catching a bright highlight on its top-left curve and a subtle cool pink rim light., Red=A glossy red rubber dog bone. Extremely rounded ends, resembling a soft, plump 3D dumbbell. The surface has a semi-glossy, polished-clay finish with rich crimson gradients and a soft pink highlight from the top-left key light., Soda0d=A horizontal, dual-headed dog training whistle. Thick, cylindrical body with plump, rounded cones pointing horizontally to the left and right, clearly indicating horizontal direction. Painted with alternating bright orange and yellow horizontal stripes, with a glossy vinyl finish., Soda90=A vertical, dual-headed dog training whistle. Thick, cylindrical body with plump, rounded cones pointing vertically to the top and bottom, indicating vertical direction. Painted with alternating bright teal and white vertical stripes, with a glossy vinyl finish., Yel=A plump, stylized yellow rubber ducky pet toy. Thick, highly simplified 3D geometry with an oversized head and rounded beak. Soft matte-vinyl finish, transitioning from warm golden-yellow to soft cream. Soft top-left key light and a gentle orange-tinted rim light.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B1_pet_s2                      │
+│ style    Render all pet-themed assets as clean,… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /private/tmp/m3main/generated_art/rese… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/1  generating…
+  │  ✗ postprocess  Object too small (bbox coverage 28% < 30%). Mak…
+  └─ ❌ FAILED
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       11                                  │
+│ 🟡 review     0                                   │
+│ ❌ failed     1                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /private/tmp/m3main/generated_art/rese… │
+│ history  /private/tmp/m3main/generated_art/rese… │
+│ report   /private/tmp/m3main/generated_art/rese… │
+│ contact  /private/tmp/m3main/generated_art/rese… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /private/tmp/m3main/generated_art/research_B1_pet_s2/generated_sprites.png
+[WARN] research_B1_pet_s2 incomplete
+
+=== B1 x pet seed 3 -> research_B1_pet_s3 ===
+2026-08-30 16:41:12.863 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-30 16:41:12.864 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 使用已快取的精煉結果: Render highly recognizable, soft 3D Disney-style pet assets using vibrant, warm colors, clean rounded volumes, and rim lighting without any outline strokes.
+[theme] 使用已快取的展開結果: Blu=A chunky, blue vinyl toy fish with exaggerated, simplified fins and a round body. Rendered as a soft, semi-glossy plastic with smooth gradients, a warm top-left key light, and deep blue-purple shadows., Crt1=A heavily ruined pastel-orange plastic pet carrier toy. Huge chunks of the vinyl shell are missing, exposing deep cracks, and the gate is completely detached, leaving only a crumbling, chunky base., Crt2=A moderately damaged pastel-orange plastic pet carrier toy, showing deep, jagged cracks splitting the side panel and a slightly crooked front gate., Crt3=A slightly damaged pastel-orange plastic pet carrier toy, showing a single clean, dark hairline fracture running along the top-left corner of its smooth vinyl shell., Crt4=An intact, pastel-orange plastic pet carrier box, styled as a chunky, soft-edged 3D toy with a clean, smooth surface and no visible damage, catching warm directional light on its rounded top., Grn=A glossy, lime-green vinyl frog squeak-toy with a smooth, plump body and simplified round eyes. Features no outlines, soft ambient occlusion, and warm orange-tinted highlights defining its clean, tactile volumes., LtBl=A sphere-shaped, multi-colored pet treat-dispensing ball composed of vibrant, rotating rainbow-colored vinyl segments. Its power is represented solely by its highly glossy, high-contrast, multi-segmented round shape., Pur=A plump, purple vinyl toy mouse with large, rounded ears and a short, stubby tail. Styled as a soft, polished plastic with a clean, high-contrast silhouette and deep magenta shadows., Red=A chunky, red vinyl dog bone with oversized, bulbous ends and a thick center. Surface is highly tactile, resembling smooth painted clay, with warm yellow highlights on the top-left and rich red-orange shadows., Soda0d=A chunky, horizontally-stretched blue vinyl dachshund toy. Its body is elongated horizontally, ending in blunt, rounded nubs on the left and right that act as directional arrows, featuring soft, semi-glossy highlights., Soda90=A chunky, vertically-stretched cat scratching post toy with a mint-green vinyl base and top. The central pillar is wrapped in thick, vertical orange ridges that point up and down, utilizing clean, bold volumes to signal the vertical direction., Yel=A vibrant yellow rubber ducky toy made of soft, semi-glossy vinyl. The silhouette is extremely simplified and chunky, with a short orange beak and clean, rounded volumes that capture soft top-left key lighting.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B1_pet_s3                      │
+│ style    Render all pet-themed sprites as soft,… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /private/tmp/m3main/generated_art/rese… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  │  ✗ postprocess  Object too small (bbox coverage 21% < 30%). Mak…
+  └─ ❌ FAILED
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       11                                  │
+│ 🟡 review     0                                   │
+│ ❌ failed     1                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /private/tmp/m3main/generated_art/rese… │
+│ history  /private/tmp/m3main/generated_art/rese… │
+│ report   /private/tmp/m3main/generated_art/rese… │
+│ contact  /private/tmp/m3main/generated_art/rese… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /private/tmp/m3main/generated_art/research_B1_pet_s3/generated_sprites.png
+[WARN] research_B1_pet_s3 incomplete
+
+=== B0 x ocean seed 2 -> research_B0_ocean_s2 ===
+2026-08-30 16:43:55.096 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-30 16:43:55.097 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B0_ocean_s2                    │
+│ style    3D Disney Cartoon Style, Simple design… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /private/tmp/m3main/generated_art/rese… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       12                                  │
+│ 🟡 review     0                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /private/tmp/m3main/generated_art/rese… │
+│ history  /private/tmp/m3main/generated_art/rese… │
+│ report   /private/tmp/m3main/generated_art/rese… │
+│ contact  /private/tmp/m3main/generated_art/rese… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /private/tmp/m3main/generated_art/research_B0_ocean_s2/generated_sprites.png
+
+=== B0 x ocean seed 3 -> research_B0_ocean_s3 ===
+2026-08-30 16:46:07.868 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-30 16:46:07.869 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B0_ocean_s3                    │
+│ style    3D Disney Cartoon Style, Simple design… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /private/tmp/m3main/generated_art/rese… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       12                                  │
+│ 🟡 review     0                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /private/tmp/m3main/generated_art/rese… │
+│ history  /private/tmp/m3main/generated_art/rese… │
+│ report   /private/tmp/m3main/generated_art/rese… │
+│ contact  /private/tmp/m3main/generated_art/rese… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /private/tmp/m3main/generated_art/research_B0_ocean_s3/generated_sprites.png
+
+=== B1 x ocean seed 2 -> research_B1_ocean_s2 ===
+2026-08-30 16:48:19.333 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-30 16:48:19.334 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 使用已快取的精煉結果: Create a vibrant, soft 3D Disney-inspired cartoon style with clean, rounded volumetric shapes and no outlines, optimized for an ocean-themed match-3 game.
+[theme] 使用已快取的展開結果: Blu=A chubby, highly stylized blue jellyfish with a bulbous dome head and short, rounded tentacles curled underneath. Rendered as a glossy, semi-translucent 3D volume with smooth, soft gradients of deep azure to light aqua., Crt1=A heavily shattered cubic wooden cargo crate near total collapse. Most planks are splintered, leaving a wide, dark gaping hole in the center, and the remaining structure is heavily tilted and barely held together by one warped metal band., Crt2=A visibly damaged cubic wooden cargo crate. Several planks are cracked and warped, one of the metal bands is snapped and bent outward, and a large gap is visible in the front side showing the dark interior., Crt3=A slightly damaged cubic wooden cargo crate. A single clean crack runs down the front face, and one corner of the wood is chipped, revealing a lighter, unpainted wood color underneath., Crt4=An intact, sturdy cubic wooden cargo crate bound by thick, rounded metal bands. The dark weathered wood is completely undamaged, with a clean, hand-painted white anchor logo on the front face., Grn=A plump, cartoon-style green sea turtle with a highly simplified, rounded shell and stubby flippers. Features a glossy finish with smooth, warm-green gradients and soft top-down lighting highlighting its dome-like back., LtBl=A giant, high-gloss iridescent pearl resting inside a wide-open, stylized golden-coral clam shell. The pearl's surface has a smooth, pearlescent gradient blending pastel pink, yellow, and aqua, catching clean, bright 3D highlights., Pur=A bulbous, friendly purple octopus with a large spherical head and eight short, stubby tentacles tucked neatly around its base. Made of smooth, semi-glossy clay-like material in a rich violet-to-lilac gradient., Red=A stout, rounded red crab with a smooth, glossy carapace and two chunky, oversized blunt claws. Features bold, simplified geometry and warm coral-red gradients with soft ambient occlusion., Soda0d=A chubby, horizontal submarine painted in vibrant orange and warm yellow. It features a sleek, rounded cylindrical body with twin horizontal propellers on the left and right sides, indicating horizontal movement., Soda90=A chubby, vertical submarine painted in rich teal and sunny yellow. It features a sleek, rounded cylindrical body with twin vertical propellers on the top and bottom sides, indicating vertical movement., Yel=A plump, stylized yellow seahorse with a soft, rounded snout, tiny dorsal fin, and a curled-up tail. The model has a smooth, semi-glossy finish in a sunny yellow-to-warm orange gradient.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B1_ocean_s2                    │
+│ style    Render all assets as soft, semi-glossy… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /private/tmp/m3main/generated_art/rese… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       12                                  │
+│ 🟡 review     0                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /private/tmp/m3main/generated_art/rese… │
+│ history  /private/tmp/m3main/generated_art/rese… │
+│ report   /private/tmp/m3main/generated_art/rese… │
+│ contact  /private/tmp/m3main/generated_art/rese… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /private/tmp/m3main/generated_art/research_B1_ocean_s2/generated_sprites.png
+
+=== B1 x ocean seed 3 -> research_B1_ocean_s3 ===
+2026-08-30 16:50:35.377 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-30 16:50:35.377 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 使用已快取的精煉結果: Render clean, vibrant 3D Disney-inspired cartoon-style ocean match-3 assets with soft, pillowy shading and high-readability silhouettes, completely free of outlines.
+[theme] 使用已快取的展開結果: Blu=A chunky, highly stylized blue starfish with soft, rounded arms and a smooth, semi-glossy plastic texture. Warm top-right lighting defines its plump form with gentle gradients, fading from a vibrant sky blue to a deep ocean blue., Crt1=An almost entirely destroyed wooden crate, heavily fractured with large, clean-edged splits, loose planks bulging outward, and held together by a single frayed, soft-shaded rope., Crt2=A visibly damaged wooden crate, showing deep, smooth-edged cracks on its surface, a chipped top-right corner, and one snapped rope binding hanging loosely., Crt3=A slightly damaged wooden crate with a clean, narrow hairline fracture running diagonally down the front panel and a slightly loosened rope wrapping., Crt4=An intact, pristine wooden crate bound in thick, soft-shaded rope. It is modeled as a solid 3D block with extremely rounded corners and a warm, semi-glossy caramel-wood finish., Grn=A plump, simplified green sea turtle with a dome-shaped shell, rendered as a smooth, soft-shaded 3D sculpture. The shell has a gentle satin finish with rounded, chunky scute patterns in lime and forest green., LtBl=A giant, highly polished iridescent pearl resting inside a chunky, smooth-edged golden clam shell. The pearl has a glossy, glass-like finish reflecting soft, multi-colored pastel gradients., Pur=A stylized, bulbous purple clam shell with soft, rounded vertical ridges. It is rendered with a glossy, pearlescent finish, using smooth violet-to-lavender gradients to highlight its volumetric, chubby silhouette., Red=A cute, chunky red crab with oversized, round claws tucked tightly to its body to form a compact silhouette. Its surface is a smooth, semi-glossy red plastic with soft peach highlights on its belly., Soda0d=A chunky, torpedo-shaped orange-and-white striped clownfish designed with a horizontal orientation. Its sleek, rounded body and pointed side fins clearly indicate a horizontal direction., Soda90=A tall, chubby blue-and-yellow striped surgeonfish designed as a vertical rocket shape. Its elongated, stylized dorsal and ventral fins point straight up and down to clearly indicate a vertical direction., Yel=A plump, highly stylized yellow seahorse curled into a compact, chunky shape. It features smooth, rounded ridges along its back and a glossy yellow-orange gradient finish with warm, sunlit highlights.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B1_ocean_s3                    │
+│ style    Render every asset as a clean, soft-sh… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /private/tmp/m3main/generated_art/rese… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/1  generating…
+  │  ✗ postprocess  Opaque background with no detectable green chro…
+  └─ ❌ FAILED
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/1  generating…
+  [api] generate_image(gemini-3.1-flash-image) 失敗(第 1 次,ServerError),5s 後重試…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  │  ✗ postprocess  Object too thin/sparse (fills 15% of the frame …
+  └─ ❌ FAILED
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       10                                  │
+│ 🟡 review     0                                   │
+│ ❌ failed     2                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /private/tmp/m3main/generated_art/rese… │
+│ history  /private/tmp/m3main/generated_art/rese… │
+│ report   /private/tmp/m3main/generated_art/rese… │
+│ contact  /private/tmp/m3main/generated_art/rese… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /private/tmp/m3main/generated_art/research_B1_ocean_s3/generated_sprites.png
+[WARN] research_B1_ocean_s3 incomplete
+
+=== B0 x steampunk seed 2 -> research_B0_steampunk_s2 ===
+2026-08-30 16:53:15.159 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-30 16:53:15.160 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B0_steampunk_s2                │
+│ style    3D Disney Cartoon Style, Simple design… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /private/tmp/m3main/generated_art/rese… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       12                                  │
+│ 🟡 review     0                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /private/tmp/m3main/generated_art/rese… │
+│ history  /private/tmp/m3main/generated_art/rese… │
+│ report   /private/tmp/m3main/generated_art/rese… │
+│ contact  /private/tmp/m3main/generated_art/rese… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /private/tmp/m3main/generated_art/research_B0_steampunk_s2/generated_sprites.png
+
+=== B0 x steampunk seed 3 -> research_B0_steampunk_s3 ===
+2026-08-30 16:55:27.891 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-30 16:55:27.892 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B0_steampunk_s3                │
+│ style    3D Disney Cartoon Style, Simple design… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /private/tmp/m3main/generated_art/rese… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       12                                  │
+│ 🟡 review     0                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /private/tmp/m3main/generated_art/rese… │
+│ history  /private/tmp/m3main/generated_art/rese… │
+│ report   /private/tmp/m3main/generated_art/rese… │
+│ contact  /private/tmp/m3main/generated_art/rese… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /private/tmp/m3main/generated_art/research_B0_steampunk_s3/generated_sprites.png
+
+=== B1 x steampunk seed 2 -> research_B1_steampunk_s2 ===
+2026-08-30 16:57:48.432 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-30 16:57:48.432 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 使用已快取的精煉結果: Render clean, chunky 3D-styled steampunk assets with Disney-esque soft volumetric shading, warm vibrant brass palettes, and bold, outline-free silhouettes optimized for high mobile readability.
+[theme] 使用已快取的展開結果: Blu=A toy-like, chunky blue glass gear-shaped gem with a polished brass core. The gear has soft, exaggerated rounded teeth and is rendered with smooth volumetric gradients and a bright rim light, with no outlines., Crt1=An almost entirely destroyed mahogany crate, heavily fractured into chunky, loose splinters held together by a single warped copper bracket, leaving a wide, hollow gap in its silhouette., Crt2=The mahogany wooden crate showing significant damage, with two planks heavily splintered open and one of the rounded brass corner guards visibly bent and detached at an angle., Crt3=The mahogany wooden crate with a single visible, stylized crack running down the top wood panel. The brass corners remain mostly intact, but a slight dent is visible on the upper left bevel., Crt4=An intact, chunky mahogany wooden crate framed with thick, rounded brass corner guards and polished copper rivets. It has a glossy, clean varnish with soft ambient occlusion in the crevices and zero damage., Grn=A stylized, rounded green pressure gauge housed in a thick, polished brass ring. The face is a soft green gradient with chunky, simplified dark teal dial hands, designed as a clean, semi-glossy toy., LtBl=A large, spherical brass astrolabe powerup with multiple nested, chunky rings and a central, polished amber glass orb. The outer rings feature rounded, toy-like knurling that catches the bright studio rim light., Pur=A spherical, purple-painted metal pressure valve with a chunky, three-pronged brass handle on top. The surface is exceptionally clean with a soft-shaded, semi-glossy finish and warm amber highlights., Red=A stubby, spherical red airship cabin toy made of painted copper, featuring a single round, thick brass porthole window. The silhouette is highly simplified, showing smooth volumetric shading and no linework., Soda0d=A horizontal steam cylinder powerup made of polished copper, with two chunky, cone-shaped exhaust vents flaring out symmetrically to the left and right sides to clearly indicate its horizontal path., Soda90=A vertical steam cylinder powerup made of polished copper, with two chunky, cone-shaped exhaust vents flaring out symmetrically to the top and bottom ends to clearly indicate its vertical path., Yel=A chunky, oversized brass pocket watch with a bright yellow enameled face. It features a simplified, thick winding loop at the top and smooth, rounded bevels along the golden metallic edges.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B1_steampunk_s2                │
+│ style    Render all assets as stylized, soft-sh… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /private/tmp/m3main/generated_art/rese… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  │  ✗ postprocess  Object too small (bbox coverage 23% < 30%). Mak…
+  └─ ❌ FAILED
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       11                                  │
+│ 🟡 review     0                                   │
+│ ❌ failed     1                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /private/tmp/m3main/generated_art/rese… │
+│ history  /private/tmp/m3main/generated_art/rese… │
+│ report   /private/tmp/m3main/generated_art/rese… │
+│ contact  /private/tmp/m3main/generated_art/rese… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /private/tmp/m3main/generated_art/research_B1_steampunk_s2/generated_sprites.png
+[WARN] research_B1_steampunk_s2 incomplete
+
+=== B1 x steampunk seed 3 -> research_B1_steampunk_s3 ===
+2026-08-30 17:00:36.107 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-30 17:00:36.107 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 使用已快取的精煉結果: Render vibrant, rounded 3D Disney-cartoon-style steampunk items with smooth, glossy finishes and bold, clean silhouettes.
+[theme] 使用已快取的展開結果: Blu=A chunky, spherical blue glass flask filled with vibrant blue liquid, wrapped in a thick, rounded copper support frame with a polished brass cap. It features soft gradient shading that highlights its glossy, liquid-filled volume., Crt1=The brass-banded wooden crate in a nearly destroyed state, with most of the wood splintered away, leaving only a highly bent, cracked brass corner frame and a few loose, dangling wooden planks., Crt2=The brass-banded wooden crate with significant damage, where a large section of the front wooden panel is broken open, exposing a dark interior, and the brass padlock hangs crookedly from a bent hasp., Crt3=The brass-banded wooden crate showing minor damage, with one of the copper corner bands slightly warped and pulled away, and a small, clean crack running down the front wooden panel., Crt4=An intact, heavily reinforced wooden cargo crate bound by thick, polished copper bands and secured with a prominent brass padlock, featuring exaggeratedly rounded corners and a soft, rich wood finish., Grn=A stout, round green lens housed in a chunky, green-enameled gear-shaped frame. The thick, rounded teeth of the gear are polished brass, giving it a strong green-and-brass contrast with bright rim lighting defining its circular shape., LtBl=An exquisite, multi-colored glass prism orb enclosed in a thick, rounded brass frame shaped like an astrolabe, reflecting a rainbow of warm and cool tones with a highly polished, semi-glossy finish., Pur=A thick, hexagonal purple-painted steel nut with a polished amethyst glass core. The edges are heavily rounded, and the glossy surface features deep purple gradients with soft ambient occlusion in the recesses., Red=An exaggerated, chunky red steam valve wheel with a glossy, red-painted finish. It features three thick spokes meeting at a polished brass center bolt, with rounded edges and high-contrast rim lighting., Soda0d=A horizontal brass cylinder shaped like a heavy pneumatic piston, featuring wide, horizontal copper stabilizer fins on its left and right ends that point outward to clearly indicate its horizontal clearance path., Soda90=A vertical copper boiler tank shaped like a chunky, rounded capsule, featuring wide, vertical brass stabilizer fins on its top and bottom ends that point vertically to clearly indicate its vertical clearance path., Yel=A simplified, highly rounded golden-yellow pocket watch. It has a chunky brass frame, a warm yellow clock face, and bold, simplified copper clock hands, rendered with smooth 3D gradient shading for a soft, glossy look.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B1_steampunk_s3                │
+│ style    Render every asset as a soft, semi-glo… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /private/tmp/m3main/generated_art/rese… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████░░░░░░░░░░] [7/12] Crt3  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[████████████░░░░░░░░] [8/12] Crt2  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████░░░░░░░] [9/12] Crt1  [crate]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████████░░░] [11/12] LtBl  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       12                                  │
+│ 🟡 review     0                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       0                                   │
+│ total        12                                  │
+│                                                  │
+│ sprites  /private/tmp/m3main/generated_art/rese… │
+│ history  /private/tmp/m3main/generated_art/rese… │
+│ report   /private/tmp/m3main/generated_art/rese… │
+│ contact  /private/tmp/m3main/generated_art/rese… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /private/tmp/m3main/generated_art/research_B1_steampunk_s3/generated_sprites.png
+
+Done. failures=['research_B1_pet_s2', 'research_B1_pet_s3', 'research_B1_ocean_s3', 'research_B1_steampunk_s2']
+[skip] research_B0_pet_s2 already complete (12/12)
+[skip] research_B0_pet_s3 already complete (12/12)
+
+=== B1 x pet seed 2 -> research_B1_pet_s2 ===
+2026-08-30 18:23:34.578 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-30 18:23:34.578 WARNING streamlit.runtime.state.session_state_proxy: Session state does not function when running a script without `streamlit run`
+2026-08-30 18:23:34.690 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 使用已快取的精煉結果: A highly readable, soft-3D Disney-style cartoon aesthetic featuring chunky volumetric shapes, warm lighting, and zero outlines for a pet-themed match-3 game.
+[theme] 使用已快取的展開結果: Blu=A soft, plump blue squeaky fish toy. Thick, simplified 3D form resembling polished vinyl. Gentle gradients transition from deep sapphire to soft sky blue. Illuminated by a warm top-left key light and a faint cool blue rim light on the bottom-right. No outlines, clean silhouette., Crt1=The wooden pet shipping crate near total collapse. Only a few rounded, splintered stubs and the bottom base remain intact. The structure is heavily sagged and lopsided, with soft-edged debris scattered around its base., Crt2=The wooden pet shipping crate in a heavily damaged state. Two side planks are completely missing, and one of the front corners is split open, revealing a dark, soft-shaded interior. The broken edges are blunt and highly rounded., Crt3=The wooden pet shipping crate showing slight wear. A single front plank is visibly warped and slightly askew, leaving a small gap. The edges of the gap are soft and rounded, maintaining the chunky, stylized look., Crt4=A sturdy wooden pet shipping crate. Features extremely soft, rounded corners and thick, simplified pine-wood planks with a warm honey-brown finish. The surface is smooth like polished clay with no grain texture, showing a clear, solid cubic silhouette., Grn=A vibrant green tennis ball squeaker toy. The white curved seam is rendered as a soft, shallow groove rather than an outline. Smooth, semi-glossy rubber finish, no fuzz texture. Volumetric sphere shape with a warm yellow-green key light on the top-left and a soft teal rim light., LtBl=A vibrant, multi-colored pet treat dispenser jar. Spherical glass globe shape containing a bright, colorful assortment of rainbow pet kibble. The glass is rendered as a semi-glossy, highly reflective 3D sphere with a silver metal base, reflecting a warm top-left key light., Pur=A cute, chunky purple pet collar forming a perfect circle. Made of soft, thick vinyl with a golden bell dangling at the bottom. Highly rounded, smooth surface with a gentle purple-to-lavender gradient, catching a bright highlight on its top-left curve and a subtle cool pink rim light., Red=A glossy red rubber dog bone. Extremely rounded ends, resembling a soft, plump 3D dumbbell. The surface has a semi-glossy, polished-clay finish with rich crimson gradients and a soft pink highlight from the top-left key light., Soda0d=A horizontal, dual-headed dog training whistle. Thick, cylindrical body with plump, rounded cones pointing horizontally to the left and right, clearly indicating horizontal direction. Painted with alternating bright orange and yellow horizontal stripes, with a glossy vinyl finish., Soda90=A vertical, dual-headed dog training whistle. Thick, cylindrical body with plump, rounded cones pointing vertically to the top and bottom, indicating vertical direction. Painted with alternating bright teal and white vertical stripes, with a glossy vinyl finish., Yel=A plump, stylized yellow rubber ducky pet toy. Thick, highly simplified 3D geometry with an oversized head and rounded beak. Soft matte-vinyl finish, transitioning from warm golden-yellow to soft cream. Soft top-left key light and a gentle orange-tinted rim light.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B1_pet_s2                      │
+│ style    Render all pet-themed assets as clean,… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /private/tmp/m3main/generated_art/rese… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  — 已 pass,跳過
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  — 已 pass,跳過
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  — 已 pass,跳過
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  — 已 pass,跳過
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  — 已 pass,跳過
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  — 已 pass,跳過
+
+[██████████░░░░░░░░░░] [7/12] Crt3  — 已 pass,跳過
+
+[████████████░░░░░░░░] [8/12] Crt2  — 已 pass,跳過
+
+[█████████████░░░░░░░] [9/12] Crt1  — 已 pass,跳過
+
+[███████████████░░░░░] [10/12] Soda0d  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[█████████████████░░░] [11/12] LtBl  — 已 pass,跳過
+
+[██████████████████░░] [12/12] Soda90  — 已 pass,跳過
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       1                                   │
+│ 🟡 review     0                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       11                                  │
+│ total        12                                  │
+│                                                  │
+│ sprites  /private/tmp/m3main/generated_art/rese… │
+│ history  /private/tmp/m3main/generated_art/rese… │
+│ report   /private/tmp/m3main/generated_art/rese… │
+│ contact  /private/tmp/m3main/generated_art/rese… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /private/tmp/m3main/generated_art/research_B1_pet_s2/generated_sprites.png
+
+=== B1 x pet seed 3 -> research_B1_pet_s3 ===
+2026-08-30 18:23:47.272 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-30 18:23:47.273 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 使用已快取的精煉結果: Render highly recognizable, soft 3D Disney-style pet assets using vibrant, warm colors, clean rounded volumes, and rim lighting without any outline strokes.
+[theme] 使用已快取的展開結果: Blu=A chunky, blue vinyl toy fish with exaggerated, simplified fins and a round body. Rendered as a soft, semi-glossy plastic with smooth gradients, a warm top-left key light, and deep blue-purple shadows., Crt1=A heavily ruined pastel-orange plastic pet carrier toy. Huge chunks of the vinyl shell are missing, exposing deep cracks, and the gate is completely detached, leaving only a crumbling, chunky base., Crt2=A moderately damaged pastel-orange plastic pet carrier toy, showing deep, jagged cracks splitting the side panel and a slightly crooked front gate., Crt3=A slightly damaged pastel-orange plastic pet carrier toy, showing a single clean, dark hairline fracture running along the top-left corner of its smooth vinyl shell., Crt4=An intact, pastel-orange plastic pet carrier box, styled as a chunky, soft-edged 3D toy with a clean, smooth surface and no visible damage, catching warm directional light on its rounded top., Grn=A glossy, lime-green vinyl frog squeak-toy with a smooth, plump body and simplified round eyes. Features no outlines, soft ambient occlusion, and warm orange-tinted highlights defining its clean, tactile volumes., LtBl=A sphere-shaped, multi-colored pet treat-dispensing ball composed of vibrant, rotating rainbow-colored vinyl segments. Its power is represented solely by its highly glossy, high-contrast, multi-segmented round shape., Pur=A plump, purple vinyl toy mouse with large, rounded ears and a short, stubby tail. Styled as a soft, polished plastic with a clean, high-contrast silhouette and deep magenta shadows., Red=A chunky, red vinyl dog bone with oversized, bulbous ends and a thick center. Surface is highly tactile, resembling smooth painted clay, with warm yellow highlights on the top-left and rich red-orange shadows., Soda0d=A chunky, horizontally-stretched blue vinyl dachshund toy. Its body is elongated horizontally, ending in blunt, rounded nubs on the left and right that act as directional arrows, featuring soft, semi-glossy highlights., Soda90=A chunky, vertically-stretched cat scratching post toy with a mint-green vinyl base and top. The central pillar is wrapped in thick, vertical orange ridges that point up and down, utilizing clean, bold volumes to signal the vertical direction., Yel=A vibrant yellow rubber ducky toy made of soft, semi-glossy vinyl. The silhouette is extremely simplified and chunky, with a short orange beak and clean, rounded volumes that capture soft top-left key lighting.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B1_pet_s3                      │
+│ style    Render all pet-themed sprites as soft,… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /private/tmp/m3main/generated_art/rese… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  — 已 pass,跳過
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  — 已 pass,跳過
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  — 已 pass,跳過
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  — 已 pass,跳過
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  — 已 pass,跳過
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  — 已 pass,跳過
+
+[██████████░░░░░░░░░░] [7/12] Crt3  — 已 pass,跳過
+
+[████████████░░░░░░░░] [8/12] Crt2  — 已 pass,跳過
+
+[█████████████░░░░░░░] [9/12] Crt1  — 已 pass,跳過
+
+[███████████████░░░░░] [10/12] Soda0d  — 已 pass,跳過
+
+[█████████████████░░░] [11/12] LtBl  — 已 pass,跳過
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       1                                   │
+│ 🟡 review     0                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       11                                  │
+│ total        12                                  │
+│                                                  │
+│ sprites  /private/tmp/m3main/generated_art/rese… │
+│ history  /private/tmp/m3main/generated_art/rese… │
+│ report   /private/tmp/m3main/generated_art/rese… │
+│ contact  /private/tmp/m3main/generated_art/rese… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /private/tmp/m3main/generated_art/research_B1_pet_s3/generated_sprites.png
+[skip] research_B0_ocean_s2 already complete (12/12)
+[skip] research_B0_ocean_s3 already complete (12/12)
+[skip] research_B1_ocean_s2 already complete (12/12)
+
+=== B1 x ocean seed 3 -> research_B1_ocean_s3 ===
+2026-08-30 18:23:59.903 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-30 18:23:59.903 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 使用已快取的精煉結果: Render clean, vibrant 3D Disney-inspired cartoon-style ocean match-3 assets with soft, pillowy shading and high-readability silhouettes, completely free of outlines.
+[theme] 使用已快取的展開結果: Blu=A chunky, highly stylized blue starfish with soft, rounded arms and a smooth, semi-glossy plastic texture. Warm top-right lighting defines its plump form with gentle gradients, fading from a vibrant sky blue to a deep ocean blue., Crt1=An almost entirely destroyed wooden crate, heavily fractured with large, clean-edged splits, loose planks bulging outward, and held together by a single frayed, soft-shaded rope., Crt2=A visibly damaged wooden crate, showing deep, smooth-edged cracks on its surface, a chipped top-right corner, and one snapped rope binding hanging loosely., Crt3=A slightly damaged wooden crate with a clean, narrow hairline fracture running diagonally down the front panel and a slightly loosened rope wrapping., Crt4=An intact, pristine wooden crate bound in thick, soft-shaded rope. It is modeled as a solid 3D block with extremely rounded corners and a warm, semi-glossy caramel-wood finish., Grn=A plump, simplified green sea turtle with a dome-shaped shell, rendered as a smooth, soft-shaded 3D sculpture. The shell has a gentle satin finish with rounded, chunky scute patterns in lime and forest green., LtBl=A giant, highly polished iridescent pearl resting inside a chunky, smooth-edged golden clam shell. The pearl has a glossy, glass-like finish reflecting soft, multi-colored pastel gradients., Pur=A stylized, bulbous purple clam shell with soft, rounded vertical ridges. It is rendered with a glossy, pearlescent finish, using smooth violet-to-lavender gradients to highlight its volumetric, chubby silhouette., Red=A cute, chunky red crab with oversized, round claws tucked tightly to its body to form a compact silhouette. Its surface is a smooth, semi-glossy red plastic with soft peach highlights on its belly., Soda0d=A chunky, torpedo-shaped orange-and-white striped clownfish designed with a horizontal orientation. Its sleek, rounded body and pointed side fins clearly indicate a horizontal direction., Soda90=A tall, chubby blue-and-yellow striped surgeonfish designed as a vertical rocket shape. Its elongated, stylized dorsal and ventral fins point straight up and down to clearly indicate a vertical direction., Yel=A plump, highly stylized yellow seahorse curled into a compact, chunky shape. It features smooth, rounded ridges along its back and a glossy yellow-orange gradient finish with warm, sunlit highlights.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B1_ocean_s3                    │
+│ style    Render every asset as a clean, soft-sh… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /private/tmp/m3main/generated_art/rese… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  — 已 pass,跳過
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  [elements]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  — 已 pass,跳過
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  — 已 pass,跳過
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  — 已 pass,跳過
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  — 已 pass,跳過
+
+[██████████░░░░░░░░░░] [7/12] Crt3  — 已 pass,跳過
+
+[████████████░░░░░░░░] [8/12] Crt2  — 已 pass,跳過
+
+[█████████████░░░░░░░] [9/12] Crt1  — 已 pass,跳過
+
+[███████████████░░░░░] [10/12] Soda0d  — 已 pass,跳過
+
+[█████████████████░░░] [11/12] LtBl  — 已 pass,跳過
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       2                                   │
+│ 🟡 review     0                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       10                                  │
+│ total        12                                  │
+│                                                  │
+│ sprites  /private/tmp/m3main/generated_art/rese… │
+│ history  /private/tmp/m3main/generated_art/rese… │
+│ report   /private/tmp/m3main/generated_art/rese… │
+│ contact  /private/tmp/m3main/generated_art/rese… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /private/tmp/m3main/generated_art/research_B1_ocean_s3/generated_sprites.png
+[skip] research_B0_steampunk_s2 already complete (12/12)
+[skip] research_B0_steampunk_s3 already complete (12/12)
+
+=== B1 x steampunk seed 2 -> research_B1_steampunk_s2 ===
+2026-08-30 18:24:23.069 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-30 18:24:23.070 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 使用已快取的精煉結果: Render clean, chunky 3D-styled steampunk assets with Disney-esque soft volumetric shading, warm vibrant brass palettes, and bold, outline-free silhouettes optimized for high mobile readability.
+[theme] 使用已快取的展開結果: Blu=A toy-like, chunky blue glass gear-shaped gem with a polished brass core. The gear has soft, exaggerated rounded teeth and is rendered with smooth volumetric gradients and a bright rim light, with no outlines., Crt1=An almost entirely destroyed mahogany crate, heavily fractured into chunky, loose splinters held together by a single warped copper bracket, leaving a wide, hollow gap in its silhouette., Crt2=The mahogany wooden crate showing significant damage, with two planks heavily splintered open and one of the rounded brass corner guards visibly bent and detached at an angle., Crt3=The mahogany wooden crate with a single visible, stylized crack running down the top wood panel. The brass corners remain mostly intact, but a slight dent is visible on the upper left bevel., Crt4=An intact, chunky mahogany wooden crate framed with thick, rounded brass corner guards and polished copper rivets. It has a glossy, clean varnish with soft ambient occlusion in the crevices and zero damage., Grn=A stylized, rounded green pressure gauge housed in a thick, polished brass ring. The face is a soft green gradient with chunky, simplified dark teal dial hands, designed as a clean, semi-glossy toy., LtBl=A large, spherical brass astrolabe powerup with multiple nested, chunky rings and a central, polished amber glass orb. The outer rings feature rounded, toy-like knurling that catches the bright studio rim light., Pur=A spherical, purple-painted metal pressure valve with a chunky, three-pronged brass handle on top. The surface is exceptionally clean with a soft-shaded, semi-glossy finish and warm amber highlights., Red=A stubby, spherical red airship cabin toy made of painted copper, featuring a single round, thick brass porthole window. The silhouette is highly simplified, showing smooth volumetric shading and no linework., Soda0d=A horizontal steam cylinder powerup made of polished copper, with two chunky, cone-shaped exhaust vents flaring out symmetrically to the left and right sides to clearly indicate its horizontal path., Soda90=A vertical steam cylinder powerup made of polished copper, with two chunky, cone-shaped exhaust vents flaring out symmetrically to the top and bottom ends to clearly indicate its vertical path., Yel=A chunky, oversized brass pocket watch with a bright yellow enameled face. It features a simplified, thick winding loop at the top and smooth, rounded bevels along the golden metallic edges.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B1_steampunk_s2                │
+│ style    Render all assets as stylized, soft-sh… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /private/tmp/m3main/generated_art/rese… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  — 已 pass,跳過
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  — 已 pass,跳過
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  — 已 pass,跳過
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  — 已 pass,跳過
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  — 已 pass,跳過
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  — 已 pass,跳過
+
+[██████████░░░░░░░░░░] [7/12] Crt3  — 已 pass,跳過
+
+[████████████░░░░░░░░] [8/12] Crt2  — 已 pass,跳過
+
+[█████████████░░░░░░░] [9/12] Crt1  — 已 pass,跳過
+
+[███████████████░░░░░] [10/12] Soda0d  — 已 pass,跳過
+
+[█████████████████░░░] [11/12] LtBl  — 已 pass,跳過
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  │  ✗ postprocess  Object too small (bbox coverage 28% < 30%). Mak…
+  └─ ❌ FAILED
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       0                                   │
+│ 🟡 review     0                                   │
+│ ❌ failed     1                                   │
+│ ⏭ skip       11                                  │
+│ total        12                                  │
+│                                                  │
+│ sprites  /private/tmp/m3main/generated_art/rese… │
+│ history  /private/tmp/m3main/generated_art/rese… │
+│ report   /private/tmp/m3main/generated_art/rese… │
+│ contact  /private/tmp/m3main/generated_art/rese… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /private/tmp/m3main/generated_art/research_B1_steampunk_s2/generated_sprites.png
+[WARN] research_B1_steampunk_s2 incomplete
+[skip] research_B1_steampunk_s3 already complete (12/12)
+
+Done. failures=['research_B1_steampunk_s2']
+[skip] research_B0_pet_s2 already complete (12/12)
+[skip] research_B0_pet_s3 already complete (12/12)
+[skip] research_B1_pet_s2 already complete (12/12)
+[skip] research_B1_pet_s3 already complete (12/12)
+[skip] research_B0_ocean_s2 already complete (12/12)
+[skip] research_B0_ocean_s3 already complete (12/12)
+[skip] research_B1_ocean_s2 already complete (12/12)
+[skip] research_B1_ocean_s3 already complete (12/12)
+[skip] research_B0_steampunk_s2 already complete (12/12)
+[skip] research_B0_steampunk_s3 already complete (12/12)
+
+=== B1 x steampunk seed 2 -> research_B1_steampunk_s2 ===
+2026-08-30 18:24:50.679 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-08-30 18:24:50.679 WARNING streamlit.runtime.state.session_state_proxy: Session state does not function when running a script without `streamlit run`
+2026-08-30 18:24:50.717 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+[style] 使用已快取的精煉結果: Render clean, chunky 3D-styled steampunk assets with Disney-esque soft volumetric shading, warm vibrant brass palettes, and bold, outline-free silhouettes optimized for high mobile readability.
+[theme] 使用已快取的展開結果: Blu=A toy-like, chunky blue glass gear-shaped gem with a polished brass core. The gear has soft, exaggerated rounded teeth and is rendered with smooth volumetric gradients and a bright rim light, with no outlines., Crt1=An almost entirely destroyed mahogany crate, heavily fractured into chunky, loose splinters held together by a single warped copper bracket, leaving a wide, hollow gap in its silhouette., Crt2=The mahogany wooden crate showing significant damage, with two planks heavily splintered open and one of the rounded brass corner guards visibly bent and detached at an angle., Crt3=The mahogany wooden crate with a single visible, stylized crack running down the top wood panel. The brass corners remain mostly intact, but a slight dent is visible on the upper left bevel., Crt4=An intact, chunky mahogany wooden crate framed with thick, rounded brass corner guards and polished copper rivets. It has a glossy, clean varnish with soft ambient occlusion in the crevices and zero damage., Grn=A stylized, rounded green pressure gauge housed in a thick, polished brass ring. The face is a soft green gradient with chunky, simplified dark teal dial hands, designed as a clean, semi-glossy toy., LtBl=A large, spherical brass astrolabe powerup with multiple nested, chunky rings and a central, polished amber glass orb. The outer rings feature rounded, toy-like knurling that catches the bright studio rim light., Pur=A spherical, purple-painted metal pressure valve with a chunky, three-pronged brass handle on top. The surface is exceptionally clean with a soft-shaded, semi-glossy finish and warm amber highlights., Red=A stubby, spherical red airship cabin toy made of painted copper, featuring a single round, thick brass porthole window. The silhouette is highly simplified, showing smooth volumetric shading and no linework., Soda0d=A horizontal steam cylinder powerup made of polished copper, with two chunky, cone-shaped exhaust vents flaring out symmetrically to the left and right sides to clearly indicate its horizontal path., Soda90=A vertical steam cylinder powerup made of polished copper, with two chunky, cone-shaped exhaust vents flaring out symmetrically to the top and bottom ends to clearly indicate its vertical path., Yel=A chunky, oversized brass pocket watch with a bright yellow enameled face. It features a simplified, thick winding loop at the top and smooth, rounded bevels along the golden metallic edges.
+[stage] 展開 1 個 family 的鏈式階段規格: crate
+[stage] crate → Crt4 → Crt3 → Crt2 → Crt1
+┌──────────────────────────────────────────────────┐
+│ AI Art Generation                                │
+├──────────────────────────────────────────────────┤
+│ mode     GENERATE                                │
+│ run      research_B1_steampunk_s2                │
+│ style    Render all assets as stylized, soft-sh… │
+│ model    img gemini-3.1-flash-image              │
+│          crt gemini-3.5-flash                    │
+│ iters    ≤1 / asset                              │
+│ assets   12 張 (Red, Blu, Grn, Pur, …)            │
+│ ref A    official sprites                        │
+│ ref B    (無)                                     │
+│ output   /private/tmp/m3main/generated_art/rese… │
+└──────────────────────────────────────────────────┘
+
+[░░░░░░░░░░░░░░░░░░░░] [1/12] Red  — 已 pass,跳過
+
+[██░░░░░░░░░░░░░░░░░░] [2/12] Blu  — 已 pass,跳過
+
+[███░░░░░░░░░░░░░░░░░] [3/12] Grn  — 已 pass,跳過
+
+[█████░░░░░░░░░░░░░░░] [4/12] Pur  — 已 pass,跳過
+
+[███████░░░░░░░░░░░░░] [5/12] Yel  — 已 pass,跳過
+
+[████████░░░░░░░░░░░░] [6/12] Crt4  — 已 pass,跳過
+
+[██████████░░░░░░░░░░] [7/12] Crt3  — 已 pass,跳過
+
+[████████████░░░░░░░░] [8/12] Crt2  — 已 pass,跳過
+
+[█████████████░░░░░░░] [9/12] Crt1  — 已 pass,跳過
+
+[███████████████░░░░░] [10/12] Soda0d  — 已 pass,跳過
+
+[█████████████████░░░] [11/12] LtBl  — 已 pass,跳過
+
+[██████████████████░░] [12/12] Soda90  [powerups]
+  ├─ iter 1/1  generating…
+  └─ ✅ PASS  style 0  fn 0  iter 1
+┌──────────────────────────────────────────────────┐
+│ Run Complete                                     │
+├──────────────────────────────────────────────────┤
+│ ✅ pass       1                                   │
+│ 🟡 review     0                                   │
+│ ❌ failed     0                                   │
+│ ⏭ skip       11                                  │
+│ total        12                                  │
+│                                                  │
+│ sprites  /private/tmp/m3main/generated_art/rese… │
+│ history  /private/tmp/m3main/generated_art/rese… │
+│ report   /private/tmp/m3main/generated_art/rese… │
+│ contact  /private/tmp/m3main/generated_art/rese… │
+│                                                  │
+│ apply    python scripts/ai_art_gen.py apply --r… │
+└──────────────────────────────────────────────────┘
+[contact-sheet] /private/tmp/m3main/generated_art/research_B1_steampunk_s2/generated_sprites.png
+[skip] research_B1_steampunk_s3 already complete (12/12)
+
+Done. failures=none

@@ -1,0 +1,162 @@
+{
+  "parser": "vlm",
+  "levels": [
+    "Level_024.json",
+    "Level_009.json",
+    "Level_012.json",
+    "Level_008.json",
+    "Level_049.json",
+    "Level_014.json",
+    "Level_002.json",
+    "Level_092.json"
+  ],
+  "judge": "gemini",
+  "results": [
+    {
+      "n_cells": 422,
+      "cell_accuracy": 0.5095,
+      "category_accuracy": 0.6493,
+      "accuracy_macro": 0.629,
+      "abstain_rate": 0.2393,
+      "off_label_rate": 0.0995,
+      "accuracy_on_answered": 0.6698,
+      "by_category": {
+        "element": {
+          "n": 21,
+          "accuracy": 0.762
+        },
+        "obstacle": {
+          "n": 401,
+          "accuracy": 0.496
+        }
+      },
+      "top_confusions": {
+        "obstacle->missing": 101,
+        "obstacle->obstacle": 59,
+        "obstacle->off_label": 42,
+        "element->obstacle": 5
+      },
+      "pack": "human",
+      "cell_px": 70,
+      "parser": "vlm",
+      "n_levels": 8,
+      "n_candidates": 12,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 422,
+      "cell_accuracy": 0.6919,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 0.838,
+      "abstain_rate": 0.0,
+      "off_label_rate": 0.0,
+      "accuracy_on_answered": 0.6919,
+      "by_category": {
+        "element": {
+          "n": 21,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 401,
+          "accuracy": 0.676
+        }
+      },
+      "top_confusions": {
+        "obstacle->obstacle": 130
+      },
+      "pack": "fruit_3dCartoonSimple",
+      "cell_px": 70,
+      "parser": "vlm",
+      "n_levels": 8,
+      "n_candidates": 12,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 422,
+      "cell_accuracy": 0.5545,
+      "category_accuracy": 0.8934,
+      "accuracy_macro": 0.7655,
+      "abstain_rate": 0.0,
+      "off_label_rate": 0.0,
+      "accuracy_on_answered": 0.5545,
+      "by_category": {
+        "element": {
+          "n": 21,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 401,
+          "accuracy": 0.531
+        }
+      },
+      "top_confusions": {
+        "obstacle->obstacle": 143,
+        "obstacle->element": 45
+      },
+      "pack": "cat_3dCartoonSimple",
+      "cell_px": 70,
+      "parser": "vlm",
+      "n_levels": 8,
+      "n_candidates": 12,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 422,
+      "cell_accuracy": 0.59,
+      "category_accuracy": 1.0,
+      "accuracy_macro": 0.7845,
+      "abstain_rate": 0.0,
+      "off_label_rate": 0.0,
+      "accuracy_on_answered": 0.59,
+      "by_category": {
+        "element": {
+          "n": 21,
+          "accuracy": 1.0
+        },
+        "obstacle": {
+          "n": 401,
+          "accuracy": 0.569
+        }
+      },
+      "top_confusions": {
+        "obstacle->obstacle": 173
+      },
+      "pack": "ocean_3dCartoonSimple",
+      "cell_px": 70,
+      "parser": "vlm",
+      "n_levels": 8,
+      "n_candidates": 12,
+      "global_candidates": true
+    },
+    {
+      "n_cells": 422,
+      "cell_accuracy": 0.282,
+      "category_accuracy": 0.8555,
+      "accuracy_macro": 0.5995,
+      "abstain_rate": 0.1422,
+      "off_label_rate": 0.0,
+      "accuracy_on_answered": 0.3287,
+      "by_category": {
+        "element": {
+          "n": 21,
+          "accuracy": 0.952
+        },
+        "obstacle": {
+          "n": 401,
+          "accuracy": 0.247
+        }
+      },
+      "top_confusions": {
+        "obstacle->obstacle": 242,
+        "obstacle->missing": 60,
+        "element->obstacle": 1
+      },
+      "pack": "SteamPunk_3dCartoonSimple",
+      "cell_px": 70,
+      "parser": "vlm",
+      "n_levels": 8,
+      "n_candidates": 12,
+      "global_candidates": true
+    }
+  ]
+}

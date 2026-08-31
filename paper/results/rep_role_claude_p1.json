@@ -1,0 +1,782 @@
+{
+  "judge": "claude",
+  "scope": "full",
+  "runs": {
+    "research_B0_fruit": {
+      "sprites": "generated_art/research_B0_fruit/sprites",
+      "n_png": 12,
+      "role_recognition": {
+        "n": 12,
+        "accuracy": 0.417,
+        "accuracy_macro": 0.333,
+        "by_category": {
+          "element": {
+            "n": 5,
+            "accuracy": 1.0
+          },
+          "obstacle": {
+            "n": 4,
+            "accuracy": 0.0
+          },
+          "powerup": {
+            "n": 3,
+            "accuracy": 0.0
+          }
+        },
+        "trials": [
+          {
+            "asset": "Blu",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Crt2",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Crt3",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Grn",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "LtBl",
+            "true": "powerup",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Pur",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Red",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Soda0d",
+            "true": "powerup",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Soda90",
+            "true": "powerup",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Yel",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          }
+        ]
+      }
+    },
+    "research_B1_fruit": {
+      "sprites": "generated_art/research_B1_fruit/sprites",
+      "n_png": 12,
+      "role_recognition": {
+        "n": 12,
+        "accuracy": 0.667,
+        "accuracy_macro": 0.583,
+        "by_category": {
+          "element": {
+            "n": 5,
+            "accuracy": 1.0
+          },
+          "obstacle": {
+            "n": 4,
+            "accuracy": 0.75
+          },
+          "powerup": {
+            "n": 3,
+            "accuracy": 0.0
+          }
+        },
+        "trials": [
+          {
+            "asset": "Blu",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Crt2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Grn",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "LtBl",
+            "true": "powerup",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Pur",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Red",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Soda0d",
+            "true": "powerup",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Soda90",
+            "true": "powerup",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Yel",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          }
+        ]
+      }
+    },
+    "research_B0_pet": {
+      "sprites": "generated_art/research_B0_pet/sprites",
+      "n_png": 12,
+      "role_recognition": {
+        "n": 12,
+        "accuracy": 0.333,
+        "accuracy_macro": 0.267,
+        "by_category": {
+          "element": {
+            "n": 5,
+            "accuracy": 0.8
+          },
+          "obstacle": {
+            "n": 4,
+            "accuracy": 0.0
+          },
+          "powerup": {
+            "n": 3,
+            "accuracy": 0.0
+          }
+        },
+        "trials": [
+          {
+            "asset": "Blu",
+            "true": "element",
+            "pred": "powerup",
+            "correct": false
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Crt2",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Crt3",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Grn",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "LtBl",
+            "true": "powerup",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Pur",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Red",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Soda0d",
+            "true": "powerup",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Soda90",
+            "true": "powerup",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Yel",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          }
+        ]
+      }
+    },
+    "research_B1_pet": {
+      "sprites": "generated_art/research_B1_pet/sprites",
+      "n_png": 12,
+      "role_recognition": {
+        "n": 12,
+        "accuracy": 0.667,
+        "accuracy_macro": 0.611,
+        "by_category": {
+          "element": {
+            "n": 5,
+            "accuracy": 1.0
+          },
+          "obstacle": {
+            "n": 4,
+            "accuracy": 0.5
+          },
+          "powerup": {
+            "n": 3,
+            "accuracy": 0.333
+          }
+        },
+        "trials": [
+          {
+            "asset": "Blu",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt3",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Grn",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "LtBl",
+            "true": "powerup",
+            "pred": "powerup",
+            "correct": true
+          },
+          {
+            "asset": "Pur",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Red",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Soda0d",
+            "true": "powerup",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Soda90",
+            "true": "powerup",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Yel",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          }
+        ]
+      }
+    },
+    "research_B0_ocean": {
+      "sprites": "generated_art/research_B0_ocean/sprites",
+      "n_png": 12,
+      "role_recognition": {
+        "n": 12,
+        "accuracy": 0.417,
+        "accuracy_macro": 0.333,
+        "by_category": {
+          "element": {
+            "n": 5,
+            "accuracy": 1.0
+          },
+          "obstacle": {
+            "n": 4,
+            "accuracy": 0.0
+          },
+          "powerup": {
+            "n": 3,
+            "accuracy": 0.0
+          }
+        },
+        "trials": [
+          {
+            "asset": "Blu",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Crt2",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Crt3",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Grn",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "LtBl",
+            "true": "powerup",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Pur",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Red",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Soda0d",
+            "true": "powerup",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Soda90",
+            "true": "powerup",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Yel",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          }
+        ]
+      }
+    },
+    "research_B1_ocean": {
+      "sprites": "generated_art/research_B1_ocean/sprites",
+      "n_png": 12,
+      "role_recognition": {
+        "n": 12,
+        "accuracy": 0.667,
+        "accuracy_macro": 0.583,
+        "by_category": {
+          "element": {
+            "n": 5,
+            "accuracy": 1.0
+          },
+          "obstacle": {
+            "n": 4,
+            "accuracy": 0.75
+          },
+          "powerup": {
+            "n": 3,
+            "accuracy": 0.0
+          }
+        },
+        "trials": [
+          {
+            "asset": "Blu",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt2",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt3",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Grn",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "LtBl",
+            "true": "powerup",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Pur",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Red",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Soda0d",
+            "true": "powerup",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Soda90",
+            "true": "powerup",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Yel",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          }
+        ]
+      }
+    },
+    "research_B0_steampunk": {
+      "sprites": "generated_art/research_B0_steampunk/sprites",
+      "n_png": 12,
+      "role_recognition": {
+        "n": 12,
+        "accuracy": 0.417,
+        "accuracy_macro": 0.333,
+        "by_category": {
+          "element": {
+            "n": 5,
+            "accuracy": 1.0
+          },
+          "obstacle": {
+            "n": 4,
+            "accuracy": 0.0
+          },
+          "powerup": {
+            "n": 3,
+            "accuracy": 0.0
+          }
+        },
+        "trials": [
+          {
+            "asset": "Blu",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Crt2",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Crt3",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Grn",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "LtBl",
+            "true": "powerup",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Pur",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Red",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Soda0d",
+            "true": "powerup",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Soda90",
+            "true": "powerup",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Yel",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          }
+        ]
+      }
+    },
+    "research_B1_steampunk": {
+      "sprites": "generated_art/research_B1_steampunk/sprites",
+      "n_png": 12,
+      "role_recognition": {
+        "n": 12,
+        "accuracy": 0.5,
+        "accuracy_macro": 0.417,
+        "by_category": {
+          "element": {
+            "n": 5,
+            "accuracy": 1.0
+          },
+          "obstacle": {
+            "n": 4,
+            "accuracy": 0.25
+          },
+          "powerup": {
+            "n": 3,
+            "accuracy": 0.0
+          }
+        },
+        "trials": [
+          {
+            "asset": "Blu",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Crt1",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Crt2",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Crt3",
+            "true": "obstacle",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Crt4",
+            "true": "obstacle",
+            "pred": "obstacle",
+            "correct": true
+          },
+          {
+            "asset": "Grn",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "LtBl",
+            "true": "powerup",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Pur",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Red",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          },
+          {
+            "asset": "Soda0d",
+            "true": "powerup",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Soda90",
+            "true": "powerup",
+            "pred": "element",
+            "correct": false
+          },
+          {
+            "asset": "Yel",
+            "true": "element",
+            "pred": "element",
+            "correct": true
+          }
+        ]
+      }
+    }
+  }
+}

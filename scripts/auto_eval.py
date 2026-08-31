@@ -221,24 +221,20 @@ class OpenAIJudge:
 
 
 class ClaudeJudge:
+    """Claude via AWS Bedrock (env: AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY,
+    AWS_REGION, BEDROCK_CLAUDE_MODEL to override the inference profile)."""
+
     name = 'claude'
 
-    def __init__(self, model: str = 'claude-sonnet-5'):
-        import anthropic
+    def __init__(self, model: str | None = None):
+        import os
 
-        try:
-            from level_generator.ai_generator import _get_key
-            key = _get_key('anthropic')
-        except Exception:  # noqa: BLE001
-            import os
-            key = os.environ.get('ANTHROPIC_API_KEY')
-        if not key:
-            raise SystemExit(
-                'Anthropic key not found for --judge claude. Set ANTHROPIC_API_KEY in '
-                'config.py, .streamlit/secrets.toml, or the environment.'
-            )
-        self._client = anthropic.Anthropic(api_key=key)
-        self.model = model
+        from anthropic import AnthropicBedrock
+
+        self.model = model or os.environ.get(
+            'BEDROCK_CLAUDE_MODEL', 'global.anthropic.claude-sonnet-5')
+        self._client = AnthropicBedrock(
+            aws_region=os.environ.get('AWS_REGION', 'us-east-1'))
 
     def ask(self, prompt: str, images: list[bytes]) -> dict:
         content: list = []
@@ -250,7 +246,7 @@ class ClaudeJudge:
             })
         content.append({'type': 'text', 'text': prompt + '\nReturn ONLY minified JSON.'})
         resp = self._client.messages.create(
-            model=self.model, max_tokens=512, temperature=0,
+            model=self.model, max_tokens=512,
             messages=[{'role': 'user', 'content': content}],
         )
         return _parse_json(''.join(b.text for b in resp.content if b.type == 'text'))
