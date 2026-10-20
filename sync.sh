@@ -59,12 +59,44 @@ overleaf_remote_ready() {
     die "no '$OVERLEAF_REMOTE' remote on this machine: run 'bash sync.sh setup'"
 }
 
-fetch_all() {
-  if git ls-remote --exit-code --heads "$GITHUB_REMOTE" "$BRANCH" >/dev/null; then
-    git fetch --quiet "$GITHUB_REMOTE" "+refs/heads/$BRANCH:$GH_REF"
+# remote_git <what> <git args...>: run a git command that talks to a remote. Transient
+# server or network errors are retried; any failure is explained from git's own output
+# rather than guessed. On success it prints the command's output minus "remote:" chatter.
+TRANSIENT='error: 50[0-9]|no healthy upstream|Could not resolve host|timed out|Connection reset|Failed to connect|early EOF'
+remote_git() {
+  local what="$1" out attempt line
+  shift
+  for attempt in 1 2 3; do
+    if out="$(git "$@" 2>&1)"; then
+      grep -v '^remote:' <<<"$out" || true
+      return 0
+    fi
+    if grep -q -E "$TRANSIENT" <<<"$out" && ((attempt < 3)); then
+      sleep $((attempt * 15))
+    else
+      break
+    fi
+  done
+  while IFS= read -r line; do printf '    git: %s\n' "$line" >&2; done <<<"$out"
+  if grep -q -E "$TRANSIENT" <<<"$out"; then
+    die "$what: remote unreachable (server or network error, retried 3 times); nothing was lost, rerun later"
+  elif grep -q -E 'no git access' <<<"$out"; then
+    die "$what: no git access; check OVERLEAF_PROJECT_ID and that the project owner has Git integration"
+  elif grep -q -E 'Authentication failed|authentication token|Invalid username or password' <<<"$out"; then
+    die "$what: authentication failed; check the token in $TOKEN_FILE (Overleaf) or ~/.git-credentials (GitHub)"
+  elif grep -q -E 'rejected|non-fast-forward|fetch first' <<<"$out"; then
+    die "$what: rejected as not a fast-forward (edited in the browser just now?); rerun 'bash sync.sh push'"
   fi
-  git fetch --quiet "$OVERLEAF_REMOTE" "+refs/heads/$OVERLEAF_BRANCH:$OL_REF" ||
-    die "fetch from Overleaf failed: token in $TOKEN_FILE expired, or wrong OVERLEAF_PROJECT_ID?"
+  die "$what failed; git's output is above"
+}
+
+fetch_all() {
+  local heads
+  heads="$(remote_git "list GitHub branches" ls-remote --heads "$GITHUB_REMOTE" "$BRANCH")"
+  if [[ -n "$heads" ]]; then
+    remote_git "fetch from GitHub" fetch --quiet "$GITHUB_REMOTE" "+refs/heads/$BRANCH:$GH_REF" >/dev/null
+  fi
+  remote_git "fetch from Overleaf" fetch --quiet "$OVERLEAF_REMOTE" "+refs/heads/$OVERLEAF_BRANCH:$OL_REF" >/dev/null
 }
 
 # merge_into_head <ref> <label>: bring <ref> into HEAD, fast-forward when possible.
@@ -151,15 +183,16 @@ cmd_push() {
   fi
 
   # 4. GitHub first (the backup), then Overleaf. Both are plain fast-forward pushes.
-  git push --quiet -u "$GITHUB_REMOTE" "$BRANCH"
-  git push --quiet "$OVERLEAF_REMOTE" "$BRANCH:$OVERLEAF_BRANCH" ||
-    die "Overleaf rejected the push (edited in the browser just now?): rerun 'bash sync.sh push'"
+  remote_git "push to GitHub" push --quiet -u "$GITHUB_REMOTE" "$BRANCH" >/dev/null
+  remote_git "push to Overleaf" push --quiet "$OVERLEAF_REMOTE" "$BRANCH:$OVERLEAF_BRANCH" >/dev/null
 
   # 5. Verify against the remotes themselves, not our tracking refs.
   local head gh ol
   head="$(git rev-parse HEAD)"
-  gh="$(git ls-remote "$GITHUB_REMOTE" "refs/heads/$BRANCH" | cut -f1)"
-  ol="$(git ls-remote "$OVERLEAF_REMOTE" "refs/heads/$OVERLEAF_BRANCH" | cut -f1)"
+  gh="$(remote_git "read GitHub head" ls-remote "$GITHUB_REMOTE" "refs/heads/$BRANCH")"
+  ol="$(remote_git "read Overleaf head" ls-remote "$OVERLEAF_REMOTE" "refs/heads/$OVERLEAF_BRANCH")"
+  gh="$(cut -f1 <<<"$gh")"
+  ol="$(cut -f1 <<<"$ol")"
   [[ "$gh" == "$head" && "$ol" == "$head" ]] ||
     die "after push: local ${head:0:7}, GitHub ${gh:0:7}, Overleaf ${ol:0:7} (expected all equal)"
   info "in sync: local, GitHub $GITHUB_REMOTE/$BRANCH and Overleaf $OVERLEAF_BRANCH all at ${head:0:7}"
@@ -190,8 +223,7 @@ cmd_setup() {
   fi
 
   info "fetching Overleaf project $OVERLEAF_PROJECT_ID"
-  git fetch --quiet "$OVERLEAF_REMOTE" "+refs/heads/$OVERLEAF_BRANCH:$OL_REF" ||
-    die "cannot fetch from Overleaf: check the token in $TOKEN_FILE and OVERLEAF_PROJECT_ID"
+  remote_git "fetch from Overleaf" fetch --quiet "$OVERLEAF_REMOTE" "+refs/heads/$OVERLEAF_BRANCH:$OL_REF" >/dev/null
 
   # First contact: a new blank Overleaf project has its own unrelated root commit
   # holding the template main.tex. Adopting it as a merge parent with `-s ours`
