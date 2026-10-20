@@ -35,7 +35,7 @@ task says otherwise, then `git add`, `git commit`, `bash sync.sh push`.
 | `main.tex` | the AAIE 2027 paper (IEEEtran) and Overleaf's main document |
 | `aaie2027.bib` | its bibliography, IEEE style; every entry checked against its publisher record |
 | `IEEEtran.cls` | copied unchanged from `latex-template/` (v1.8b) |
-| `proposal.md`, `latex-template/` | the user's inputs; local only, kept out of git by the whitelist |
+| `proposal.md`, `latex-template/` | the user's inputs: research proposal and the IEEE template to follow |
 | `workshop.tex`, `creativeai.tex` | earlier papers, frozen; with `refs.bib`, `neurips_2026.sty`, `checklist.tex` |
 | `check_paper.py` | compile + venue-rule check; `PAPERS` holds the rules for `main.tex` |
 | `sync.sh` | the one path for commits between local, GitHub and Overleaf |

@@ -30,6 +30,13 @@
 !figures/*.jpeg
 !figures/*.eps
 
+# The user's inputs for the AAIE 2027 paper: the research proposal and the IEEE
+# conference template (sources and its reference PDFs; its build output stays out).
+!proposal.md
+!latex-template/
+!latex-template/fig1.png
+!latex-template/*.pdf
+
 # Deliberately still ignored, even though they live under paper/ on main:
 #   results/       scored JSON + analysis notes, not compiled by LaTeX
 #   human_eval/    7.3MB of survey assets
