@@ -22,7 +22,7 @@ BRANCH="aaie2027"
 GITHUB_REMOTE="origin"
 OVERLEAF_REMOTE="overleaf-aaie2027"
 OVERLEAF_BRANCH="main"
-OVERLEAF_PROJECT_ID=""      # the <ID> in https://www.overleaf.com/project/<ID>
+OVERLEAF_PROJECT_ID="6ad762381d147d7d0c1ee34f"   # https://www.overleaf.com/project/<ID>
 TOKEN_FILE="$HOME/.config/overleaf/git-credentials"   # outside the repo, chmod 600
 
 export GIT_TERMINAL_PROMPT=0   # fail fast instead of hanging on a password prompt
