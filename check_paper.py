@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Compile the paper on this branch and fail loudly on submission-blocking defects.
 
-Checks the venue rules that a compile alone cannot catch: body length excluding
-references, the required template, double-blind anonymity, and placeholder
-bibliography entries.
+Checks the venue rules that a compile alone cannot catch: the page range, the
+required template, double-blind anonymity (source and printed reference list),
+draft placeholders left in the text, and placeholder bibliography entries.
 
     python3 check_paper.py             # submission mode: every violation FAILs
     python3 check_paper.py --draft     # sync mode: only a broken build FAILs,
@@ -15,7 +15,7 @@ but one that does not compile must not. Run the strict mode before any upload.
 
 Requires `tectonic` (0.15+) on PATH or at ~/.local/bin/tectonic. Stdlib only.
 Tectonic is XeTeX-based while Overleaf compiles with pdfLaTeX, so line breaks can
-differ slightly: a body page count sitting exactly at the limit is Overleaf's call.
+differ slightly: a page count sitting exactly at a limit is Overleaf's call.
 """
 from __future__ import annotations
 
@@ -28,7 +28,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 
-# The page count that matters is the body, not the PDF length. We read the page
+# Venues that exclude references count the body only. For those we read the page
 # of the \label{endofbody} marker (placed just before \bibliography) out of the
 # .aux file, which is LaTeX's own answer rather than our guess at where the
 # references start.
@@ -38,18 +38,24 @@ BODY_LABEL = "endofbody"
 # creativeai.tex are frozen reference copies, so they are deliberately absent.
 PAPERS = {
     "main.tex": {
-        # PLACEHOLDER rules inherited from workshop.tex (NeurIPS 2026 Workshop:
-        # 4-9 body pages, NeurIPS 2026 template, double blind). Replace all four
-        # fields together once the AAIE 2027 call for papers is pinned down.
-        "venue": "AAIE 2027 (rules TBD; NeurIPS 2026 workshop placeholders)",
-        "body_pages": (4, 9),
-        "template": "neurips_2026",  # name in \usepackage{..} or \documentclass{..}
+        # AAIE 2027, icaaie.org (read 2026-10-20): IEEE conference template,
+        # double-blind review, 5-12 pages INCLUDING tables, figures and
+        # references. Registration covers 5 pages; each further page is an
+        # overlength charge of USD 60.
+        "venue": "AAIE 2027 (IEEE conference, double-blind)",
+        "total_pages": (5, 12),
+        "paid_pages": 5,
+        "template": "IEEEtran",  # name in \usepackage{..} or \documentclass{..}
         "blind": True,
     },
 }
 
 # Strings that must never reach a double-blind PDF. Extend as co-authors join.
 IDENTIFIERS = ["tkwang", "Ting-Kang", "Gamania", "gmail.com", "Match3_sim"]
+
+# Draft markers defined in main.tex for numbers and claims that wait for the
+# experiments. Any use outside their \newcommand definition blocks submission.
+PLACEHOLDER_MACROS = ["pending", "tbd"]
 
 # Placeholder bib entries compile cleanly and print into the reference list, so
 # only a content check catches them. "X Authors" is how the stubs were written.
@@ -94,6 +100,13 @@ def body_pages(tex: Path) -> int | None:
     return int(m.group(1)) if m else None
 
 
+def placeholders(src: str) -> int:
+    """Uses of the draft macros, ignoring comments and their \\newcommand lines."""
+    lines = [re.sub(r"(?<!\\)%.*", "", ln) for ln in src.splitlines()]
+    body = "\n".join(ln for ln in lines if "\\newcommand" not in ln)
+    return sum(len(re.findall(r"\\" + m + r"(?![A-Za-z])", body)) for m in PLACEHOLDER_MACROS)
+
+
 def check(tex_name: str, cfg: dict, tectonic: str | None) -> tuple[list[str], list[str]]:
     """Return (build failures, rule violations) for one paper.
 
@@ -124,20 +137,28 @@ def check(tex_name: str, cfg: dict, tectonic: str | None) -> tuple[list[str], li
     total = int(m.group(1))
 
     rules: list[str] = []
-    lo, hi = cfg["body_pages"]
-    body = body_pages(tex)
-    if body is None:
-        rules.append(
-            f"{tex_name}: no \\label{{{BODY_LABEL}}} found in .aux -- cannot tell "
-            f"body pages from reference pages, so the {lo}-{hi} page rule is unverifiable"
-        )
-    else:
-        if not lo <= body <= hi:
+    if "total_pages" in cfg:
+        lo, hi = cfg["total_pages"]
+        if not lo <= total <= hi:
+            rules.append(f"{tex_name}: {total} pages outside the required {lo}-{hi} (references included)")
+        extra = total - cfg.get("paid_pages", total)
+        cost = f"; {extra} page(s) beyond the {cfg['paid_pages']} covered by registration" if extra > 0 else ""
+        print(f"  pages: {total} / {lo}-{hi}   (references included{cost})")
+    if "body_pages" in cfg:
+        lo, hi = cfg["body_pages"]
+        body = body_pages(tex)
+        if body is None:
             rules.append(
-                f"{tex_name}: {body} body pages outside the required {lo}-{hi} "
-                f"(references and appendices excluded)"
+                f"{tex_name}: no \\label{{{BODY_LABEL}}} found in .aux -- cannot tell "
+                f"body pages from reference pages, so the {lo}-{hi} page rule is unverifiable"
             )
-        print(f"  body pages: {body} / {lo}-{hi}   (PDF total {total}, refs excluded)")
+        else:
+            if not lo <= body <= hi:
+                rules.append(
+                    f"{tex_name}: {body} body pages outside the required {lo}-{hi} "
+                    f"(references and appendices excluded)"
+                )
+            print(f"  body pages: {body} / {lo}-{hi}   (PDF total {total}, refs excluded)")
 
     template = re.escape(cfg["template"])
     if not re.search(r"\\(?:usepackage|documentclass)(\[[^\]]*\])?\{" + template + r"\}", src):
@@ -156,13 +177,26 @@ def check(tex_name: str, cfg: dict, tectonic: str | None) -> tuple[list[str], li
     if re.search(r"\\ref\{|\\cite\{", src) and "There were undefined references" in log_text:
         rules.append(f"{tex_name}: undefined references remain after final pass")
 
+    n_ph = placeholders(src)
+    if n_ph:
+        rules.append(f"{tex_name}: {n_ph} draft placeholder(s) (\\pending, \\tbd) still in the text")
+
     if cfg["blind"]:
         hits = [i for i in IDENTIFIERS if i.lower() in src.lower()]
         if hits:
             rules.append(f"{tex_name}: double-blind but source contains {hits}")
+        # The reference list is printed from the .bbl, not from the .tex.
+        bbl = tex.with_suffix(".bbl")
+        if bbl.exists():
+            bbl_text = bbl.read_text(errors="replace").lower()
+            hits = [i for i in IDENTIFIERS if i.lower() in bbl_text]
+            if hits:
+                rules.append(f"{tex_name}: double-blind but the reference list contains {hits}")
 
     n_cite = len(re.findall(r"\\cite[tp]?\b", src))
     print(f"  citations: {n_cite}", "  <-- WARNING: no related work" if n_cite == 0 else "")
+    if n_ph:
+        print(f"  draft placeholders: {n_ph}")
     return [], rules
 
 
