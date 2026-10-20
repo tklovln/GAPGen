@@ -1,0 +1,278 @@
+% Bibliography for main.tex (AAIE 2027, IEEEtran.bst).
+%
+% Every entry was checked against its publisher record on 2026-10-20: Crossref
+% (doi.org) for DOI-bearing papers, the NeurIPS / PMLR proceedings pages, and arXiv
+% for the ICLR papers. Titles are in IEEE sentence case; braces protect proper
+% nouns and acronyms. Keep this file separate from refs.bib, which serves the
+% frozen NeurIPS-format papers with a different citation style.
+
+% IEEE reference style: more than six authors -> first author et al.
+% Activated by \bstctlcite{IEEEexample:BSTcontrol} right after \begin{document}.
+@IEEEtranBSTCTL{IEEEexample:BSTcontrol,
+  CTLuse_forced_etal       = "yes",
+  CTLmax_names_forced_etal = "6",
+  CTLnames_show_etal       = "1",
+}
+
+% --- Generative AI and learning -------------------------------------------------
+
+@article{kasneci2023chatgpt,
+  author  = {Enkelejda Kasneci and Kathrin Sessler and Stefan K{\"u}chemann and Maria Bannert and Daryna Dementieva and Frank Fischer and Urs Gasser and Georg Groh and Stephan G{\"u}nnemann and Eyke H{\"u}llermeier and Stephan Krusche and Gitta Kutyniok and Tilman Michaeli and Claudia Nerdel and J{\"u}rgen Pfeffer and Oleksandra Poquet and Michael Sailer and Albrecht Schmidt and Tina Seidel and Matthias Stadler and Jochen Weller and Jochen Kuhn and Gjergji Kasneci},
+  title   = {{ChatGPT} for good? {On} opportunities and challenges of large language models for education},
+  journal = {Learn. Individ. Differ.},
+  volume  = {103},
+  pages   = {102274},
+  year    = {2023},
+  doi     = {10.1016/j.lindif.2023.102274},
+  note    = {doi: \url{10.1016/j.lindif.2023.102274}},
+}
+
+@article{plass2015foundations,
+  author  = {Jan L. Plass and Bruce D. Homer and Charles K. Kinzer},
+  title   = {Foundations of game-based learning},
+  journal = {Educ. Psychol.},
+  volume  = {50},
+  number  = {4},
+  pages   = {258--283},
+  year    = {2015},
+  doi     = {10.1080/00461520.2015.1122533},
+  note    = {doi: \url{10.1080/00461520.2015.1122533}},
+}
+
+@article{siegler2013fractions,
+  author  = {Robert S. Siegler and Lisa K. Fazio and Drew H. Bailey and Xinlin Zhou},
+  title   = {Fractions: {The} new frontier for theories of numerical development},
+  journal = {Trends Cogn. Sci.},
+  volume  = {17},
+  number  = {1},
+  pages   = {13--19},
+  year    = {2013},
+  doi     = {10.1016/j.tics.2012.11.004},
+  note    = {doi: \url{10.1016/j.tics.2012.11.004}},
+}
+
+@misc{ccss2010math,
+  author       = {{National Governors Association Center for Best Practices and Council of Chief State School Officers}},
+  title        = {{Common Core State Standards for Mathematics}},
+  howpublished = {Standard 3.NF.A.1, Washington, DC, USA},
+  year         = {2010},
+  url          = {https://www.thecorestandards.org/Math/Content/3/NF/A/1/},
+}
+
+@inproceedings{belouadi2024automatikz,
+  author    = {Jonas Belouadi and Anne Lauscher and Steffen Eger},
+  title     = {{AutomaTikZ}: {Text}-guided synthesis of scientific vector graphics with {TikZ}},
+  booktitle = {Proc. Int. Conf. Learn. Represent. (ICLR)},
+  year      = {2024},
+  url       = {https://arxiv.org/abs/2310.00367},
+}
+
+% Prior work on generated game assets, cited in the third person. Double-blind:
+% author list and link withheld in the review version.
+% TK: camera-ready -> real author list + OpenReview link.
+@inproceedings{anon2026legibility,
+  author    = {Anonymous},
+  title     = {What makes generated content functionally legible? {A} {VLM}-judged ablation with executable ground truth},
+  booktitle = {NeurIPS Workshop Who Verifies the Agents? Toward Reliable Agent Development},
+  year      = {2026},
+  note      = {Non-archival},
+}
+
+% --- Model judges and text-to-image evaluation -----------------------------------
+
+@inproceedings{hessel2021clipscore,
+  author    = {Jack Hessel and Ari Holtzman and Maxwell Forbes and Ronan {Le Bras} and Yejin Choi},
+  title     = {{CLIPScore}: {A} reference-free evaluation metric for image captioning},
+  booktitle = {Proc. Conf. Empirical Methods Natural Lang. Process. (EMNLP)},
+  pages     = {7514--7528},
+  year      = {2021},
+  doi       = {10.18653/v1/2021.emnlp-main.595},
+  note      = {doi: \url{10.18653/v1/2021.emnlp-main.595}},
+}
+
+@inproceedings{zheng2023judging,
+  author    = {Lianmin Zheng and Wei-Lin Chiang and Ying Sheng and Siyuan Zhuang and Zhanghao Wu and Yonghao Zhuang and Zi Lin and Zhuohan Li and Dacheng Li and Eric P. Xing and Hao Zhang and Joseph E. Gonzalez and Ion Stoica},
+  title     = {Judging {LLM}-as-a-judge with {MT-Bench} and {Chatbot Arena}},
+  booktitle = {Proc. Adv. Neural Inf. Process. Syst., Datasets Benchmarks Track},
+  volume    = {36},
+  pages     = {46595--46623},
+  year      = {2023},
+  doi       = {10.52202/075280-2020},
+  note      = {doi: \url{10.52202/075280-2020}},
+}
+
+@inproceedings{chen2024mllmjudge,
+  author    = {Dongping Chen and Ruoxi Chen and Shilin Zhang and Yaochen Wang and Yinuo Liu and Huichi Zhou and Qihui Zhang and Yao Wan and Pan Zhou and Lichao Sun},
+  title     = {{MLLM}-as-a-judge: {Assessing} multimodal {LLM}-as-a-judge with vision-language benchmark},
+  booktitle = {Proc. Int. Conf. Mach. Learn. (ICML)},
+  volume    = {235},
+  pages     = {6562--6595},
+  year      = {2024},
+  url       = {https://proceedings.mlr.press/v235/chen24h.html},
+}
+
+@inproceedings{cho2024dsg,
+  author    = {Jaemin Cho and Yushi Hu and Roopal Garg and Peter Anderson and Ranjay Krishna and Jason Baldridge and Mohit Bansal and Jordi Pont-Tuset and Su Wang},
+  title     = {{Davidsonian} scene graph: {Improving} reliability in fine-grained evaluation for text-to-image generation},
+  booktitle = {Proc. Int. Conf. Learn. Represent. (ICLR)},
+  year      = {2024},
+  url       = {https://arxiv.org/abs/2310.18235},
+}
+
+@inproceedings{ghosh2023geneval,
+  author    = {Dhruba Ghosh and Hannaneh Hajishirzi and Ludwig Schmidt},
+  title     = {{GenEval}: {An} object-focused framework for evaluating text-to-image alignment},
+  booktitle = {Proc. Adv. Neural Inf. Process. Syst., Datasets Benchmarks Track},
+  volume    = {36},
+  pages     = {52132--52152},
+  year      = {2023},
+  doi       = {10.52202/075280-2270},
+  note      = {doi: \url{10.52202/075280-2270}},
+}
+
+% --- What vision-language models get wrong ---------------------------------------
+
+@inproceedings{paiss2023count,
+  author    = {Roni Paiss and Ariel Ephrat and Omer Tov and Shiran Zada and Inbar Mosseri and Michal Irani and Tali Dekel},
+  title     = {Teaching {CLIP} to count to ten},
+  booktitle = {Proc. IEEE/CVF Int. Conf. Comput. Vis. (ICCV)},
+  pages     = {3147--3157},
+  year      = {2023},
+  doi       = {10.1109/ICCV51070.2023.00294},
+  note      = {doi: \url{10.1109/ICCV51070.2023.00294}},
+}
+
+@inproceedings{rahmanzadehgervi2024blind,
+  author    = {Pooyan Rahmanzadehgervi and Logan Bolton and Mohammad Reza Taesiri and Anh Totti Nguyen},
+  title     = {Vision language models are blind},
+  booktitle = {Proc. Asian Conf. Comput. Vis. (ACCV)},
+  pages     = {293--309},
+  year      = {2024},
+  doi       = {10.1007/978-981-96-0917-8_17},
+  note      = {doi: \url{10.1007/978-981-96-0917-8_17}},
+}
+
+@inproceedings{kamath2023whatsup,
+  author    = {Amita Kamath and Jack Hessel and Kai-Wei Chang},
+  title     = {What's ``up'' with vision-language models? {Investigating} their struggle with spatial reasoning},
+  booktitle = {Proc. Conf. Empirical Methods Natural Lang. Process. (EMNLP)},
+  pages     = {9161--9175},
+  year      = {2023},
+  doi       = {10.18653/v1/2023.emnlp-main.568},
+  note      = {doi: \url{10.18653/v1/2023.emnlp-main.568}},
+}
+
+@inproceedings{li2023pope,
+  author    = {Yifan Li and Yifan Du and Kun Zhou and Jinpeng Wang and Wayne Xin Zhao and Ji-Rong Wen},
+  title     = {Evaluating object hallucination in large vision-language models},
+  booktitle = {Proc. Conf. Empirical Methods Natural Lang. Process. (EMNLP)},
+  pages     = {292--305},
+  year      = {2023},
+  doi       = {10.18653/v1/2023.emnlp-main.20},
+  note      = {doi: \url{10.18653/v1/2023.emnlp-main.20}},
+}
+
+% --- Parse-then-check verification ----------------------------------------------
+
+@inproceedings{yi2018nsvqa,
+  author    = {Kexin Yi and Jiajun Wu and Chuang Gan and Antonio Torralba and Pushmeet Kohli and Joshua B. Tenenbaum},
+  title     = {Neural-symbolic {VQA}: {Disentangling} reasoning from vision and language understanding},
+  booktitle = {Proc. Adv. Neural Inf. Process. Syst.},
+  volume    = {31},
+  year      = {2018},
+  url       = {https://proceedings.neurips.cc/paper_files/paper/2018/hash/5e388103a391daabe3de1d76a6739ccd-Abstract.html},
+}
+
+@inproceedings{gupta2023visprog,
+  author    = {Tanmay Gupta and Aniruddha Kembhavi},
+  title     = {Visual programming: {Compositional} visual reasoning without training},
+  booktitle = {Proc. IEEE/CVF Conf. Comput. Vis. Pattern Recognit. (CVPR)},
+  pages     = {14953--14962},
+  year      = {2023},
+  doi       = {10.1109/CVPR52729.2023.01436},
+  note      = {doi: \url{10.1109/CVPR52729.2023.01436}},
+}
+
+@inproceedings{suris2023vipergpt,
+  author    = {D{\'\i}dac Sur{\'\i}s and Sachit Menon and Carl Vondrick},
+  title     = {{ViperGPT}: {Visual} inference via {Python} execution for reasoning},
+  booktitle = {Proc. IEEE/CVF Int. Conf. Comput. Vis. (ICCV)},
+  pages     = {11854--11864},
+  year      = {2023},
+  doi       = {10.1109/ICCV51070.2023.01092},
+  note      = {doi: \url{10.1109/ICCV51070.2023.01092}},
+}
+
+@inproceedings{kirillov2023sam,
+  author    = {Alexander Kirillov and Eric Mintun and Nikhila Ravi and Hanzi Mao and Chloe Rolland and Laura Gustafson and Tete Xiao and Spencer Whitehead and Alexander C. Berg and Wan-Yen Lo and Piotr Doll{\'a}r and Ross Girshick},
+  title     = {Segment anything},
+  booktitle = {Proc. IEEE/CVF Int. Conf. Comput. Vis. (ICCV)},
+  pages     = {3992--4003},
+  year      = {2023},
+  doi       = {10.1109/ICCV51070.2023.00371},
+  note      = {doi: \url{10.1109/ICCV51070.2023.00371}},
+}
+
+% --- Controlled, counterfactual and selective evaluation --------------------------
+
+@inproceedings{johnson2017clevr,
+  author    = {Justin Johnson and Bharath Hariharan and Laurens {van der Maaten} and Li Fei-Fei and C. Lawrence Zitnick and Ross Girshick},
+  title     = {{CLEVR}: {A} diagnostic dataset for compositional language and elementary visual reasoning},
+  booktitle = {Proc. IEEE Conf. Comput. Vis. Pattern Recognit. (CVPR)},
+  pages     = {1988--1997},
+  year      = {2017},
+  doi       = {10.1109/CVPR.2017.215},
+  note      = {doi: \url{10.1109/CVPR.2017.215}},
+}
+
+@inproceedings{gardner2020contrast,
+  author    = {Matt Gardner and Yoav Artzi and Victoria Basmov and Jonathan Berant and Ben Bogin and Sihao Chen and Pradeep Dasigi and Dheeru Dua and Yanai Elazar and Ananth Gottumukkala and Nitish Gupta and Hannaneh Hajishirzi and Gabriel Ilharco and Daniel Khashabi and Kevin Lin and Jiangming Liu and Nelson F. Liu and Phoebe Mulcaire and Qiang Ning and Sameer Singh and Noah A. Smith and Sanjay Subramanian and Reut Tsarfaty and Eric Wallace and Ally Zhang and Ben Zhou},
+  title     = {Evaluating models' local decision boundaries via contrast sets},
+  booktitle = {Findings Assoc. Comput. Linguistics: EMNLP},
+  pages     = {1307--1323},
+  year      = {2020},
+  doi       = {10.18653/v1/2020.findings-emnlp.117},
+  note      = {doi: \url{10.18653/v1/2020.findings-emnlp.117}},
+}
+
+@inproceedings{hsieh2023sugarcrepe,
+  author    = {Cheng-Yu Hsieh and Jieyu Zhang and Zixian Ma and Aniruddha Kembhavi and Ranjay Krishna},
+  title     = {{SugarCrepe}: {Fixing} hackable benchmarks for vision-language compositionality},
+  booktitle = {Proc. Adv. Neural Inf. Process. Syst., Datasets Benchmarks Track},
+  volume    = {36},
+  pages     = {31096--31116},
+  year      = {2023},
+  doi       = {10.52202/075280-1355},
+  note      = {doi: \url{10.52202/075280-1355}},
+}
+
+@article{chen2018metamorphic,
+  author  = {Tsong Yueh Chen and Fei-Ching Kuo and Huai Liu and Pak-Lok Poon and Dave Towey and T. H. Tse and Zhi Quan Zhou},
+  title   = {Metamorphic testing: {A} review of challenges and opportunities},
+  journal = {ACM Comput. Surv.},
+  volume  = {51},
+  number  = {1},
+  pages   = {1--27},
+  year    = {2018},
+  doi     = {10.1145/3143561},
+  note    = {doi: \url{10.1145/3143561}},
+}
+
+@inproceedings{geifman2017selective,
+  author    = {Yonatan Geifman and Ran El-Yaniv},
+  title     = {Selective classification for deep neural networks},
+  booktitle = {Proc. Adv. Neural Inf. Process. Syst.},
+  volume    = {30},
+  year      = {2017},
+  url       = {https://proceedings.neurips.cc/paper_files/paper/2017/hash/4a8423d5e91fda00bb7e46540e2b0cf1-Abstract.html},
+}
+
+@inproceedings{whitehead2022reliable,
+  author    = {Spencer Whitehead and Suzanne Petryk and Vedaad Shakib and Joseph Gonzalez and Trevor Darrell and Anna Rohrbach and Marcus Rohrbach},
+  title     = {Reliable visual question answering: {Abstain} rather than answer incorrectly},
+  booktitle = {Proc. Eur. Conf. Comput. Vis. (ECCV)},
+  pages     = {148--166},
+  year      = {2022},
+  doi       = {10.1007/978-3-031-20059-5_9},
+  note      = {doi: \url{10.1007/978-3-031-20059-5_9}},
+}
