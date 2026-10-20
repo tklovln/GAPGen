@@ -13,7 +13,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 # Object categories shared by the counting and spatial domains.
-COUNT_CATEGORIES = ["apple", "star", "fish", "heart", "flower", "ball"]
+COUNT_CATEGORIES = ["apple", "star", "fish", "heart", "flower", "tree"]
 SHAPE_CATEGORIES = ["star", "square", "circle", "triangle", "heart"]
 ALL_CATEGORIES = sorted(set(COUNT_CATEGORIES) | set(SHAPE_CATEGORIES) | {"arrow"})
 
@@ -40,17 +40,17 @@ class Style:
 
 _BASE_OBJECTS = {
     "apple": "#e53935", "star": "#fbc02d", "fish": "#1e88e5", "heart": "#ec407a",
-    "flower": "#8e24aa", "ball": "#43a047", "square": "#00897b", "circle": "#fb8c00",
+    "flower": "#8e24aa", "tree": "#43a047", "square": "#00897b", "circle": "#fb8c00",
     "triangle": "#00acc1", "arrow": "#3949ab",
 }
 _PASTEL_OBJECTS = {
     "apple": "#f28b82", "star": "#fff176", "fish": "#81d4fa", "heart": "#f8bbd0",
-    "flower": "#b39ddb", "ball": "#a5d6a7", "square": "#80cbc4", "circle": "#ffab91",
+    "flower": "#b39ddb", "tree": "#a5d6a7", "square": "#80cbc4", "circle": "#ffab91",
     "triangle": "#c5e1a5", "arrow": "#9fa8da",
 }
 _BRIGHT_OBJECTS = {
     "apple": "#ff5252", "star": "#ffd740", "fish": "#40c4ff", "heart": "#ff4081",
-    "flower": "#e040fb", "ball": "#69f0ae", "square": "#64ffda", "circle": "#ff6e40",
+    "flower": "#e040fb", "tree": "#69f0ae", "square": "#64ffda", "circle": "#ff6e40",
     "triangle": "#b2ff59", "arrow": "#8c9eff",
 }
 

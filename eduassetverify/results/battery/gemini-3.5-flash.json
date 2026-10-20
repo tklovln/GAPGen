@@ -1,0 +1,37 @@
+{
+ "backbone": "gemini-3.5-flash",
+ "images": 18,
+ "majority": 0.5,
+ "grounding": {
+  "protocol": 0.9861111111111112,
+  "protocol_strict": 0.9444444444444444,
+  "retest": 0.9444444444444444,
+  "permutation": 1.0,
+  "blank_empty": 1.0,
+  "accuracy": 1.0
+ },
+ "judge": {
+  "protocol": 1.0,
+  "retest": 1.0,
+  "permutation": 0.9444444444444444,
+  "accuracy": 1.0,
+  "blank_accuracy": 0.5
+ },
+ "pass": {
+  "grounding": {
+   "protocol": true,
+   "retest": true,
+   "permutation": true,
+   "blank": true,
+   "above_majority": true
+  },
+  "judge": {
+   "protocol": true,
+   "retest": true,
+   "permutation": true,
+   "blank": true,
+   "above_majority": true
+  }
+ },
+ "passed": true
+}

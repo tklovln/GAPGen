@@ -113,11 +113,13 @@ def _draw_object(ax, prim: dict, style: Style):
                                         0.2 * s, facecolor=fc, edgecolor=ec, linewidth=lw * 0.7, zorder=3))
         ax.add_patch(patches.Circle((cx, cy), 0.15 * s, facecolor="#ffffff", edgecolor=ec,
                                     linewidth=lw * 0.7, zorder=4))
-    elif cat == "ball":
-        ax.add_patch(patches.Circle((cx, cy), 0.44 * s, facecolor=fc, edgecolor=ec, linewidth=lw, zorder=3))
-        for th1, th2 in ((200, 340), (20, 160)):
-            ax.add_patch(patches.Arc((cx, cy), 0.62 * s, 0.62 * s, theta1=th1, theta2=th2,
-                                     edgecolor="#ffffff", linewidth=max(2.0, 0.05 * s), zorder=4))
+    elif cat == "tree":
+        ax.add_patch(patches.Rectangle((cx - 0.08 * s, cy + 0.08 * s), 0.16 * s, 0.40 * s, facecolor="#795548",
+                                       edgecolor=ec, linewidth=lw * 0.7, zorder=2))
+        for dx, dy, rr in ((-0.18, -0.02, 0.22), (0.18, -0.02, 0.22), (0.0, -0.20, 0.27)):
+            ax.add_patch(patches.Circle((cx + dx * s, cy + dy * s), rr * s, facecolor=fc, edgecolor=ec,
+                                        linewidth=lw, zorder=3))
+        ax.add_patch(patches.Circle((cx, cy - 0.06 * s), 0.2 * s, facecolor=fc, edgecolor="none", zorder=3.5))
     elif cat == "square":
         ax.add_patch(patches.Rectangle((cx - 0.4 * s, cy - 0.4 * s), 0.8 * s, 0.8 * s, facecolor=fc,
                                        edgecolor=ec, linewidth=lw, zorder=3))

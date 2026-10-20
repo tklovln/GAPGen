@@ -25,7 +25,7 @@ from ..styles import COUNT_CATEGORIES
 from . import Item, NotApplicable, constraint
 
 PLURAL = {"apple": "apples", "star": "stars", "fish": "fish", "heart": "hearts",
-          "flower": "flowers", "ball": "balls"}
+          "flower": "flowers", "tree": "trees"}
 ARTICLE = {"apple": "an apple"}
 
 
