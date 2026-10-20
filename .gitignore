@@ -16,6 +16,7 @@
 !.gitignore
 !AGENTS.md
 !check_paper.py
+!sync.sh
 !*.tex
 !*.bib
 !*.sty

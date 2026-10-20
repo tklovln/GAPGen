@@ -1,16 +1,21 @@
 #!/usr/bin/env python3
-"""Compile every paper on this branch and fail loudly on submission-blocking defects.
+"""Compile the paper on this branch and fail loudly on submission-blocking defects.
 
-Checks the NeurIPS 2026 Workshop rules that a compile alone cannot catch: body
-length within 4-9 pages excluding references, the required template, double-blind
-anonymity, and placeholder bibliography entries.
+Checks the venue rules that a compile alone cannot catch: body length excluding
+references, the required template, double-blind anonymity, and placeholder
+bibliography entries.
 
-Run before any Overleaf push or OpenReview upload:
+    python3 check_paper.py             # submission mode: every violation FAILs
+    python3 check_paper.py --draft     # sync mode: only a broken build FAILs,
+                                       #   rule violations print as WARN
+    python3 check_paper.py --no-build  # re-check existing logs, no compile
 
-    python3 check_paper.py            # compile + check
-    python3 check_paper.py --no-build # check existing logs only
+`bash sync.sh push` runs --draft: a half-written paper must still reach Overleaf,
+but one that does not compile must not. Run the strict mode before any upload.
 
-Requires `tectonic` (any 0.15+). Stdlib only, no venv needed.
+Requires `tectonic` (0.15+) on PATH or at ~/.local/bin/tectonic. Stdlib only.
+Tectonic is XeTeX-based while Overleaf compiles with pdfLaTeX, so line breaks can
+differ slightly: a body page count sitting exactly at the limit is Overleaf's call.
 """
 from __future__ import annotations
 
@@ -23,24 +28,22 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 
-# NeurIPS 2026 Workshop "Who Verifies the Agents?" submission guidelines:
-#   Format      4-9 pages EXCLUDING references and appendices; NeurIPS 2026
-#               template; demo papers <= 4 pages.
-#   Review      double blind.
-#   Dual subm.  work under review or recently published elsewhere is welcome,
-#               so there is nothing to check here -- no venue conflict exists.
-#   Archival    non-archival; accepted papers appear on OpenReview only.
-#
-# The page count that matters therefore is not the PDF length. We read the page
+# The page count that matters is the body, not the PDF length. We read the page
 # of the \label{endofbody} marker (placed just before \bibliography) out of the
 # .aux file, which is LaTeX's own answer rather than our guess at where the
 # references start.
 BODY_LABEL = "endofbody"
 
+# One entry per paper this branch submits. workshop.tex (published) and
+# creativeai.tex are frozen reference copies, so they are deliberately absent.
 PAPERS = {
-    "workshop.tex": {
-        "venue": "NeurIPS 2026 Workshop: Who Verifies the Agents?",
-        "body_pages": (4, 9),  # demo track would be (1, 4)
+    "main.tex": {
+        # PLACEHOLDER rules inherited from workshop.tex (NeurIPS 2026 Workshop:
+        # 4-9 body pages, NeurIPS 2026 template, double blind). Replace all four
+        # fields together once the AAIE 2027 call for papers is pinned down.
+        "venue": "AAIE 2027 (rules TBD; NeurIPS 2026 workshop placeholders)",
+        "body_pages": (4, 9),
+        "template": "neurips_2026",  # name in \usepackage{..} or \documentclass{..}
         "blind": True,
     },
 }
@@ -57,9 +60,17 @@ BIB_PLACEHOLDERS = [
 ]
 
 
-def compile_tex(tex: Path) -> None:
+def find_tectonic() -> str | None:
+    found = shutil.which("tectonic")
+    if found:
+        return found
+    local = Path.home() / ".local" / "bin" / "tectonic"
+    return str(local) if local.exists() else None
+
+
+def compile_tex(tectonic: str, tex: Path) -> None:
     subprocess.run(
-        ["tectonic", "-X", "compile", str(tex.name), "--keep-logs", "--keep-intermediates"],
+        [tectonic, "-X", "compile", tex.name, "--keep-logs", "--keep-intermediates"],
         cwd=ROOT,
         check=True,
         capture_output=True,
@@ -83,47 +94,54 @@ def body_pages(tex: Path) -> int | None:
     return int(m.group(1)) if m else None
 
 
-def check(tex_name: str, cfg: dict, build: bool) -> list[str]:
-    tex = ROOT / tex_name
-    fails: list[str] = []
-    if not tex.exists():
-        return [f"{tex_name}: missing"]
+def check(tex_name: str, cfg: dict, tectonic: str | None) -> tuple[list[str], list[str]]:
+    """Return (build failures, rule violations) for one paper.
 
-    if build:
+    A build failure means there is no trustworthy PDF; it fails in every mode.
+    A rule violation fails only in submission mode. `tectonic=None` skips the
+    compile and re-reads the existing logs.
+    """
+    tex = ROOT / tex_name
+    if not tex.exists():
+        return [f"{tex_name}: missing"], []
+
+    if tectonic:
         try:
-            compile_tex(tex)
+            compile_tex(tectonic, tex)
         except subprocess.CalledProcessError as e:
             tail = e.stderr.decode(errors="replace").strip().splitlines()[-15:]
-            return [f"{tex_name}: tectonic failed\n    " + "\n    ".join(tail)]
+            return [f"{tex_name}: tectonic failed\n    " + "\n    ".join(tail)], []
 
     log = tex.with_suffix(".log")
     if not log.exists():
-        return [f"{tex_name}: no .log (compile first, drop --no-build)"]
+        return [f"{tex_name}: no .log (compile first, drop --no-build)"], []
     log_text = log.read_text(errors="replace")
     src = tex.read_text(errors="replace")
 
     m = re.search(r"Output written on \S+ \((\d+) pages?", log_text)
-    total = int(m.group(1)) if m else None
-    if total is None:
-        fails.append(f"{tex_name}: could not read page count from log")
+    if not m:
+        return [f"{tex_name}: could not read page count from log (no PDF written?)"], []
+    total = int(m.group(1))
 
+    rules: list[str] = []
     lo, hi = cfg["body_pages"]
     body = body_pages(tex)
     if body is None:
-        fails.append(
+        rules.append(
             f"{tex_name}: no \\label{{{BODY_LABEL}}} found in .aux -- cannot tell "
             f"body pages from reference pages, so the {lo}-{hi} page rule is unverifiable"
         )
     else:
         if not lo <= body <= hi:
-            fails.append(
+            rules.append(
                 f"{tex_name}: {body} body pages outside the required {lo}-{hi} "
                 f"(references and appendices excluded)"
             )
         print(f"  body pages: {body} / {lo}-{hi}   (PDF total {total}, refs excluded)")
 
-    if not re.search(r"\\usepackage(\[[^\]]*\])?\{neurips_2026\}", src):
-        fails.append(f"{tex_name}: not using the required NeurIPS 2026 template")
+    template = re.escape(cfg["template"])
+    if not re.search(r"\\(?:usepackage|documentclass)(\[[^\]]*\])?\{" + template + r"\}", src):
+        rules.append(f"{tex_name}: not using the required {cfg['template']} template")
 
     for pattern, label in [
         (r"^Overfull", "overfull box"),
@@ -132,20 +150,20 @@ def check(tex_name: str, cfg: dict, build: bool) -> list[str]:
     ]:
         n = len(re.findall(pattern, log_text, re.MULTILINE))
         if n:
-            fails.append(f"{tex_name}: {n} x {label}")
+            rules.append(f"{tex_name}: {n} x {label}")
 
     # `??` in the PDF means a broken cross-reference that the log may not flag.
     if re.search(r"\\ref\{|\\cite\{", src) and "There were undefined references" in log_text:
-        fails.append(f"{tex_name}: undefined references remain after final pass")
+        rules.append(f"{tex_name}: undefined references remain after final pass")
 
     if cfg["blind"]:
         hits = [i for i in IDENTIFIERS if i.lower() in src.lower()]
         if hits:
-            fails.append(f"{tex_name}: double-blind but source contains {hits}")
+            rules.append(f"{tex_name}: double-blind but source contains {hits}")
 
     n_cite = len(re.findall(r"\\cite[tp]?\b", src))
     print(f"  citations: {n_cite}", "  <-- WARNING: no related work" if n_cite == 0 else "")
-    return fails
+    return [], rules
 
 
 def check_bibs() -> list[str]:
@@ -162,25 +180,38 @@ def check_bibs() -> list[str]:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--no-build", action="store_true")
+    ap.add_argument("--draft", action="store_true",
+                    help="only a broken build fails; rule violations become warnings")
+    ap.add_argument("--no-build", action="store_true", help="check existing logs only")
     args = ap.parse_args()
 
-    if not args.no_build and not shutil.which("tectonic"):
-        print("tectonic not on PATH (try ~/.local/bin/tectonic)", file=sys.stderr)
-        return 2
+    tectonic = None
+    if not args.no_build:
+        tectonic = find_tectonic()
+        if not tectonic:
+            print("tectonic not found on PATH or at ~/.local/bin/tectonic", file=sys.stderr)
+            return 2
 
-    all_fails: list[str] = []
+    build_fails: list[str] = []
+    rule_fails: list[str] = []
     for name, cfg in PAPERS.items():
         print(f"\n{name}  [{cfg['venue']}]")
-        all_fails += check(name, cfg, build=not args.no_build)
-    all_fails += check_bibs()
+        b, r = check(name, cfg, tectonic)
+        build_fails += b
+        rule_fails += r
+    rule_fails += check_bibs()
 
     print()
-    if all_fails:
-        for f in all_fails:
-            print("FAIL:", f)
+    for f in build_fails:
+        print("FAIL:", f)
+    for f in rule_fails:
+        print("WARN:" if args.draft else "FAIL:", f)
+    if build_fails or (rule_fails and not args.draft):
         return 1
-    print("PASS: all papers compile and clear submission checks")
+    if rule_fails:
+        print(f"PASS (draft): compiles; {len(rule_fails)} rule violation(s) to fix before submitting")
+    else:
+        print("PASS: all papers compile and clear submission checks")
     return 0
 
 
