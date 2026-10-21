@@ -93,7 +93,10 @@ changes. Thresholds are fixed on the dev split only; a post-test change goes int
   `anon2026legibility`; author names, affiliations, links and acknowledgments stay
   out until camera-ready. `check_paper.py` scans the printed source (comments excluded)
   and the `.bbl`; its identifiers include the GitHub account `tklovln`. The user's
-  project-page sentence after the contributions list is commented out until camera-ready.
+  project-page sentence after the contributions list links, for review, to an Anonymous
+  GitHub mirror of the demo repository (`anonymous.4open.science/w/<id>/`, created by the
+  user, since it needs their GitHub login); a `\pending` marker holds the footnote until
+  the link exists. Camera-ready: the GitHub Pages address of the demo repository.
 - **IEEE format as in the template.** Keep the template's preamble, margins, fonts and
   spacing; size the content to the page budget instead of `\vspace` or font tweaks.
   Table captions above in title case, figure captions below, `Fig.~\ref{...}`.

@@ -80,7 +80,7 @@ for Educational Games}
 \maketitle
 
 \begin{abstract}
-Generative models can now produce the visual material of an entire curriculum, which moves the bottleneck of educational content from production to verification: an image that looks right can still teach the wrong concept, such as a fraction drawn with unequal parts. Existing evaluators cannot close this gap. Similarity and aesthetic scores ignore the instructional rule, and vision-language model judges return holistic verdicts that are unreliable and carry no checkable evidence. The challenge is to verify instructional correctness at scale, without human raters, and with a reliability that can itself be measured. We present EduAssetVerify, which separates perception from judgment: learning objectives become formal constraints, a vision-language model only reports what an image contains without seeing the expected answer, geometry is measured deterministically, and three-valued rules decide each constraint, abstaining instead of guessing. To measure reliability without raters, we build a counterfactual benchmark in which every correct asset is paired with a minimally altered violation and every label is verified against the rendered pixels. On 900 test images and two model families, EduAssetVerify accepted no violated asset, whereas vision-language model judges accepted up to 4.3 percent, at the cost of sending 1.5 to 3.1 percent of assets to review.
+Generative models can now produce the visual material of an entire curriculum, which moves the bottleneck of educational content from production to verification: an image that looks right can still teach the wrong concept, such as a fraction drawn with unequal parts. Existing evaluators cannot close this gap. Similarity and aesthetic scores ignore the instructional rule, and vision-language model judges return holistic verdicts that are unreliable and carry no checkable evidence. The challenge is to verify instructional correctness at scale, without human raters, and with a reliability that can itself be measured. We present EduAssetVerify, which separates perception from judgment: learning objectives become formal constraints, a vision-language model only reports what an image contains without seeing the expected answer, geometry is measured deterministically, and three-valued rules decide each constraint, abstaining instead of guessing. To measure reliability without raters, we build a counterfactual benchmark in which every correct asset is paired with a minimally altered violation and every label is verified against the rendered pixels. On 900 test images and two model families, EduAssetVerify accepted no violated asset, whereas the judges accepted up to 4.3 percent, at the cost of sending 1.5 to 3.1 percent of assets to review.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -244,18 +244,20 @@ Verifying instructional correctness therefore poses three challenges:
 \begin{enumerate}
 \item Learning objectives are abstract, so they must be turned into requirements that a machine can check and whose consistency can be tested.
 \item VLMs perceive well but judge poorly, so their perception must yield checkable evidence, without letting them see the answer they are asked to verify.
-\item Violations are local and subtle, so a verifier must catch a single wrong part regardless of style, template, or background, and its reliability must be measured without human labels.
+\item Violations are local and subtle, so a verifier must catch one wrong part in any style or template, and its reliability must be measured without human labels.
 \end{enumerate}
 We address them with EduAssetVerify (Figs.~\ref{fig:teaser} and~\ref{fig:overview}), a general recipe for evidence-based verification that separates perception from judgment: models report what they see, deterministic measurement and rules decide, and the verifier abstains rather than guesses. Our contributions are:
 \begin{enumerate}
-\item A formal constraint schema that makes instructional correctness machine-checkable, with a consistency check that rejects contradictory objectives before any image is verified.
+\item A formal constraint schema that makes instructional correctness machine-checkable, with a consistency check that rejects contradictory objectives before verification.
 \item A verifier that combines value-blind grounding, deterministic measurement, and three-valued rules; on 900 test images it accepted no violated asset under either of two model families.
-\item A counterfactual benchmark with programmatically verified labels and a measurement protocol for model-based verifiers, which shows that VLM judges fail precisely where correctness must be measured rather than recognized.
+\item A counterfactual benchmark with programmatically verified labels and a measurement protocol for model-based verifiers, showing that VLM judges fail precisely where correctness must be measured, not recognized.
 \end{enumerate}
 
-% Camera-ready only: the link names the author's GitHub account, so it stays out of the
-% double-blind review version (check_paper.py fails on it). Uncomment after acceptance.
-% More visual results can be found at our project page.\footnote{Project page: \url{https://tklovln.github.io/eduassetverify-demo/}}
+% Review version: the project page through an Anonymous GitHub mirror, because the GitHub Pages
+% address contains the account name. Until the mirror exists the link is a draft marker (the
+% strict check fails); then: \footnote{{\urlstyle{same}\url{https://anonymous.4open.science/w/<id>/}}}
+% Camera-ready: the GitHub Pages address of the demo repository.
+More visual results can be found at our project page.\footnote{\pending{anonymized link: https://anonymous.4open.science/w/<id>/}}
 
 \section{Related Work}\label{sec:related}
 
