@@ -232,17 +232,15 @@ def table_ablation(N):
 
 
 def table_cost(N):
+    """Rows: methods; per backbone: time (s), calls, USD per 1k assets."""
     out = []
-    for b, bname in BACKBONES.items():
-        out.append(f"\\multicolumn{{5}}{{@{{}}l}}{{\\textit{{{bname}}}}} \\\\")
-        for key, name in [("direct", "Direct judge"), ("cot", "CoT judge"), ("structured", "Structured judge"),
-                          ("rule_only", "Rule-only validator"), ("eav", "EduAssetVerify")]:
+    for key, name in [("direct", "Direct judge"), ("cot", "CoT judge"), ("structured", "Structured judge"),
+                      ("rule_only", "Rule-only validator"), ("eav", "EduAssetVerify")]:
+        cells = []
+        for b in BACKBONES:
             c = N["cost"][f"{key}__{b}"]
-            out.append(f"\\quad {name} & {c['latency']:.1f} & {c['calls']:.1f} & {c['tin'] / 1000:.1f} / {c['tout'] / 1000:.1f} "
-                       f"& {c['usd_1k']:.2f} \\\\")
-    c = N["cost"]["clip"]
-    out.append("\\midrule")
-    out.append(f"Text--image similarity & {c['latency']:.3f} & 0 & -- & -- \\\\")
+            cells += [f"{c['latency']:.1f}", f"{c['calls']:.1f}", f"{c['usd_1k']:.2f}"]
+        out.append(f"{name} & " + " & ".join(cells) + " \\\\")
     return "\n".join(out) + "\n"
 
 
@@ -251,6 +249,7 @@ def table_cost(N):
 def fig_qual(N, man, R, bench, out_path):
     import matplotlib
     matplotlib.use("Agg")
+    matplotlib.rcParams["pdf.fonttype"] = 42      # embedded TrueType, not Type 3 (IEEE PDF eXpress)
     import matplotlib.pyplot as plt
     from matplotlib import patches
 
