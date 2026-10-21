@@ -14081,52 +14081,84 @@
   }
  },
  "teaser": {
-  "item_id": "be3761b61e04",
-  "objective": "Show the fraction 1/6: a rectangle divided into 6 equal parts with 1 of them colored.",
-  "split": "test_indomain",
-  "style": "flat_orange",
-  "parts": 6,
+  "item_id": "58a5c37ad5ec",
+  "objective": "Show the fraction 2/8: a circle divided into 8 equal parts with 2 of them colored.",
+  "split": "test_unseen_style",
+  "style": "dark",
+  "parts": 8,
   "crop_px": [
-   336,
-   206
+   322,
+   322
   ],
   "witness_norm": [
-   0.6666666666666666,
-   0.06796116504854369,
-   0.8809523809523809,
-   0.9271844660194175
+   0.515527950310559,
+   0.062111801242236024,
+   0.9503105590062112,
+   0.484472049689441
   ],
-  "area_ratios": [
-   0.9962264150943396,
-   0.9962264150943396,
-   0.9962264150943396,
-   0.9962264150943396,
-   1.630188679245283,
-   0.3849056603773585
+  "witness_same_every_pass": true,
+  "witness_area_ratio_measured": 1.6979626128964502,
+  "part_sizes_spec": [
+   0.125,
+   0.125,
+   0.125,
+   0.19929901564938096,
+   0.05070098435061904,
+   0.125,
+   0.125,
+   0.125
   ],
-  "witness_index": 4,
-  "witness_area_ratio": 1.630188679245283,
-  "verdicts_claude": {
-   "direct": [
-    "VALID",
-    "INVALID",
-    "VALID"
-   ],
-   "cot": [
-    "VALID",
-    "VALID",
-    "VALID"
-   ],
-   "structured": [
-    "VALID",
-    "VALID",
-    "VALID"
-   ],
-   "eav": [
-    "INVALID",
-    "INVALID",
-    "INVALID"
-   ]
+  "largest_part_ratio_spec": 1.5943921251950477,
+  "smallest_part_ratio_spec": 0.4056078748049523,
+  "verdicts": {
+   "direct": {
+    "gemini-3.5-flash": [
+     "INVALID",
+     "INVALID",
+     "INVALID"
+    ],
+    "global.anthropic.claude-sonnet-5": [
+     "VALID",
+     "VALID",
+     "VALID"
+    ]
+   },
+   "cot": {
+    "gemini-3.5-flash": [
+     "INVALID",
+     "INVALID",
+     "INVALID"
+    ],
+    "global.anthropic.claude-sonnet-5": [
+     "VALID",
+     "VALID",
+     "VALID"
+    ]
+   },
+   "structured": {
+    "gemini-3.5-flash": [
+     "INVALID",
+     "INVALID",
+     "INVALID"
+    ],
+    "global.anthropic.claude-sonnet-5": [
+     "VALID",
+     "VALID",
+     "VALID"
+    ]
+   },
+   "eav": {
+    "gemini-3.5-flash": [
+     "INVALID",
+     "INVALID",
+     "INVALID"
+    ],
+    "global.anthropic.claude-sonnet-5": [
+     "INVALID",
+     "INVALID",
+     "INVALID"
+    ]
+   }
   }
  },
  "max_sd_main_table": 0.007143445008142931,
