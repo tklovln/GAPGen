@@ -40,7 +40,7 @@ task says otherwise, then `git add`, `git commit`, `bash sync.sh push`.
 | `workshop.tex`, `creativeai.tex` | earlier papers, frozen; with `refs.bib`, `neurips_2026.sty`, `checklist.tex` |
 | `tables/{main,ablation,overview_values}.tex`, `figures/eav_examples.pdf`, `figures/eav_teaser_asset.png`, `figures/eav_overview_regions.png`, `figures/eav_domain_far.pdf` | generated from the experiment results on `main`; never edited by hand |
 | Figs. 1 and 2 | TikZ in `main.tex`; palette `eav*` colors and the robot/ruler icons (TikZ pics) are defined in the preamble, which also inputs `tables/overview_values.tex`. Fig. 1 shows the rule-picked pie asset (`teaser()` in `eav/paper.py`); Fig. 2 follows the same asset through every module, and every value it prints (and Fig. 1's red witness box) is a macro from `overview_values.tex` (`overview()` in `eav/paper.py`: parser answers from the response cache, readings from the run record, rule pass recomputed and checked against the logged verdicts). Typed by hand from `numbers.json`: the 59% in Fig. 1's caption and its judges' range bar |
-| Figs. 3 and 4 | `figures/eav_examples.pdf` (examples) and `figures/eav_domain_far.pdf` (false acceptance by domain, which replaced the domain table) |
+| Figs. 3 and 4 | `figures/eav_examples.pdf` (examples) and `figures/eav_domain_far.pdf` (false acceptance by domain under Claude only, which replaced the domain table; the Gemini maxima in its caption are `fig_domain` in `numbers.json`) |
 | `check_paper.py` | compile + venue-rule check; `PAPERS` holds the rules for `main.tex` |
 | `sync.sh` | the one path for commits between local, GitHub and Overleaf |
 
