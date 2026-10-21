@@ -14080,6 +14080,29 @@
    "test_unseen_style": 0.035555555555555556
   }
  },
+ "teaser": {
+  "item_id": "581ae2bb5129",
+  "objective": "Show the fraction 5/8: a rectangle divided into 8 equal parts with 5 of them colored.",
+  "split": "test_unseen_style",
+  "style": "pastel_thick",
+  "crop_px": [
+   342,
+   187
+  ],
+  "witness_norm": [
+   0.13157894736842105,
+   0.11229946524064172,
+   0.2543859649122807,
+   0.8877005347593583
+  ],
+  "witness_area_ratio": 1.6076555023923444,
+  "verdicts_claude_pass0": {
+   "direct": "VALID",
+   "cot": "VALID",
+   "structured": "VALID",
+   "eav": "INVALID"
+  }
+ },
  "max_sd_main_table": 0.007143445008142931,
  "max_sd_ablation_table": 0.005879447357921313
 }

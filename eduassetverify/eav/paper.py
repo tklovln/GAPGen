@@ -404,6 +404,37 @@ def fig_rc(man, R, out_path):
     plt.close(fig)
 
 
+def teaser(man, R, bench, out_dir) -> dict:
+    """First-page example: the unequal partition that all three Claude judges accepted.
+    Saves the cropped benchmark image and returns the witness box in crop-normalized units."""
+    from . import measure as M
+    b = "global.anthropic.claude-sonnet-5"
+    iid = next(e["item_id"] for e in pick_examples(man, R) if e["title"].startswith("Judges accept"))
+    m = man[iid]
+    spec = json.loads((bench / "specs" / f"{iid}.json").read_text())
+    g = spec["scene"]["geom"]
+    pad = 14
+    x0, y0 = int(g["x"] - pad), int(g["y"] - pad)
+    x1, y1 = int(np.ceil(g["x"] + g["w"] + pad)), int(np.ceil(g["y"] + g["h"] + pad))
+    img = Image.open(bench / m["image"]).convert("RGB").crop((x0, y0, x1, y1))
+    img.save(out_dir / "teaser_asset.png")
+    rec = next(r for r in R[("eav", b)] if r["item_id"] == iid and r["pass"] == 0)
+    rep = next(d for d in rec["report"] if d["cid"] == "equal")
+    wx0, wy0, wx1, wy1 = rep["witness"]
+    W, H = x1 - x0, y1 - y0
+    rgb = np.asarray(Image.open(bench / m["image"]).convert("RGB"))
+    ev = rec["readings"][0]
+    shape = max(ev["shapes"], key=lambda sh: (sh["box"][2] - sh["box"][0]) * (sh["box"][3] - sh["box"][1]))
+    part = M.partition(rgb, shape["box"])
+    mean = float(np.mean([q["area"] for q in part["parts"]]))
+    worst = next(q for q in part["parts"] if q["bbox"] == part["worst"])
+    verdicts = {k: next(r for r in R[(k, b)] if r["item_id"] == iid and r["pass"] == 0)["verdict"]
+                for k in ("direct", "cot", "structured", "eav")}
+    return {"item_id": iid, "objective": m["objective"], "split": m["split"], "style": m["style"],
+            "crop_px": [W, H], "witness_norm": [(wx0 - x0) / W, (wy0 - y0) / H, (wx1 - x0) / W, (wy1 - y0) / H],
+            "witness_area_ratio": float(worst["area"]) / mean, "verdicts_claude_pass0": verdicts}
+
+
 # --------------------------------------------------------------------------- main
 
 def main() -> None:
@@ -443,6 +474,7 @@ def main() -> None:
     N["battery"] = {b: json.loads((pathlib.Path("results/battery") / f"{b}.json").read_text()) for b in BACKBONES}
     N["examples"] = pick_examples(man, R)
     N["extras"] = extras(man, R)
+    N["teaser"] = teaser(man, R, bench, out)
     N["max_sd_main_table"] = main_max_sd(N)
     N["max_sd_ablation_table"] = ablation_max_sd(N)
 
