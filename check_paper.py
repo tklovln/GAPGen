@@ -53,7 +53,8 @@ PAPERS = {
 }
 
 # Strings that must never reach a double-blind PDF. Extend as co-authors join.
-IDENTIFIERS = ["tkwang", "Ting-Kang", "Gamania", "gmail.com", "Match3_sim"]
+IDENTIFIERS = ["tkwang", "Ting-Kang", "Gamania", "gmail.com", "Match3_sim",
+               "tklovln"]  # the GitHub account: any link to it names the author
 
 # Draft markers defined in main.tex for numbers and claims that wait for the
 # experiments. Any use outside their \newcommand definition blocks submission.
@@ -77,6 +78,10 @@ def find_tectonic() -> str | None:
 
 
 def compile_tex(tectonic: str, tex: Path) -> None:
+    # An .aux written before a package change (hyperref adds fields to every \newlabel)
+    # stops the next run with an error such as "Argument of \Hy@setref@link has an extra }".
+    for ext in (".aux", ".out"):
+        tex.with_suffix(ext).unlink(missing_ok=True)
     subprocess.run(
         [tectonic, "-X", "compile", tex.name, "--keep-logs", "--keep-intermediates"],
         cwd=ROOT,
@@ -184,7 +189,8 @@ def check(tex_name: str, cfg: dict, tectonic: str | None) -> tuple[list[str], li
         rules.append(f"{tex_name}: {n_ph} draft placeholder(s) (\\pending, \\tbd) still in the text")
 
     if cfg["blind"]:
-        hits = [i for i in IDENTIFIERS if i.lower() in src.lower()]
+        printed = "\n".join(re.sub(r"(?<!\\)%.*", "", ln) for ln in src.splitlines())  # comments never print
+        hits = [i for i in IDENTIFIERS if i.lower() in printed.lower()]
         if hits:
             rules.append(f"{tex_name}: double-blind but source contains {hits}")
         # The reference list is printed from the .bbl, not from the .tex.
