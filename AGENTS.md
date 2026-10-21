@@ -104,8 +104,9 @@ changes. Thresholds are fixed on the dev split only; a post-test change goes int
   `anonymous.4open.science/w/eduassetverify-demo/` (`/r/` would open its repository browser).
   `/w/` works only while "GitHub Pages" is ticked under Features in the mirror's settings, which
   only the user can change; the mirror masks the terms `tklovln` and `xdblazer39`. The mirror is
-  outside `check_paper.py`; before upload, the page must load (`curl -s -o /dev/null -w "%{http_code}"
-  https://anonymous.4open.science/w/eduassetverify-demo/` prints 200, not 400 page_not_activated) and
+  outside `check_paper.py`; before upload, the page must load (`curl -s -H "Accept: text/html" -o /dev/null -w "%{http_code}"
+  https://anonymous.4open.science/w/eduassetverify-demo/` prints 200; without that header the mirror
+  answers 404, and 400 means page_not_activated) and
   no served file may name the account or carry the mirror's mask `XXXX-n` (this must print 0):
   `for f in $(for p in "" thumbs; do curl -s "https://anonymous.4open.science/api/repo/eduassetverify-demo/files?path=$p" | python3 -c "import json,sys; print(' '.join('/'.join(filter(None, (x['path'], x['name']))) for x in json.load(sys.stdin) if x.get('size')))"; done); do curl -s "https://anonymous.4open.science/api/repo/eduassetverify-demo/file/$f"; done | grep -c -i "tklovln\|xdblazer\|github\.io\|XXXX-[0-9]"`.
   Camera-ready: the GitHub Pages address of the demo repository.
