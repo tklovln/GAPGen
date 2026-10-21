@@ -19,10 +19,9 @@
 % Figure palette
 \definecolor{eavPurple}{HTML}{7F55B1}\definecolor{eavLilac}{HTML}{9B7EBD}\definecolor{eavPink}{HTML}{F49BAB}
 \definecolor{eavBlush}{HTML}{FFE1E0}\definecolor{eavCream}{HTML}{EEECE1}\definecolor{eavRose}{HTML}{E16981}
-% Icons for Figs. 1 and 2 (TikZ pics); the arguments are colors.
+\definecolor{eavRed}{HTML}{D50000} % witness boxes, as in Fig. 3
+% Icons for Fig. 1 (TikZ pics); the arguments are colors.
 \tikzset{
-  pics/goal/.style 2 args={code={% learning objective: bullseye, ink #1 on #2
-    \fill[#1] (0,0) circle (0.17); \fill[#2] (0,0) circle (0.115); \fill[#1] (0,0) circle (0.06);}},
   pics/robot/.style={code={% VLM judge
     \draw[#1, line width=0.8pt] (0,0.18) -- (0,0.28); \fill[#1] (0,0.30) circle (0.045);
     \fill[#1] (-0.29,-0.06) rectangle (0.29,0.06);
@@ -39,37 +38,6 @@
   pics/nomark/.style 2 args={code={% reject: disc #1, cross #2
     \fill[#1] (0,0) circle (0.24);
     \draw[#2, line width=1.5pt, line cap=round] (-0.085,-0.085) -- (0.085,0.085) (-0.085,0.085) -- (0.085,-0.085);}},
-  pics/unmark/.style 2 args={code={% abstain: disc #1, question mark #2
-    \fill[#1] (0,0) circle (0.24);
-    \node[text=#2, font=\sffamily\bfseries\small, inner sep=0pt] at (0,0) {?};}},
-  pics/warn/.style={code={% wrong verdict
-    \filldraw[fill=#1, draw=white, line width=0.7pt, rounded corners=0.8pt] (-0.13,-0.10) -- (0.13,-0.10) -- (0,0.13) -- cycle;
-    \draw[white, line width=0.75pt, line cap=round] (0,-0.02) -- (0,0.05); \fill[white] (0,-0.06) circle (0.017);}},
-  pics/imageicon/.style={code={% an image
-    \draw[#1, line width=0.9pt, rounded corners=1.5pt] (-0.29,-0.21) rectangle (0.29,0.21);
-    \fill[#1] (-0.21,-0.14) -- (-0.08,0.05) -- (0,-0.05) -- (0.08,0.02) -- (0.21,-0.14) -- cycle;
-    \fill[#1] (0.13,0.11) circle (0.045);}},
-  pics/docicon/.style={code={% text in, structure out
-    \draw[#1, line width=0.9pt, line join=round] (-0.48,-0.24) -- (-0.48,0.24) -- (-0.22,0.24) -- (-0.12,0.14) -- (-0.12,-0.24) -- cycle;
-    \foreach \y in {0.08,-0.02,-0.12} \draw[#1, line width=0.8pt, line cap=round] (-0.39,\y) -- (-0.21,\y);
-    \draw[#1, line width=0.9pt, -{Stealth[length=1.4mm]}] (-0.04,0) -- (0.16,0);
-    \node[text=#1, font=\sffamily\bfseries\large, inner sep=0pt] at (0.36,0.01) {\{\,\}};}},
-  pics/eye/.style 2 args={code={% perception: ink #1 on #2
-    \fill[#1] (-0.32,0) .. controls (-0.13,0.22) and (0.13,0.22) .. (0.32,0) .. controls (0.13,-0.22) and (-0.13,-0.22) .. (-0.32,0) -- cycle;
-    \fill[#2] (0,0) circle (0.105); \fill[#1] (0,0) circle (0.05);}},
-  pics/checklist/.style={code={% constraint set
-    \foreach \y in {0.16,0,-0.16} {\draw[#1, line width=0.7pt, rounded corners=0.5pt] (-0.25,{\y-0.055}) rectangle (-0.14,{\y+0.055});
-      \draw[#1, line width=0.9pt, line cap=round] (-0.06,\y) -- (0.25,\y);}}},
-  pics/evidence/.style={code={% evidence graph and measured areas
-    \draw[#1, line width=0.8pt] (-0.50,-0.12) -- (-0.36,0.13) -- (-0.20,-0.10) -- cycle;
-    \fill[#1] (-0.50,-0.12) circle (0.055) (-0.36,0.13) circle (0.055) (-0.20,-0.10) circle (0.055);
-    \fill[#1!45] (0.02,-0.17) rectangle ++(0.09,0.2) (0.14,-0.17) rectangle ++(0.09,0.2) (0.38,-0.17) rectangle ++(0.09,0.08);
-    \fill[#1] (0.26,-0.17) rectangle ++(0.09,0.33);
-    \draw[eavRose, dashed, line width=0.6pt] (-0.02,0.03) -- (0.51,0.03);}},
-  pics/report/.style={code={% verdict with its report and witness
-    \fill[white, rounded corners=1pt] (-0.25,-0.32) rectangle (0.25,0.32);
-    \foreach \y in {0.19,0.08,-0.03} \draw[#1, line width=0.9pt, line cap=round] (-0.15,\y) -- (0.15,\y);
-    \draw[eavPurple, line width=0.9pt] (-0.15,-0.23) rectangle (0.0,-0.12);}},
 }
 
 % Draft markers: every claim or number that waits for the experiments.
@@ -126,35 +94,32 @@ Automatic evaluators do not close this gap. Embedding-based similarity scores~\c
 \centering
 \begin{tikzpicture}[x=1cm, y=1cm, font=\sffamily\bfseries\scriptsize,
   arr/.style={-{Stealth[length=1.6mm]}, line width=0.9pt}]
-\fill[eavCream, rounded corners=6pt] (0,0) rectangle (8.6,4.3);
-% objective 1/6 and the test asset; purple box: the witness EduAssetVerify reports
-% (numbers.json: teaser.witness_norm; the bars below are generated as tables/teaser_bars.tex)
-\node[fill=eavPurple, text=white, rounded corners=3.1mm, minimum height=6.2mm, inner xsep=7pt, anchor=south west,
-  font=\sffamily\bfseries\large] (goal) at (0.25,3.5) {\hspace{4.4mm}1/6};
-\pic at ($(goal.west)+(0.36,0)$) {goal={white}{eavPurple}};
-\node[anchor=north west, inner sep=0pt] (img) at (0.25,3.36) {\includegraphics[width=3.4cm]{figures/eav_teaser_asset.png}};
-\begin{scope}[shift={(img.south west)}, x={($(img.south east)-(img.south west)$)}, y={($(img.north west)-(img.south west)$)}]
-  \draw[eavPurple, line width=1.3pt, rounded corners=1pt] (0.667,1-0.927) rectangle (0.881,1-0.068);
+\fill[eavCream, rounded corners=6pt] (0,0) rectangle (8.6,4.6);
+\node[anchor=north west, inner sep=0pt, font=\sffamily\footnotesize] at (0.25,4.38)
+  {\textbf{Asset meant to show 2/8}\ \ {\mdseries\color{black!60}(8 equal parts, 2 colored)}};
+% the benchmark test asset; red box: the part EduAssetVerify reports (numbers.json: teaser.witness_norm)
+\begin{scope}
+  \clip[rounded corners=4pt] (0.25,1.4) rectangle (2.85,4.0);
+  \node[anchor=south west, inner sep=0pt] at (0.25,1.4) {\includegraphics[width=2.6cm]{figures/eav_teaser_asset.png}};
 \end{scope}
-\coordinate (fork) at ($(img.east)+(0.22,0)$);
-\draw[line width=0.9pt, black!40] (img.east) -- (fork);
-\draw[arr, eavRose] (fork) |- (4.3,3.0);
-\draw[arr, eavPurple] (fork) |- (4.3,1.88);
-% VLM judges: a verdict without evidence
-\pic at (4.75,3.0) {robot=eavRose};
-\node[text=eavRose] at (4.75,2.6) {VLM judges};
-\draw[arr, eavRose] (5.15,3.0) -- (7.55,3.0);
-\pic at (7.85,3.0) {okmark={eavRose}{white}};
-\pic at (8.1,3.2) {warn=eavRose};
-\node[text=eavRose] at (7.85,2.6) {Valid};
-% EduAssetVerify: measured part areas (dashed line: equal share), then the rejection
-\pic[rotate=25] at (4.75,1.9) {ruler={eavPurple}{white}};
-\node[text=eavPurple] at (4.75,1.4) {EduAssetVerify};
-\draw[arr, eavPurple] (5.17,1.88) -- (5.47,1.88);
-\begin{scope}[shift={(5.6,1.6)}] \input{tables/teaser_bars.tex} \end{scope}
-\draw[arr, eavPurple] (7.27,1.88) -- (7.55,1.88);
-\pic at (7.85,1.88) {nomark={eavPurple}{white}};
-\node[text=eavPurple] at (7.85,1.48) {Invalid};
+\begin{scope}[shift={(0.25,1.4)}, x=2.6cm, y=2.6cm]
+  \draw[eavRed, line width=1.3pt] (0.516,1-0.484) rectangle (0.950,1-0.062);
+\end{scope}
+\draw[line width=0.9pt, black!40] (2.9,2.7) -- (3.15,2.7);
+\draw[arr, eavRose] (3.15,2.7) |- (3.8,3.3);
+\draw[arr, eavPurple] (3.15,2.7) |- (3.8,2.1);
+% VLM judges
+\pic at (4.25,3.3) {robot=eavRose};
+\node[text=eavRose] at (4.25,2.9) {VLM judges};
+\draw[arr, eavRose] (4.75,3.3) -- (6.22,3.3);
+\pic at (6.52,3.3) {okmark={eavRose}{white}};
+\node[anchor=west, text=eavRose, font=\sffamily\bfseries\footnotesize] at (6.86,3.3) {Valid};
+% EduAssetVerify
+\pic[rotate=25] at (4.25,2.12) {ruler={eavPurple}{white}};
+\node[text=eavPurple] at (4.25,1.66) {EduAssetVerify};
+\draw[arr, eavPurple] (4.75,2.1) -- (6.22,2.1);
+\pic at (6.52,2.1) {nomark={eavPurple}{white}};
+\node[anchor=west, text=eavPurple, font=\sffamily\bfseries\footnotesize] at (6.86,2.1) {Invalid};
 % violated test assets accepted: judges (range bar, min and max judge FAR in numbers.json main) and EduAssetVerify (diamond)
 \fill[white, rounded corners=4pt] (0.25,0.18) rectangle (8.35,1.1);
 \foreach \y in {0.84,0.44} \fill[black!7, rounded corners=1.5pt] (1.05,{\y-0.08}) rectangle (5.55,{\y+0.08});
@@ -166,49 +131,30 @@ Automatic evaluators do not close this gap. Embedding-based similarity scores~\c
 \node[anchor=west, text=eavPurple] at (5.65,0.44) {0\%};
 \node[align=center, text=black!65, font=\sffamily\scriptsize] at (7.55,0.64) {Violations\\accepted};
 \end{tikzpicture}
-\caption{A benchmark test asset for the objective 1/6 with one part 63\% too large. The VLM judges accepted it (CoT and structured in all three passes, direct in two); EduAssetVerify rejected it in every pass, citing the purple part, whose measured area (bars; dashed: equal share) breaks the equal-area rule. Bottom: violated test assets accepted under two model families.}
+\caption{A benchmark test asset (unseen style) meant to show 2/8 in eight equal parts; the red box marks a part 59\% too large. With Claude Sonnet 5, all three VLM judges accepted it in every pass, with Gemini 3.5 Flash in none; EduAssetVerify rejected it in every pass with either backbone, citing the boxed part. Bottom: violated test assets accepted under both backbones.}
 \label{fig:teaser}
 \end{figure}
 
 \begin{figure*}[t]
 \centering
-\begin{tikzpicture}[x=1cm, y=1cm, font=\sffamily\bfseries\footnotesize,
-  card/.style={rounded corners=6pt, minimum height=13.5mm},
-  inbox/.style={card, fill=eavCream, minimum width=27.5mm},
-  modbox/.style={card, fill=eavLilac, minimum width=34mm},
-  databox/.style={card, fill=eavBlush, minimum width=36.5mm},
-  corebox/.style={card, fill=eavPurple, minimum width=28mm, minimum height=37mm},
-  outbox/.style={card, fill=eavRose, minimum width=25mm, minimum height=37mm},
-  ttl/.style={anchor=north, align=center, inner sep=0pt, yshift=-2.2mm},
+\begin{tikzpicture}[x=1cm, y=1cm, font=\sffamily\small,
+  card/.style={rounded corners=6pt, align=center, inner sep=5pt, minimum height=15mm},
+  inbox/.style={card, fill=eavCream, text width=24mm},
+  modbox/.style={card, fill=eavLilac, text=white, text width=31mm},
+  databox/.style={card, fill=eavBlush, text width=29mm},
+  corebox/.style={card, fill=eavPurple, text=white, text width=31mm, minimum height=40mm},
+  outbox/.style={card, fill=eavRose, text=white, text width=26mm, minimum height=40mm},
   flow/.style={-{Stealth[length=2.4mm]}, line width=1.1pt, draw=eavPurple!80},
   stepbadge/.style={circle, fill=white, draw=eavPurple, line width=0.8pt, text=eavPurple, inner sep=0pt,
     minimum size=4.6mm, font=\sffamily\bfseries\scriptsize}]
-\node[inbox] (obj) at (0,1.175) {};
-\node[inbox] (img) at (0,-1.175) {};
-\node[modbox] (parse) at (3.8,1.175) {};
-\node[modbox] (ground) at (3.8,-1.175) {};
-\node[databox] (cons) at (8.05,1.175) {};
-\node[databox] (evid) at (8.05,-1.175) {};
-\node[corebox] (verify) at (12.0,0) {};
-\node[outbox] (verdict) at (15.375,0) {};
-\node[ttl] at (obj.north) {Learning objective};
-\node[ttl] at (img.north) {Generated asset};
-\node[ttl, text=white] at (parse.north) {Constraint parser};
-\node[ttl, text=white] at (ground.north) {Value-blind grounding};
-\node[ttl] at (cons.north) {Constraint set};
-\node[ttl] at (evid.north) {Evidence + measurement};
-\node[ttl, text=white] at (verify.north) {Three-valued\\verification};
-\node[ttl, text=white] at (verdict.north) {Verdict};
-\pic[scale=1.15] at ([yshift=-1.8mm]obj.center) {goal={eavPurple}{eavCream}};
-\pic[scale=1.15] at ([yshift=-1.8mm]img.center) {imageicon=eavPurple};
-\pic[scale=1.1] at ([yshift=-1.8mm]parse.center) {docicon=white};
-\pic[scale=1.15] at ([yshift=-1.8mm]ground.center) {eye={white}{eavLilac}};
-\pic[scale=1.15] at ([yshift=-1.8mm]cons.center) {checklist=eavPurple};
-\pic[scale=1.1] at ([yshift=-1.8mm]evid.center) {evidence=eavPurple};
-\pic[scale=1.4] at ($(verify.center)+(-0.8,-0.25)$) {okmark={white}{eavPurple}};
-\pic[scale=1.4] at ($(verify.center)+(0,-0.25)$) {nomark={white}{eavPurple}};
-\pic[scale=1.4] at ($(verify.center)+(0.8,-0.25)$) {unmark={white}{eavPurple}};
-\pic[scale=1.8] at ($(verdict.center)+(0,-0.25)$) {report=eavRose};
+\node[inbox] (obj) at (0,1.25) {\textbf{Learning objective}\\[1pt]{\footnotesize ``show 1/4''}};
+\node[inbox] (img) at (0,-1.25) {\textbf{Generated asset}\\[1pt]{\footnotesize image to verify}};
+\node[modbox] (parse) at (3.75,1.25) {\textbf{Constraint parser}\\[1pt]{\footnotesize schema + consistency}};
+\node[modbox] (ground) at (3.75,-1.25) {\textbf{Value-blind grounding}\\[1pt]{\footnotesize VLM, $m$ readings}};
+\node[databox] (cons) at (7.55,1.25) {\textbf{Constraint set}\\[1pt]{\footnotesize counts, areas, relations, labels}};
+\node[databox] (evid) at (7.55,-1.25) {\textbf{Evidence + measurement}\\[1pt]{\footnotesize objects, text, areas}};
+\node[corebox] (verify) at (11.35,0) {\textbf{Three-valued verification}\\[6pt]{\footnotesize rules decide\\[2pt]disagree $\rightarrow$ abstain}};
+\node[outbox] (verdict) at (14.95,0) {\textbf{Verdict}\\[6pt]{\footnotesize Valid, Invalid,\\or Uncertain\\[2pt]+ witness region}};
 \draw[flow] (obj) -- (parse);
 \draw[flow] (parse) -- (cons);
 \draw[flow] (img) -- (ground);
@@ -222,7 +168,7 @@ Automatic evaluators do not close this gap. Embedding-based similarity scores~\c
 \node[stepbadge] at (verify.north west) {3};
 \node[stepbadge] at (verdict.north west) {4};
 \end{tikzpicture}
-\caption{Architecture of EduAssetVerify. (1) A parser turns the objective into constraints on counts, areas, relations, and labels, and rejects contradictory ones. (2) A VLM that sees only the constraint vocabulary reads the asset $m$ times into an evidence graph, and deterministic operators measure areas and symmetry. (3) Three-valued rules decide each constraint, re-reading semantic ones and abstaining on disagreement. (4) The report names the witness region.}
+\caption{Architecture of EduAssetVerify. (1) Learning objectives become formal constraints; (2) a VLM reads the image without seeing target values, and deterministic operators measure its geometry; (3) three-valued rules decide each constraint; (4) the verdict cites the evidence behind it.}
 \label{fig:overview}
 \end{figure*}
 
