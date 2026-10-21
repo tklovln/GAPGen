@@ -408,6 +408,13 @@ PALETTE = {"purple": "#7F55B1", "lilac": "#9B7EBD", "pink": "#F49BAB", "blush": 
            "cream": "#EEECE1", "rose": "#E16981"}
 
 
+def circle_crop(spec, pad: int = 10) -> tuple[int, int, int, int]:
+    """Pixel window around a circle asset, shared by Figs. 1 and 2."""
+    g = spec["scene"]["geom"]
+    return (int(g["cx"] - g["r"] - pad), int(g["cy"] - g["r"] - pad),
+            int(np.ceil(g["cx"] + g["r"] + pad)), int(np.ceil(g["cy"] + g["r"] + pad)))
+
+
 def teaser(man, R, bench, out_dir) -> dict:
     """First-page example, chosen by rule: among test unequal partitions of a circle (a pie, the
     most familiar fraction model) that all three Claude judges accepted in pass 0 and
@@ -435,10 +442,7 @@ def teaser(man, R, bench, out_dir) -> dict:
         cands.append((len(spec["scene"]["sizes"]), len(m["constraints"]), -all3, iid, spec))
     n, _, _, iid, spec = sorted(cands, key=lambda t: t[:4])[0]
     m = man[iid]
-    g = spec["scene"]["geom"]
-    pad = 10
-    x0, y0 = int(g["cx"] - g["r"] - pad), int(g["cy"] - g["r"] - pad)
-    x1, y1 = int(np.ceil(g["cx"] + g["r"] + pad)), int(np.ceil(g["cy"] + g["r"] + pad))
+    x0, y0, x1, y1 = circle_crop(spec)
     Image.open(bench / m["image"]).convert("RGB").crop((x0, y0, x1, y1)).save(out_dir / "teaser_asset.png")
     W, H = x1 - x0, y1 - y0
     recs = sorted((r for r in R[("eav", b)] if r["item_id"] == iid), key=lambda r: r["pass"])
@@ -459,6 +463,145 @@ def teaser(man, R, bench, out_dir) -> dict:
             "witness_area_ratio_measured": worst["area"] / mean,
             "part_sizes_spec": sizes, "largest_part_ratio_spec": max(sizes) * n, "smallest_part_ratio_spec": min(sizes) * n,
             "verdicts": judges}
+
+
+def _tex(s) -> str:
+    return (str(s).replace("\\", "\\textbackslash{}").replace("_", "\\_").replace("%", "\\%")
+            .replace("&", "\\&").replace("#", "\\#").replace("$", "\\$"))
+
+
+def overview(man, R, bench, parse_dir, out_dir, iid: str) -> dict:
+    """Fig. 2: what every module produced on the Fig. 1 asset (Claude Sonnet 5, pass 0).
+
+    Parser answers are read from the response cache (no network; a missing entry is an
+    error), grounding readings from the main-run record, and the rule pass is recomputed on
+    the extracted constraints; it must reproduce the logged verdicts of the extracted and the
+    gold regime. Writes the measured regions as a PNG and every value the figure prints as
+    LaTeX macros (overview_values.tex), so the TikZ figure types no number by hand."""
+    from . import measure as M
+    from .evidence import SEMANTIC_CATEGORY, SEMANTIC_TEXT, parse_json
+    from .methods import parser as PA
+    from .rules import Config, decide
+    from .vlm.client import make
+    b = "global.anthropic.claude-sonnet-5"
+    m = man[iid]
+    spec = json.loads((bench / "specs" / f"{iid}.json").read_text())
+
+    def parsed(model, p):
+        vlm = make(model, temperature=0.7, thinking_budget=1024 if model.startswith("gemini") else None)
+        r = vlm.ask(PA.prompt(m["objective"]), [], sample=f"parse-p{p}", allow_network=False)
+        if r.get("error"):
+            raise RuntimeError(f"parser answer for {iid} ({model}, pass {p}) is not in the response cache")
+        return PA.normalize((parse_json(r["text"]) or {}).get("constraints"))
+
+    def keyset(cs):
+        return sorted(json.dumps([c["name"], c.get("subject"), c["value"]]) for c in cs)
+
+    cons = parsed(b, 0)
+    same_parse = all(keyset(parsed(bb, p)) == keyset(cons) for bb in BACKBONES for p in range(3))
+    conflicts = PA.contradictions(cons)
+    if conflicts:
+        raise RuntimeError(f"overview item {iid}: parsed constraints are inconsistent: {conflicts}")
+    val = {c["name"]: c["value"] for c in cons}
+    n, k, frac = val["part_count"], val["colored_part_count"], val["fraction_value"]
+
+    rec = next(r for r in R[("eav", b)] if r["item_id"] == iid and r["pass"] == 0)
+    rgb = np.asarray(Image.open(bench / m["image"]).convert("RGB"))
+    read0 = rec["readings"][0]
+    shape = max(read0["shapes"], key=lambda sh: (sh["box"][2] - sh["box"][0]) * (sh["box"][3] - sh["box"][1]))
+    sem_names = {c["name"] for c in cons} & (SEMANTIC_TEXT | SEMANTIC_CATEGORY)
+    if sem_names or any(x is not None for x in rec["semantic"]):
+        raise RuntimeError("overview item triggers the semantic verifier; the figure draws it as not triggered")
+
+    res = decide(cons, rec["readings"], rec["semantic"], rgb, Config())
+    ext = next(json.loads(line) for line in open(parse_dir / f"eav_extracted_test__{b}.jsonl")
+               if json.loads(line)["item_id"] == iid and json.loads(line)["pass"] == 0)
+    if not (res["verdict"] == ext["verdict"] == rec["verdict"] and res["confidence"] == ext["confidence"]):
+        raise RuntimeError("recomputed rule pass does not reproduce the logged verdicts")
+    gem = {r["item_id"]: r["verdict"] for r in R[("eav", "gemini-3.5-flash")] if r["pass"] == 0}
+    gem_ext = next(json.loads(line)["verdict"] for line in open(parse_dir / "eav_extracted_test__gemini-3.5-flash.jsonl")
+                   if json.loads(line)["item_id"] == iid and json.loads(line)["pass"] == 0)
+    same_verdict = gem[iid] == gem_ext == res["verdict"]
+
+    # measured regions, drawn in the same pixel window as Fig. 1
+    part = M.partition(rgb, shape["box"], masks=True)
+    x0, y0, x1, y1 = circle_crop(spec)
+    W, H = x1 - x0, y1 - y0
+    areas = np.array([q["area"] for q in part["parts"]], float)
+    ratios = areas / areas.mean()
+    big, small = int(np.argmax(ratios)), int(np.argmin(ratios))
+    eps_t, eps_f = Config().equal_area
+    canvas = np.full((H, W, 4), 0, np.uint8)
+    ox, oy = part["origin"]
+    def tint(hex_color, pct):          # xcolor's  name!pct  (mixed with white), so the TikZ swatches match
+        rgb = np.array([int(hex_color[i:i + 2], 16) for i in (1, 3, 5)], float)
+        return tuple(int(round(v)) for v in pct / 100 * rgb + (1 - pct / 100) * 255)
+    red = "#D50000"                    # eavRed in main.tex, the witness color of Figs. 1 and 3
+    for i, q in enumerate(part["parts"]):
+        if i == big:
+            color = tint(red, 30)        # oversized part (the witness)
+        elif i == small:
+            color = tint(red, 15)        # undersized part
+        elif q["colored"]:
+            color = tint(PALETTE["lilac"], 100)
+        else:
+            color = tint(PALETTE["lilac"], 25)
+        ys, xs = np.nonzero(q["mask"])
+        ys, xs = ys + oy - y0, xs + ox - x0
+        keep = (ys >= 0) & (ys < H) & (xs >= 0) & (xs < W)
+        canvas[ys[keep], xs[keep]] = (*color, 255)
+    Image.fromarray(canvas, "RGBA").save(out_dir / "overview_regions.png")
+
+    report = {d["name"]: d for d in res["report"]}
+    agree = min(sum(r["status"] == d["status"] for r in d["readings"]) for d in res["report"])
+    q_min = min(d["q"] for d in res["report"])
+    fails = [d for d in res["report"] if d["status"] == "F"]
+    wx0, wy0, wx1, wy1 = fails[0]["witness"]
+
+    def shown(d):
+        v = d["readings"][0]["value"]
+        return f"d = {v:.2f}" if isinstance(v, float) else str(v)
+
+    parse_lines = [_tex(c["name"]) + ("" if c["value"] is True else f" = {_tex(c['value'])}") for c in cons]
+    rows = [f"\\ovRow{{{i + 1}}}{{{_tex(d['name'])}}}{{{_tex(shown(d))}}}{{{d['status']}}}" for i, d in enumerate(res["report"])]
+    texts = ", ".join(t["text"] for t in read0["texts"]) or "none"
+    mac = {
+        "ovObjective": _tex(m["objective"]),
+        "ovParse": "\\\\".join(parse_lines),
+        "ovConsColored": str(k), "ovConsParts": str(n), "ovConsFraction": _tex(frac), "ovConsRatio": f"{k}/{n}",
+        "ovShape": _tex(shape["shape"]), "ovBox": "[" + ",".join(str(round(v)) for v in shape["box"]) + "]",
+        "ovGParts": str(len(shape["parts"])), "ovGColored": str(sum(p["colored"] for p in shape["parts"])),
+        "ovGTexts": _tex(texts), "ovReadings": str(len(rec["readings"])),
+        "ovRegions": str(part["n"]), "ovMColored": str(part["colored"]), "ovDev": f"{part['deviation']:.2f}",
+        "ovBig": f"{ratios[big]:.2f}", "ovSmall": f"{ratios[small]:.2f}",
+        "ovRuleRows": "".join(rows),
+        "ovEpsT": f"{eps_t:.2f}", "ovEpsF": f"{eps_f:.2f}", "ovTau": f"{Config().tau:g}",
+        "ovAgree": f"{agree} of {len(rec['readings'])}", "ovQ": f"{q_min:.1f}",
+        "ovMin": ", ".join(d["status"] for d in res["report"]),
+        "ovMinResult": min((d["status"] for d in res["report"]), key={"F": 0, "U": 1, "T": 2}.get),
+        "ovVerdict": res["verdict"], "ovFailed": _tex(fails[0]["name"]),
+        # witness box in the Fig. 1 crop, normalized, y up (lower-left a, upper-right b)
+        "ovWitnessXa": f"{(wx0 - x0) / W:.3f}", "ovWitnessYa": f"{1 - (wy1 - y0) / H:.3f}",
+        "ovWitnessXb": f"{(wx1 - x0) / W:.3f}", "ovWitnessYb": f"{1 - (wy0 - y0) / H:.3f}",
+    }
+    pills = {v: ("pillon" if v == res["verdict"] else "pilloff") for v in ("VALID", "INVALID", "UNCERTAIN")}
+    lines = ["% Generated by eduassetverify/eav/paper.py (overview) from the experiment records and the",
+             f"% response cache: item {iid}, Claude Sonnet 5, pass 0; do not edit by hand."]
+    lines += [f"\\newcommand{{\\{name}}}{{{v}}}" for name, v in mac.items()]
+    lines.append("\\tikzset{" + ", ".join(f"pill{v}/.style={{{st}}}" for v, st in pills.items()) + "}")
+    (out_dir / "overview_values.tex").write_text("\n".join(lines) + "\n")
+    return {"item_id": iid, "backbone": b, "pass": 0, "constraints": [[c["name"], c["value"]] for c in cons],
+            "consistency_conflicts": conflicts, "same_constraints_every_backbone_and_pass": same_parse,
+            "grounding_reading0": {"shape": shape["shape"], "box": [round(v) for v in shape["box"]],
+                                   "parts": len(shape["parts"]), "colored": sum(p["colored"] for p in shape["parts"]),
+                                   "texts": [t["text"] for t in read0["texts"]]},
+            "semantic_triggered": False,
+            "measurement": {"regions": part["n"], "colored": part["colored"], "deviation": part["deviation"],
+                            "ratios": [float(x) for x in ratios], "worst": part["worst"]},
+            "rules": [{"name": d["name"], "value": d["readings"][0]["value"], "status": d["status"], "q": d["q"]}
+                      for d in res["report"]],
+            "readings_agree": f"{agree}/{len(rec['readings'])}", "verdict": res["verdict"],
+            "witness": fails[0]["witness"], "same_verdict_under_gemini": same_verdict}
 
 
 def fig_domain(N, out_path):
@@ -550,6 +693,7 @@ def main() -> None:
     N["examples"] = pick_examples(man, R)
     N["extras"] = extras(man, R)
     N["teaser"] = teaser(man, R, bench, out)
+    N["overview"] = overview(man, R, bench, pathlib.Path(args.parse), out, N["teaser"]["item_id"])
     N["max_sd_main_table"] = main_max_sd(N)
     N["max_sd_ablation_table"] = ablation_max_sd(N)
 

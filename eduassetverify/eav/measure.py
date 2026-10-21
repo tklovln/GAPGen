@@ -58,8 +58,10 @@ def _edges(rgb: np.ndarray, thresh: float = 120.0) -> np.ndarray:
 
 # --------------------------------------------------------------------------- partition
 
-def partition(rgb: np.ndarray, box) -> dict:
-    """Parts of a divided shape inside `box`: regions bounded by edges, not touching the crop border."""
+def partition(rgb: np.ndarray, box, masks: bool = False) -> dict:
+    """Parts of a divided shape inside `box`: regions bounded by edges, not touching the crop border.
+    masks=True also returns each part's boolean mask in crop coordinates and the crop origin
+    (used only to draw the paper's overview figure; the verifier never asks for them)."""
     x0, y0, x1, y1 = _pad(box)
     crop = rgb[y0:y1, x0:x1]
     if crop.shape[0] < 20 or crop.shape[1] < 20:
@@ -91,9 +93,14 @@ def partition(rgb: np.ndarray, box) -> dict:
     out_parts = [{"bbox": [p["bbox"][0] + x0, p["bbox"][1] + y0, p["bbox"][2] + x0, p["bbox"][3] + y0],
                   "area": int(a), "colored": bool(c)} for p, a, c in zip(parts, areas, colored)]
     dev = np.abs(areas / areas.mean() - 1.0)
-    return {"ok": len(parts) >= 2 and covered >= 0.3, "n": len(parts), "colored": int(colored.sum()),
-            "deviation": float(dev.max()), "worst": out_parts[int(np.argmax(dev))]["bbox"], "parts": out_parts,
-            "coverage": float(covered)}
+    out = {"ok": len(parts) >= 2 and covered >= 0.3, "n": len(parts), "colored": int(colored.sum()),
+           "deviation": float(dev.max()), "worst": out_parts[int(np.argmax(dev))]["bbox"], "parts": out_parts,
+           "coverage": float(covered)}
+    if masks:
+        for op, p in zip(out_parts, parts):
+            op["mask"] = p["mask"]
+        out["origin"] = [x0, y0]
+    return out
 
 
 # --------------------------------------------------------------------------- objects

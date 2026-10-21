@@ -14161,6 +14161,100 @@
    }
   }
  },
+ "overview": {
+  "item_id": "58a5c37ad5ec",
+  "backbone": "global.anthropic.claude-sonnet-5",
+  "pass": 0,
+  "constraints": [
+   [
+    "fraction_value",
+    "2/8"
+   ],
+   [
+    "part_count",
+    8
+   ],
+   [
+    "equal_area",
+    true
+   ],
+   [
+    "colored_part_count",
+    2
+   ]
+  ],
+  "consistency_conflicts": [],
+  "same_constraints_every_backbone_and_pass": true,
+  "grounding_reading0": {
+   "shape": "circle",
+   "box": [
+    133,
+    76,
+    435,
+    379
+   ],
+   "parts": 8,
+   "colored": 2,
+   "texts": []
+  },
+  "semantic_triggered": false,
+  "measurement": {
+   "regions": 8,
+   "colored": 2,
+   "deviation": 0.6979626128964502,
+   "ratios": [
+    0.9996499334873626,
+    1.6979626128964502,
+    0.9957291885458237,
+    0.9957291885458237,
+    0.3188405797101449,
+    0.9961492683609886,
+    0.9962892949660436,
+    0.9996499334873626
+   ],
+   "worst": [
+    289,
+    85,
+    429,
+    221
+   ]
+  },
+  "rules": [
+   {
+    "name": "fraction_value",
+    "value": "2/8",
+    "status": "T",
+    "q": 1.0
+   },
+   {
+    "name": "part_count",
+    "value": 8,
+    "status": "T",
+    "q": 1.0
+   },
+   {
+    "name": "equal_area",
+    "value": 0.6979626128964502,
+    "status": "F",
+    "q": 1.0
+   },
+   {
+    "name": "colored_part_count",
+    "value": 2,
+    "status": "T",
+    "q": 1.0
+   }
+  ],
+  "readings_agree": "3/3",
+  "verdict": "INVALID",
+  "witness": [
+   289,
+   85,
+   429,
+   221
+  ],
+  "same_verdict_under_gemini": true
+ },
  "max_sd_main_table": 0.007143445008142931,
  "max_sd_ablation_table": 0.005879447357921313
 }
