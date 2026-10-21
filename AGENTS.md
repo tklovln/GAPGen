@@ -11,7 +11,8 @@ that `sync.sh` keeps in step:
 
 Venue (icaaie.org, read 2026-10-20): IEEE conference template, double-blind review,
 5-12 pages *including* references; registration covers 5 pages, each further page
-costs USD 60. `PAPERS` in `check_paper.py` encodes these rules.
+costs USD 60. The user's target is at most 5 pages before the references; the current
+version has 4 body pages and 5 in total. `PAPERS` in `check_paper.py` encodes both.
 
 ## Writing loop
 
@@ -37,7 +38,7 @@ task says otherwise, then `git add`, `git commit`, `bash sync.sh push`.
 | `IEEEtran.cls` | copied unchanged from `latex-template/` (v1.8b) |
 | `proposal.md`, `latex-template/` | the user's inputs: research proposal and the IEEE template to follow |
 | `workshop.tex`, `creativeai.tex` | earlier papers, frozen; with `refs.bib`, `neurips_2026.sty`, `checklist.tex` |
-| `tables/*.tex`, `figures/eav_*.pdf` | generated from the experiment results on `main`; never edited by hand |
+| `tables/main.tex`, `tables/ablation.tex`, `figures/eav_examples.pdf` | generated from the experiment results on `main`; never edited by hand |
 | `check_paper.py` | compile + venue-rule check; `PAPERS` holds the rules for `main.tex` |
 | `sync.sh` | the one path for commits between local, GitHub and Overleaf |
 
@@ -52,7 +53,7 @@ Code, benchmark builder and results live on `main` in `eduassetverify/` (worktre
 
 ```bash
 cd ../GAPGen/eduassetverify && .venv/bin/python -m eav.paper --out results/paper
-# then copy results/paper/tab_<name>.tex -> tables/<name>.tex (keep the header comment)
+# then copy results/paper/tab_{main,ablation}.tex -> tables/ (keep the header comment)
 # and results/paper/fig_examples.pdf -> figures/eav_examples.pdf
 ```
 
@@ -68,6 +69,7 @@ changes. Thresholds are fixed on the dev split only; a post-test change goes int
   remains. Fill one only with a value produced by the evaluation code.
 - **Report what the data say.** Negative and mixed results stay in the paper (judges
   beat us on accuracy under Gemini; the semantic verifier and abstention add nothing).
+  A table may go for space or readability; its finding then stays in the text.
 - **No learning-outcome claims.** Nothing here was tested on learners; statements stay
   about verifying assets, never about student understanding or achievement.
 - **Double-blind.** The workshop paper is cited in the third person as

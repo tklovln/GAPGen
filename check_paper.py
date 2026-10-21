@@ -45,6 +45,8 @@ PAPERS = {
         "venue": "AAIE 2027 (IEEE conference, double-blind)",
         "total_pages": (5, 12),
         "paid_pages": 5,
+        # Author target (2026-10-21): at most 5 pages before the references.
+        "body_pages": (1, 5),
         "template": "IEEEtran",  # name in \usepackage{..} or \documentclass{..}
         "blind": True,
     },
@@ -155,7 +157,7 @@ def check(tex_name: str, cfg: dict, tectonic: str | None) -> tuple[list[str], li
         else:
             if not lo <= body <= hi:
                 rules.append(
-                    f"{tex_name}: {body} body pages outside the required {lo}-{hi} "
+                    f"{tex_name}: {body} body pages outside the target {lo}-{hi} "
                     f"(references and appendices excluded)"
                 )
             print(f"  body pages: {body} / {lo}-{hi}   (PDF total {total}, refs excluded)")
