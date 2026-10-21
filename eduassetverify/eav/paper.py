@@ -604,8 +604,10 @@ def overview(man, R, bench, parse_dir, out_dir, iid: str) -> dict:
             "witness": fails[0]["witness"], "same_verdict_under_gemini": same_verdict}
 
 
-def fig_domain(N, out_path):
-    """Grouped bars: false acceptance by domain, per backbone (replaces the domain table).
+def fig_domain(N, out_path, backbone: str = "global.anthropic.claude-sonnet-5"):
+    """Grouped bars: false acceptance by domain under one backbone (replaces the domain table).
+    Only Claude is drawn: under Gemini every judge stays below 2% in every domain, which a panel
+    on the same axis cannot show and the caption states in numbers (gemini_judge_max below).
     Judges in the pink family, EduAssetVerify in purple (its value is 0 in every cell)."""
     import matplotlib
     matplotlib.use("Agg")
@@ -614,43 +616,50 @@ def fig_domain(N, out_path):
     judges = [("direct", "Direct judge", PALETTE["blush"]), ("cot", "CoT judge", PALETTE["pink"]),
               ("structured", "Structured judge", PALETTE["rose"])]
     doms = [("fraction", "Fraction"), ("counting", "Counting"), ("spatial", "Spatial")]
-    fig, axes = plt.subplots(1, 2, figsize=(3.45, 1.38), sharey=True)
-    w = 0.235                                                 # wide enough for a 3-digit label per bar
-    for ax, (b, bname) in zip(axes, BACKBONES.items()):
-        for i, (d, _) in enumerate(doms):
-            for j, (key, label, color) in enumerate(judges):
-                v = 100 * N["domain"][f"{key}__{b}"][d]["far"][0]
-                x = i + (j - 1.5) * w
-                ax.bar(x, v, w * 0.92, color=color, edgecolor=PALETTE["rose"], linewidth=0.5,
-                       label=label if i == 0 else None, zorder=2)
-                if v >= 2.0:                                  # label only the bars that matter
-                    ax.text(x, v + 0.2, f"{v:.1f}", ha="center", va="bottom", fontsize=5.2, color="#555555")
-            x = i + 1.5 * w
-            v = 100 * N["domain"][f"eav__{b}"][d]["far"][0]
-            ax.scatter([x], [v], s=12, color=PALETTE["purple"], marker="D", zorder=3, clip_on=False,
-                       label="EduAssetVerify" if i == 0 else None)
-            ax.text(x, v + 0.35, f"{v:.0f}", ha="center", va="bottom", fontsize=5.5, color=PALETTE["purple"],
-                    fontweight="bold")
-        ax.set_xticks(range(len(doms)))
-        ax.set_xticklabels([n for _, n in doms], fontsize=6.5)
-        ax.set_title(bname, fontsize=7, pad=2)
-        ax.tick_params(axis="y", labelsize=6, length=2)
-        ax.tick_params(axis="x", length=0, pad=2)
-        ax.grid(axis="y", color="#e9e9e9", linewidth=0.5, zorder=0)
-        for side in ("top", "right"):
-            ax.spines[side].set_visible(False)
-        ax.set_ylim(0, 12)
-        ax.set_yticks([0, 4, 8, 12])
-    axes[0].set_ylabel("False acceptance (%)", fontsize=6.5)
-    # the legend sits in the empty upper part of the Gemini panel (every bar there is below 2%)
-    h, l = axes[0].get_legend_handles_labels()
+    fig, ax = plt.subplots(figsize=(3.45, 1.2))
+    w = 0.2
+    for i, (d, _) in enumerate(doms):
+        for j, (key, label, color) in enumerate(judges):
+            v = 100 * N["domain"][f"{key}__{backbone}"][d]["far"][0]
+            x = i + (j - 1.5) * w
+            ax.bar(x, v, w * 0.9, color=color, edgecolor=PALETTE["rose"], linewidth=0.5,
+                   label=label if i == 0 else None, zorder=2)
+            if v >= 2.0:                                  # label only the bars that matter
+                ax.text(x, v + 0.2, f"{v:.1f}", ha="center", va="bottom", fontsize=5.8, color="#555555")
+        x = i + 1.5 * w
+        v = 100 * N["domain"][f"eav__{backbone}"][d]["far"][0]
+        ax.scatter([x], [v], s=14, color=PALETTE["purple"], marker="D", zorder=3, clip_on=False,
+                   label="EduAssetVerify" if i == 0 else None)
+        ax.text(x, v + 0.4, f"{v:.0f}", ha="center", va="bottom", fontsize=6, color=PALETTE["purple"],
+                fontweight="bold")
+    ax.set_xticks(range(len(doms)))
+    ax.set_xticklabels([n for _, n in doms], fontsize=7)
+    ax.tick_params(axis="y", labelsize=6.5, length=2)
+    ax.tick_params(axis="x", length=0, pad=2)
+    ax.grid(axis="y", color="#e9e9e9", linewidth=0.5, zorder=0)
+    for side in ("top", "right"):
+        ax.spines[side].set_visible(False)
+    ax.set_ylim(0, 12)
+    ax.set_yticks([0, 4, 8, 12])
+    ax.set_xlim(-0.55, 2.55)
+    ax.set_ylabel("False acceptance (%)", fontsize=6.5)
+    # the legend sits above the counting and spatial groups, which stay below 3%
+    h, l = ax.get_legend_handles_labels()
     order = [l.index(x) for x in ("Direct judge", "CoT judge", "Structured judge", "EduAssetVerify")]
-    axes[0].legend([h[k] for k in order], [l[k] for k in order], loc="upper right", fontsize=5.8,
-                   frameon=True, fancybox=False, edgecolor="none", facecolor="white", framealpha=1.0,
-                   handlelength=1.1, borderaxespad=0.1, labelspacing=0.3)
-    fig.subplots_adjust(left=0.115, right=0.99, top=0.885, bottom=0.135, wspace=0.08)
+    ax.legend([h[k] for k in order], [l[k] for k in order], loc="upper right", fontsize=6.2, ncol=2,
+              frameon=True, fancybox=False, edgecolor="none", facecolor="white", framealpha=1.0,
+              handlelength=1.1, columnspacing=1.0, borderaxespad=0.1, labelspacing=0.3)
+    fig.subplots_adjust(left=0.11, right=0.995, top=0.965, bottom=0.15)
     fig.savefig(out_path)
     plt.close(fig)
+    other = [b for b in BACKBONES if b != backbone]
+    return {"backbone": backbone,
+            "other_backbones_judge_max": {b: max(N["domain"][f"{k}__{b}"][d]["far"][0] for k, _, _ in judges
+                                                 for d, _ in doms) for b in other},
+            "other_backbones_judge_counting_max": {b: max(N["domain"][f"{k}__{b}"]["counting"]["far"][0]
+                                                          for k, _, _ in judges) for b in other},
+            "eav_rule_only_max_all": max(N["domain"][f"{k}__{b}"][d]["far"][0] for k in ("eav", "rule_only")
+                                         for b in BACKBONES for d, _ in doms)}
 
 
 # --------------------------------------------------------------------------- main
@@ -696,6 +705,7 @@ def main() -> None:
     N["overview"] = overview(man, R, bench, pathlib.Path(args.parse), out, N["teaser"]["item_id"])
     N["max_sd_main_table"] = main_max_sd(N)
     N["max_sd_ablation_table"] = ablation_max_sd(N)
+    N["fig_domain"] = fig_domain(N, out / "fig_domain_far.pdf")
 
     (out / "numbers.json").write_text(json.dumps(N, indent=1, default=float))
     (out / "tab_main.tex").write_text(table_main(N))
@@ -705,7 +715,6 @@ def main() -> None:
     (out / "tab_ablation.tex").write_text(table_ablation(N))
     (out / "tab_cost.tex").write_text(table_cost(N))
     fig_qual(N, man, R, bench, out / "fig_examples.pdf")
-    fig_domain(N, out / "fig_domain_far.pdf")
     fig_rc(man, R, out / "fig_risk_coverage.pdf")
     print("wrote", sorted(p.name for p in out.iterdir()))
 

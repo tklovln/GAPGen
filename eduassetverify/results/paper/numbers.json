@@ -14256,5 +14256,15 @@
   "same_verdict_under_gemini": true
  },
  "max_sd_main_table": 0.007143445008142931,
- "max_sd_ablation_table": 0.005879447357921313
+ "max_sd_ablation_table": 0.005879447357921313,
+ "fig_domain": {
+  "backbone": "global.anthropic.claude-sonnet-5",
+  "other_backbones_judge_max": {
+   "gemini-3.5-flash": 0.015555555555555557
+  },
+  "other_backbones_judge_counting_max": {
+   "gemini-3.5-flash": 0.0
+  },
+  "eav_rule_only_max_all": 0.0
+ }
 }
