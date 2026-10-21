@@ -14,8 +14,11 @@
 \usepackage[T1]{fontenc} % keeps IEEE Times under XeTeX too (local checker); pdfLaTeX output unchanged
 \usepackage{url}       % links and DOIs in the reference list
 \usepackage{booktabs}  % table rules
-\usepackage{tikz}      % Fig. 1 is drawn inline
+\usepackage{tikz}      % Figs. 1 and 2 are drawn inline
 \usetikzlibrary{positioning,calc,arrows.meta}
+% Figure palette
+\definecolor{eavPurple}{HTML}{7F55B1}\definecolor{eavLilac}{HTML}{9B7EBD}\definecolor{eavPink}{HTML}{F49BAB}
+\definecolor{eavBlush}{HTML}{FFE1E0}\definecolor{eavCream}{HTML}{EEECE1}\definecolor{eavRose}{HTML}{E16981}
 
 % Draft markers: every claim or number that waits for the experiments.
 % check_paper.py (strict mode) fails while any of them remains in the source.
@@ -52,7 +55,7 @@ for Educational Games}
 \maketitle
 
 \begin{abstract}
-Generative image models make visual material for educational games cheap to produce, yet an image that looks right can still teach the wrong concept, such as one fourth drawn as one of four unequal parts. Common evaluators score aesthetics or text-image similarity, and vision-language model judges return holistic verdicts without checkable evidence. We present EduAssetVerify, which represents a learning objective as formal constraints, asks a vision-language model only for visual evidence, measures geometry deterministically, and lets rules decide each constraint, answering Uncertain when the evidence is insufficient. To evaluate verifiers without human raters, we build a counterfactual benchmark of fraction, counting, and spatial assets in which every correct asset is paired with a minimally altered violation and every label is checked against the rendered pixels. On 900 test images with two model families, EduAssetVerify accepted no violated asset, whereas direct, chain-of-thought, and structured judges accepted 0.6 to 4.3 percent, at the price of sending 1.5 to 3.1 percent of assets to review and four to nine times the judges' cost.
+Generative models can now produce the visual material of an entire curriculum, which moves the bottleneck of educational content from production to verification: an image that looks right can still teach the wrong concept, such as a fraction drawn with unequal parts. Existing evaluators cannot close this gap. Similarity and aesthetic scores ignore the instructional rule, and vision-language model judges return holistic verdicts that are unreliable and carry no checkable evidence. The challenge is to verify instructional correctness at scale, without human raters, and with a reliability that can itself be measured. We present EduAssetVerify, which separates perception from judgment: learning objectives become formal constraints, a vision-language model only reports what an image contains without seeing the expected answer, geometry is measured deterministically, and three-valued rules decide each constraint, abstaining instead of guessing. To measure reliability without raters, we build a counterfactual benchmark in which every correct asset is paired with a minimally altered violation and every label is verified against the rendered pixels. On 900 test images and two model families, EduAssetVerify accepted no violated asset, whereas vision-language model judges accepted up to 4.3 percent, at the cost of sending 1.5 to 3.1 percent of assets to review.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -61,23 +64,96 @@ generative AI, multimodal verification, educational game assets, vision-language
 
 \section{Introduction}
 
-Generative artificial intelligence is being adopted across education, from tutoring dialogue to the creation of learning materials~\cite{kasneci2023chatgpt}. In educational games, text-to-image models make the many small visual assets a lesson needs, such as fraction tiles, counting cards, and left--right puzzles, cheap to produce. Unlike decorative art, these assets carry the concept being taught: visual design is one of the elements through which games support learning~\cite{plass2015foundations}, and a unit fraction $1/b$ is one of $b$ \emph{equal} parts of a whole~\cite{ccss2010math}, so a diagram with unequal parts misrepresents a concept that many learners already find difficult~\cite{siegler2013fractions}.
 
-Such errors are hard to catch because the image remains plausible. CLIPScore~\cite{hessel2021clipscore} measures overall image--text compatibility, and CLIP-style models are largely insensitive to exact counts~\cite{paiss2023count}. Vision-language models (VLMs) used as judges~\cite{zheng2023judging,chen2024mllmjudge} miscount and misjudge elementary geometry~\cite{rahmanzadehgervi2024blind}, confuse spatial relations~\cite{kamath2023whatsup}, and report absent objects~\cite{li2023pope}, and their holistic verdicts carry no evidence that a teacher could inspect. We are not aware of a controlled benchmark with exact ground truth for educational concept violations.
 
-Experience with generated game assets shows how easily model-judged evaluation misleads~\cite{anon2026legibility}. Scores of a single judge shifted between identical scoring passes by as much as the effect under study, a deprecated request parameter made one judge fail on every call, which a naive harness would have scored as wrong answers, and rankings did not survive a change of judge. Conclusions became trustworthy only with an executable answer key and judges that passed validity checks before scoring. Educational assets suit these lessons, because the answer key can be generated together with the asset.
+Generative artificial intelligence is turning learning materials from a scarce craft into an abundant resource: a single prompt can now illustrate an entire unit, personalized to each learner~\cite{kasneci2023chatgpt}. Abundance moves the bottleneck from production to verification. In educational games, visual assets carry the concept being taught~\cite{plass2015foundations}, and many concepts are defined by checkable visual properties: a unit fraction $1/b$ is one of $b$ \emph{equal} parts of a whole~\cite{ccss2010math}. An asset that looks right but breaks such a rule silently teaches a misconception, in topics that learners already find difficult~\cite{siegler2013fractions}, and human review cannot keep pace with generation.
 
-We therefore ask whether constraint-grounded multimodal verification can reliably detect educational concept violations in AI-generated visual assets without human evaluation. This requires:
+Automatic evaluators do not close this gap. Embedding-based similarity scores~\cite{hessel2021clipscore} measure overall image--text compatibility and are largely insensitive to exact counts~\cite{paiss2023count}. Vision-language models (VLMs) used as judges~\cite{zheng2023judging,chen2024mllmjudge} miscount and misjudge elementary geometry~\cite{rahmanzadehgervi2024blind}, confuse spatial relations~\cite{kamath2023whatsup}, and report absent objects~\cite{li2023pope}, and their holistic verdicts carry no evidence that a teacher could inspect. Model-judged evaluation also misleads its users: in a study of generated game assets~\cite{anon2026legibility}, scores shifted between identical passes by as much as the effect under study, a deprecated request parameter made one judge fail on every call, and rankings did not survive a change of judge. No benchmark with exact ground truth measures how reliable such verifiers are on educational content.
+
+\begin{figure}[!t]
+\centering
+\begin{tikzpicture}[x=1cm, y=1cm, font=\sffamily\footnotesize,
+  arr/.style={-{Stealth[length=1.8mm]}, line width=0.9pt}]
+\fill[eavCream, rounded corners=6pt] (0,0) rectangle (8.6,5.15);
+\node[fill=white, rounded corners=4pt, inner sep=4pt, anchor=north west, text width=3.55cm, align=left] (obj) at (0.25,4.9)
+  {{\bfseries\color{eavPurple} Learning objective}\\[1pt]Show 5/8: a rectangle in\\8 equal parts, 5 colored};
+\node[anchor=north west, inner sep=0pt] (img) at (0.25,3.55) {\includegraphics[width=3.75cm]{figures/eav_teaser_asset.png}};
+\begin{scope}[shift={(img.south west)}, x={($(img.south east)-(img.south west)$)}, y={($(img.north west)-(img.south west)$)}]
+  \draw[eavPurple, line width=1.3pt, rounded corners=1pt] (0.132,1-0.888) rectangle (0.254,1-0.112);
+\end{scope}
+\node[anchor=north west, font=\sffamily\scriptsize, text=black!65] at ($(img.south west)+(0,-0.05)$) {Generated asset: looks right, is wrong};
+\node[fill=eavBlush, rounded corners=4pt, inner sep=4pt, anchor=north west, text width=3.75cm, align=left] (judge) at (4.5,4.9)
+  {{\bfseries\color{eavRose} VLM judges}\\{\scriptsize direct, CoT, and structured}\\[2pt]
+   {\bfseries\large\color{eavRose} Valid}\\[1pt]{\scriptsize holistic verdict, no evidence}};
+\node[fill=white, draw=eavPurple, line width=1pt, rounded corners=4pt, inner sep=4pt, anchor=north west, text width=3.69cm, align=left] (ours) at (4.5,2.92)
+  {{\bfseries\color{eavPurple} EduAssetVerify}\\[2pt]
+   {\bfseries\large\color{eavPurple} Invalid}\\[1pt]
+   {\scriptsize\ttfamily equal\_area = F}\\{\scriptsize witness: one part 61\% too large}};
+\draw[arr, eavRose] ($(img.east)+(0.08,0.35)$) -- (judge.west);
+\draw[arr, eavPurple] ($(img.east)+(0.08,-0.15)$) -- (ours.west);
+% verdict marks: cross for the wrong verdict, check for the correct one
+\begin{scope}[shift={($(judge.north east)+(-0.40,-1.02)$)}]
+  \draw[eavRose, line width=1.4pt, line cap=round] (-0.12,-0.12) -- (0.12,0.12) (-0.12,0.12) -- (0.12,-0.12);
+\end{scope}
+\begin{scope}[shift={($(ours.north east)+(-0.40,-0.80)$)}]
+  \draw[eavPurple, line width=1.4pt, line cap=round, line join=round] (-0.14,0.0) -- (-0.04,-0.11) -- (0.15,0.13);
+\end{scope}
+\fill[eavPurple, rounded corners=4pt] (0.25,0.15) rectangle (8.35,0.95);
+\node[text=white, font=\sffamily\scriptsize] at (4.3,0.73) {Violated assets accepted on 900 test images};
+\node[text=white, font=\sffamily\footnotesize\bfseries] at (4.3,0.38) {VLM judges 0.6--4.3\%\qquad EduAssetVerify 0\%};
+\end{tikzpicture}
+\caption{A generated asset that three VLM judges accepted. EduAssetVerify rejects it with checkable evidence: the purple box is the part whose measured area violates the equal-area constraint.}
+\label{fig:teaser}
+\end{figure}
+
+\begin{figure*}[t]
+\centering
+\begin{tikzpicture}[x=1cm, y=1cm, font=\sffamily\small,
+  card/.style={rounded corners=6pt, align=center, inner sep=5pt, minimum height=15mm},
+  inbox/.style={card, fill=eavCream, text width=24mm},
+  modbox/.style={card, fill=eavLilac, text=white, text width=31mm},
+  databox/.style={card, fill=eavBlush, text width=29mm},
+  corebox/.style={card, fill=eavPurple, text=white, text width=31mm, minimum height=40mm},
+  outbox/.style={card, fill=eavRose, text=white, text width=26mm, minimum height=40mm},
+  flow/.style={-{Stealth[length=2.4mm]}, line width=1.1pt, draw=eavPurple!80},
+  stepbadge/.style={circle, fill=white, draw=eavPurple, line width=0.8pt, text=eavPurple, inner sep=0pt,
+    minimum size=4.6mm, font=\sffamily\bfseries\scriptsize}]
+\node[inbox] (obj) at (0,1.25) {\textbf{Learning objective}\\[1pt]{\footnotesize ``show 1/4 with 4 equal parts''}};
+\node[inbox] (img) at (0,-1.25) {\textbf{Generated asset}\\[1pt]{\footnotesize image to verify}};
+\node[modbox] (parse) at (3.75,1.25) {\textbf{Constraint parser}\\[1pt]{\footnotesize schema + consistency check}};
+\node[modbox] (ground) at (3.75,-1.25) {\textbf{Value-blind grounding}\\[1pt]{\footnotesize VLM, $m$ independent readings}};
+\node[databox] (cons) at (7.55,1.25) {\textbf{Constraint set}\\[1pt]{\footnotesize counts, areas, relations, labels}};
+\node[databox] (evid) at (7.55,-1.25) {\textbf{Evidence + measurement}\\[1pt]{\footnotesize regions, objects, text; areas, symmetry}};
+\node[corebox] (verify) at (11.35,0) {\textbf{Three-valued verification}\\[6pt]{\footnotesize rules decide measured constraints\\[2pt]semantic re-reading\\[2pt]disagreement $\rightarrow$ abstain}};
+\node[outbox] (verdict) at (14.95,0) {\textbf{Verdict}\\[6pt]{\footnotesize Valid, Invalid, or Uncertain\\[2pt]+ violation report\\with witness region}};
+\draw[flow] (obj) -- (parse);
+\draw[flow] (parse) -- (cons);
+\draw[flow] (img) -- (ground);
+\draw[flow] (ground) -- (evid);
+\draw[flow] (cons.east) -- (cons.east -| verify.west);
+\draw[flow] (evid.east) -- (evid.east -| verify.west);
+\draw[flow] (verify) -- (verdict);
+\draw[-{Stealth[length=2.2mm]}, line width=1pt, dashed, draw=eavPink] (parse.south) -- node[right, font=\sffamily\footnotesize, text=eavRose] {vocabulary only} (ground.north);
+\node[stepbadge] at (parse.north west) {1};
+\node[stepbadge] at (ground.north west) {2};
+\node[stepbadge] at (verify.north west) {3};
+\node[stepbadge] at (verdict.north west) {4};
+\end{tikzpicture}
+\caption{Architecture of EduAssetVerify. (1) Learning objectives become formal constraints; (2) a VLM reads the image without seeing target values, and deterministic operators measure its geometry; (3) three-valued rules decide each constraint; (4) the verdict cites the evidence behind it.}
+\label{fig:overview}
+\end{figure*}
+
+Verifying instructional correctness therefore poses three challenges:
 \begin{enumerate}
-\item turning an abstract learning objective into constraints that a machine can check;
-\item extracting verifiable visual evidence from an image instead of trusting a VLM's overall verdict; and
-\item detecting a local violation without being swayed by style or background.
+\item Learning objectives are abstract, so they must be turned into requirements that a machine can check and whose consistency can be tested.
+\item VLMs perceive well but judge poorly, so their perception must yield checkable evidence, without letting them see the answer they are asked to verify.
+\item Violations are local and subtle, so a verifier must catch a single wrong part regardless of style, template, or background, and its reliability must be measured without human labels.
 \end{enumerate}
-We propose EduAssetVerify, which separates perception from judgment: a VLM reports what the image contains without being told what the constraints expect, deterministic measurement and rules decide each formal constraint, and a VLM semantic verifier handles the constraints that resist formalization. Our contributions are:
+We address them with EduAssetVerify (Figs.~\ref{fig:teaser} and~\ref{fig:overview}), a general recipe for evidence-based verification that separates perception from judgment: models report what they see, deterministic measurement and rules decide, and the verifier abstains rather than guesses. Our contributions are:
 \begin{enumerate}
-\item a constraint schema for educational visual assets, with a consistency check;
-\item a verifier that combines value-blind VLM grounding, deterministic measurement, and three-valued rules with abstention; and
-\item a counterfactual benchmark with programmatically verified labels, evaluated under a protocol that guards against known failure modes of model judges.
+\item A formal constraint schema that makes instructional correctness machine-checkable, with a consistency check that rejects contradictory objectives before any image is verified.
+\item A verifier that combines value-blind grounding, deterministic measurement, and three-valued rules; on 900 test images it accepted no violated asset under either of two model families.
+\item A counterfactual benchmark with programmatically verified labels and a measurement protocol for model-based verifiers, which shows that VLM judges fail precisely where correctness must be measured rather than recognized.
 \end{enumerate}
 
 \section{Related Work}\label{sec:related}
@@ -114,36 +190,8 @@ The last constraint follows from the others; stating it lets a consistency check
 
 \section{EduAssetVerify}\label{sec:method}
 
-Fig.~\ref{fig:overview} shows the pipeline.
+Fig.~\ref{fig:overview} shows the four stages.
 
-\begin{figure}[t]
-\centering
-\begin{tikzpicture}[
-  font=\footnotesize, node distance=2.6mm and 5mm,
-  box/.style={draw, rounded corners=2pt, align=center, inner sep=2pt,
-    minimum height=6mm, text width=34mm},
-  wide/.style={box, text width=74mm},
-  arr/.style={-{Stealth[length=1.5mm]}, semithick}]
-\node[box] (L) {Learning objective $L$};
-\node[box, right=of L] (I) {Generated image $I$};
-\node[box, below=of L] (P) {Constraint parser\\and consistency check};
-\node[box, below=of I] (G) {Value-blind VLM grounding\\($m$ readings) and measurement};
-\node[box, below=of P] (R) {Rule engine\\(formal constraints)};
-\node[box, below=of G] (S) {VLM semantic verifier\\(semantic constraints)};
-\node[wide, below=3.5mm of $(R.south)!0.5!(S.south)$] (V) {Statuses $s_j\in\{\sT,\sF,\sU\}$ with confidence $q_j$ $\rightarrow$ Kleene verdict\\\Valid{}, \Invalid{}, or \Uncertain{}, with a violation report};
-\draw[arr] (L) -- (P);
-\draw[arr] (I) -- (G);
-\draw[arr, dashed] (P.east) -- (G.west);
-\draw[arr] (P) -- (R);
-\draw[arr] (G) -- (S);
-\draw[arr] (P.south east) -- (S.north west);
-\draw[arr] (G.south west) -- (R.north east);
-\draw[arr] (R.south) -- (R.south |- V.north);
-\draw[arr] (S.south) -- (S.south |- V.north);
-\end{tikzpicture}
-\caption{Overview of EduAssetVerify. Dashed: only the constraint vocabulary reaches grounding.}
-\label{fig:overview}
-\end{figure}
 
 \subsection{Constraint Parser}\label{sec:parser}
 A language model, the same backbone as the verifier, transcribes every requirement stated in $L$ into the schema and keeps conflicting requirements rather than resolving them. A deterministic check then rejects unsatisfiable sets, such as conflicting values, a fraction or label that disagrees with the part counts, or cyclic spatial relations. Gold constraints, authored with each template, are evaluated separately from extracted ones, so that an extraction error is never counted as an image-verification error.
@@ -156,7 +204,7 @@ Each constraint $c_j$ receives a status $s_j\in\{\sT,\sF,\sU\}$. Rules decide th
 \begin{equation}
 s_j=\sT \text{ if } d_j\le\epsilon_j^{\sT},\quad \sF \text{ if } d_j\ge\epsilon_j^{\sF},\quad \sU \text{ otherwise},\label{eq:zones}
 \end{equation}
-and a failed precondition, such as parts that cannot be segmented, gives $\sU$. Semantic constraints are posed as open questions about nodes of $G_I$: labels are re-read from a crop, categories from a numbered montage of the grounded objects, and the rules compare the answers with the targets. The confidence $q_j$ averages the agreement of the $m$ readings with the majority status, weighting measured readings by their distance to the nearest threshold of~\eqref{eq:zones}, and a status with $q_j<\tau$ becomes $\sU$. With $\sF<\sU<\sT$, the verdict is the strong Kleene conjunction
+and a failed precondition, such as parts that cannot be segmented, gives $\sU$. Semantic constraints are posed as open questions about nodes of $G_I$: labels are re-read from a crop, categories from a numbered montage of the grounded objects, and the rules compare the answers with the targets. The confidence $q_j$ averages the agreement of the $m$ readings with the majority status, weighting measured readings by their distance to the nearest threshold of~\eqref{eq:zones}, and a status with $q_j<\tau$ becomes $\sU$. With $\sF<\sU<\sT$, the verdict is the three-valued conjunction
 \begin{equation}
 V(I,C)=\begin{cases}\Valid, & \min_j s_j=\sT,\\ \Invalid, & \min_j s_j=\sF,\\ \Uncertain, & \text{otherwise},\end{cases}\label{eq:verdict}
 \end{equation}
@@ -206,9 +254,28 @@ Method & Acc. & FAR & FRR & Abst. & Acc. & FAR & FRR & Abst. \\
 \parbox{\columnwidth}{\footnotesize Mean over three passes on 900 images; sd at most 0.7 points. Acc.\ counts abstentions as errors. Extracted $C$: parser-produced constraints. $^{\ast}$Backbone-free.}
 \end{table}
 
-\emph{Detection (RQ1).} EduAssetVerify accepted no violated asset under either backbone, 0 of 1{,}350 violated evaluations each, whereas the judges accepted 8 to 9 under Gemini and 42 to 58 under Claude (Table~\ref{tab:main}); the difference exceeds two standard errors for every judge. The zero costs abstention on 3.1\% and 1.5\% of assets. Counting abstentions as errors, its accuracy is below the judges' under Gemini (96.7\% against 99.1 to 99.5\%) and above it under Claude (98.5\% against 95.7 to 97.7\%). The rule-only validator also accepts no violation and is the most accurate method, and CLIPScore is at chance. The judges' false acceptances concentrate where correctness is a measured quantity: under Claude, the direct judge accepted 22\% of unequal partitions, 14\% of wrong part counts, and 12\% of broken symmetries, while counting errors were almost always caught.
+\emph{Detection (RQ1).} EduAssetVerify accepted no violated asset under either backbone, 0 of 1{,}350 violated evaluations each, whereas the judges accepted 8 to 9 under Gemini and 42 to 58 under Claude (Table~\ref{tab:main}); the difference exceeds two standard errors for every judge. The zero costs abstention on 3.1\% and 1.5\% of assets. Counting abstentions as errors, its accuracy is below the judges' under Gemini (96.7\% against 99.1 to 99.5\%) and above it under Claude (98.5\% against 95.7 to 97.7\%). The rule-only validator also accepts no violation and is the most accurate method, and CLIPScore is at chance. The judges' false acceptances concentrate where correctness is a measured quantity (Table~\ref{tab:domain}): in fraction assets they reach 8.4 to 10.4\% under Claude, and the direct judge accepted 22\% of unequal partitions, 14\% of wrong part counts, and 12\% of broken symmetries, while counting errors were almost always caught.
 
-\emph{Generalization (RQ3).} The FAR of EduAssetVerify stayed at zero in every test condition, whereas the judges' reached 6.7\% (Claude, unseen styles). Abstentions cost pairs: under Gemini, the fraction of pairs with both images judged correctly was 1.4 to 5.8 points below the judges' in every condition, whereas under Claude it exceeded both judges in-domain and on unseen templates (98.5\% and 97.6\%) and stayed within one point of the CoT judge elsewhere. Unseen styles were the hardest condition for the judges; for EduAssetVerify, a hand-drawn wobble breaks exact mirror symmetry, and such figures were sent to review.
+\begin{table}[t]
+\caption{False Acceptance Rate by Educational Domain (\%)}
+\label{tab:domain}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}lcccccc@{}}
+\toprule
+& \multicolumn{2}{c}{Fraction} & \multicolumn{2}{c}{Counting} & \multicolumn{2}{c}{Spatial} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(l){6-7}
+Method & G & C & G & C & G & C \\
+\midrule
+\tablerows{tables/domain.tex}
+\bottomrule
+\end{tabular*}
+\par\smallskip
+\parbox{\columnwidth}{\footnotesize G: Gemini 3.5 Flash; C: Claude Sonnet 5. Mean over three passes.}
+\end{table}
+
+\emph{Generalization (RQ3).} The FAR of EduAssetVerify stayed at zero in every test condition, whereas the judges' reached 6.7\% (Claude, unseen styles). Abstentions cost pairs: under Gemini, the fraction of pairs with both images judged correctly was 1.4 to 5.8 points below the judges' in every condition, whereas under Claude it exceeded both judges in-domain and on unseen templates (98.5\% and 97.6\%) and stayed within one point of the CoT judge elsewhere. Unseen styles were hardest; a hand-drawn wobble breaks exact symmetry, which sent such figures to review.
 
 \begin{table}[t]
 \caption{Component Ablation (\%)}
@@ -231,21 +298,21 @@ Configuration & FAR & FRR & Abst. & FAR & FRR & Abst. \\
 
 \emph{Ablation and localization (RQ2).} Measurement matters most (Table~\ref{tab:ablation}): without it, Claude's FAR rises to 1.9\% and its FRR to 8.3\%. Letting the VLM apply the rules to the same evidence raises FRR to 1.6\% and 3.8\%. The semantic verifier shows no measurable benefit, and abstention prevents no false acceptance; it turns false rejections into reviews. Over correct rejections of localizable errors, the reported violations are perturbed constraints in 99.6\% and 100\% of cases, and the witness hits the perturbed region in 94.2\% and 85.5\%. The misses come from symmetry, where the moved element and its partner are indistinguishable, and from text boxes smaller than the ground truth.
 
-\emph{Extracted constraints.} With parser-produced constraints, the pipeline accepted 2 of 1{,}350 violated evaluations under Gemini and none under Claude (Table~\ref{tab:main}, last row). The parsers reproduced the gold set for 83.8\% and 79.0\% of objectives, and both false acceptances trace to parses that dropped ``and nothing else.'' The consistency check rejected 88.9\% and 100\% of 60 contradictory objectives without false alarms. A first run of this regime on the test split exposed a vocabulary mismatch, the divided whole being parsed as an object that must be present; we corrected the parser instruction on the development split and report the second run.
+\emph{Extracted constraints.} With parser-produced constraints, the pipeline accepted 2 of 1{,}350 violated evaluations under Gemini and none under Claude (Table~\ref{tab:main}, last row). The parsers reproduced the gold set for 83.8\% and 79.0\% of objectives; both false acceptances trace to parses that dropped ``and nothing else.'' The consistency check rejected 88.9\% and 100\% of 60 contradictory objectives without false alarms. A first run on the test split exposed a vocabulary mismatch (the divided whole parsed as a required object); we corrected the parser instruction on the development split and report the second run.
 
 \emph{Cost (RQ4).} EduAssetVerify makes 4.9 VLM calls per asset, three readings plus re-readings, with 12 to 16 s of summed latency, and costs 4.2 to 9.2 times as much as a single judge call: USD 4.62 and 25.16 per 1{,}000 assets, against 0.84 to 1.11 and 2.73 to 5.50, at assumed token rates. Under Gemini, 54 of the 84 abstentions followed a malformed reply, which occurred in 2.2\% of readings.
 
 
-\emph{Qualitative analysis.} Fig.~\ref{fig:qual} shows one case of each kind. All three judges accepted the unequal partition, in which one uncolored part deviates from an equal share by 61\% while the colored parts keep their exact share, the misconception the operator models. The false rejection arose because the crop around a correctly grounded label also contained the circle's outline, and two of three re-readings returned ``)5/8''; the sketch-style figure was sent to review because its mirror overlap of 0.88 lies between the two zones.
+\emph{Qualitative analysis.} In Fig.~\ref{fig:qual}, all three judges accepted an unequal partition whose colored parts keep their exact share, the misconception the operator models. The false rejection arose because a label crop also contained the circle's outline, and the sketch-style figure was sent to review because its mirror overlap of 0.88 lies between the zones.
 
 \section{Discussion and Limitations}
 
 EduAssetVerify can gate automated material production, with its abstentions as the review queue for teachers or designers. Because its advantage over the judges lies in measured proportions and symmetries, the semantic verifier and abstention, which we expected to matter, are optional on assets like ours: the rule-only configuration was as safe, more accurate, and cheaper.
 
-We do not measure learning outcomes, and only concepts expressible as constraints are covered. The benchmark is procedurally rendered: we built no cross-generator condition, because generator outputs lack labels that can be confirmed without raters. Under Gemini, the judges are near ceiling, which leaves little room to separate methods on accuracy, and costs rest on assumed token prices. Future work includes harder concepts and diagrams, labeled generator outputs, automatic repair from the violation report, and studies with teachers.
+We do not measure learning outcomes, and only concepts expressible as constraints are covered. The benchmark is procedurally rendered: we built no cross-generator condition, because generator outputs lack labels that can be confirmed without raters. Under Gemini, the judges are near ceiling, which leaves little room to separate methods on accuracy, and costs rest on assumed token prices.
 
-\section{Conclusion}
-EduAssetVerify verifies AI-generated educational assets by grounding a VLM's evidence in formal constraints, deterministic measurement, and three-valued rules. On a counterfactual benchmark with verified labels, it accepted no violated asset under two model families, whereas VLM judges accepted up to 4.3\%, at the price of reviewing 1.5 to 3.1\% of assets and a four- to ninefold cost. Its value comes from measured, value-blind evidence; claims about learning outcomes require studies with learners.
+\section{Conclusion and Future Work}
+EduAssetVerify shows that the instructional correctness of generated visuals can be verified with checkable evidence and without human labels. Asking a VLM for evidence rather than verdicts, measuring what can be measured, and letting three-valued rules decide eliminated false acceptances under two model families on our benchmark, where VLM judges accepted up to 4.3\% of violated assets, at the price of reviewing 1.5 to 3.1\% of assets and a four- to ninefold cost. The same recipe applies wherever generated content must satisfy explicit requirements. Future work will extend the schema to harder concepts and diagrams, build a labeled set of generator outputs, use violation reports to repair assets automatically, and study the effect of verified assets with teachers and learners.
 
 % Page-limit anchor: the author target is at most 5 pages before the references;
 % check_paper.py reads this label's page from main.aux.

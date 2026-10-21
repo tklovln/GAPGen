@@ -12,7 +12,7 @@ that `sync.sh` keeps in step:
 Venue (icaaie.org, read 2026-10-20): IEEE conference template, double-blind review,
 5-12 pages *including* references; registration covers 5 pages, each further page
 costs USD 60. The user's target is at most 5 pages before the references; the current
-version has 4 body pages and 5 in total. `PAPERS` in `check_paper.py` encodes both.
+version ends its body on page 5 and has 5 pages in total. `PAPERS` in `check_paper.py` encodes both.
 
 ## Writing loop
 
@@ -38,7 +38,8 @@ task says otherwise, then `git add`, `git commit`, `bash sync.sh push`.
 | `IEEEtran.cls` | copied unchanged from `latex-template/` (v1.8b) |
 | `proposal.md`, `latex-template/` | the user's inputs: research proposal and the IEEE template to follow |
 | `workshop.tex`, `creativeai.tex` | earlier papers, frozen; with `refs.bib`, `neurips_2026.sty`, `checklist.tex` |
-| `tables/main.tex`, `tables/ablation.tex`, `figures/eav_examples.pdf` | generated from the experiment results on `main`; never edited by hand |
+| `tables/{main,domain,ablation}.tex`, `figures/eav_examples.pdf`, `figures/eav_teaser_asset.png` | generated from the experiment results on `main`; never edited by hand |
+| Figs. 1 and 2 | TikZ in `main.tex`, palette `eav*` colors defined in the preamble |
 | `check_paper.py` | compile + venue-rule check; `PAPERS` holds the rules for `main.tex` |
 | `sync.sh` | the one path for commits between local, GitHub and Overleaf |
 
@@ -53,8 +54,8 @@ Code, benchmark builder and results live on `main` in `eduassetverify/` (worktre
 
 ```bash
 cd ../GAPGen/eduassetverify && .venv/bin/python -m eav.paper --out results/paper
-# then copy results/paper/tab_{main,ablation}.tex -> tables/ (keep the header comment)
-# and results/paper/fig_examples.pdf -> figures/eav_examples.pdf
+# then copy results/paper/tab_{main,domain,ablation}.tex -> tables/ (keep the header comment),
+# results/paper/fig_examples.pdf -> figures/eav_examples.pdf, teaser_asset.png -> figures/eav_teaser_asset.png
 ```
 
 Every number in the prose (abstract, introduction, Section VII, conclusion) is read from
