@@ -666,9 +666,10 @@ def fig_domain(N, out_path, backbone: str = "global.anthropic.claude-sonnet-5"):
 
 SEEN_STYLES = ("flat_blue", "flat_green", "flat_orange")
 UNSEEN_STYLES = [("dark", "dark"), ("paper", "paper"), ("pastel_thick", "pastel, thick"), ("sketch", "sketch")]
-OPERATOR_ROWS = [
+OPERATOR_ROWS = [             # wrong_label edits a fraction label or a counting numeral: both tasks
     ("Fraction", [("wrong_part_count", "Wrong part count"), ("wrong_colored_count", "Wrong colored count"),
-                  ("unequal_partition", "Unequal partition"), ("wrong_label", "Wrong label")]),
+                  ("unequal_partition", "Unequal partition")]),
+    ("Fraction, counting", [("wrong_label", "Wrong label")]),
     ("Counting", [("extra_object", "Extra object"), ("missing_object", "Missing object"),
                   ("semantic_mismatch", "Semantic mismatch")]),
     ("Spatial", [("relation_reversal", "Relation reversal"), ("broken_symmetry", "Broken symmetry")]),
@@ -740,7 +741,7 @@ def fig_pairs(man, bench, out_path) -> dict:
             p = min(cands, key=lambda p: (len(p["-"]["constraints"]), p["-"]["item_id"]))
             cols.append((task, name, p))
             picked[op] = {"correct": p["+"]["item_id"], "violated": p["-"]["item_id"], "targets": p["-"]["targets"]}
-    W, H = 7.16, 1.8
+    W, H = 7.16, 1.9
     plt, fig, at = _figure(W, H)
     x0, side, pitch, y_lab = 0.46, 0.62, 0.74, 0.3
     ys = (y_lab + side + 0.05, y_lab)
@@ -757,7 +758,8 @@ def fig_pairs(man, bench, out_path) -> dict:
         a, b = x0 + start * pitch, x0 + (start + len(ops) - 1) * pitch + side
         top = ys[0] + side + 0.06
         fig.add_artist(plt.Line2D([a / W, b / W], [top / H, top / H], color="#9e9e9e", linewidth=0.6))
-        fig.text((a + b) / 2 / W, (top + 0.03) / H, task, ha="center", va="bottom", fontsize=7, fontweight="bold")
+        fig.text((a + b) / 2 / W, (top + 0.03) / H, task.replace(", ", ",\n"), ha="center", va="bottom", fontsize=7,
+                 fontweight="bold", linespacing=1.05)
         start += len(ops)
     fig.savefig(out_path)
     plt.close(fig)

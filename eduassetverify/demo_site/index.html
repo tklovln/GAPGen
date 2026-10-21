@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Keeps the page out of search results while the paper is under double-blind review. -->
+  <meta name="robots" content="noindex, nofollow">
+  <title>EduAssetVerify — Demo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <h1>EduAssetVerify</h1>
+      <p class="subtitle">Constraint-Grounded Verification of AI-Generated Visual Assets for Educational Games</p>
+      <p class="authors">Anonymous Author(s) &middot; supplementary results for double-blind review</p>
+      <nav class="toc">
+        <a href="#overview">Overview</a>
+        <a href="#walkthrough">One asset, every module</a>
+        <a href="#pairs">Counterfactual pairs</a>
+        <a href="#results">Result tables</a>
+        <a href="#browser">All 900 test assets</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="overview">
+      <h2>Overview</h2>
+      <div class="overview">
+        <div>
+          <p>An image that looks right can still teach the wrong concept, such as a fraction drawn with
+            unequal parts. Vision-language model (VLM) judges return holistic verdicts that carry no checkable
+            evidence. EduAssetVerify separates perception from judgment: a VLM only reports what an image
+            contains, without seeing the expected answer; deterministic operators measure its geometry; and
+            three-valued rules decide each constraint, abstaining instead of guessing.</p>
+          <p>This page shows the outputs behind the paper: one test asset through every module, the
+            counterfactual pairs, the result tables, and all 900 test assets with every verdict of every pass.</p>
+          <div id="tiles" class="tiles"></div>
+        </div>
+        <figure id="teaser" class="teaser"></figure>
+      </div>
+    </section>
+
+    <section id="walkthrough">
+      <h2>One asset, every module</h2>
+      <p class="lead" id="wt-lead"></p>
+      <div id="wt" class="flow"></div>
+      <h3>What the judges answered for the same asset</h3>
+      <p class="lead">First-pass answers of the three judges, given the objective and every requirement in plain
+        words. A judge returns a verdict, and at most a description; nothing in it can be checked against the image.</p>
+      <div id="wt-judges" class="judges"></div>
+    </section>
+
+
+    <section id="pairs">
+      <h2>Counterfactual pairs</h2>
+      <p class="lead">Each violated asset applies one of nine operators to a correct asset, and an assertion checks
+        that exactly the targeted constraint changes status. One pair per operator from the in-domain test split
+        (fewest constraints, then smallest item id); select a pair to open it, or browse every pair of an operator.</p>
+      <div id="pair-list" class="pairs"></div>
+    </section>
+
+    <section id="results">
+      <h2>Result tables</h2>
+      <p class="lead">The numbers of the paper, mean over three passes on the 900 test images (percent).
+        False acceptance (FAR): violated assets judged valid; false rejection (FRR): correct assets judged invalid;
+        abstentions count against accuracy but never as acceptance.</p>
+      <div id="tables"></div>
+    </section>
+
+    <section id="browser">
+      <h2>All test assets</h2>
+      <p class="lead">Each of the 900 test assets with the verdicts of the three judges and of EduAssetVerify in each
+        of three passes. Red boxes are the witnesses that EduAssetVerify reported in its first pass. Select an asset
+        for its constraints, the full first-pass report, and the judges' first-pass answers.</p>
+      <div class="controls" id="controls">
+        <div class="seg" id="bk"></div>
+        <label>Show <select id="f-show"></select></label>
+        <label>Task <select id="f-dm"></select></label>
+        <label>Condition <select id="f-sp"></select></label>
+        <label>Error <select id="f-op"></select></label>
+        <label>Label <select id="f-y"></select></label>
+      </div>
+      <div class="legend">
+        <span><i class="pass ok">&#x2713;</i> correct verdict</span>
+        <span><i class="pass bad">&#x2717;</i> wrong verdict</span>
+        <span><i class="pass rev">?</i> sent to review</span>
+        <span><i class="pass rev">&ndash;</i> no parsable answer</span>
+        <span><i class="wsample"></i> witness (EduAssetVerify, first pass)</span>
+        <span class="count" id="count"></span>
+      </div>
+      <div id="grid" class="grid"></div>
+      <div class="more" id="more"></div>
+    </section>
+
+    <section id="notes">
+      <h2>About these results</h2>
+      <ul>
+        <li>The assets are procedurally rendered benchmark images, not outputs of an image generator. Before any
+          verifier ran, an independent script recomputed every label from the pixels; an item was kept only if both
+          answers agreed.</li>
+        <li>The benchmark has 1,020 images: 120 for development, which fixed prompts and thresholds, and 900 for
+          testing under four conditions (in-domain, unseen templates, two-operator errors, and four unseen styles).</li>
+        <li>Verdicts and reports are read from the experiment records of the paper (three independent passes per
+          configuration and backbone); the judges' answers are read from the response cache of the same runs.
+          No human rater was involved.</li>
+        <li>Once abstentions count as errors, every judge is more accurate than EduAssetVerify under Gemini 3.5 Flash,
+          and EduAssetVerify is more accurate than every judge under Claude Sonnet 5.</li>
+        <li>The rule-only validator, which uses the same evidence without the semantic verifier and abstention, also
+          accepted no violated asset and was more accurate than the full method under both backbones: on this
+          benchmark the semantic verifier showed no measurable benefit, and abstention prevented no false acceptance
+          but turned false rejections into reviews.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="wrap">EduAssetVerify &middot; Anonymous Author(s)</footer>
+
+  <div id="modal" class="modal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="m-title">
+      <button class="close" id="m-close" aria-label="Close">&times;</button>
+      <div id="m-body"></div>
+    </div>
+  </div>
+
+  <noscript><p class="wrap">This page needs JavaScript to show the results.</p></noscript>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
