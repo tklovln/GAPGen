@@ -74,6 +74,12 @@ cd ../GAPGen/eduassetverify && .venv/bin/python -m eav.paper --out results/paper
 # (PDFs are gitignored on main, so the paper branch holds the only committed copy)
 ```
 
+The project page is generated too: after `eav.paper`, run `.venv/bin/python -m eav.demo --out
+results/demo` (its docstring lists what it checks), replace the files of the demo repository
+`tklovln/eduassetverify-demo` (GitHub Pages from the root of `main`) with `results/demo/` while
+keeping its README, and push. The anonymous mirror serves a new commit only after the user clicks
+"Force update" in its dashboard.
+
 Every number in the prose (abstract, introduction, Section VII, conclusion, appendix) is read from
 `results/paper/numbers.json` on `main`; re-check the prose against it whenever a table
 changes. Thresholds are fixed on the dev split only; a post-test change goes into
@@ -100,9 +106,9 @@ changes. Thresholds are fixed on the dev split only; a post-test change goes int
   only the user can change; the mirror masks the terms `tklovln` and `xdblazer39`. The mirror is
   outside `check_paper.py`; before upload, the page must load (`curl -s -o /dev/null -w "%{http_code}"
   https://anonymous.4open.science/w/eduassetverify-demo/` prints 200, not 400 page_not_activated) and
-  no served file may name the account (this must print nothing):
-  `for f in $(curl -s https://anonymous.4open.science/api/repo/eduassetverify-demo/files | python3 -c "import json,sys; print(' '.join(x['name'] for x in json.load(sys.stdin) if x.get('size')))"); do curl -s https://anonymous.4open.science/api/repo/eduassetverify-demo/file/$f; done | grep -i tklovln`
-  (top-level files only). Camera-ready: the GitHub Pages address of the demo repository.
+  no served file may name the account or carry the mirror's mask `XXXX-n` (this must print 0):
+  `for f in $(for p in "" thumbs; do curl -s "https://anonymous.4open.science/api/repo/eduassetverify-demo/files?path=$p" | python3 -c "import json,sys; print(' '.join('/'.join(filter(None, (x['path'], x['name']))) for x in json.load(sys.stdin) if x.get('size')))"; done); do curl -s "https://anonymous.4open.science/api/repo/eduassetverify-demo/file/$f"; done | grep -c -i "tklovln\|xdblazer\|github\.io\|XXXX-[0-9]"`.
+  Camera-ready: the GitHub Pages address of the demo repository.
 - **IEEE format as in the template.** Keep the template's preamble, margins, fonts and
   spacing; size the content to the page budget instead of `\vspace` or font tweaks.
   Table captions above in title case, figure captions below, `Fig.~\ref{...}`.
