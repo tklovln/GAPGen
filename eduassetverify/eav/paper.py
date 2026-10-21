@@ -662,6 +662,230 @@ def fig_domain(N, out_path, backbone: str = "global.anthropic.claude-sonnet-5"):
                                          for b in BACKBONES for d, _ in doms)}
 
 
+# --------------------------------------------------------------------------- appendix
+
+SEEN_STYLES = ("flat_blue", "flat_green", "flat_orange")
+UNSEEN_STYLES = [("dark", "dark"), ("paper", "paper"), ("pastel_thick", "pastel, thick"), ("sketch", "sketch")]
+OPERATOR_ROWS = [
+    ("Fraction", [("wrong_part_count", "Wrong part count"), ("wrong_colored_count", "Wrong colored count"),
+                  ("unequal_partition", "Unequal partition"), ("wrong_label", "Wrong label")]),
+    ("Counting", [("extra_object", "Extra object"), ("missing_object", "Missing object"),
+                  ("semantic_mismatch", "Semantic mismatch")]),
+    ("Spatial", [("relation_reversal", "Relation reversal"), ("broken_symmetry", "Broken symmetry")]),
+]
+TEMPLATE_NAMES = {"F1_circle": "circle", "F2_strips": "strips", "F3_circle_label": "circle, label",
+                  "F4_grid": "grid", "F5_strips_label": "strips, label", "C1_grid": "grid",
+                  "C2_scatter": "scatter", "C3_grid_numeral": "grid, numeral", "C4_distractors": "distractors",
+                  "C5_two_groups": "two groups", "S1_left_right": "left-right", "S2_above_below": "above-below",
+                  "S3_symmetry": "symmetry", "S4_three_row": "three in a row", "S5_rotation": "quarter turn"}
+MEASURED_OPERATORS = {"wrong_part_count", "wrong_colored_count", "unequal_partition", "broken_symmetry"}
+
+
+def _thumb(bench, m, px=300, box=None):
+    im = Image.open(bench / m["image"]).convert("RGB")
+    return np.asarray((im.crop(box) if box else im).resize((px, px), Image.LANCZOS))
+
+
+def _content_box(bench, ms, pad=0.1):
+    """One square window around the drawn content of several images (a counterfactual pair keeps
+    the same framing, so the two images stay comparable)."""
+    from . import measure as M
+    boxes = []
+    for m in ms:
+        rgb = np.asarray(Image.open(bench / m["image"]).convert("RGB"))
+        ys, xs = np.nonzero(M.foreground(rgb))
+        if len(xs):
+            boxes.append((xs.min(), ys.min(), xs.max(), ys.max()))
+    H, W = rgb.shape[:2]
+    if not boxes:
+        return (0, 0, W, H)
+    x0, y0 = min(b[0] for b in boxes), min(b[1] for b in boxes)
+    x1, y1 = max(b[2] for b in boxes), max(b[3] for b in boxes)
+    half = min(max(x1 - x0, y1 - y0) / 2 * (1 + pad) + 6, W / 2, H / 2)
+    cx = min(max((x0 + x1) / 2, half), W - half)
+    cy = min(max((y0 + y1) / 2, half), H - half)
+    return (int(cx - half), int(cy - half), int(cx + half), int(cy + half))
+
+
+def _figure(w_in, h_in):
+    import matplotlib
+    matplotlib.use("Agg")
+    matplotlib.rcParams["pdf.fonttype"] = 42
+    import matplotlib.pyplot as plt
+    fig = plt.figure(figsize=(w_in, h_in))
+
+    def at(x, y, w, h):                     # an image axis placed in inches from the lower left
+        ax = fig.add_axes([x / w_in, y / h_in, w / w_in, h / h_in])
+        ax.set_xticks([])
+        ax.set_yticks([])
+        for sp in ax.spines.values():
+            sp.set_edgecolor("#c8c8c8")
+            sp.set_linewidth(0.5)
+        return ax
+    return plt, fig, at
+
+
+def fig_pairs(man, bench, out_path) -> dict:
+    """Appendix: one counterfactual pair per operator, chosen by rule: single-operator pairs of the
+    in-domain test split in a base style; fewest constraints, then smallest item id."""
+    import textwrap
+    pairs = defaultdict(dict)
+    for m in man.values():
+        pairs[m["pair_id"]][m["polarity"]] = m
+    cols, picked = [], {}
+    for task, ops in OPERATOR_ROWS:
+        for op, name in ops:
+            cands = [p for p in pairs.values() if p["-"]["operators"] == [op] and p["-"]["split"] == "test_indomain"
+                     and p["-"]["style"] in SEEN_STYLES]
+            p = min(cands, key=lambda p: (len(p["-"]["constraints"]), p["-"]["item_id"]))
+            cols.append((task, name, p))
+            picked[op] = {"correct": p["+"]["item_id"], "violated": p["-"]["item_id"], "targets": p["-"]["targets"]}
+    W, H = 7.16, 1.8
+    plt, fig, at = _figure(W, H)
+    x0, side, pitch, y_lab = 0.46, 0.62, 0.74, 0.3
+    ys = (y_lab + side + 0.05, y_lab)
+    for i, (task, name, p) in enumerate(cols):
+        x = x0 + i * pitch
+        box = _content_box(bench, [p["+"], p["-"]])
+        for y, pol in zip(ys, "+-"):
+            at(x, y, side, side).imshow(_thumb(bench, p[pol], box=box))
+        fig.text((x + side / 2) / W, (y_lab - 0.05) / H, textwrap.fill(name, 13), ha="center", va="top", fontsize=6.5)
+    for label, y in zip(("Correct", "Violated"), ys):
+        fig.text((x0 - 0.14) / W, (y + side / 2) / H, label, rotation=90, ha="center", va="center", fontsize=6.5)
+    start = 0
+    for task, ops in OPERATOR_ROWS:
+        a, b = x0 + start * pitch, x0 + (start + len(ops) - 1) * pitch + side
+        top = ys[0] + side + 0.06
+        fig.add_artist(plt.Line2D([a / W, b / W], [top / H, top / H], color="#9e9e9e", linewidth=0.6))
+        fig.text((a + b) / 2 / W, (top + 0.03) / H, task, ha="center", va="bottom", fontsize=7, fontweight="bold")
+        start += len(ops)
+    fig.savefig(out_path)
+    plt.close(fig)
+    return picked
+
+
+def fig_bench(man, bench, out_path) -> dict:
+    """Appendix: (a) the fifteen templates, one correct test asset each in a base style (smallest item
+    id); (b) one scene in its base style and re-rendered in each unseen style (template F1_circle,
+    smallest item id per style)."""
+    heldout = {t for t in TEMPLATE_NAMES if all(m["split"] == "test_unseen_template" for m in man.values()
+                                                if m["template"] == t)}
+    by_key = {(m["pair_id"], m["polarity"]): m for m in man.values()}
+    W, H = 7.16, 1.86
+    plt, fig, at = _figure(W, H)
+    side, pitch, row = 0.42, 0.56, 0.55
+    x0, y_top = 0.4, H - 0.2
+    picked = {"templates": {}, "styles": {}}
+    for r, (task, letter) in enumerate((("Fraction", "F"), ("Counting", "C"), ("Spatial", "S"))):
+        y = y_top - side - r * row
+        fig.text((x0 - 0.13) / W, (y + side / 2) / H, task, rotation=90, ha="center", va="center", fontsize=6.5)
+        for c in range(5):
+            t = next(t for t in TEMPLATE_NAMES if t.startswith(f"{letter}{c + 1}_"))
+            m = min((m for m in man.values() if m["template"] == t and m["polarity"] == "+" and m["split"] in TEST
+                     and m["style"] in SEEN_STYLES), key=lambda m: m["item_id"])
+            picked["templates"][t] = m["item_id"]
+            x = x0 + c * pitch + (0.12 if c >= 3 else 0.0)
+            ax = at(x, y, side, side)
+            ax.imshow(_thumb(bench, m))
+            if t in heldout:
+                for sp in ax.spines.values():
+                    sp.set_edgecolor(PALETTE["purple"])
+                    sp.set_linestyle((0, (2, 1.2)))
+                    sp.set_linewidth(0.9)
+            fig.text((x + side / 2) / W, (y - 0.02) / H, TEMPLATE_NAMES[t], ha="center", va="top", fontsize=5.8)
+    fig.text((x0 + 1.5 * pitch - 0.05) / W, (y_top + 0.06) / H, "Development and test", ha="center", va="bottom",
+             fontsize=6.5, fontweight="bold")
+    fig.text((x0 + 3.5 * pitch + 0.12 + side / 2 - 0.05) / W, (y_top + 0.06) / H, "Held out (test only)",
+             ha="center", va="bottom", fontsize=6.5, fontweight="bold", color=PALETTE["purple"])
+    # (b) unseen styles: the same scene in its base style (top) and in the unseen style (bottom)
+    xb, side_b, pitch_b = 4.25, 0.66, 0.73
+    ys = (y_top - side_b, y_top - 2 * side_b - 0.06)
+    for c, (style, label) in enumerate(UNSEEN_STYLES):
+        m = min((m for m in man.values() if m["split"] == "test_unseen_style" and m["polarity"] == "+"
+                 and m["template"] == "F1_circle" and m["style"] == style), key=lambda m: m["item_id"])
+        base = by_key[(m["source_pair"], "+")]
+        picked["styles"][style] = {"unseen": m["item_id"], "base": base["item_id"]}
+        x = xb + c * pitch_b
+        at(x, ys[0], side_b, side_b).imshow(_thumb(bench, base))
+        at(x, ys[1], side_b, side_b).imshow(_thumb(bench, m))
+        fig.text((x + side_b / 2) / W, (ys[1] - 0.02) / H, label, ha="center", va="top", fontsize=6.5)
+    for label, y in zip(("Base style", "Unseen style"), ys):
+        fig.text((xb - 0.12) / W, (y + side_b / 2) / H, label, rotation=90, ha="center", va="center", fontsize=6.5)
+    fig.savefig(out_path)
+    plt.close(fig)
+    picked["heldout"] = sorted(heldout)
+    return picked
+
+
+def fig_errors(N, out_path, backbone: str = "global.anthropic.claude-sonnet-5") -> dict:
+    """Appendix: false acceptance of the three judges by operator (test set, three passes), and the
+    counts the appendix text quotes (all judges, both backbones)."""
+    ex = N["extras"]
+    den = ex["violated_evals_by_operator"]
+    judges = [("direct", "Direct judge", PALETTE["blush"]), ("cot", "CoT judge", PALETTE["pink"]),
+              ("structured", "Structured judge", PALETTE["rose"])]
+    rows = [(task, op, name) for task, ops in OPERATOR_ROWS for op, name in ops] + [("Combined", "+", "Two operators")]
+
+    def far(key, b, op):
+        fa = ex[f"fa_by_operator__{key}__{b}"]
+        if op == "+":
+            return sum(v for k, v in fa.items() if "+" in k) / sum(v for k, v in den.items() if "+" in k)
+        return fa.get(op, 0) / den[op]
+    vals = {key: [100 * far(key, backbone, op) for _, op, _ in rows] for key, _, _ in judges}
+    plt, fig, _ = _figure(3.45, 2.0)
+    ax = fig.add_axes([0.315, 0.16, 0.665, 0.73])
+    hgt = 0.26
+    for j, (key, label, color) in enumerate(judges):
+        for i, v in enumerate(vals[key]):
+            y = i + (j - 1) * hgt
+            ax.barh(y, v, hgt * 0.92, color=color, edgecolor=PALETTE["rose"], linewidth=0.5,
+                    label=label if i == 0 else None, zorder=2)
+    for i in range(len(rows)):                 # one label per row: the range over the three judges
+        lo, hi = min(vals[k][i] for k, _, _ in judges), max(vals[k][i] for k, _, _ in judges)
+        if hi >= 5:
+            ax.text(hi + 0.5, i, f"{lo:.1f}\u2013{hi:.1f}", va="center", ha="left", fontsize=5.8, color="#555555")
+    ax.set_yticks(range(len(rows)))
+    ax.set_yticklabels([name for _, _, name in rows], fontsize=6.5)
+    ax.invert_yaxis()
+    ax.set_xlim(0, 37)
+    ax.set_xticks([0, 10, 20, 30])
+    ax.tick_params(axis="x", labelsize=6.5, length=2)
+    ax.tick_params(axis="y", length=0, pad=3)
+    ax.set_xlabel(f"False acceptance under {BACKBONES[backbone]} (%)", fontsize=6.5, labelpad=2)
+    ax.grid(axis="x", color="#e9e9e9", linewidth=0.5, zorder=0)
+    for side in ("top", "right"):
+        ax.spines[side].set_visible(False)
+    edge = 0
+    for task, ops in OPERATOR_ROWS + [("Combined", [None])]:
+        if edge:
+            ax.axhline(edge - 0.5, color="#bdbdbd", linewidth=0.5, zorder=1)
+        ax.text(36.8, edge - 0.42, task, ha="right", va="top", fontsize=5.8, color="#8a8a8a", style="italic")
+        edge += len(ops)
+    ax.legend(loc="lower center", bbox_to_anchor=(0.42, 1.0), ncol=3, fontsize=6, frameon=False,
+              handlelength=1.1, columnspacing=1.0, borderaxespad=0.3)
+    fig.savefig(out_path)
+    plt.close(fig)
+    total = measured = 0
+    other = Counter()
+    per_backbone = {}
+    for b in BACKBONES:
+        cnt = Counter()
+        for key, _, _ in judges:
+            for k, v in ex[f"fa_by_operator__{key}__{b}"].items():
+                total += v
+                cnt[k] += v
+                if set(k.split("+")) <= MEASURED_OPERATORS:
+                    measured += v
+                else:
+                    other[k] += v
+        per_backbone[b] = dict(cnt)
+    combined = {b: sum(v for k, v in per_backbone[b].items() if "+" in k) for b in BACKBONES}
+    return {"backbone": backbone, "far_percent": {key: dict(zip([op for _, op, _ in rows], v)) for key, v in vals.items()},
+            "fa_judges_both_backbones": total, "fa_measured_operators_only": measured, "fa_other": dict(other),
+            "fa_judges_by_operator": per_backbone, "fa_judges_combined": combined,
+            "fa_eav_both_backbones": sum(ex[f"fa_total__eav__{b}"] for b in BACKBONES)}
+
+
 # --------------------------------------------------------------------------- main
 
 def main() -> None:
@@ -706,6 +930,9 @@ def main() -> None:
     N["max_sd_main_table"] = main_max_sd(N)
     N["max_sd_ablation_table"] = ablation_max_sd(N)
     N["fig_domain"] = fig_domain(N, out / "fig_domain_far.pdf")
+    N["appendix"] = {"pairs": fig_pairs(man, bench, out / "fig_pairs.pdf"),
+                     "bench": fig_bench(man, bench, out / "fig_bench.pdf"),
+                     "errors": fig_errors(N, out / "fig_errors.pdf")}
 
     (out / "numbers.json").write_text(json.dumps(N, indent=1, default=float))
     (out / "tab_main.tex").write_text(table_main(N))

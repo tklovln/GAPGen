@@ -14266,5 +14266,184 @@
    "gemini-3.5-flash": 0.0
   },
   "eav_rule_only_max_all": 0.0
+ },
+ "appendix": {
+  "pairs": {
+   "wrong_part_count": {
+    "correct": "6b430f01ab2b",
+    "violated": "0118caca4006",
+    "targets": [
+     "parts"
+    ]
+   },
+   "wrong_colored_count": {
+    "correct": "ecaab0f350c0",
+    "violated": "136cf5fedf8c",
+    "targets": [
+     "colored"
+    ]
+   },
+   "unequal_partition": {
+    "correct": "ebb69574dccc",
+    "violated": "30bdc6e26f45",
+    "targets": [
+     "equal"
+    ]
+   },
+   "wrong_label": {
+    "correct": "62771fd0af03",
+    "violated": "3f5b4eeca725",
+    "targets": [
+     "numeral"
+    ]
+   },
+   "extra_object": {
+    "correct": "7540eb517eae",
+    "violated": "3cffe2cb2ba8",
+    "targets": [
+     "count"
+    ]
+   },
+   "missing_object": {
+    "correct": "6abe5e83cc6a",
+    "violated": "1c3e1431ee85",
+    "targets": [
+     "count"
+    ]
+   },
+   "semantic_mismatch": {
+    "correct": "d5a7e9372eee",
+    "violated": "1a8b2b6160ee",
+    "targets": [
+     "category"
+    ]
+   },
+   "relation_reversal": {
+    "correct": "5dd9eb696bff",
+    "violated": "0206b81d0eb6",
+    "targets": [
+     "rel"
+    ]
+   },
+   "broken_symmetry": {
+    "correct": "c56d8769f936",
+    "violated": "03acb8b30b7b",
+    "targets": [
+     "sym"
+    ]
+   }
+  },
+  "bench": {
+   "templates": {
+    "F1_circle": "066d2b960b01",
+    "F2_strips": "03d4ad5e6aa0",
+    "F3_circle_label": "0022eb7a5aba",
+    "F4_grid": "053ec1304121",
+    "F5_strips_label": "03c79b81c8a7",
+    "C1_grid": "0636e63c31cf",
+    "C2_scatter": "00bb63590e39",
+    "C3_grid_numeral": "1b1d961cfc1e",
+    "C4_distractors": "1e3afd1067a3",
+    "C5_two_groups": "09b16f0cc2aa",
+    "S1_left_right": "037f37539828",
+    "S2_above_below": "057093275228",
+    "S3_symmetry": "08400a128601",
+    "S4_three_row": "03416c7c1af3",
+    "S5_rotation": "0001d664bd2a"
+   },
+   "styles": {
+    "dark": {
+     "unseen": "8f49613b5fea",
+     "base": "22063a6d39f3"
+    },
+    "paper": {
+     "unseen": "160a88915e77",
+     "base": "d7f6e99beb74"
+    },
+    "pastel_thick": {
+     "unseen": "4e5a4e224043",
+     "base": "6f4fa0cd842b"
+    },
+    "sketch": {
+     "unseen": "0f6b1b414bf7",
+     "base": "de4f205d1d67"
+    }
+   },
+   "heldout": [
+    "C4_distractors",
+    "C5_two_groups",
+    "F4_grid",
+    "F5_strips_label",
+    "S4_three_row",
+    "S5_rotation"
+   ]
+  },
+  "errors": {
+   "backbone": "global.anthropic.claude-sonnet-5",
+   "far_percent": {
+    "direct": {
+     "wrong_part_count": 13.690476190476192,
+     "wrong_colored_count": 1.0101010101010102,
+     "unequal_partition": 22.22222222222222,
+     "wrong_label": 0.0,
+     "extra_object": 0.0,
+     "missing_object": 1.7857142857142856,
+     "semantic_mismatch": 0.0,
+     "relation_reversal": 0.0,
+     "broken_symmetry": 12.121212121212121,
+     "+": 2.0
+    },
+    "cot": {
+     "wrong_part_count": 11.30952380952381,
+     "wrong_colored_count": 1.0101010101010102,
+     "unequal_partition": 20.833333333333336,
+     "wrong_label": 0.0,
+     "extra_object": 0.0,
+     "missing_object": 0.0,
+     "semantic_mismatch": 0.0,
+     "relation_reversal": 0.0,
+     "broken_symmetry": 4.040404040404041,
+     "+": 2.0
+    },
+    "structured": {
+     "wrong_part_count": 13.095238095238097,
+     "wrong_colored_count": 2.0202020202020203,
+     "unequal_partition": 27.77777777777778,
+     "wrong_label": 0.0,
+     "extra_object": 0.0,
+     "missing_object": 0.0,
+     "semantic_mismatch": 0.0,
+     "relation_reversal": 0.0,
+     "broken_symmetry": 8.080808080808081,
+     "+": 2.0
+    }
+   },
+   "fa_judges_both_backbones": 181,
+   "fa_measured_operators_only": 178,
+   "fa_other": {
+    "missing_object": 3
+   },
+   "fa_judges_by_operator": {
+    "gemini-3.5-flash": {
+     "unequal_partition": 8,
+     "broken_symmetry": 12,
+     "wrong_part_count": 5,
+     "wrong_colored_count+wrong_part_count": 1
+    },
+    "global.anthropic.claude-sonnet-5": {
+     "unequal_partition": 51,
+     "wrong_part_count": 64,
+     "wrong_colored_count+wrong_part_count": 9,
+     "missing_object": 3,
+     "broken_symmetry": 24,
+     "wrong_colored_count": 4
+    }
+   },
+   "fa_judges_combined": {
+    "gemini-3.5-flash": 1,
+    "global.anthropic.claude-sonnet-5": 9
+   },
+   "fa_eav_both_backbones": 0
+  }
  }
 }
