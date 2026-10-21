@@ -38,8 +38,8 @@ task says otherwise, then `git add`, `git commit`, `bash sync.sh push`.
 | `IEEEtran.cls` | copied unchanged from `latex-template/` (v1.8b) |
 | `proposal.md`, `latex-template/` | the user's inputs: research proposal and the IEEE template to follow |
 | `workshop.tex`, `creativeai.tex` | earlier papers, frozen; with `refs.bib`, `neurips_2026.sty`, `checklist.tex` |
-| `tables/{main,ablation}.tex`, `figures/eav_examples.pdf`, `figures/eav_teaser_asset.png`, `figures/eav_domain_far.pdf` | generated from the experiment results on `main`; never edited by hand |
-| Figs. 1 and 2 | TikZ in `main.tex`; palette `eav*` colors and the Fig. 1 icons (TikZ pics) are defined in the preamble. Fig. 1 shows the rule-picked pie asset (`teaser()` in `eav/paper.py`); its red witness box, the 59% in its caption and the judges' range bar are typed from `numbers.json` (`teaser`, judge FARs in `main`) |
+| `tables/{main,ablation,overview_values}.tex`, `figures/eav_examples.pdf`, `figures/eav_teaser_asset.png`, `figures/eav_overview_regions.png`, `figures/eav_domain_far.pdf` | generated from the experiment results on `main`; never edited by hand |
+| Figs. 1 and 2 | TikZ in `main.tex`; palette `eav*` colors and the robot/ruler icons (TikZ pics) are defined in the preamble, which also inputs `tables/overview_values.tex`. Fig. 1 shows the rule-picked pie asset (`teaser()` in `eav/paper.py`); Fig. 2 follows the same asset through every module, and every value it prints (and Fig. 1's red witness box) is a macro from `overview_values.tex` (`overview()` in `eav/paper.py`: parser answers from the response cache, readings from the run record, rule pass recomputed and checked against the logged verdicts). Typed by hand from `numbers.json`: the 59% in Fig. 1's caption and its judges' range bar |
 | Figs. 3 and 4 | `figures/eav_examples.pdf` (examples) and `figures/eav_domain_far.pdf` (false acceptance by domain, which replaced the domain table) |
 | `check_paper.py` | compile + venue-rule check; `PAPERS` holds the rules for `main.tex` |
 | `sync.sh` | the one path for commits between local, GitHub and Overleaf |
@@ -56,7 +56,8 @@ Code, benchmark builder and results live on `main` in `eduassetverify/` (worktre
 ```bash
 cd ../GAPGen/eduassetverify && .venv/bin/python -m eav.paper --out results/paper
 # then copy results/paper/tab_{main,ablation}.tex -> tables/ (keep the header comment),
-# teaser_asset.png -> figures/eav_teaser_asset.png,
+# teaser_asset.png -> figures/eav_teaser_asset.png, overview_values.tex -> tables/overview_values.tex,
+# overview_regions.png -> figures/eav_overview_regions.png,
 # fig_examples.pdf -> figures/eav_examples.pdf, fig_domain_far.pdf -> figures/eav_domain_far.pdf
 # (PDFs are gitignored on main, so the paper branch holds the only committed copy)
 ```
