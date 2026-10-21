@@ -81,7 +81,7 @@ Automatic evaluators do not close this gap. Embedding-based similarity scores~\c
 \begin{scope}[shift={(img.south west)}, x={($(img.south east)-(img.south west)$)}, y={($(img.north west)-(img.south west)$)}]
   \draw[eavPurple, line width=1.3pt, rounded corners=1pt] (0.132,1-0.888) rectangle (0.254,1-0.112);
 \end{scope}
-\node[anchor=north west, font=\sffamily\scriptsize, text=black!65] at ($(img.south west)+(0,-0.05)$) {Generated asset: looks right, is wrong};
+\node[anchor=north west, font=\sffamily\scriptsize, text=black!65] at ($(img.south west)+(0,-0.05)$) {Test asset: looks right, is wrong};
 \node[fill=eavBlush, rounded corners=4pt, inner sep=4pt, anchor=north west, text width=3.75cm, align=left] (judge) at (4.5,4.9)
   {{\bfseries\color{eavRose} VLM judges}\\{\scriptsize direct, CoT, and structured}\\[2pt]
    {\bfseries\large\color{eavRose} Valid}\\[1pt]{\scriptsize holistic verdict, no evidence}};
@@ -102,7 +102,7 @@ Automatic evaluators do not close this gap. Embedding-based similarity scores~\c
 \node[text=white, font=\sffamily\scriptsize] at (4.3,0.73) {Violated assets accepted on 900 test images};
 \node[text=white, font=\sffamily\footnotesize\bfseries] at (4.3,0.38) {VLM judges 0.6--4.3\%\qquad EduAssetVerify 0\%};
 \end{tikzpicture}
-\caption{A generated asset that three VLM judges accepted. EduAssetVerify rejects it with checkable evidence: the purple box is the part whose measured area violates the equal-area constraint.}
+\caption{A benchmark test asset that three VLM judges accepted. EduAssetVerify rejects it with checkable evidence: the purple box is the part whose measured area violates the equal-area constraint.}
 \label{fig:teaser}
 \end{figure}
 
