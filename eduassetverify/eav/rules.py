@@ -211,7 +211,8 @@ def check(c: dict, ev: dict, rgb: np.ndarray, ctx: dict, sem: dict | None, cfg: 
         diff = pts[1][k] - pts[0][k]
         st = T if diff > margin else F if diff < -margin else U
         w = min(1.0, max(0.0, abs(diff) / margin - 1.0)) if st != U else 0.0
-        return Reading(st, float(diff), False, _union_box([a["box"], b["box"]]), max(w, 0.5 if st != U else 0.0),
+        # witness: the first-named object, which a reversal puts on the wrong side
+        return Reading(st, float(diff), False, a["box"], max(w, 0.5 if st != U else 0.0),
                        "measured" if cfg.use_measure else "vlm")
     if name == "mirror_symmetric":
         if cfg.use_measure:
@@ -268,7 +269,7 @@ def aggregate(cid: str, name: str, readings: list[Reading], cfg: Config) -> Deci
 
 def verdict(decisions: list[Decision], cfg: Config) -> str:
     statuses = [d.status for d in decisions]
-    if not cfg.abstain:
+    if not cfg.abstain:   # forced answer: an undetermined constraint counts as not verified
         statuses = [F if s == U else s for s in statuses]
     low = min(statuses, key=lambda s: ORDER[s]) if statuses else U
     return {T: "VALID", F: "INVALID", U: "UNCERTAIN"}[low]

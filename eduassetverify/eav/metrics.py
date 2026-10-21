@@ -67,21 +67,48 @@ def detection(results: list[dict], man: dict) -> dict:
             "accuracy": (tp + tn) / n if n else float("nan")}
 
 
-def aurc(results: list[dict], man: dict) -> float:
-    """Area under the risk-coverage curve, ranking answers by confidence (min over constraints)."""
+def risk_coverage(results: list[dict], man: dict) -> list[tuple[float, float]]:
+    """Coverage-risk points when answering only the most confident items.
+
+    Items are ranked by confidence (the weakest constraint's q for EduAssetVerify; the
+    distance to the threshold for CLIPScore). Judges report no confidence, so all their
+    answers tie and the curve is a single point. Ties are admitted as a block. Items that
+    abstain or fail to parse are scored with a forced guess, so the curve reaches
+    coverage 1 for every method.
+    """
     pts = []
     for r in results:
-        if r["verdict"] in ("UNPARSABLE",):
-            continue
-        conf = min(r.get("confidence", {}).values(), default=1.0) if r.get("confidence") else 1.0
-        pred = r["verdict"] if r["verdict"] != "UNCERTAIN" else _forced(r)
+        conf = min(r["confidence"].values()) if r.get("confidence") else 1.0
+        if r["verdict"] in ("UNCERTAIN", "UNPARSABLE"):
+            pred, conf = _forced(r), -1.0
+        else:
+            pred = r["verdict"]
         pts.append((conf, pred != man[r["item_id"]]["label"]))
     if not pts:
-        return float("nan")
+        return []
     pts.sort(key=lambda t: -t[0])
-    errs = np.cumsum([e for _, e in pts])
-    risks = errs / np.arange(1, len(pts) + 1)
-    return float(risks.mean())
+    curve, errs = [], 0
+    i = 0
+    while i < len(pts):
+        j = i
+        while j < len(pts) and pts[j][0] == pts[i][0]:
+            errs += pts[j][1]
+            j += 1
+        curve.append((j / len(pts), errs / j))
+        i = j
+    return curve
+
+
+def aurc(results: list[dict], man: dict) -> float:
+    """Area under the risk-coverage curve (step function from coverage 0)."""
+    curve = risk_coverage(results, man)
+    if not curve:
+        return float("nan")
+    area, prev = 0.0, 0.0
+    for cov, risk in curve:
+        area += (cov - prev) * risk
+        prev = cov
+    return float(area)
 
 
 def _forced(r: dict) -> str:
@@ -118,7 +145,7 @@ def localization(results: list[dict], man: dict) -> dict:
         if tgt:
             box = report.get(tgt[0], {}).get("witness")
             regions = m["gt_regions"].get(tgt[0], [])
-            hit_loc += any(iou(box, g) >= 0.5 for g in regions)
+            hit_loc += any(iou(box, g) >= 0.5 for g in regions)   # any one of the affected objects
     return {"loc_n": n, "violation_type_accuracy": hit_c / n if n else float("nan"),
             "localization_accuracy": hit_loc / n if n else float("nan")}
 

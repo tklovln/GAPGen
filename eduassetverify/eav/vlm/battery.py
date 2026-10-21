@@ -24,6 +24,7 @@ from PIL import Image
 
 from ..evidence import evidence, parse_json, schema_for
 from ..methods.judges import run_judge
+from ..methods.oracle import oracle_evidence
 from ..rules import Config, decide
 from ..run import GuardedVLM, forbidden_strings, load_rows, view
 from . import prompts as P
@@ -34,13 +35,28 @@ Image.new("RGB", (512, 512), (255, 255, 255)).save(BLANK, format="PNG")
 BLANK = BLANK.getvalue()
 
 
-def _ground(vlm, row, png, rgb, sample, order=None, image=None):
-    resp = vlm.ask(P.grounding(schema_for(row["constraints"]), order), [image or png], sample=sample)
+def _frame_ok(ev: dict, spec: dict) -> bool | None:
+    """Do the reported boxes land where the drawn content is? (catches a wrong coordinate frame)"""
+    truth = oracle_evidence(spec)
+    tb = [s["box"] for s in truth["shapes"]] + [o["box"] for o in truth["objects"]]
+    pb = [s["box"] for s in ev["shapes"] if s.get("box")] + [o["box"] for o in ev["objects"]]
+    if not tb or not pb:
+        return None
+    t, p = np.array(tb), np.array(pb)
+    return bool(abs(p[:, 2].max() / t[:, 2].max() - 1) < 0.15 and abs(p[:, 3].max() / t[:, 3].max() - 1) < 0.15)
+
+
+def _ground(vlm, row, png, rgb, sample, order=None, image=None, bench=None):
+    frame = P.frame_for(vlm.model)
+    resp = vlm.ask(P.grounding(schema_for(row["constraints"]), order, frame), [image or png], sample=sample)
     strict = parse_json(resp["text"], repair=False) is not None
-    ev = evidence(parse_json(resp["text"]))
+    ev = evidence(parse_json(resp["text"]), P.FRAME[frame])
+    frame_ok = None
+    if bench is not None and image is None:
+        frame_ok = _frame_ok(ev, json.loads((bench / "specs" / f"{row['item_id']}.json").read_text()))
     verdict = decide(row["constraints"], [ev], [None], rgb, Config(tau=0.0))["verdict"]
     empty = ev["ok"] and not ev["objects"] and not ev["shapes"]
-    return {"ok": ev["ok"], "strict": strict, "verdict": verdict, "empty": empty}
+    return {"ok": ev["ok"], "strict": strict, "verdict": verdict, "empty": empty, "frame_ok": frame_ok}
 
 
 def run_battery(backbone: str, bench: pathlib.Path, pairs: int, thinking_budget=None, temperature=0.7) -> dict:
@@ -54,9 +70,9 @@ def run_battery(backbone: str, bench: pathlib.Path, pairs: int, thinking_budget=
         rgb = np.asarray(Image.open(io.BytesIO(png)).convert("RGB"))
         vocab = 8 if schema_for(row["constraints"]) == "spatial" else 7
         order = [int(i) for i in rng.permutation(vocab)]
-        g["a"].append(_ground(vlm, row, png, rgb, "battery-a"))
-        g["b"].append(_ground(vlm, row, png, rgb, "battery-b"))
-        g["perm"].append(_ground(vlm, row, png, rgb, "battery-perm", order=order))
+        g["a"].append(_ground(vlm, row, png, rgb, "battery-a", bench=bench))
+        g["b"].append(_ground(vlm, row, png, rgb, "battery-b", bench=bench))
+        g["perm"].append(_ground(vlm, row, png, rgb, "battery-perm", order=order, bench=bench))
         g["blank"].append(_ground(vlm, row, png, np.full_like(rgb, 255), "battery-blank", image=BLANK))
         req = [int(i) for i in rng.permutation(len(row["constraints"]))]
         j["a"].append(run_judge("direct", view(row), png, vlm, 0, tag="-battery-a"))
@@ -78,6 +94,7 @@ def run_battery(backbone: str, bench: pathlib.Path, pairs: int, thinking_budget=
         "backbone": backbone, "images": len(rows), "majority": majority,
         "grounding": {
             "protocol": float(np.mean([x["ok"] for x in g_all])), "protocol_strict": float(np.mean([x["strict"] for x in g_all])),
+            "frame": float(np.mean([x["frame_ok"] for x in g_all if x["frame_ok"] is not None])),
             "retest": agree(g["a"], g["b"]), "permutation": agree(g["a"], g["perm"]),
             "blank_empty": float(np.mean([x["empty"] for x in g["blank"]])), "accuracy": acc(g["a"]),
         },
@@ -89,7 +106,7 @@ def run_battery(backbone: str, bench: pathlib.Path, pairs: int, thinking_budget=
     }
     G, J = report["grounding"], report["judge"]
     report["pass"] = {
-        "grounding": {"protocol": G["protocol"] >= 0.98, "retest": G["retest"] >= 0.8, "permutation": G["permutation"] >= 0.7,
+        "grounding": {"protocol": G["protocol"] >= 0.98 and G["frame"] >= 0.95, "retest": G["retest"] >= 0.8, "permutation": G["permutation"] >= 0.7,
                       "blank": G["blank_empty"] >= 0.9, "above_majority": G["accuracy"] > majority},
         "judge": {"protocol": J["protocol"] >= 0.98, "retest": J["retest"] >= 0.8, "permutation": J["permutation"] >= 0.7,
                   "blank": J["accuracy"] - J["blank_accuracy"] >= 0.2, "above_majority": J["accuracy"] > majority},

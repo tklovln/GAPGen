@@ -184,7 +184,10 @@ def symmetry(rgb: np.ndarray, axis_x: float | None = None) -> dict:
     union = (fg | mirror).sum()
     if union < 500:
         return {"ok": False}
-    diff = fg ^ mirror
-    comps = _components(diff, min_area=40, connectivity=8)
-    worst = max(comps, key=lambda c: c["area"])["bbox"] if comps else None
+    # witness: the foreground blob that has no mirror partner (mostly unmatched pixels)
+    worst, worst_frac = None, 0.0
+    for c in _components(fg, min_area=60, connectivity=8):
+        frac = float((c["mask"] & ~mirror).sum() / c["area"])
+        if frac > worst_frac:
+            worst, worst_frac = c["bbox"], frac
     return {"ok": True, "iou": float((fg & mirror).sum() / union), "axis": float(axis_x), "worst": worst}

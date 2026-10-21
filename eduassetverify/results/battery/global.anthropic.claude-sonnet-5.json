@@ -1,0 +1,38 @@
+{
+ "backbone": "global.anthropic.claude-sonnet-5",
+ "images": 18,
+ "majority": 0.5,
+ "grounding": {
+  "protocol": 1.0,
+  "protocol_strict": 1.0,
+  "frame": 1.0,
+  "retest": 1.0,
+  "permutation": 1.0,
+  "blank_empty": 1.0,
+  "accuracy": 1.0
+ },
+ "judge": {
+  "protocol": 1.0,
+  "retest": 0.8888888888888888,
+  "permutation": 0.8333333333333334,
+  "accuracy": 0.8333333333333334,
+  "blank_accuracy": 0.5
+ },
+ "pass": {
+  "grounding": {
+   "protocol": true,
+   "retest": true,
+   "permutation": true,
+   "blank": true,
+   "above_majority": true
+  },
+  "judge": {
+   "protocol": true,
+   "retest": true,
+   "permutation": true,
+   "blank": true,
+   "above_majority": true
+  }
+ },
+ "passed": true
+}

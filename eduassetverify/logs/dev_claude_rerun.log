@@ -1,0 +1,32 @@
+120 images x 3 passes x methods eav,vlmrules on global.anthropic.claude-sonnet-5
+  eav: 25/360 correct 25 | calls 99 errors 0 unparsable 0 | tokens in 57687 out 28874 ~$0.606 | 41s
+  eav: 50/360 correct 49 | calls 222 errors 0 unparsable 0 | tokens in 124041 out 66015 ~$1.362 | 65s
+  eav: 75/360 correct 74 | calls 399 errors 0 unparsable 0 | tokens in 202299 out 104734 ~$2.178 | 106s
+  eav: 100/360 correct 99 | calls 534 errors 0 unparsable 0 | tokens in 267201 out 132854 ~$2.794 | 127s
+  eav: 125/360 correct 124 | calls 654 errors 0 unparsable 0 | tokens in 327387 out 158343 ~$3.357 | 153s
+  eav: 150/360 correct 147 | calls 756 errors 0 unparsable 0 | tokens in 385497 out 192177 ~$4.039 | 184s
+  eav: 175/360 correct 172 | calls 894 errors 0 unparsable 0 | tokens in 456513 out 230275 ~$4.824 | 208s
+  eav: 200/360 correct 197 | calls 1068 errors 0 unparsable 0 | tokens in 534408 out 267322 ~$5.613 | 245s
+  eav: 225/360 correct 222 | calls 1194 errors 0 unparsable 0 | tokens in 595263 out 292375 ~$6.171 | 264s
+  eav: 250/360 correct 247 | calls 1308 errors 0 unparsable 0 | tokens in 654792 out 318576 ~$6.743 | 294s
+  eav: 275/360 correct 271 | calls 1410 errors 0 unparsable 0 | tokens in 712890 out 348354 ~$7.364 | 311s
+  eav: 300/360 correct 296 | calls 1566 errors 0 unparsable 0 | tokens in 788265 out 389096 ~$8.201 | 345s
+  eav: 325/360 correct 321 | calls 1731 errors 0 unparsable 0 | tokens in 862986 out 423134 ~$8.936 | 372s
+  eav: 350/360 correct 346 | calls 1854 errors 0 unparsable 0 | tokens in 923301 out 450489 ~$9.527 | 407s
+  eav: 360/360 correct 356 | calls 1908 errors 0 unparsable 0 | tokens in 948291 out 457554 ~$9.708 | 407s
+  vlmrules: 25/360 correct 25 | calls 75 errors 0 unparsable 0 | tokens in 25107 out 14371 ~$0.291 | 21s
+  vlmrules: 50/360 correct 49 | calls 150 errors 0 unparsable 0 | tokens in 54210 out 24511 ~$0.530 | 26s
+  vlmrules: 75/360 correct 74 | calls 225 errors 0 unparsable 0 | tokens in 86037 out 31052 ~$0.724 | 35s
+  vlmrules: 100/360 correct 98 | calls 300 errors 0 unparsable 0 | tokens in 114379 out 42990 ~$0.988 | 54s
+  vlmrules: 125/360 correct 122 | calls 375 errors 0 unparsable 0 | tokens in 140320 out 55515 ~$1.254 | 63s
+  vlmrules: 150/360 correct 146 | calls 450 errors 0 unparsable 0 | tokens in 165647 out 70879 ~$1.560 | 76s
+  vlmrules: 175/360 correct 171 | calls 525 errors 0 unparsable 0 | tokens in 196802 out 79944 ~$1.790 | 82s
+  vlmrules: 200/360 correct 196 | calls 600 errors 0 unparsable 0 | tokens in 228440 out 86553 ~$1.984 | 90s
+  vlmrules: 225/360 correct 221 | calls 675 errors 0 unparsable 0 | tokens in 255330 out 100301 ~$2.271 | 109s
+  vlmrules: 250/360 correct 246 | calls 750 errors 0 unparsable 0 | tokens in 280750 out 113787 ~$2.549 | 119s
+  vlmrules: 275/360 correct 270 | calls 825 errors 0 unparsable 0 | tokens in 306001 out 128179 ~$2.841 | 133s
+  vlmrules: 300/360 correct 295 | calls 900 errors 0 unparsable 0 | tokens in 338437 out 135436 ~$3.047 | 138s
+  vlmrules: 325/360 correct 320 | calls 975 errors 0 unparsable 0 | tokens in 368800 out 142444 ~$3.243 | 150s
+  vlmrules: 350/360 correct 345 | calls 1050 errors 0 unparsable 0 | tokens in 396445 out 156648 ~$3.539 | 162s
+  vlmrules: 360/360 correct 355 | calls 1080 errors 0 unparsable 0 | tokens in 406081 out 161982 ~$3.648 | 174s
+API calls made 2969, cache hits 19

@@ -8,8 +8,22 @@ from __future__ import annotations
 from ..evidence import COUNT_VOCAB, SHAPE_VOCAB
 
 BOX = '{"left": int, "top": int, "right": int, "bottom": int}'
-COORDS = ("Coordinates are integers from 0 to 1000: 0 is the left or top edge of the image, "
-          "1000 the right or bottom edge.")
+# Coordinate frame of all boxes. Gemini is trained to answer in 0-1000 units; Claude
+# answered in image pixels even when asked for 0-1000 (84% of dev readings), so each model
+# is asked in its native frame, and protocol compliance checks the frame (eav.vlm.battery).
+FRAME = {"norm1000": 1000, "pixels": 512}
+
+
+def coords(frame: str) -> str:
+    if frame == "norm1000":
+        return ("Coordinates are integers from 0 to 1000: 0 is the left or top edge of the image, "
+                "1000 the right or bottom edge.")
+    return ("Coordinates are pixels of this 512 x 512 image: x from 0 (left edge) to 512 (right edge), "
+            "y from 0 (top edge) to 512 (bottom edge).")
+
+
+def frame_for(model: str) -> str:
+    return "norm1000" if model.startswith("gemini") else "pixels"
 
 
 def _vocab(words: list[str], order: list[int] | None) -> str:
@@ -17,7 +31,7 @@ def _vocab(words: list[str], order: list[int] | None) -> str:
     return ", ".join(words)
 
 
-def grounding(schema: str, vocab_order: list[int] | None = None) -> str:
+def grounding(schema: str, vocab_order: list[int] | None = None, frame: str = "norm1000") -> str:
     head = ("You are looking at a picture made for an educational game. Describe what the picture shows "
             "as JSON. Report only what you see; do not judge whether the picture is correct.\n\n")
     if schema == "partition":
@@ -25,7 +39,7 @@ def grounding(schema: str, vocab_order: list[int] | None = None) -> str:
             '{"shapes": [{"shape": "circle" | "rectangle" | "other", "box": ' + BOX + ',\n'
             '             "parts": [{"box": ' + BOX + ', "colored": true | false}]}],\n'
             ' "texts": [{"text": "exact characters", "box": ' + BOX + '}]}\n\n'
-            f"- {COORDS}\n"
+            f"- {coords(frame)}\n"
             "- A shape may be divided into parts by lines. List every part of every shape separately.\n"
             '- "colored" is true when a part is filled with a color that differs from the unfilled parts.\n'
             "- List every piece of text exactly as written, for example digits or fractions such as 3/8.")
@@ -35,7 +49,7 @@ def grounding(schema: str, vocab_order: list[int] | None = None) -> str:
             ' "texts": [{"text": "exact characters", "box": ' + BOX + '}],\n'
             ' "lines": [{"style": "solid" | "dashed", "orientation": "vertical" | "horizontal", '
             '"position": int}]}\n\n'
-            f"- {COORDS} A line's position is its x (vertical line) or y (horizontal line).\n"
+            f"- {coords(frame)} A line's position is its x (vertical line) or y (horizontal line).\n"
             "- List every object separately, also when several objects look alike.\n"
             "- List every piece of text exactly as written.")
     return head + (
@@ -43,7 +57,7 @@ def grounding(schema: str, vocab_order: list[int] | None = None) -> str:
         '              "direction": "up" | "down" | "left" | "right" | "none"}],\n'
         ' "lines": [{"style": "solid" | "dashed", "orientation": "vertical" | "horizontal", '
         '"position": int}]}\n\n'
-        f"- {COORDS} A line's position is its x (vertical line) or y (horizontal line).\n"
+        f"- {coords(frame)} A line's position is its x (vertical line) or y (horizontal line).\n"
         "- List every object separately.\n"
         '- For an arrow, "direction" is where its tip points; for any other object use "none".')
 

@@ -83,6 +83,9 @@ class VLM:
                 time.sleep(min(60, 2 ** attempt * 2))
             except Exception as e:  # noqa: BLE001  (non-retryable: record and surface)
                 error = f"{type(e).__name__}: {e}"
+                if "client has been closed" in error and attempt < 5:   # local client fault, not the model
+                    GeminiVLM._local.client = None
+                    continue
                 break
         out = {"text": text, "usage": usage, "latency": time.time() - t0, "error": error,
                "model": self.model, "sample": sample, "time": time.time()}
@@ -134,19 +137,20 @@ class OpenAIVLM(VLM):
 
 class GeminiVLM(VLM):
     provider = "gemini"
-    _client = None
+    _local = threading.local()     # one client per thread: a shared client can be closed under us
 
     def _call(self, prompt, images):
         from google import genai
         from google.genai import errors, types
-        if GeminiVLM._client is None:
-            GeminiVLM._client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+        client = getattr(GeminiVLM._local, "client", None)
+        if client is None:
+            client = GeminiVLM._local.client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
         parts = [types.Part.from_bytes(data=img, mime_type="image/png") for img in images] + [prompt]
         cfg = types.GenerateContentConfig(
             response_mime_type="application/json", max_output_tokens=self.max_tokens, temperature=self.temperature,
             thinking_config=None if self.thinking_budget is None else types.ThinkingConfig(thinking_budget=self.thinking_budget))
         try:
-            resp = GeminiVLM._client.models.generate_content(model=self.model, contents=parts, config=cfg)
+            resp = client.models.generate_content(model=self.model, contents=parts, config=cfg)
         except errors.APIError as e:
             if getattr(e, "code", None) in (429, 500, 502, 503, 504):
                 raise RetryableError(f"transient {e.code}") from e
@@ -174,7 +178,9 @@ class BedrockVLM(VLM):
         content = [{"image": {"format": "png", "source": {"bytes": img}}} for img in images]
         content.append({"text": prompt + "\nAnswer with the JSON object only."})
         inf = {"maxTokens": self.max_tokens}
-        if self.temperature is not None:
+        # Claude 5 models reject `temperature` ("deprecated for this model"): sampling stays
+        # at the provider default, which is stochastic, so repeated readings still differ.
+        if self.temperature is not None and "claude" not in self.model:
             inf["temperature"] = self.temperature
         try:
             resp = BedrockVLM._client.converse(modelId=self.model, messages=[{"role": "user", "content": content}],

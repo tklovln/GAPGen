@@ -23,6 +23,7 @@ from PIL import Image
 from .domains import counting, fraction, spatial
 from .methods.eav import run_eav
 from .methods.judges import run_judge
+from .methods.vlm_rules import run_vlm_rules
 from .vlm.client import cost, make
 
 SPLITS = ["dev", "test_indomain", "test_unseen_template", "test_error_combo", "test_unseen_style"]
@@ -79,12 +80,14 @@ def view(row: dict) -> dict:
     return {"objective": row["objective"], "constraints": row["constraints"]}
 
 
-def run_method(method: str, row: dict, bench: pathlib.Path, vlm, pass_idx: int, m: int) -> dict:
+def run_method(method: str, row: dict, bench: pathlib.Path, vlm, pass_idx: int, m: int, deps: dict) -> dict:
     png = (bench / row["image"]).read_bytes()
     rgb = np.asarray(Image.open(io.BytesIO(png)).convert("RGB"))
     t0 = time.time()
     if method == "eav":
         res = run_eav(view(row), png, rgb, vlm, pass_idx, m=m)
+    elif method == "vlmrules":     # needs the eav readings of the same item and pass
+        res = run_vlm_rules(view(row), deps[(row["item_id"], pass_idx)], rgb, vlm, pass_idx)
     else:
         res = run_judge(method, view(row), png, vlm, pass_idx)
     res["wall"] = time.time() - t0
@@ -119,6 +122,12 @@ def main() -> None:
     print(f"{len(rows)} images x {args.passes} passes x methods {args.methods} on {args.backbone}", flush=True)
     for method in args.methods.split(","):
         path = out / f"{method}__{args.backbone}.jsonl"
+        deps = {}
+        if method == "vlmrules":
+            src = out / f"eav__{args.backbone}.jsonl"
+            for line in src.read_text().splitlines():
+                d = json.loads(line)
+                deps[(d["item_id"], d["pass"])] = d
         done = set()
         if path.exists():
             for line in path.read_text().splitlines():
@@ -128,7 +137,8 @@ def main() -> None:
                 if (r["item_id"], p) not in done]
         t0 = time.time()
         with ThreadPoolExecutor(args.workers) as ex, open(path, "a") as f:
-            futs = [(r, p, ex.submit(run_method, method, r, bench, vlm, p, args.m)) for r, p in todo]
+            todo = [(r, p) for r, p in todo if method != "vlmrules" or (r["item_id"], p) in deps]
+            futs = [(r, p, ex.submit(run_method, method, r, bench, vlm, p, args.m, deps)) for r, p in todo]
             usage = {"input": 0, "output": 0, "calls": 0, "errors": 0, "unparsable": 0, "ok": 0}
             for k, (r, p, fut) in enumerate(futs, 1):
                 res = fut.result()

@@ -100,13 +100,14 @@ def run_eav(item: dict, png: bytes, rgb: np.ndarray, vlm, pass_idx: int, m: int 
             cfg: Config | None = None, vocab_order=None, image_override: bytes | None = None) -> dict:
     cfg = cfg or Config()
     schema = schema_for(item["constraints"])
-    prompt = P.grounding(schema, vocab_order)
+    frame = P.frame_for(vlm.model)
+    prompt = P.grounding(schema, vocab_order, frame)
     img = image_override or png
     readings, sems, calls = [], [], []
     for r in range(m):
         resp = vlm.ask(prompt, [img], sample=f"p{pass_idx}-g{r}" + ("-perm" if vocab_order else ""))
         calls.append(resp)
-        ev = evidence(parse_json(resp["text"]))
+        ev = evidence(parse_json(resp["text"]), P.FRAME[frame])
         readings.append(ev)
     needs_sem = {c["name"] for c in item["constraints"]} & (SEMANTIC_TEXT | SEMANTIC_CATEGORY)
     for r, ev in enumerate(readings):
