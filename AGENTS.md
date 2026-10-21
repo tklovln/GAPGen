@@ -13,11 +13,13 @@ Venue (icaaie.org, read 2026-10-21): IEEE conference template, double-blind revi
 submission deadline 2026-11-20, 5-12 pages *including* references; registration covers
 5 pages, each further page costs USD 60. There is no separate supplementary upload, so the
 appendix is part of the PDF and counts. The user's target is at most 5 pages before the
-references; the current version is the 5-page paper (body and references end on page 5)
-plus a one-page appendix the user approved (6 pages, USD 60 overlength).
+references; the current version is the 5-page paper (body and references end on page 5).
+The one-page appendix the user approved earlier (page 6, USD 60 overlength) is commented out
+at the user's request (2026-10-21): it and the three in-text pointers to it are marked
+`APPENDIX` in `main.tex`, and the note above `\bibliographystyle` says how to restore them.
 `PAPERS` in `check_paper.py` encodes the body and total limits.
 
-The appendix page: its two `figure*` (Figs. 5 and 6) are defined right after
+The appendix page, once restored: its two `figure*` (Figs. 5 and 6) are defined right after
 `\label{endofbody}`, because a `figure*` never appears on the page where it is defined;
 after the bibliography, `\newpage` (not `\clearpage`, which would flush them onto a float
 page of their own) starts page 6 under them, and `\raggedbottom` keeps its half-empty
@@ -50,7 +52,7 @@ task says otherwise, then `git add`, `git commit`, `bash sync.sh push`.
 | `tables/{main,ablation,overview_values,split}.tex`, `figures/eav_examples.pdf`, `figures/eav_teaser_asset.png`, `figures/eav_overview_regions.png`, `figures/eav_domain_far.pdf`, `figures/eav_appendix_{pairs,bench,errors}.pdf` | generated from the experiment results on `main`; never edited by hand |
 | Figs. 1 and 2 | TikZ in `main.tex`; palette `eav*` colors and the robot/ruler icons (TikZ pics) are defined in the preamble, which also inputs `tables/overview_values.tex`. Fig. 1 shows the rule-picked pie asset (`teaser()` in `eav/paper.py`); Fig. 2 follows the same asset through every module, and every value it prints (and Fig. 1's red witness box) is a macro from `overview_values.tex` (`overview()` in `eav/paper.py`: parser answers from the response cache, readings from the run record, rule pass recomputed and checked against the logged verdicts). Typed by hand from `numbers.json`: the 59% in Fig. 1's caption and its judges' range bar |
 | Figs. 3 and 4 | `figures/eav_examples.pdf` (examples) and `figures/eav_domain_far.pdf` (false acceptance by domain under Claude only, which replaced the domain table; the Gemini maxima in its caption are `fig_domain` in `numbers.json`) |
-| Appendix (page 6) | Figs. 5-7 and Table III: rule-picked counterfactual pairs (`fig_pairs`), templates and unseen styles (`fig_bench`), false acceptance by operator (`fig_errors`), pair accuracy per test condition (`tables/split.tex`); the counts in its text and the Fig. 7 caption are `appendix` in `numbers.json` |
+| Appendix (commented out; page 6 when restored) | Figs. 5-7 and Table III: rule-picked counterfactual pairs (`fig_pairs`), templates and unseen styles (`fig_bench`), false acceptance by operator (`fig_errors`), pair accuracy per test condition (`tables/split.tex`); the counts in its text and the Fig. 7 caption are `appendix` in `numbers.json` |
 | `check_paper.py` | compile + venue-rule check; `PAPERS` holds the rules for `main.tex` |
 | `sync.sh` | the one path for commits between local, GitHub and Overleaf |
 

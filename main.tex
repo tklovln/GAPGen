@@ -322,7 +322,8 @@ so one well-evidenced violation rejects an asset, whereas acceptance requires ev
 
 \section{Counterfactual Educational Asset Benchmark}\label{sec:benchmark}
 
-The benchmark covers three tasks with five templates each, three for development and two held out: fraction understanding (circles, strips, and grids, optionally labeled), object counting and classification (exact counts, distractors, two groups, optional numeral), and spatial reasoning (left--right, above--below, three-object order, mirror symmetry, and quarter-turn rotation). Each violated asset $I^{-}=T_k(I^{+})$ applies one of nine operators to a correct asset, covering seven error types: missing object, extra object, incorrect proportion, incorrect label, spatial relation reversal, broken symmetry, and semantic mismatch. Operators act on the scene specification, and an assertion checks that exactly the targeted constraint changes status. A procedural renderer draws each scene at $512\times512$ pixels in one of seven styles, and before any verifier runs, an independent script recomputes every label from the pixels; an item is kept only if both answers agree~\cite{anon2026legibility}. The benchmark has 1{,}020 images: 120 for development, which fixes prompts and thresholds, and 900 for testing, 300 per task, under four conditions: in-domain, unseen templates, combinations of two operators, and four unseen styles (Fig.~\ref{fig:qual} and Appendix~\ref{app:bench}).
+The benchmark covers three tasks with five templates each, three for development and two held out: fraction understanding (circles, strips, and grids, optionally labeled), object counting and classification (exact counts, distractors, two groups, optional numeral), and spatial reasoning (left--right, above--below, three-object order, mirror symmetry, and quarter-turn rotation). Each violated asset $I^{-}=T_k(I^{+})$ applies one of nine operators to a correct asset, covering seven error types: missing object, extra object, incorrect proportion, incorrect label, spatial relation reversal, broken symmetry, and semantic mismatch. Operators act on the scene specification, and an assertion checks that exactly the targeted constraint changes status. A procedural renderer draws each scene at $512\times512$ pixels in one of seven styles, and before any verifier runs, an independent script recomputes every label from the pixels; an item is kept only if both answers agree~\cite{anon2026legibility}. The benchmark has 1{,}020 images: 120 for development, which fixes prompts and thresholds, and 900 for testing, 300 per task, under four conditions: in-domain, unseen templates, combinations of two operators, and four unseen styles (Fig.~\ref{fig:qual}).
+%% APPENDIX: with the appendix, the parenthesis above reads (Fig.~\ref{fig:qual} and Appendix~\ref{app:bench}).
 
 \section{Experimental Setup}\label{sec:setup}
 
@@ -357,7 +358,8 @@ Method & Acc. & FAR & FRR & Abst. & Acc. & FAR & FRR & Abst. \\
 \parbox{\columnwidth}{\footnotesize Mean over three passes on 900 images; sd at most 0.7 points. Acc.\ counts abstentions as errors. Extracted $C$: parser-produced constraints. $^{\ast}$Backbone-free.}
 \end{table}
 
-\emph{Detection (RQ1).} EduAssetVerify accepted no violated asset under either backbone, 0 of 1{,}350 violated evaluations each, whereas the judges accepted 8 to 9 under Gemini and 42 to 58 under Claude (Table~\ref{tab:main}); the difference exceeds two standard errors for every judge. The zero costs abstention on 3.1\% and 1.5\% of assets. Counting abstentions as errors, its accuracy is below the judges' under Gemini (96.7\% against 99.1 to 99.5\%) and above it under Claude (98.5\% against 95.7 to 97.7\%). The rule-only validator also accepts no violation and is the most accurate method under Claude, and CLIPScore is at chance. The judges' false acceptances concentrate where correctness is a measured quantity (Fig.~\ref{fig:domain}): in fraction assets they reach 8.4 to 10.4\% under Claude, and the direct judge accepted 22\% of unequal partitions, 14\% of wrong part counts, and 12\% of broken symmetries, while counting errors were almost always caught (Appendix~\ref{app:results}).
+\emph{Detection (RQ1).} EduAssetVerify accepted no violated asset under either backbone, 0 of 1{,}350 violated evaluations each, whereas the judges accepted 8 to 9 under Gemini and 42 to 58 under Claude (Table~\ref{tab:main}); the difference exceeds two standard errors for every judge. The zero costs abstention on 3.1\% and 1.5\% of assets. Counting abstentions as errors, its accuracy is below the judges' under Gemini (96.7\% against 99.1 to 99.5\%) and above it under Claude (98.5\% against 95.7 to 97.7\%). The rule-only validator also accepts no violation and is the most accurate method under Claude, and CLIPScore is at chance. The judges' false acceptances concentrate where correctness is a measured quantity (Fig.~\ref{fig:domain}): in fraction assets they reach 8.4 to 10.4\% under Claude, and the direct judge accepted 22\% of unequal partitions, 14\% of wrong part counts, and 12\% of broken symmetries, while counting errors were almost always caught.
+%% APPENDIX: with the appendix, the paragraph above ends: caught (Appendix~\ref{app:results}).
 
 \begin{figure}[t]
 \centering
@@ -366,7 +368,8 @@ Method & Acc. & FAR & FRR & Abst. & Acc. & FAR & FRR & Abst. \\
 \label{fig:domain}
 \end{figure}
 
-\emph{Generalization (RQ3).} The FAR of EduAssetVerify stayed at zero in every test condition, whereas the judges' reached 6.7\% (Claude, unseen styles). Abstentions cost pairs (Appendix~\ref{app:results}): under Gemini, the fraction of pairs with both images judged correctly was 1.4 to 5.8 points below the judges' in every condition, whereas under Claude it exceeded both judges in-domain and on unseen templates (98.5\% and 97.6\%) and stayed within one point of the CoT judge elsewhere. Unseen styles were hardest; a hand-drawn wobble breaks exact symmetry, which sent such figures to review.
+\emph{Generalization (RQ3).} The FAR of EduAssetVerify stayed at zero in every test condition, whereas the judges' reached 6.7\% (Claude, unseen styles). Abstentions cost pairs: under Gemini, the fraction of pairs with both images judged correctly was 1.4 to 5.8 points below the judges' in every condition, whereas under Claude it exceeded both judges in-domain and on unseen templates (98.5\% and 97.6\%) and stayed within one point of the CoT judge elsewhere. Unseen styles were hardest; a hand-drawn wobble breaks exact symmetry, which sent such figures to review.
+%% APPENDIX: with the appendix, the paragraph above reads: Abstentions cost pairs (Appendix~\ref{app:results}): under Gemini, ...
 
 \begin{table}[t]
 \caption{Component Ablation (\%)}
@@ -409,60 +412,64 @@ EduAssetVerify shows that the instructional correctness of generated visuals can
 % check_paper.py reads this label's page from main.aux.
 \label{endofbody}
 
-% Figures of Appendix A. They are defined on the last page of the paper because a figure* never
-% appears on the page where it is defined: from here they float to the top of the appendix page.
-\begin{figure*}[t]
-\centering
-\includegraphics[width=\textwidth]{figures/eav_appendix_pairs.pdf}
-\caption{One counterfactual pair per operator (in-domain test split): each violated asset (bottom) changes exactly one constraint of the correct asset above it.}
-\label{fig:pairs}
-\end{figure*}
+%% APPENDIX (commented out on 2026-10-21 at the user's request). To bring back page 6, uncomment
+%% this block and the one after the bibliography (in Overleaf: select the lines, Ctrl+/), and
+%% restore the three pointers marked APPENDIX in Sections V and VII.
+% % Figures of Appendix A. They are defined on the last page of the paper because a figure* never
+% % appears on the page where it is defined: from here they float to the top of the appendix page.
+% \begin{figure*}[t]
+% \centering
+% \includegraphics[width=\textwidth]{figures/eav_appendix_pairs.pdf}
+% \caption{One counterfactual pair per operator (in-domain test split): each violated asset (bottom) changes exactly one constraint of the correct asset above it.}
+% \label{fig:pairs}
+% \end{figure*}
 
-\begin{figure*}[t]
-\centering
-\includegraphics[width=\textwidth]{figures/eav_appendix_bench.pdf}
-\caption{Left: the fifteen templates, one correct test asset each; dashed frames mark the templates held out from development. Right: scenes in a base style (top) and re-rendered in the four unseen styles (bottom).}
-\label{fig:bench}
-\end{figure*}
+% \begin{figure*}[t]
+% \centering
+% \includegraphics[width=\textwidth]{figures/eav_appendix_bench.pdf}
+% \caption{Left: the fifteen templates, one correct test asset each; dashed frames mark the templates held out from development. Right: scenes in a base style (top) and re-rendered in the four unseen styles (bottom).}
+% \label{fig:bench}
+% \end{figure*}
 
 \bibliographystyle{IEEEtran}
 \bibliography{aaie2027}
 
-% Appendix: one page after the references (registration covers 5 pages; this is the sixth).
-\newpage
-\raggedbottom % the appendix page is not full: no stretched gaps between its paragraphs
-\appendices
-% Floats of Appendix B first, so that they take the tops of the two columns.
-\begin{figure}[!t]
-\centering
-\includegraphics[width=\columnwidth]{figures/eav_appendix_errors.pdf}
-\caption{False acceptance by operator under Claude Sonnet 5 (absent bars are zero; EduAssetVerify accepts none). Under Gemini 3.5 Flash, the judges' 26 false acceptances are 12 broken symmetries, 8 unequal partitions, 5 wrong part counts, and 1 two-operator error.}
-\label{fig:errors}
-\end{figure}
+%% APPENDIX (commented out; see the note above \bibliographystyle).
+% % Appendix: one page after the references (registration covers 5 pages; this is the sixth).
+% \newpage
+% \raggedbottom % the appendix page is not full: no stretched gaps between its paragraphs
+% \appendices
+% % Floats of Appendix B first, so that they take the tops of the two columns.
+% \begin{figure}[!t]
+% \centering
+% \includegraphics[width=\columnwidth]{figures/eav_appendix_errors.pdf}
+% \caption{False acceptance by operator under Claude Sonnet 5 (absent bars are zero; EduAssetVerify accepts none). Under Gemini 3.5 Flash, the judges' 26 false acceptances are 12 broken symmetries, 8 unequal partitions, 5 wrong part counts, and 1 two-operator error.}
+% \label{fig:errors}
+% \end{figure}
 
-\begin{table}[!t]
-\caption{Pair Accuracy by Test Condition (\%)}
-\label{tab:split}
-\centering
-\footnotesize
-\setlength{\tabcolsep}{2.6pt}
-\begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}lcccccc@{}}
-\toprule
-& \multicolumn{2}{c}{Direct judge} & \multicolumn{2}{c}{CoT judge} & \multicolumn{2}{c}{EduAssetVerify} \\
-\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(l){6-7}
-Condition & G & C & G & C & G & C \\
-\midrule
-\tablerows{tables/split.tex}
-\bottomrule
-\end{tabular*}
-\par\smallskip
-\parbox{\columnwidth}{\footnotesize Pairs whose correct image is judged valid and violated image invalid, mean of three passes; abstentions count as errors. G: Gemini 3.5 Flash; C: Claude Sonnet 5. Style invariance: unseen-style images whose verdict matches that of the same scene in its base style.}
-\end{table}
+% \begin{table}[!t]
+% \caption{Pair Accuracy by Test Condition (\%)}
+% \label{tab:split}
+% \centering
+% \footnotesize
+% \setlength{\tabcolsep}{2.6pt}
+% \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}lcccccc@{}}
+% \toprule
+% & \multicolumn{2}{c}{Direct judge} & \multicolumn{2}{c}{CoT judge} & \multicolumn{2}{c}{EduAssetVerify} \\
+% \cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(l){6-7}
+% Condition & G & C & G & C & G & C \\
+% \midrule
+% \tablerows{tables/split.tex}
+% \bottomrule
+% \end{tabular*}
+% \par\smallskip
+% \parbox{\columnwidth}{\footnotesize Pairs whose correct image is judged valid and violated image invalid, mean of three passes; abstentions count as errors. G: Gemini 3.5 Flash; C: Claude Sonnet 5. Style invariance: unseen-style images whose verdict matches that of the same scene in its base style.}
+% \end{table}
 
-\section{Benchmark}\label{app:bench}
-Fig.~\ref{fig:pairs} shows one counterfactual pair for each of the nine operators. Fig.~\ref{fig:bench} shows the fifteen templates and the four unseen styles; an unseen-style image re-renders a scene that also appears in a base style, so its verdict should not change.
+% \section{Benchmark}\label{app:bench}
+% Fig.~\ref{fig:pairs} shows one counterfactual pair for each of the nine operators. Fig.~\ref{fig:bench} shows the fifteen templates and the four unseen styles; an unseen-style image re-renders a scene that also appears in a base style, so its verdict should not change.
 
-\section{Additional Results}\label{app:results}
-Fig.~\ref{fig:errors} breaks the judges' false acceptances down by operator. Of the 181 false acceptances of all judges under both backbones, 178 involve only part counts, colored counts, unequal partitions, or broken symmetries; the other 3 are missing objects, and EduAssetVerify accepted none. Table~\ref{tab:split} gives the pair accuracy per test condition summarized in Section~\ref{sec:results}.
+% \section{Additional Results}\label{app:results}
+% Fig.~\ref{fig:errors} breaks the judges' false acceptances down by operator. Of the 181 false acceptances of all judges under both backbones, 178 involve only part counts, colored counts, unequal partitions, or broken symmetries; the other 3 are missing objects, and EduAssetVerify accepted none. Table~\ref{tab:split} gives the pair accuracy per test condition summarized in Section~\ref{sec:results}.
 
 \end{document}
