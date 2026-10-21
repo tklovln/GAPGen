@@ -38,8 +38,9 @@ task says otherwise, then `git add`, `git commit`, `bash sync.sh push`.
 | `IEEEtran.cls` | copied unchanged from `latex-template/` (v1.8b) |
 | `proposal.md`, `latex-template/` | the user's inputs: research proposal and the IEEE template to follow |
 | `workshop.tex`, `creativeai.tex` | earlier papers, frozen; with `refs.bib`, `neurips_2026.sty`, `checklist.tex` |
-| `tables/{main,domain,ablation}.tex`, `figures/eav_examples.pdf`, `figures/eav_teaser_asset.png` | generated from the experiment results on `main`; never edited by hand |
-| Figs. 1 and 2 | TikZ in `main.tex`, palette `eav*` colors defined in the preamble |
+| `tables/{main,ablation}.tex`, `tables/teaser_bars.tex`, `figures/eav_examples.pdf`, `figures/eav_teaser_asset.png`, `figures/eav_domain_far.pdf` | generated from the experiment results on `main`; never edited by hand |
+| Figs. 1 and 2 | TikZ in `main.tex`; palette `eav*` colors and the icons (TikZ pics) are defined in the preamble. Fig. 1 inputs `tables/teaser_bars.tex`; its witness box and the judges' range bar are typed from `numbers.json` (`teaser.witness_norm`, judge FARs in `main`) |
+| Figs. 3 and 4 | `figures/eav_examples.pdf` (examples) and `figures/eav_domain_far.pdf` (false acceptance by domain, which replaced the domain table) |
 | `check_paper.py` | compile + venue-rule check; `PAPERS` holds the rules for `main.tex` |
 | `sync.sh` | the one path for commits between local, GitHub and Overleaf |
 
@@ -54,8 +55,10 @@ Code, benchmark builder and results live on `main` in `eduassetverify/` (worktre
 
 ```bash
 cd ../GAPGen/eduassetverify && .venv/bin/python -m eav.paper --out results/paper
-# then copy results/paper/tab_{main,domain,ablation}.tex -> tables/ (keep the header comment),
-# results/paper/fig_examples.pdf -> figures/eav_examples.pdf, teaser_asset.png -> figures/eav_teaser_asset.png
+# then copy results/paper/tab_{main,ablation}.tex -> tables/ (keep the header comment),
+# teaser_bars.tex -> tables/teaser_bars.tex, teaser_asset.png -> figures/eav_teaser_asset.png,
+# fig_examples.pdf -> figures/eav_examples.pdf, fig_domain_far.pdf -> figures/eav_domain_far.pdf
+# (PDFs are gitignored on main, so the paper branch holds the only committed copy)
 ```
 
 Every number in the prose (abstract, introduction, Section VII, conclusion) is read from
