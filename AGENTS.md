@@ -37,19 +37,37 @@ task says otherwise, then `git add`, `git commit`, `bash sync.sh push`.
 | `IEEEtran.cls` | copied unchanged from `latex-template/` (v1.8b) |
 | `proposal.md`, `latex-template/` | the user's inputs: research proposal and the IEEE template to follow |
 | `workshop.tex`, `creativeai.tex` | earlier papers, frozen; with `refs.bib`, `neurips_2026.sty`, `checklist.tex` |
+| `tables/*.tex`, `figures/eav_*.pdf` | generated from the experiment results on `main`; never edited by hand |
 | `check_paper.py` | compile + venue-rule check; `PAPERS` holds the rules for `main.tex` |
 | `sync.sh` | the one path for commits between local, GitHub and Overleaf |
 
 Frozen papers are reading material: mine them for technical lessons, edit `main.tex`.
-`workshop.tex` is the source of the evaluation pitfalls the method and Table IV guard
-against; paraphrase it, since AAIE screens for similarity (index below 20%).
+`workshop.tex` is the source of the evaluation pitfalls the method and the guards table
+build on; paraphrase it, since AAIE screens for similarity (index below 20%).
+
+## Experiments
+
+Code, benchmark builder and results live on `main` in `eduassetverify/` (worktree
+`../GAPGen`); read its `CONFIG_FROZEN.md` before changing a setting. After any re-run:
+
+```bash
+cd ../GAPGen/eduassetverify && .venv/bin/python -m eav.paper --out results/paper
+# then copy results/paper/tab_<name>.tex -> tables/<name>.tex (keep the header comment)
+# and results/paper/fig_examples.pdf -> figures/eav_examples.pdf
+```
+
+Every number in the prose (abstract, introduction, Section VII, conclusion) is read from
+`results/paper/numbers.json` on `main`; re-check the prose against it whenever a table
+changes. Thresholds are fixed on the dev split only; a post-test change goes into
+`CONFIG_FROZEN.md` and is disclosed in the paper.
 
 ## Rules
 
-- **Numbers come from experiment outputs.** `\pending{...}` and `\tbd` mark every
-  claim and table cell that waits for experiments; strict `check_paper.py` fails
-  while any remain. Replace one only with a value produced by the evaluation code.
-  Abstract, introduction and conclusion claim no outcome until Section VII has data.
+- **Numbers come from experiment outputs.** `\pending{...}` and `\tbd` mark any new
+  claim or cell that waits for experiments; strict `check_paper.py` fails while one
+  remains. Fill one only with a value produced by the evaluation code.
+- **Report what the data say.** Negative and mixed results stay in the paper (judges
+  beat us on accuracy under Gemini; the semantic verifier and abstention add nothing).
 - **No learning-outcome claims.** Nothing here was tested on learners; statements stay
   about verifying assets, never about student understanding or achievement.
 - **Double-blind.** The workshop paper is cited in the third person as

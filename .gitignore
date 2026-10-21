@@ -23,6 +23,8 @@
 !*.cls
 !*.bst
 
+!tables/
+!tables/*.tex
 !figures/
 !figures/*.png
 !figures/*.pdf
