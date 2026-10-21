@@ -152,25 +152,33 @@ def extras(man, R):
 
 # --------------------------------------------------------------------------- tables
 
+MAIN_ROWS = [("clip", "CLIPScore$^{\\ast}$"), ("direct", "Direct judge"), ("cot", "CoT judge"),
+             ("structured", "Structured judge"), ("rule_only", "Rule-only"), ("eav", "EduAssetVerify"),
+             ("extracted", "\\quad extracted $C$")]
+MAIN_COLS = ["accuracy", "far", "frr", "abstention"]
+
+
 def table_main(N):
-    hdr = (" & \\multicolumn{5}{c}{" + BACKBONES["gemini-3.5-flash"] + "} & \\multicolumn{5}{c}{" +
-           BACKBONES["global.anthropic.claude-sonnet-5"] + "} \\\\\n\\cmidrule(lr){2-6}\\cmidrule(l){7-11}\n"
-           "Method & F1 & FAR $\\downarrow$ & FRR $\\downarrow$ & Abst. & AURC $\\downarrow$ & F1 & FAR $\\downarrow$ & "
-           "FRR $\\downarrow$ & Abst. & AURC $\\downarrow$ \\\\\n\\midrule\n")
-    rows = []
-    c = N["main"]["clip"]
-    cells = [pct(c["f1"], sd=False), pct(c["far"], sd=False), pct(c["frr"], sd=False), pct(c["abstention"], sd=False),
-             pct(c["aurc"], sd=False)]
-    rows.append("Text--image similarity$^{\\ast}$ & " + " & ".join(cells + cells) + " \\\\")
-    for key, name in METHODS + [("extracted", "EduAssetVerify, extracted $C$")]:
+    """Compact main table: mean over passes (sd reported once, in the caption)."""
+    out = []
+    for key, name in MAIN_ROWS:
         cells = []
         for b in BACKBONES:
-            s = N["main"][f"{key}__{b}"]
-            cells += [pct(s["f1"]), pct(s["far"]), pct(s["frr"]), pct(s["abstention"]), pct(s["aurc"])]
+            s = N["main"]["clip"] if key == "clip" else N["main"][f"{key}__{b}"]
+            cells += [pct(s[c], sd=False) for c in MAIN_COLS]
         if key == "extracted":
-            rows.append("\\midrule")
-        rows.append(f"{name} & " + " & ".join(cells) + " \\\\")
-    return hdr + "\n".join(rows) + "\n"
+            out.append("\\midrule")
+        out.append(f"{name} & " + " & ".join(cells) + " \\\\")
+    return "\n".join(out) + "\n"
+
+
+def main_max_sd(N) -> float:
+    vals = []
+    for key, _ in MAIN_ROWS:
+        for b in BACKBONES:
+            s = N["main"]["clip"] if key == "clip" else N["main"][f"{key}__{b}"]
+            vals += [s[c][1] for c in MAIN_COLS]
+    return float(max(vals))
 
 
 def table_data(man):
@@ -225,10 +233,15 @@ def table_ablation(N):
         cells = []
         for b in BACKBONES:
             s = N["main"][f"{key}__{b}"]
-            cells += [pct(s["far"], sd=False), pct(s["frr"], sd=False), pct(s["abstention"], sd=False),
-                      pct(s["localization_accuracy"], sd=False) if key != "vlmrules" else "--"]
+            cells += [pct(s["far"], sd=False), pct(s["frr"], sd=False), pct(s["abstention"], sd=False)]
         out.append(f"{name} & " + " & ".join(cells) + " \\\\")
     return "\n".join(out) + "\n"
+
+
+def ablation_max_sd(N) -> float:
+    vals = [N["main"][f"{k}__{b}"][c][1] for k in ("eav", "vlmrules", "abl_no_measure", "abl_no_semantic", "abl_no_abstain")
+            for b in BACKBONES for c in ("far", "frr", "abstention")]
+    return float(max(vals))
 
 
 def table_cost(N):
@@ -430,6 +443,8 @@ def main() -> None:
     N["battery"] = {b: json.loads((pathlib.Path("results/battery") / f"{b}.json").read_text()) for b in BACKBONES}
     N["examples"] = pick_examples(man, R)
     N["extras"] = extras(man, R)
+    N["max_sd_main_table"] = main_max_sd(N)
+    N["max_sd_ablation_table"] = ablation_max_sd(N)
 
     (out / "numbers.json").write_text(json.dumps(N, indent=1, default=float))
     (out / "tab_main.tex").write_text(table_main(N))

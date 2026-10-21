@@ -14079,5 +14079,7 @@
    "test_error_combo": 0.02,
    "test_unseen_style": 0.035555555555555556
   }
- }
+ },
+ "max_sd_main_table": 0.007143445008142931,
+ "max_sd_ablation_table": 0.005879447357921313
 }
