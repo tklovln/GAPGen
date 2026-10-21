@@ -93,11 +93,14 @@ changes. Thresholds are fixed on the dev split only; a post-test change goes int
   `anon2026legibility`; author names, affiliations, links and acknowledgments stay
   out until camera-ready. `check_paper.py` scans the printed source (comments excluded)
   and the `.bbl`; its identifiers include the GitHub account `tklovln`. The user's
-  project-page sentence after the contributions list links, for review, to the user's
-  Anonymous GitHub mirror of the demo repository, `anonymous.4open.science/r/eduassetverify-demo/`
-  (`/w/` instead serves the rendered page once "GitHub page" is enabled in its settings, which
-  only the user can change). The mirror is outside this check; before upload, confirm that no
-  served file names the account (the command must print nothing):
+  project-page sentence after the contributions list links, for review, to the rendered page
+  of the user's Anonymous GitHub mirror of the demo repository,
+  `anonymous.4open.science/w/eduassetverify-demo/` (`/r/` would open its repository browser).
+  `/w/` works only while "GitHub Pages" is ticked under Features in the mirror's settings, which
+  only the user can change; the mirror masks the terms `tklovln` and `xdblazer39`. The mirror is
+  outside `check_paper.py`; before upload, the page must load (`curl -s -o /dev/null -w "%{http_code}"
+  https://anonymous.4open.science/w/eduassetverify-demo/` prints 200, not 400 page_not_activated) and
+  no served file may name the account (this must print nothing):
   `for f in $(curl -s https://anonymous.4open.science/api/repo/eduassetverify-demo/files | python3 -c "import json,sys; print(' '.join(x['name'] for x in json.load(sys.stdin) if x.get('size')))"); do curl -s https://anonymous.4open.science/api/repo/eduassetverify-demo/file/$f; done | grep -i tklovln`
   (top-level files only). Camera-ready: the GitHub Pages address of the demo repository.
 - **IEEE format as in the template.** Keep the template's preamble, margins, fonts and
