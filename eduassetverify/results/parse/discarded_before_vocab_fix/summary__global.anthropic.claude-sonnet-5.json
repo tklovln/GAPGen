@@ -1,0 +1,116 @@
+{
+ "backbone": "global.anthropic.claude-sonnet-5",
+ "objectives": 249,
+ "contradiction_items": 60,
+ "extraction": {
+  "exact": [
+   0.4350736278447122,
+   0.009274703119512047
+  ],
+  "precision": [
+   0.8125102973643455,
+   0.004793413708928262
+  ],
+  "recall": [
+   0.9616104868913858,
+   0.004290801212505503
+  ],
+  "false_inconsistent": [
+   0.0,
+   0.0
+  ]
+ },
+ "pipeline": {
+  "n": [
+   900.0,
+   0.0
+  ],
+  "precision": [
+   0.861894586894587,
+   0.0016610201603900327
+  ],
+  "recall": [
+   0.9985185185185186,
+   0.0012830005981991767
+  ],
+  "f1": [
+   0.9251891448531387,
+   0.0011464203793803615
+  ],
+  "far": [
+   0.0014814814814814814,
+   0.0012830005981991684
+  ],
+  "frr": [
+   0.16,
+   0.0022222222222222227
+  ],
+  "abstention": [
+   0.0033333333333333335,
+   0.0019245008972987527
+  ],
+  "unparsable": [
+   0.0,
+   0.0
+  ],
+  "accuracy": [
+   0.9159259259259259,
+   0.00320750149549791
+  ]
+ },
+ "spec_rejected": 0.0,
+ "consistency": {
+  "detected": [
+   1.0,
+   0.0
+  ],
+  "false_alarm": [
+   0.0,
+   0.0
+  ]
+ },
+ "examples": [
+  {
+   "original": "Show the fraction 1/8: a grid divided into 8 equal cells with 1 of them colored.",
+   "contradictory": "Show the fraction 1/8: a grid divided into 7 equal cells with 1 of them colored.",
+   "flags": [
+    "fraction value differs from colored/parts"
+   ]
+  },
+  {
+   "original": "Show the fraction 1/3: a circle divided into 3 equal parts with 1 of them colored.",
+   "contradictory": "Show the fraction 1/3: a circle divided into 2 equal parts with 1 of them colored.",
+   "flags": [
+    "fraction value differs from colored/parts"
+   ]
+  },
+  {
+   "original": "From left to right, the picture shows a circle, a heart, and a star.",
+   "contradictory": "From left to right, the picture shows a circle, a heart, and a star. The star is to the left of the circle.",
+   "flags": [
+    "left_of relations form a cycle"
+   ]
+  },
+  {
+   "original": "Show exactly 4 fish and nothing else.",
+   "contradictory": "Show exactly 4 fish and nothing else; there are exactly 6 objects in total.",
+   "flags": [
+    "all objects are one category, but the counts differ"
+   ]
+  },
+  {
+   "original": "Show exactly 5 flowers and write the number 5 below them.",
+   "contradictory": "Show exactly 5 flowers and write the number 6 below them.",
+   "flags": [
+    "numeral differs from the object count"
+   ]
+  },
+  {
+   "original": "Show the fraction 2/4: a grid divided into 4 equal cells with 2 of them colored.",
+   "contradictory": "Show the fraction 2/4: a grid divided into 3 equal cells with 2 of them colored.",
+   "flags": [
+    "fraction value differs from colored/parts"
+   ]
+  }
+ ]
+}

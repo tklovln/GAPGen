@@ -21,3 +21,19 @@ Dev-split findings that changed the pipeline before test (kept for the paper's a
    `results/discarded_frame_bug/`.
 2. Witness boxes for relation reversal and broken symmetry were unions or difference
    blobs; they now name the misplaced object.
+
+## After the test run (disclosed in the paper)
+
+3. Extracted-constraint regime: its first run went straight to the test split and exposed
+   a vocabulary mismatch (both parsers listed the divided whole, "a circle", as an object
+   that must be present, which the partition evidence cannot confirm; FRR 16%). The parser
+   instruction was corrected and checked on the dev split (`results/parse/summary_dev__*`),
+   then the test split was run once more. The first run is kept in
+   `results/parse/discarded_before_vocab_fix/`.
+4. Localization metric: for error combinations the scorer picked the first violated target,
+   which could be the non-localizable one (a missing object); it now scores the target of
+   the localizable operator, as the metric is defined. Ground-truth boxes were not changed;
+   text-label boxes are estimated from font metrics and remain looser than the glyphs.
+
+Spend: the API response cache holds 75,169 calls (34.5M/8.3M input/output tokens on
+Gemini, 19.0M/8.1M on Claude), about USD 209 at the assumed rates of eav/vlm/client.py.

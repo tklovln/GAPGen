@@ -10,6 +10,7 @@ conjunction: INVALID if any status is F, VALID if all are T, UNCERTAIN otherwise
 from __future__ import annotations
 
 from collections import Counter
+from fractions import Fraction
 from dataclasses import asdict, dataclass, field
 
 import numpy as np
@@ -119,7 +120,7 @@ def check(c: dict, ev: dict, rgb: np.ndarray, ctx: dict, sem: dict | None, cfg: 
     if not ev["ok"]:
         return Reading(U, source="unparsable")
     # ---------------------------------------------------------------- fraction
-    if name in ("part_count", "colored_part_count", "equal_area"):
+    if name in ("part_count", "colored_part_count", "equal_area", "fraction_value"):
         shape = _main_shape(ev)
         if shape is None:
             return Reading(U, source="no shape")
@@ -133,6 +134,16 @@ def check(c: dict, ev: dict, rgb: np.ndarray, ctx: dict, sem: dict | None, cfg: 
             val = meas["n"] if meas and meas["ok"] else vlm
             conflict = bool(meas and meas["ok"] and meas["n"] != vlm)
             return Reading(T if val == c["value"] else F, val, conflict, shape["box"],
+                           source="measured" if meas and meas["ok"] else "vlm")
+        if name == "fraction_value":      # extracted regime only: colored / parts equals the value
+            n_val = meas["n"] if meas and meas["ok"] else len(parts)
+            k_val = meas["colored"] if meas and meas["ok"] else sum(p["colored"] for p in parts)
+            try:
+                want = Fraction(str(c["value"]))
+            except (ValueError, ZeroDivisionError):
+                return Reading(U, source="bad value")
+            ok = n_val > 0 and Fraction(k_val, n_val) == want
+            return Reading(T if ok else F, f"{k_val}/{n_val}", False, shape["box"],
                            source="measured" if meas and meas["ok"] else "vlm")
         if name == "colored_part_count":
             vlm = sum(p["colored"] for p in parts)

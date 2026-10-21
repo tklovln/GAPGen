@@ -128,24 +128,26 @@ def pairwise(results: list[dict], man: dict) -> dict:
 
 
 def localization(results: list[dict], man: dict) -> dict:
-    """Of violated, localizable items judged INVALID: reported violated constraint is a target,
-    and its witness box overlaps a ground-truth region with IoU >= 0.5."""
+    """Of violated, localizable items judged INVALID: the reported violated constraints are
+    targets (violation type), and the witness box of a violated target whose operator is
+    localizable overlaps one of its ground-truth regions with IoU >= 0.5 (localization).
+    Targets and operators are aligned lists, so in an error combination only the localizable
+    operator's target is scored."""
     n = hit_c = hit_loc = 0
     for r in results:
         m = man[r["item_id"]]
-        if m["label"] != "INVALID" or r["verdict"] != "INVALID" or not set(m["operators"]) & LOCALIZABLE:
+        loc_targets = [t for t, op in zip(m["targets"], m["operators"]) if op in LOCALIZABLE]
+        if m["label"] != "INVALID" or r["verdict"] != "INVALID" or not loc_targets:
             continue
         report = {d["cid"]: d for d in r.get("report", [])}
         viol = [cid for cid, s in r.get("statuses", {}).items() if s == "F"]
         if not viol:
             continue
         n += 1
-        tgt = [cid for cid in viol if cid in m["targets"]]
-        hit_c += bool(tgt) and set(viol) <= set(m["targets"])
-        if tgt:
-            box = report.get(tgt[0], {}).get("witness")
-            regions = m["gt_regions"].get(tgt[0], [])
-            hit_loc += any(iou(box, g) >= 0.5 for g in regions)   # any one of the affected objects
+        hit_c += bool(set(viol) & set(m["targets"])) and set(viol) <= set(m["targets"])
+        hit_loc += any(cid in viol and any(iou(report.get(cid, {}).get("witness"), g) >= 0.5
+                                           for g in m["gt_regions"].get(cid, []))
+                       for cid in loc_targets)
     return {"loc_n": n, "violation_type_accuracy": hit_c / n if n else float("nan"),
             "localization_accuracy": hit_loc / n if n else float("nan")}
 

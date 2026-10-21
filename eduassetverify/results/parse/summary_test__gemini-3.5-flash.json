@@ -1,0 +1,120 @@
+{
+ "backbone": "gemini-3.5-flash",
+ "objectives": 249,
+ "contradiction_items": 60,
+ "extraction": {
+  "exact": [
+   0.8380187416331996,
+   0.015204573884338081
+  ],
+  "precision": [
+   0.924558210687345,
+   0.003127047470013462
+  ],
+  "recall": [
+   0.9236891385767789,
+   0.0016217704190720184
+  ],
+  "false_inconsistent": [
+   0.0013386880856760374,
+   0.0023186757798780147
+  ]
+ },
+ "pipeline": {
+  "n": [
+   900.0,
+   0.0
+  ],
+  "precision": [
+   0.9917143811960484,
+   0.002621512293664526
+  ],
+  "recall": [
+   0.9984882142416388,
+   0.0013093357505814332
+  ],
+  "f1": [
+   0.9950888945312606,
+   0.0017366275376823606
+  ],
+  "far": [
+   0.0014814814814814814,
+   0.0012830005981991684
+  ],
+  "frr": [
+   0.00814814814814815,
+   0.0025660011963983364
+  ],
+  "abstention": [
+   0.03925925925925926,
+   0.00420659877466687
+  ],
+  "unparsable": [
+   0.0,
+   0.0
+  ],
+  "accuracy": [
+   0.955925925925926,
+   0.004625924443258102
+  ]
+ },
+ "spec_rejected": 0.0007407407407407407,
+ "consistency": {
+  "detected": [
+   0.8888888888888888,
+   0.025458753860865747
+  ],
+  "false_alarm": [
+   0.0,
+   0.0
+  ]
+ },
+ "examples": [
+  {
+   "original": "Show the fraction 1/8: a grid divided into 8 equal cells with 1 of them colored.",
+   "contradictory": "Show the fraction 1/8: a grid divided into 7 equal cells with 1 of them colored.",
+   "flags": [
+    "fraction value differs from colored/parts"
+   ]
+  },
+  {
+   "original": "Show the fraction 1/3: a circle divided into 3 equal parts with 1 of them colored.",
+   "contradictory": "Show the fraction 1/3: a circle divided into 2 equal parts with 1 of them colored.",
+   "flags": [
+    "fraction value differs from colored/parts"
+   ]
+  },
+  {
+   "original": "From left to right, the picture shows a circle, a heart, and a star.",
+   "contradictory": "From left to right, the picture shows a circle, a heart, and a star. The star is to the left of the circle.",
+   "flags": [
+    "left_of relations form a cycle"
+   ]
+  },
+  {
+   "original": "Show exactly 4 fish and nothing else.",
+   "contradictory": "Show exactly 4 fish and nothing else; there are exactly 6 objects in total.",
+   "flags": []
+  },
+  {
+   "original": "Show exactly 5 flowers and write the number 5 below them.",
+   "contradictory": "Show exactly 5 flowers and write the number 6 below them.",
+   "flags": [
+    "numeral differs from the object count"
+   ]
+  },
+  {
+   "original": "Show the fraction 2/4: a grid divided into 4 equal cells with 2 of them colored.",
+   "contradictory": "Show the fraction 2/4: a grid divided into 3 equal cells with 2 of them colored.",
+   "flags": [
+    "fraction value differs from colored/parts"
+   ]
+  }
+ ],
+ "pipeline_splits": [
+  "test_indomain",
+  "test_unseen_template",
+  "test_error_combo",
+  "test_unseen_style"
+ ]
+}

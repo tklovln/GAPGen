@@ -1,0 +1,122 @@
+{
+ "backbone": "global.anthropic.claude-sonnet-5",
+ "objectives": 249,
+ "contradiction_items": 60,
+ "extraction": {
+  "exact": [
+   0.7898259705488622,
+   0.01672020883105325
+  ],
+  "precision": [
+   0.9262708316025693,
+   0.006626521749199915
+  ],
+  "recall": [
+   0.9878277153558052,
+   0.00292368820149738
+  ],
+  "false_inconsistent": [
+   0.0,
+   0.0
+  ]
+ },
+ "pipeline": {
+  "n": [
+   900.0,
+   0.0
+  ],
+  "precision": [
+   1.0,
+   0.0
+  ],
+  "recall": [
+   1.0,
+   0.0
+  ],
+  "f1": [
+   1.0,
+   0.0
+  ],
+  "far": [
+   0.0,
+   0.0
+  ],
+  "frr": [
+   0.0,
+   0.0
+  ],
+  "abstention": [
+   0.004814814814814814,
+   0.0006415002990995843
+  ],
+  "unparsable": [
+   0.0,
+   0.0
+  ],
+  "accuracy": [
+   0.9951851851851852,
+   0.0006415002990995562
+  ]
+ },
+ "spec_rejected": 0.0,
+ "consistency": {
+  "detected": [
+   1.0,
+   0.0
+  ],
+  "false_alarm": [
+   0.0,
+   0.0
+  ]
+ },
+ "examples": [
+  {
+   "original": "Show the fraction 1/8: a grid divided into 8 equal cells with 1 of them colored.",
+   "contradictory": "Show the fraction 1/8: a grid divided into 7 equal cells with 1 of them colored.",
+   "flags": [
+    "fraction value differs from colored/parts"
+   ]
+  },
+  {
+   "original": "Show the fraction 1/3: a circle divided into 3 equal parts with 1 of them colored.",
+   "contradictory": "Show the fraction 1/3: a circle divided into 2 equal parts with 1 of them colored.",
+   "flags": [
+    "fraction value differs from colored/parts"
+   ]
+  },
+  {
+   "original": "From left to right, the picture shows a circle, a heart, and a star.",
+   "contradictory": "From left to right, the picture shows a circle, a heart, and a star. The star is to the left of the circle.",
+   "flags": [
+    "left_of relations form a cycle"
+   ]
+  },
+  {
+   "original": "Show exactly 4 fish and nothing else.",
+   "contradictory": "Show exactly 4 fish and nothing else; there are exactly 6 objects in total.",
+   "flags": [
+    "all objects are one category, but the counts differ"
+   ]
+  },
+  {
+   "original": "Show exactly 5 flowers and write the number 5 below them.",
+   "contradictory": "Show exactly 5 flowers and write the number 6 below them.",
+   "flags": [
+    "numeral differs from the object count"
+   ]
+  },
+  {
+   "original": "Show the fraction 2/4: a grid divided into 4 equal cells with 2 of them colored.",
+   "contradictory": "Show the fraction 2/4: a grid divided into 3 equal cells with 2 of them colored.",
+   "flags": [
+    "fraction value differs from colored/parts"
+   ]
+  }
+ ],
+ "pipeline_splits": [
+  "test_indomain",
+  "test_unseen_template",
+  "test_error_combo",
+  "test_unseen_style"
+ ]
+}

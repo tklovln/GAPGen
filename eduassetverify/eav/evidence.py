@@ -15,7 +15,7 @@ import json
 import re
 
 SIZE = 512.0
-FRACTION_NAMES = {"part_count", "equal_area", "colored_part_count", "label_text"}
+FRACTION_NAMES = {"part_count", "equal_area", "colored_part_count", "label_text", "fraction_value"}
 COUNTING_NAMES = {"object_count", "all_objects_category", "numeral_label", "category_count", "group_count"}
 SPATIAL_NAMES = {"object_present", "left_of", "above", "mirror_symmetric", "rotated_quarter_cw"}
 COUNT_VOCAB = ["apple", "fish", "flower", "heart", "star", "tree", "other"]
