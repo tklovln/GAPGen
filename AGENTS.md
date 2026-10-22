@@ -76,7 +76,8 @@ cd ../GAPGen/eduassetverify && .venv/bin/python -m eav.paper --out results/paper
 # (PDFs are gitignored on main, so the paper branch holds the only committed copy)
 ```
 
-The project page is generated too: after `eav.paper`, run `.venv/bin/python -m eav.demo --out
+The project page is generated too (sources in `eduassetverify/demo_site/`: page, stylesheet, script
+parts in `js/`, embedded fonts): after `eav.paper`, run `.venv/bin/python -m eav.demo --out
 results/demo` (its docstring lists what it checks), replace the files of the demo repository
 `tklovln/eduassetverify-demo` (GitHub Pages from the root of `main`) with `results/demo/` while
 keeping its README, and push. The anonymous mirror serves a new commit only after the user clicks
@@ -110,7 +111,7 @@ changes. Thresholds are fixed on the dev split only; a post-test change goes int
   https://anonymous.4open.science/w/eduassetverify-demo/` prints 200; without that header the mirror
   answers 404, and 400 means page_not_activated) and
   no served file may name the account or carry the mirror's mask `XXXX-n` (this must print 0):
-  `for f in $(for p in "" thumbs; do curl -s "https://anonymous.4open.science/api/repo/eduassetverify-demo/files?path=$p" | python3 -c "import json,sys; print(' '.join('/'.join(filter(None, (x['path'], x['name']))) for x in json.load(sys.stdin) if x.get('size')))"; done); do curl -s "https://anonymous.4open.science/api/repo/eduassetverify-demo/file/$f"; done | grep -c -i "tklovln\|xdblazer\|github\.io\|XXXX-[0-9]"`.
+  `for f in $(for p in "" media fonts; do curl -s "https://anonymous.4open.science/api/repo/eduassetverify-demo/files?path=$p" | python3 -c "import json,sys; print(' '.join('/'.join(filter(None, (x['path'], x['name']))) for x in json.load(sys.stdin) if x.get('size')))"; done); do curl -s "https://anonymous.4open.science/api/repo/eduassetverify-demo/file/$f"; done | grep -c -i "tklovln\|xdblazer\|github\.io\|XXXX-[0-9]"`.
   Camera-ready: the GitHub Pages address of the demo repository.
 - **IEEE format as in the template.** Keep the template's preamble, margins, fonts and
   spacing; size the content to the page budget instead of `\vspace` or font tweaks.
